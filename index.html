@@ -36,6 +36,9 @@ a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margi
 .cta-avatar{width:22px;height:22px;border-radius:50%;}
 .cta-name{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .cta-btn-out{padding:5px 9px;font-size:11.5px;}
+.headright{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.feedbacklink{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
+.feedbacklink:hover{color:var(--accent);}
 </style>
 </head>
 <body>
@@ -46,7 +49,10 @@ a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margi
       <h1>Cao Thắng — Ôn Thi</h1>
       <div class="sub">Danh sách các trang luyện thi</div>
     </div>
-    <div id="authWidget" style="margin-left:auto"></div>
+    <div class="headright">
+      <a href="mailto:0303261267@caothang.edu.vn" class="feedbacklink">Feedback: 0303261267@caothang.edu.vn</a>
+      <div id="authWidget"></div>
+    </div>
   </header>
   <div class="list">
     <a class="card" href="/testdauvaotienganh">

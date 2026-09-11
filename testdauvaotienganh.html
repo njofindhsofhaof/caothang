@@ -79,7 +79,10 @@ aside{position:sticky;top:16px;align-self:start;display:flex;flex-direction:colu
 .timerhint b{color:var(--ink);font-weight:600;}
 .themebtn{font-size:12px;font-family:var(--mono);border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);border-radius:6px;padding:6px 10px;cursor:pointer;}
 a{color:var(--accent);}
-.headright{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.headright{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.headright-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.feedbacklink{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
+.feedbacklink:hover{color:var(--accent);}
 .cta-btn{font-family:var(--sans);font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:7px 12px;cursor:pointer;}
 .cta-btn:hover{border-color:var(--accent);color:var(--accent);}
 .cta-user{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
@@ -101,8 +104,11 @@ a{color:var(--accent);}
       <span class="sub">50 câu trắc nghiệm · 5 đề</span>
     </div>
     <div class="headright">
-      <div id="authWidget"></div>
-      <button class="themebtn" id="themeBtn">Giao dien: He thong</button>
+      <a href="mailto:0303261267@caothang.edu.vn" class="feedbacklink">Feedback: 0303261267@caothang.edu.vn</a>
+      <div class="headright-row">
+        <div id="authWidget"></div>
+        <button class="themebtn" id="themeBtn">Giao dien: He thong</button>
+      </div>
     </div>
   </header>
 
