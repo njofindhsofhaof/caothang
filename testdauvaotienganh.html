@@ -617,7 +617,15 @@ function setupSaveResult(exam,correct,total,pct,taken){
       timeTaken:taken!==undefined?taken:null
     }).then(function(id){
       var url=location.origin+location.pathname+"?result="+id;
-      msg.innerHTML='Da luu! <a href="'+url+'" id="shareLink">'+url+'</a> <button class="cta-btn" type="button" id="copyLinkBtn">Copy link</button>';
+      var text="Toi vua lam "+exam.title+" duoc "+correct+"/"+total+" cau dung! Thu suc tai:";
+      msg.innerHTML='Da luu ket qua! <button class="cta-btn" type="button" id="shareBtn">Chia se</button> <button class="cta-btn" type="button" id="copyLinkBtn">Copy link</button>';
+      document.getElementById("shareBtn").onclick=function(){
+        if(navigator.share){
+          navigator.share({title:"Ket qua "+exam.title,text:text,url:url}).catch(function(){});
+        }else{
+          window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),"_blank","noopener");
+        }
+      };
       var copyBtn=document.getElementById("copyLinkBtn");
       copyBtn.onclick=function(){
         navigator.clipboard.writeText(url).then(function(){copyBtn.textContent="Da copy!";});
