@@ -34,7 +34,9 @@ a.card h2{font-family:var(--serif);font-size:18px;margin:0 0 6px;font-weight:600
 a.card p{font-size:13.5px;color:var(--ink-soft);margin:0;}
 a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:10px;display:block;}
 a.card .pub{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;display:block;}
-footer.contact{position:fixed;right:16px;bottom:12px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);}
+.headright{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.feedbacklink{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
+.feedbacklink:hover{color:var(--accent);}
 </style>
 </head>
 <body>
@@ -46,7 +48,10 @@ footer.contact{position:fixed;right:16px;bottom:12px;font-family:var(--mono);fon
         <h1>Điện Tử Cơ Bản</h1>
       </div>
     </div>
-    <a class="backlink" href="/">&larr; Về trang chủ</a>
+    <div class="headright">
+      <a href="mailto:0303261267@caothang.edu.vn" class="feedbacklink">Feedback: 0303261267@caothang.edu.vn</a>
+      <a class="backlink" href="/">&larr; Về trang chủ</a>
+    </div>
   </header>
   <div class="list">
     <a class="card" href="/vongmaudientro">
@@ -56,7 +61,6 @@ footer.contact{position:fixed;right:16px;bottom:12px;font-family:var(--mono);fon
       <span class="go">vongmaudientro &rarr;</span>
     </a>
   </div>
-  <footer class="contact">Feedback: 0303261267@caothang.edu.vn</footer>
 </div>
 </body>
 </html>
