@@ -70,11 +70,7 @@ aside{position:sticky;top:16px;align-self:start;display:flex;flex-direction:colu
 .progresswrap{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:12px;}
 .progressfill{height:100%;background:var(--accent-warm);border-radius:4px;transition:width .25s;}
 .progresstxt{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:6px;}
-.timerbox{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:20px;font-family:var(--mono);flex-wrap:wrap;}
-.timerbox .t{font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:.03em;}
-.timerbox button{font-family:var(--sans);font-size:12.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:6px 11px;cursor:pointer;}
-.timerbox button:hover{border-color:var(--accent);}
-.timerhint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 24px;}
+.timerhint{font-size:12.5px;color:var(--ink-soft);margin:0 0 24px;}
 .timerhint b{color:var(--ink);font-weight:600;}
 .themebtn{font-size:12px;font-family:var(--mono);border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);border-radius:6px;padding:6px 10px;cursor:pointer;}
 a{color:var(--accent);}
@@ -120,16 +116,10 @@ var EXAM_ORDER = [];
 EXAMS_DATA.forEach(function(e){ EXAMS[e.id] = e; EXAM_ORDER.push(e.id); });
 
 /* ============ STATE ============ */
-var state={examId:EXAM_ORDER[0],answers:{},submitted:{},timeLeft:{},timeTaken:{}};
+var state={examId:EXAM_ORDER[0],answers:{},submitted:{}};
 try{var saved=JSON.parse(localStorage.getItem("mcqexam_vmt")||"{}");if(saved&&saved.answers)state=Object.assign(state,saved);}catch(e){}
 function save(){try{localStorage.setItem("mcqexam_vmt",JSON.stringify(state));}catch(e){}}
 function ansKey(n){return state.examId+"_"+n;}
-
-/* ============ TIMER ============ */
-var timer={running:false,handle:null};
-function fmtTime(sec){var m=Math.floor(sec/60),s=sec%60;return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;}
-function getTimeLeft(){return state.timeLeft[state.examId]!==undefined?state.timeLeft[state.examId]:60*60;}
-function setTimeLeft(v){state.timeLeft[state.examId]=v;}
 
 /* ============ RENDER ============ */
 function renderTabs(){
@@ -168,13 +158,12 @@ function renderExam(){
   if(!state.submitted[state.examId])document.getElementById("scoreCardBody").innerHTML="";
 
   var html='';
-  var metaSpans='<span>'+total+' CÂU · 60 PHÚT</span>';
+  var metaSpans='<span>'+total+' CÂU</span>';
   exam.parts.forEach(function(part){
     metaSpans+='<span>'+part.label.split(":")[0]+'</span>';
   });
   html+='<div class="exammeta">'+metaSpans+'</div>';
-  html+='<div class="timerbox"><span>Thời gian</span><span class="t" id="timerDisplay">60:00</span><button id="timerBtn">Bắt đầu 60 phút</button></div>';
-  html+='<p class="timerhint">Nhấn vào nút <b>Bắt đầu 60 phút</b> để đếm thời gian khi làm bài. Khi làm xong, nhấn nút <b>Nộp bài</b>; muốn làm lại từ đầu thì nhấn nút <b>Làm lại</b>.</p>';
+  html+='<p class="timerhint">Khi làm xong, nhấn nút <b>Nộp bài</b> để kiểm tra kết quả; muốn làm lại từ đầu thì nhấn nút <b>Làm lại</b>.</p>';
 
   var n=1;
   exam.parts.forEach(function(part,pi){
@@ -214,28 +203,17 @@ function renderExam(){
     resetArmed=false;
     Object.keys(state.answers).forEach(function(k){if(k.indexOf(state.examId+"_")===0)delete state.answers[k];});
     state.submitted[state.examId]=false;
-    delete state.timeLeft[state.examId];
-    delete state.timeTaken[state.examId];
     save();
-    timer.running=false;clearInterval(timer.handle);
     document.getElementById("scoreCard").style.display="none";
     document.getElementById("scoreCardBody").innerHTML="";
     renderAll();
   };
 
-  setupTimer();
   if(state.submitted[state.examId])gradeExam(true);
   updateNav();
 }
 
 function gradeExam(silent){
-  timer.running=false;clearInterval(timer.handle);
-  if(!silent){
-    state.timeTaken[state.examId]=60*60-getTimeLeft();
-    save();
-  }
-  var btn=document.getElementById("timerBtn");
-  if(btn){btn.textContent="Đã nộp bài";btn.disabled=true;}
   var exam=EXAMS[state.examId];
   var flat=allQuestionsFlat(exam);
   var correct=0,total=flat.length;
@@ -262,43 +240,13 @@ function gradeExam(silent){
 
   var pct=Math.round(correct/total*100);
   var band=pct>=90?"Xuất sắc":pct>=70?"Khá - đạt yêu cầu":pct>=50?"Trung bình, cần ôn tập thêm":"Cần học lại kiến thức cơ bản";
-  var taken=state.timeTaken[state.examId];
-  var timeHtml=taken!==undefined?'<div><div class="lbl">Thời gian làm bài</div><div class="big">'+fmtTime(taken)+'</div></div>':'';
-  document.getElementById("scoreBanner").innerHTML='<div class="scoreband"><div><div class="lbl">Điểm số</div><div class="big">'+correct+' / '+total+'</div></div><div><div class="lbl">Tỉ lệ đúng</div><div class="big">'+pct+'%</div></div>'+timeHtml+'<div style="max-width:200px;font-size:13px;opacity:.85">'+band+'</div></div>';
+  document.getElementById("scoreBanner").innerHTML='<div class="scoreband"><div><div class="lbl">Điểm số</div><div class="big">'+correct+' / '+total+'</div></div><div><div class="lbl">Tỉ lệ đúng</div><div class="big">'+pct+'%</div></div><div style="max-width:200px;font-size:13px;opacity:.85">'+band+'</div></div>';
 
   document.getElementById("scoreCard").style.display="block";
-  document.getElementById("scoreCardBody").innerHTML='<div style="font-family:var(--mono);font-size:26px;font-weight:600;color:var(--accent)">'+correct+'/'+total+'</div><div style="font-size:12px;color:var(--ink-soft);margin-top:4px">'+pct+'% chính xác</div>'+(taken!==undefined?'<div style="font-size:12px;color:var(--ink-soft);margin-top:4px">Thời gian: '+fmtTime(taken)+'</div>':'');
+  document.getElementById("scoreCardBody").innerHTML='<div style="font-family:var(--mono);font-size:26px;font-weight:600;color:var(--accent)">'+correct+'/'+total+'</div><div style="font-size:12px;color:var(--ink-soft);margin-top:4px">'+pct+'% chính xác</div>';
 
   updateNav();
   if(!silent){var sb=document.getElementById("scoreBanner");if(sb)sb.scrollIntoView({behavior:"smooth",block:"nearest"});}
-}
-
-function setupTimer(){
-  var disp=document.getElementById("timerDisplay"),btn=document.getElementById("timerBtn");
-  timer.running=false;clearInterval(timer.handle);
-  function render(){disp.textContent=fmtTime(getTimeLeft());}
-  render();
-
-  if(state.submitted[state.examId]){
-    btn.textContent="Đã nộp bài";btn.disabled=true;
-    return;
-  }
-  btn.disabled=false;
-  btn.textContent=getTimeLeft()<60*60?"Tiếp tục":"Bắt đầu 60 phút";
-
-  btn.onclick=function(){
-    if(timer.running){
-      timer.running=false;clearInterval(timer.handle);btn.textContent="Tiếp tục";
-    }else{
-      timer.running=true;btn.textContent="Tạm dừng";
-      timer.handle=setInterval(function(){
-        var left=getTimeLeft()-1;
-        setTimeLeft(left);save();
-        if(left<=0){setTimeLeft(0);clearInterval(timer.handle);timer.running=false;btn.textContent="Hết giờ";}
-        render();
-      },1000);
-    }
-  };
 }
 
 function updateNav(){
