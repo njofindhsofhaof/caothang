@@ -133,8 +133,22 @@
     });
   }
 
+  function warmPages() {
+    var conn = navigator.connection;
+    if (conn && conn.saveData) return;
+    var here = currentPath();
+    var targets = [{ href: "/" }].concat(SECTIONS).filter(function (t) { return t.href !== here; });
+    targets.forEach(function (t) {
+      fetch(t.href, { credentials: "same-origin" }).catch(function () {});
+    });
+  }
+
   var menu = document.getElementById("siteNav");
-  if (menu) renderMenu(menu);
+  if (menu) {
+    renderMenu(menu);
+    if (window.requestIdleCallback) window.requestIdleCallback(warmPages, { timeout: 3000 });
+    else setTimeout(warmPages, 1500);
+  }
   var news = document.getElementById("newsBoard");
   if (news) renderNews(news);
   var list = document.getElementById("postList");
