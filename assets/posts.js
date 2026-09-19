@@ -32,5 +32,11 @@ window.CT_POSTS = [
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
     date: "2026-09-19",
     href: "https://vt.tiktok.com/ZSqngEDSJ/"
+  },
+  {
+    section: "ontap",
+    title: "Bài tập Kirchoff Law 1,2 môn Lý thuyết Mạch",
+    date: "2026-09-19",
+    href: "/files/bai-tap-kirchhoff-ly-thuyet-mach.pdf"
   }
 ];
