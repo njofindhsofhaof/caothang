@@ -23,7 +23,7 @@
       if (k === "text") node.textContent = attrs[k];
       else node.setAttribute(k, attrs[k]);
     });
-    (children || []).forEach(function (c) { node.appendChild(c); });
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
     return node;
   }
 
@@ -41,9 +41,13 @@
     return s ? s.href : "/";
   }
 
+  var WEEKDAYS = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+
   function formatDate(iso) {
     var p = String(iso).split("-");
-    return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : String(iso);
+    if (p.length !== 3) return String(iso);
+    var weekday = WEEKDAYS[new Date(+p[0], +p[1] - 1, +p[2]).getDay()];
+    return weekday + ", " + p[2] + "/" + p[1] + "/" + p[0];
   }
 
   function isRecent(iso) {
@@ -123,7 +127,7 @@
       if (isRecent(p.date)) title.appendChild(badge());
       container.appendChild(el("a", postLink(p, { "class": "card" }), [
         title,
-        el("p", { text: p.desc || "" }),
+        p.desc ? el("p", { text: p.desc }) : null,
         el("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) })
       ]));
     });

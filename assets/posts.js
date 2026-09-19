@@ -30,7 +30,6 @@ window.CT_POSTS = [
   {
     section: "hoctap",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
-    desc: "Video hướng dẫn trên TikTok.",
     date: "2026-09-19",
     href: "https://vt.tiktok.com/ZSqngEDSJ/"
   }
