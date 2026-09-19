@@ -86,17 +86,6 @@ a{color:var(--accent);}
 .headright-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .feedbacklink{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
 .feedbacklink:hover{color:var(--accent);}
-.cta-btn{font-family:var(--sans);font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:7px 12px;cursor:pointer;}
-.cta-btn:hover{border-color:var(--accent);color:var(--accent);}
-.cta-user{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
-.cta-avatar{width:22px;height:22px;border-radius:50%;}
-.cta-name{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cta-btn-out{padding:5px 9px;font-size:11.5px;}
-.savebar{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap;}
-.saveresultmsg{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
-.saveresultmsg a{color:var(--accent);}
-.sharedbanner{display:none;grid-column:1/-1;background:var(--surface-2);border:1px solid var(--accent);border-radius:8px;padding:12px 16px;font-size:13.5px;margin-bottom:-4px;}
-.sharedbanner b{color:var(--accent);}
 </style>
 </head>
 <body>
@@ -114,13 +103,10 @@ a{color:var(--accent);}
         <a class="themebtn" href="/ontap" style="text-decoration:none;display:inline-block;">&larr; Ôn tập</a>
         <a class="themebtn" href="/dientucoban" style="text-decoration:none;display:inline-block;">&larr; Điện Tử Cơ Bản</a>
         <a class="themebtn" href="/" style="text-decoration:none;display:inline-block;">&larr; Về trang chủ</a>
-        <div id="authWidget"></div>
         <button class="themebtn" id="themeBtn">Giao dien: He thong</button>
       </div>
     </div>
   </header>
-
-  <div class="sharedbanner" id="sharedResultBanner"></div>
 
   <div class="examtabs" id="examTabs"></div>
 
@@ -141,11 +127,6 @@ a{color:var(--accent);}
   </aside>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="assets/firebase-config.js"></script>
-<script src="assets/auth-widget.js"></script>
 
 <script>
 /* ============ DATA ============ */
@@ -301,72 +282,13 @@ function gradeExam(silent){
   state.submitted[state.examId]=true;save();
 
   var pct=Math.round(correct/total*100);
-  document.getElementById("scoreBanner").innerHTML='<div class="scoreband"><div><div class="lbl">Điểm số</div><div class="big">'+correct+' / '+total+'</div></div><div><div class="lbl">Tỉ lệ đúng</div><div class="big">'+pct+'%</div></div></div><div class="savebar"><button class="btn secondary" type="button" id="saveResultBtn">Luu ket qua</button><span class="saveresultmsg" id="saveResultMsg"></span></div>';
+  document.getElementById("scoreBanner").innerHTML='<div class="scoreband"><div><div class="lbl">Điểm số</div><div class="big">'+correct+' / '+total+'</div></div><div><div class="lbl">Tỉ lệ đúng</div><div class="big">'+pct+'%</div></div></div>';
 
   document.getElementById("scoreCard").style.display="block";
   document.getElementById("scoreCardBody").innerHTML='<div style="font-family:var(--mono);font-size:26px;font-weight:600;color:var(--accent)">'+correct+'/'+total+'</div><div style="font-size:12px;color:var(--ink-soft);margin-top:4px">'+pct+'% chính xác</div>';
 
-  setupSaveResult(exam,correct,total,pct);
   updateNav();
   if(!silent){var sb=document.getElementById("scoreBanner");if(sb)sb.scrollIntoView({behavior:"smooth",block:"nearest"});}
-}
-
-function setupSaveResult(exam,correct,total,pct){
-  var saveBtn=document.getElementById("saveResultBtn");
-  var msg=document.getElementById("saveResultMsg");
-  if(!saveBtn||!window.CaoThangAuth)return;
-
-  function doSave(){
-    msg.textContent="Dang luu...";
-    CaoThangAuth.saveResult({
-      examId:state.examId,
-      examTitle:exam.title,
-      correct:correct,total:total,pct:pct,
-      timeTaken:null
-    }).then(function(id){
-      var url=location.origin+location.pathname+"?result="+id;
-      var text="Toi vua lam "+exam.title+" duoc "+correct+"/"+total+" cau dung! Thu suc tai:";
-      msg.innerHTML='Da luu ket qua! <button class="cta-btn" type="button" id="shareBtn">Chia se</button> <button class="cta-btn" type="button" id="copyLinkBtn">Copy link</button>';
-      document.getElementById("shareBtn").onclick=function(){
-        if(navigator.share){
-          navigator.share({title:"Ket qua "+exam.title,text:text,url:url}).catch(function(){});
-        }else{
-          window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(url),"_blank","noopener");
-        }
-      };
-      var copyBtn=document.getElementById("copyLinkBtn");
-      copyBtn.onclick=function(){
-        navigator.clipboard.writeText(url).then(function(){copyBtn.textContent="Da copy!";});
-      };
-    }).catch(function(err){
-      msg.textContent="Loi: "+(err&&err.message?err.message:err);
-    });
-  }
-
-  saveBtn.onclick=function(){
-    if(!CaoThangAuth.getUser()){
-      msg.textContent="Dang mo dang nhap Google...";
-      CaoThangAuth.signIn().then(doSave).catch(function(err){
-        msg.textContent="Dang nhap that bai: "+(err&&err.message?err.message:err);
-      });
-      return;
-    }
-    doSave();
-  };
-}
-
-function showSharedResult(){
-  if(!window.CaoThangAuth)return;
-  var params=new URLSearchParams(location.search);
-  var rid=params.get("result");
-  if(!rid)return;
-  CaoThangAuth.loadResult(rid).then(function(data){
-    if(!data)return;
-    var el=document.getElementById("sharedResultBanner");
-    if(!el)return;
-    el.style.display="block";
-    el.innerHTML='Ket qua da chia se cua <b>'+(data.name||data.email||"mot ban")+'</b>: <b>'+data.correct+'/'+data.total+'</b> ('+data.pct+'%) &middot; '+(data.examTitle||data.examId);
-  }).catch(function(){});
 }
 
 function updateNav(){
@@ -421,10 +343,6 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("themeBtn").onclick=cycleTheme;
   document.getElementById("colorLegendCard").innerHTML=renderColorLegend();
   renderAll();
-  if(window.CaoThangAuth){
-    CaoThangAuth.renderWidget(document.getElementById("authWidget"));
-    showSharedResult();
-  }
 });
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
