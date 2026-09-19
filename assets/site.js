@@ -74,7 +74,10 @@
   }
 
   function renderNews(container) {
-    var latest = posts.slice().sort(byDateDesc).slice(0, NEWS_LIMIT);
+    var latest = posts
+      .filter(function (p) { return !p.hideFromNews; })
+      .sort(byDateDesc)
+      .slice(0, NEWS_LIMIT);
     if (latest.length === 0) {
       container.appendChild(el("p", { "class": "empty", text: "Chưa có bài mới." }));
       return;
