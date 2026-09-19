@@ -1,6 +1,6 @@
 /* Nguon du lieu duy nhat cho bang "Bai moi" o trang chu va danh sach bai o cac trang con.
    Them bai moi: them 1 dong vao mang duoi day (date dang YYYY-MM-DD).
-   - section: gioithieu | ontap | hoatdong | event | thongtinlop
+   - section: gioithieu | ontap | hoctap | hoatdong | event | thongtinlop
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai). */
 window.CT_POSTS = [
@@ -26,5 +26,12 @@ window.CT_POSTS = [
     date: "2026-09-11",
     href: "/vongmaudientro",
     parent: "/dientucoban"
+  },
+  {
+    section: "hoctap",
+    title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
+    desc: "Video hướng dẫn trên TikTok.",
+    date: "2026-09-19",
+    href: "https://vt.tiktok.com/ZSqngEDSJ/"
   }
 ];

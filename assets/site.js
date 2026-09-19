@@ -9,6 +9,7 @@
   var SECTIONS = [
     { key: "gioithieu", label: "Giới thiệu", href: "/gioithieu" },
     { key: "ontap", label: "Ôn tập", href: "/ontap" },
+    { key: "hoctap", label: "Học tập", href: "/hoctap" },
     { key: "hoatdong", label: "Hoạt động", href: "/hoatdong" },
     { key: "event", label: "Event", href: "/event" },
     { key: "thongtinlop", label: "Thông tin lớp", href: "/thongtinlop" }
@@ -69,6 +70,15 @@
     });
   }
 
+  function postLink(p, extra) {
+    var attrs = Object.assign({ href: p.href }, extra || {});
+    if (/^https?:\/\//.test(p.href)) {
+      attrs.target = "_blank";
+      attrs.rel = "noopener";
+    }
+    return attrs;
+  }
+
   function badge() {
     return el("span", { "class": "badge-new", text: "Mới" });
   }
@@ -84,7 +94,7 @@
     }
     var tbody = el("tbody");
     latest.forEach(function (p) {
-      var titleCell = el("td", { "class": "c-title" }, [el("a", { href: p.href, text: p.title })]);
+      var titleCell = el("td", { "class": "c-title" }, [el("a", postLink(p, { text: p.title }))]);
       if (isRecent(p.date)) titleCell.appendChild(badge());
       tbody.appendChild(el("tr", {}, [
         el("td", { "class": "c-date", text: formatDate(p.date) }),
@@ -111,7 +121,7 @@
     items.forEach(function (p) {
       var title = el("h2", { text: p.title });
       if (isRecent(p.date)) title.appendChild(badge());
-      container.appendChild(el("a", { "class": "card", href: p.href }, [
+      container.appendChild(el("a", postLink(p, { "class": "card" }), [
         title,
         el("p", { text: p.desc || "" }),
         el("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) })
