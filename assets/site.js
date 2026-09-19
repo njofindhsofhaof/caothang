@@ -76,7 +76,7 @@
 
   function postLink(p, extra) {
     var attrs = Object.assign({ href: p.href }, extra || {});
-    if (/^https?:\/\//.test(p.href) || /\.pdf$/i.test(p.href)) {
+    if (/^https?:\/\//.test(p.href)) {
       attrs.target = "_blank";
       attrs.rel = "noopener";
     }

@@ -35,8 +35,8 @@ window.CT_POSTS = [
   },
   {
     section: "ontap",
-    title: "Bài tập Kirchoff Law 1,2 môn Lý thuyết Mạch",
+    title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     date: "2026-09-19",
-    href: "/files/bai-tap-kirchhoff-ly-thuyet-mach.pdf"
+    href: "/kirchhoff"
   }
 ];
