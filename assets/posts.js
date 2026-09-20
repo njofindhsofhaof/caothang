@@ -38,5 +38,11 @@ window.CT_POSTS = [
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     date: "2026-09-19",
     href: "/kirchhoff"
+  },
+  {
+    section: "thongtinlop",
+    title: "Lịch thực hành điện tử cơ bản từ 21-26/9/2026",
+    date: "2026-09-20",
+    href: "/lichthuchanh"
   }
 ];
