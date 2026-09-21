@@ -11,10 +11,10 @@ window.KH_SETS = [
   {"id":"1.8","ask":"Tính I.","img":"1-08.webp","w":602,"h":382,"fields":[{"label":"I","value":3.0,"unit":"A"}],"absOk":false,"solution":"+8+5−10−6+I₅=0 ⇒ I₅=3A"},
   {"id":"1.9","ask":"Tính I.","img":"1-09.webp","w":602,"h":382,"fields":[{"label":"I","value":6.0,"unit":"A"}],"absOk":false,"solution":"+14−7−4−9+I₅=0 ⇒ I₅=6A"},
   {"id":"1.10","ask":"Tính U_R.","img":"1-10.webp","w":738,"h":353,"fields":[{"label":"U_R","value":30.0,"unit":"V"}],"absOk":false,"solution":"−24+U_R−6=0 ⇒ U_R=30 V"},
-  {"id":"1.11","ask":"Tính U_R2.","img":"1-11.webp","w":756,"h":406,"fields":[{"label":"U_R2","value":-48.0,"unit":"V"}],"absOk":true,"solution":"+30+8+10+U_R2=0 ⇒ U_R2=−48 V (âm: dòng thực tế ngược chiều I)"},
+  {"id":"1.11","ask":"Tính U_R2.","img":"1-11.webp","w":756,"h":406,"fields":[{"label":"U_R2","value":12.0,"unit":"V"}],"absOk":false,"solution":"−30+8+10+U_R2=0 ⇒ U_R2=12V"},
   {"id":"1.12","ask":"Tính I và điện áp từng trở.","img":"1-12.webp","w":723,"h":400,"fields":[{"label":"I","value":3.0,"unit":"A"},{"label":"U_R1","value":9.0,"unit":"V"},{"label":"U_R2","value":15.0,"unit":"V"},{"label":"U_R3","value":12.0,"unit":"V"}],"absOk":false,"solution":"I=36/(3+5+4)=3A; U_R1=9V, U_R2=15V, U_R3=12V"},
   {"id":"1.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"1-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":2.0,"unit":"A"},{"label":"I₃","value":5.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. Giải hệ ⇒ I₁=3A, I₂=2A, I₃=5A"},
-  {"id":"1.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ vào, I₂ và I₃ ra khỏi nút B.)","img":"1-14.webp","w":884,"h":350,"fields":[{"label":"I₁","value":6.153846,"unit":"A"},{"label":"I₂","value":4.384615,"unit":"A"},{"label":"I₃","value":1.769231,"unit":"A"}],"absOk":false,"solution":"K1: I₁−I₂−I₃=0. K2: 22=3·I₁+2·I₃ và −14=−4·I₂+2·I₃. Giải hệ ⇒ I₁=6.15A, I₂=4.38A, I₃=1.77A"}
+  {"id":"1.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ vào, I₂ và I₃ ra khỏi nút B.)","img":"1-14.webp","w":884,"h":350,"fields":[{"label":"I₁","value":4.0,"unit":"A"},{"label":"I₂","value":-1.0,"unit":"A"},{"label":"I₃","value":5.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁−I₂−I₃=0. Giải hệ ⇒ I₁=4A, I₂=−1A (thực tế dòng chảy ngược chiều giả định, tức là vào B), I₃=5A"}
  ]},
  {"id":2,"title":"Đề 2","problems":[
   {"id":"2.1","ask":"Tính I.","img":"2-01.webp","w":502,"h":302,"fields":[{"label":"I","value":5.0,"unit":"A"}],"absOk":false,"solution":"+9−4−I₃=0 ⇒ I₃=5A"},
@@ -26,11 +26,11 @@ window.KH_SETS = [
   {"id":"2.7","ask":"Tính I.","img":"2-07.webp","w":602,"h":382,"fields":[{"label":"I","value":6.0,"unit":"A"}],"absOk":false,"solution":"+15+5−6−8−I₅=0 ⇒ I₅=6A"},
   {"id":"2.8","ask":"Tính I.","img":"2-08.webp","w":602,"h":382,"fields":[{"label":"I","value":-4.0,"unit":"A"}],"absOk":true,"solution":"+20−4−7−5+I₅=0 ⇒ I₅=−4A (ra 4A)"},
   {"id":"2.9","ask":"Tính I.","img":"2-09.webp","w":582,"h":382,"fields":[{"label":"I","value":16.0,"unit":"A"}],"absOk":false,"solution":"+3−9−4−6+I₅=0 ⇒ I₅=16A"},
-  {"id":"2.10","ask":"Tính U_R.","img":"2-10.webp","w":738,"h":353,"fields":[{"label":"U_R","value":-14.0,"unit":"V"}],"absOk":true,"solution":"+18+U_R−4=0 ⇒ U_R=−14 V (âm: dòng thực tế ngược chiều I)"},
-  {"id":"2.11","ask":"Tính U_R2.","img":"2-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":-60.0,"unit":"V"}],"absOk":true,"solution":"+40+15+5+U_R2=0 ⇒ U_R2=−60 V (âm: dòng thực tế ngược chiều I)"},
+  {"id":"2.10","ask":"Tính U_R.","img":"2-10.webp","w":738,"h":353,"fields":[{"label":"U_R","value":22.0,"unit":"V"}],"absOk":false,"solution":"−18+U_R−4=0 ⇒ U_R=22V"},
+  {"id":"2.11","ask":"Tính U_R2.","img":"2-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":20.0,"unit":"V"}],"absOk":false,"solution":"−40+15+5+U_R2=0 ⇒ U_R2=20V"},
   {"id":"2.12","ask":"Tính I và công suất tiêu thụ từng trở.","img":"2-12.webp","w":723,"h":363,"fields":[{"label":"I","value":3.0,"unit":"A"},{"label":"P_R1","value":54.0,"unit":"W"},{"label":"P_R2","value":81.0,"unit":"W"}],"absOk":false,"solution":"I=45/(6+9)=3A; P_R1=I²R₁=54W, P_R2=I²R₂=81W"},
-  {"id":"2.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"2-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.5,"unit":"A"},{"label":"I₂","value":1.0,"unit":"A"},{"label":"I₃","value":4.5,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. K2: 32=4·I₁+4·I₃ và 20=2·I₂+4·I₃. Giải hệ ⇒ I₁=3.5A, I₂=1A, I₃=4.5A"},
-  {"id":"2.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁, I₂ giả định ra; I₃ giả định vào nút B.)","img":"2-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-6.875,"unit":"A"},{"label":"I₂","value":5.125,"unit":"A"},{"label":"I₃","value":-1.75,"unit":"A"}],"absOk":false,"solution":"K1: −I₁−I₂+I₃=0. K2: 19=−2·I₁−3·I₃ và −5=−2·I₂−3·I₃. Giải hệ ⇒ I₁=−6.88A, I₂=5.13A, I₃=−1.75A"}
+  {"id":"2.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"2-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":1.0,"unit":"A"},{"label":"I₃","value":4.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. Giải hệ ⇒ I₁=3A, I₂=1A, I₃=4A"},
+  {"id":"2.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁, I₂ giả định ra; I₃ giả định vào nút B.)","img":"2-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-5.0,"unit":"A"},{"label":"I₂","value":2.0,"unit":"A"},{"label":"I₃","value":-3.0,"unit":"A"}],"absOk":false,"solution":"K1: −I₁−I₂+I₃=0. Giải hệ ⇒ I₁=−5A, I₂=2A, I₃=−3A"}
  ]},
  {"id":3,"title":"Đề 3","problems":[
   {"id":"3.1","ask":"Tính I.","img":"3-01.webp","w":533,"h":302,"fields":[{"label":"I","value":4.0,"unit":"A"}],"absOk":false,"solution":"+1.2+2.8−I₃=0 ⇒ I₃=4.0A"},
@@ -42,11 +42,11 @@ window.KH_SETS = [
   {"id":"3.7","ask":"Tính I.","img":"3-07.webp","w":582,"h":382,"fields":[{"label":"I","value":8.0,"unit":"A"}],"absOk":false,"solution":"+9+7−3−5−I₅=0 ⇒ I₅=8A"},
   {"id":"3.8","ask":"Tính I.","img":"3-08.webp","w":622,"h":382,"fields":[{"label":"I","value":3.0,"unit":"A"}],"absOk":false,"solution":"+16+4−11−6−I₅=0 ⇒ I₅=3A"},
   {"id":"3.9","ask":"Tính I.","img":"3-09.webp","w":582,"h":382,"fields":[{"label":"I","value":4.0,"unit":"A"}],"absOk":false,"solution":"+5+2−8−3+I₅=0 ⇒ I₅=4A"},
-  {"id":"3.10","ask":"Tính U_R.","img":"3-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":65.0,"unit":"V"}],"absOk":false,"solution":"−50+U_R−15=0 ⇒ U_R=65 V"},
-  {"id":"3.11","ask":"Tính U_R2.","img":"3-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":-32.0,"unit":"V"}],"absOk":true,"solution":"+28+10−6+U_R2=0 ⇒ U_R2=−32 V (âm: dòng thực tế ngược chiều I)"},
+  {"id":"3.10","ask":"Tính U_R.","img":"3-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":35.0,"unit":"V"}],"absOk":false,"solution":"−50+U_R+15=0 ⇒ U_R=35V"},
+  {"id":"3.11","ask":"Tính U_R2.","img":"3-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":24.0,"unit":"V"}],"absOk":false,"solution":"−28+10−6+U_R2=0 ⇒ U_R2=24V"},
   {"id":"3.12","ask":"Tính I và điện áp từng trở.","img":"3-12.webp","w":723,"h":400,"fields":[{"label":"I","value":6.0,"unit":"A"},{"label":"U_R1","value":12.0,"unit":"V"},{"label":"U_R2","value":30.0,"unit":"V"},{"label":"U_R3","value":18.0,"unit":"V"}],"absOk":false,"solution":"I=60/(2+5+3)=6A; U_R1=12V, U_R2=30V, U_R3=18V"},
-  {"id":"3.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"3-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.4,"unit":"A"},{"label":"I₂","value":3.8,"unit":"A"},{"label":"I₃","value":7.2,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. K2: 28=4·I₁+2·I₃ và 22=2·I₂+2·I₃. Giải hệ ⇒ I₁=3.4A, I₂=3.8A, I₃=7.2A"},
-  {"id":"3.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ vào, I₂ ra, I₃ giả định vào nút B.)","img":"3-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":3.363636,"unit":"A"},{"label":"I₂","value":1.727273,"unit":"A"},{"label":"I₃","value":-1.636364,"unit":"A"}],"absOk":false,"solution":"K1: I₁−I₂+I₃=0. K2: 15=3·I₁−3·I₃ và −2=−4·I₂−3·I₃. Giải hệ ⇒ I₁=3.36A, I₂=1.73A, I₃=−1.64A"}
+  {"id":"3.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"3-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":2.0,"unit":"A"},{"label":"I₃","value":5.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. Giải hệ ⇒ I₁=3A, I₂=2A, I₃=5A"},
+  {"id":"3.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ vào, I₂ ra, I₃ giả định vào nút B.)","img":"3-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":1.0,"unit":"A"},{"label":"I₃","value":-2.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁−I₂+I₃=0. Giải hệ ⇒ I₁=3A, I₂=1A, I₃=−2A"}
  ]},
  {"id":4,"title":"Đề 4","problems":[
   {"id":"4.1","ask":"Tính I.","img":"4-01.webp","w":533,"h":302,"fields":[{"label":"I","value":5.0,"unit":"A"}],"absOk":false,"solution":"+3.6+1.4−I₃=0 ⇒ I₃=5.0A"},
@@ -58,11 +58,11 @@ window.KH_SETS = [
   {"id":"4.7","ask":"Tính I.","img":"4-07.webp","w":602,"h":382,"fields":[{"label":"I","value":6.0,"unit":"A"}],"absOk":false,"solution":"+18+4−7−9−I₅=0 ⇒ I₅=6A"},
   {"id":"4.8","ask":"Tính I.","img":"4-08.webp","w":622,"h":382,"fields":[{"label":"I","value":3.0,"unit":"A"}],"absOk":false,"solution":"+10+8−12−3−I₅=0 ⇒ I₅=3A"},
   {"id":"4.9","ask":"Tính I.","img":"4-09.webp","w":602,"h":382,"fields":[{"label":"I","value":6.0,"unit":"A"}],"absOk":false,"solution":"+6+3−10−5+I₅=0 ⇒ I₅=6A"},
-  {"id":"4.10","ask":"Tính U_R.","img":"4-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":48.0,"unit":"V"}],"absOk":false,"solution":"−36+U_R−12=0 ⇒ U_R=48 V"},
-  {"id":"4.11","ask":"Tính U_R2.","img":"4-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":-76.0,"unit":"V"}],"absOk":true,"solution":"+48+20+8+U_R2=0 ⇒ U_R2=−76 V (âm: dòng thực tế ngược chiều I)"},
+  {"id":"4.10","ask":"Tính U_R.","img":"4-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":24.0,"unit":"V"}],"absOk":false,"solution":"−36+U_R+12=0 ⇒ U_R=24V"},
+  {"id":"4.11","ask":"Tính U_R2.","img":"4-11.webp","w":738,"h":406,"fields":[{"label":"U_R2","value":20.0,"unit":"V"}],"absOk":false,"solution":"−48+20+8+U_R2=0 ⇒ U_R2=20V"},
   {"id":"4.12","ask":"Tính I và công suất tiêu thụ.","img":"4-12.webp","w":723,"h":411,"fields":[{"label":"I","value":6.0,"unit":"A"},{"label":"P","value":432.0,"unit":"W"}],"absOk":false,"solution":"I=72/(4+8)=6A; U_R1=24V, U_R2=48V, P=I²(R₁+R₂)=432W"},
-  {"id":"4.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"4-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.333333,"unit":"A"},{"label":"I₂","value":1.333333,"unit":"A"},{"label":"I₃","value":4.666667,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. K2: 40=5·I₁+5·I₃ và 26=2·I₂+5·I₃. Giải hệ ⇒ I₁=3.33A, I₂=1.33A, I₃=4.67A"},
-  {"id":"4.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ giả định ra, I₂ vào, I₃ ra khỏi nút B.)","img":"4-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-5.181818,"unit":"A"},{"label":"I₂","value":-1.545455,"unit":"A"},{"label":"I₃","value":3.636364,"unit":"A"}],"absOk":false,"solution":"K1: −I₁+I₂−I₃=0. K2: 28=−4·I₁+2·I₃ và −2=6·I₂+2·I₃. Giải hệ ⇒ I₁=−5.18A, I₂=−1.55A, I₃=3.64A"}
+  {"id":"4.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"4-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":1.0,"unit":"A"},{"label":"I₃","value":4.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. Giải hệ ⇒ I₁=3A, I₂=1A, I₃=4A"},
+  {"id":"4.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ giả định ra, I₂ vào, I₃ ra khỏi nút B.)","img":"4-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-5.0,"unit":"A"},{"label":"I₂","value":-1.0,"unit":"A"},{"label":"I₃","value":4.0,"unit":"A"}],"absOk":false,"solution":"K1: −I₁+I₂−I₃=0. Giải hệ ⇒ I₁=−5A, I₂=−1A, I₃=4A"}
  ]},
  {"id":5,"title":"Đề 5","problems":[
   {"id":"5.1","ask":"Tính I.","img":"5-01.webp","w":533,"h":302,"fields":[{"label":"I","value":10.0,"unit":"A"}],"absOk":false,"solution":"+7.5+2.5−I₃=0 ⇒ I₃=10.0A"},
@@ -74,10 +74,10 @@ window.KH_SETS = [
   {"id":"5.7","ask":"Tính I.","img":"5-07.webp","w":622,"h":382,"fields":[{"label":"I","value":10.0,"unit":"A"}],"absOk":false,"solution":"+22+6−10−8−I₅=0 ⇒ I₅=10A"},
   {"id":"5.8","ask":"Tính I.","img":"5-08.webp","w":622,"h":382,"fields":[{"label":"I","value":4.0,"unit":"A"}],"absOk":false,"solution":"+14+9−15−4−I₅=0 ⇒ I₅=4A"},
   {"id":"5.9","ask":"Tính I.","img":"5-09.webp","w":602,"h":382,"fields":[{"label":"I","value":8.0,"unit":"A"}],"absOk":false,"solution":"+8+4−14−6+I₅=0 ⇒ I₅=8A"},
-  {"id":"5.10","ask":"Tính U_R.","img":"5-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":58.0,"unit":"V"}],"absOk":false,"solution":"−44+U_R−14=0 ⇒ U_R=58 V"},
-  {"id":"5.11","ask":"Tính U_R2.","img":"5-11.webp","w":756,"h":406,"fields":[{"label":"U_R2","value":-75.0,"unit":"V"}],"absOk":true,"solution":"+60+25−10+U_R2=0 ⇒ U_R2=−75 V (âm: dòng thực tế ngược chiều I)"},
+  {"id":"5.10","ask":"Tính U_R.","img":"5-10.webp","w":756,"h":353,"fields":[{"label":"U_R","value":30.0,"unit":"V"}],"absOk":false,"solution":"−44+U_R+14=0 ⇒ U_R=30V"},
+  {"id":"5.11","ask":"Tính U_R2.","img":"5-11.webp","w":756,"h":406,"fields":[{"label":"U_R2","value":45.0,"unit":"V"}],"absOk":false,"solution":"−60+25−10+U_R2=0 ⇒ U_R2=45V"},
   {"id":"5.12","ask":"Tính I và điện áp từng trở.","img":"5-12.webp","w":723,"h":363,"fields":[{"label":"I","value":5.0,"unit":"A"},{"label":"U_R1","value":15.0,"unit":"V"},{"label":"U_R2","value":35.0,"unit":"V"}],"absOk":false,"solution":"I=50/(3+7)=5A; U_R1=15V, U_R2=35V"},
-  {"id":"5.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"5-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.744681,"unit":"A"},{"label":"I₂","value":0.808511,"unit":"A"},{"label":"I₃","value":4.553191,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. K2: 34=3·I₁+5·I₃ và 26=4·I₂+5·I₃. Giải hệ ⇒ I₁=3.74A, I₂=0.81A, I₃=4.55A"},
-  {"id":"5.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ giả định ra; I₂, I₃ giả định vào nút B.)","img":"5-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-6.387097,"unit":"A"},{"label":"I₂","value":-2.645161,"unit":"A"},{"label":"I₃","value":-3.741935,"unit":"A"}],"absOk":false,"solution":"K1: −I₁+I₂+I₃=0. K2: 24=−2·I₁−3·I₃ và −2=5·I₂−3·I₃. Giải hệ ⇒ I₁=−6.39A, I₂=−2.65A, I₃=−3.74A"}
+  {"id":"5.13","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃.","img":"5-13.webp","w":884,"h":350,"fields":[{"label":"I₁","value":3.0,"unit":"A"},{"label":"I₂","value":1.0,"unit":"A"},{"label":"I₃","value":4.0,"unit":"A"}],"absOk":false,"solution":"K1: I₁+I₂−I₃=0. Giải hệ ⇒ I₁=3A, I₂=1A, I₃=4A"},
+  {"id":"5.14","ask":"Viết hệ K1,K2 và tính I₁,I₂,I₃. (I₁ giả định ra; I₂, I₃ giả định vào nút B.)","img":"5-14.webp","w":869,"h":350,"fields":[{"label":"I₁","value":-6.0,"unit":"A"},{"label":"I₂","value":-2.0,"unit":"A"},{"label":"I₃","value":-4.0,"unit":"A"}],"absOk":false,"solution":"K1: −I₁+I₂+I₃=0. Giải hệ ⇒ I₁=−6A, I₂=−2A, I₃=−4A"}
  ]}
 ];
