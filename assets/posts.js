@@ -44,5 +44,11 @@ window.CT_POSTS = [
     title: "Lịch thực hành điện tử cơ bản từ 21-26/9/2026",
     date: "2026-09-20",
     href: "/lichthuchanh"
+  },
+  {
+    section: "hoctap",
+    title: "Hướng dẫn lắp mạch khởi động động cơ trực tiếp có đèn báo - môn Thực hành Điện cơ bản",
+    date: "2026-09-23",
+    href: "https://vt.tiktok.com/ZSbJtDv8f/"
   }
 ];
