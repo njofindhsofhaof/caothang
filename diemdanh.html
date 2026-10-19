@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Điểm danh · DDT26C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/diemdanh.css">
+</head>
+<body>
+<main class="wrap dd">
+  <header>
+    <h1>Điểm danh</h1>
+    <span class="feedbacklink">CĐ Đ, ĐT 26C · Cao Thắng</span>
+  </header>
+
+  <section class="dd-card" id="whoCard" aria-labelledby="whoTitle">
+    <h2 class="dd-label" id="whoTitle">Sinh viên</h2>
+    <form id="mssvForm" class="dd-form" hidden>
+      <label for="mssvInput">Nhập MSSV của bạn (chỉ nhập lần đầu)</label>
+      <div class="dd-row">
+        <input id="mssvInput" inputmode="numeric" autocomplete="off" pattern="\d{6,12}" maxlength="12" placeholder="VD: 303261238" required>
+        <button type="submit" class="dd-btn">Tiếp</button>
+      </div>
+      <p class="dd-hint" id="mssvMsg" role="status"></p>
+    </form>
+    <div id="whoView" class="dd-who" hidden>
+      <p class="dd-name" id="whoName"></p>
+      <p class="dd-mssv" id="whoMssv"></p>
+    </div>
+  </section>
+
+  <section class="dd-status" id="statusCard" data-state="idle" aria-live="polite">
+    <div class="dd-stamp" aria-hidden="true"><span id="stampIcon">·</span></div>
+    <div>
+      <p class="dd-status-title" id="statusTitle">Đang chuẩn bị…</p>
+      <p class="dd-status-msg" id="statusMsg"></p>
+    </div>
+  </section>
+
+  <button type="button" class="dd-btn dd-btn-wide" id="retryBtn" hidden>Thử lại</button>
+
+  <ol class="dd-steps">
+    <li>Bật <b>định vị (GPS)</b> và cho phép trình duyệt dùng vị trí.</li>
+    <li>Trong khung giờ điểm danh, mở trang này (link trong nhóm lớp hoặc mã QR dán ở lớp). Nếu thầy chiếu QR thì quét mã đang chiếu.</li>
+    <li>Mỗi điện thoại chỉ điểm danh được cho <b>một</b> MSSV.</li>
+  </ol>
+</main>
+<script src="/assets/diemdanh.js"></script>
+</body>
+</html>

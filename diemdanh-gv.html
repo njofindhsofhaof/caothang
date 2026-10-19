@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Điểm danh · Giáo viên</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/diemdanh.css">
+</head>
+<body>
+<main class="wrap gv">
+  <header>
+    <h1>Điểm danh · Giáo viên</h1>
+    <span class="feedbacklink" id="rosterInfo">CĐ Đ, ĐT 26C</span>
+  </header>
+
+  <form class="dd-card gv-login" id="loginForm" hidden>
+    <label class="dd-label" for="pinInput">Mã PIN giáo viên</label>
+    <div class="dd-row">
+      <input id="pinInput" type="password" inputmode="numeric" autocomplete="current-password" required>
+      <button class="dd-btn" type="submit">Vào</button>
+    </div>
+    <p class="dd-hint" id="loginMsg" role="status"></p>
+  </form>
+
+  <div id="app" hidden>
+    <nav class="menu gv-tabs" aria-label="Chức năng">
+      <a href="#phien" data-tab="phien">Lịch điểm danh</a>
+      <a href="#thang" data-tab="thang">Bảng tháng &amp; xuất Excel</a>
+      <a href="#lop" data-tab="lop">Danh sách lớp</a>
+    </nav>
+
+    <!-- Lịch điểm danh -->
+    <section data-panel="phien" aria-labelledby="phienTitle">
+      <div id="livePanel" hidden>
+        <h2 class="sec" id="phienTitle">Đang mở điểm danh</h2>
+        <div class="gv-stage" id="stage">
+          <div class="gv-qr-wrap" id="qrWrap" hidden>
+            <div class="gv-qr" id="qrBox" role="img" aria-label="Mã QR điểm danh (đổi mỗi 10 giây)"></div>
+            <div class="gv-tick" aria-hidden="true"><span id="tickBar"></span></div>
+          </div>
+          <div class="gv-side">
+            <p class="dd-label">Đã điểm danh</p>
+            <p class="gv-count"><span id="countNow">0</span><span class="gv-total">/<span id="countTotal">0</span></span></p>
+            <p class="gv-meta" id="sessionMeta"></p>
+            <p class="gv-meta" id="countdown"></p>
+            <div class="gv-actions">
+              <button class="dd-btn" type="button" id="qrBtn">Chiếu QR tại lớp</button>
+              <button class="dd-btn dd-btn-ghost" type="button" id="fullBtn" hidden>Toàn màn hình</button>
+              <button class="dd-btn dd-btn-ghost" type="button" id="extendBtn">+5 phút</button>
+              <button class="dd-btn dd-btn-ghost" type="button" id="closeBtn">Đóng sớm</button>
+            </div>
+          </div>
+        </div>
+        <div class="gv-lists">
+          <section class="dd-card"><h3 class="dd-label">Chưa điểm danh (<span id="absentCount">0</span>)</h3><ul class="gv-list" id="absentList"></ul></section>
+          <section class="dd-card"><h3 class="dd-label">Có mặt</h3><ul class="gv-list" id="presentList"></ul></section>
+        </div>
+      </div>
+
+      <div class="gv-plan">
+        <form class="dd-card gv-open" id="openForm">
+          <h2 class="sec">Đặt khung giờ điểm danh</h2>
+          <p class="gv-note">Trong khung giờ này sinh viên tự mở trang điểm danh và tự điểm danh. Máy chủ kiểm tra GPS (phải ở trong phòng) và mỗi máy chỉ điểm danh cho một MSSV.</p>
+          <div class="gv-fields">
+            <label class="span2">Tên buổi <input id="labelInput" maxlength="60" placeholder="VD: Mạch điện – sáng thứ Hai"></label>
+            <label class="span2">Phòng <select id="placeSelect"></select></label>
+            <label>Ngày <input id="dateInput" type="date" required></label>
+            <label>Từ <input id="fromInput" type="time" required></label>
+            <label>Đến <input id="toInput" type="time" required></label>
+            <label>Bán kính (m) <input id="radiusInput" type="number" min="30" max="500" value="100"></label>
+            <label>Lặp hàng tuần <select id="repeatInput"><option value="1">Không lặp</option><option value="4">4 tuần</option><option value="8">8 tuần</option><option value="15">15 tuần (cả học kỳ)</option></select></label>
+            <label class="gv-check"><input type="checkbox" id="qrInput"> Bắt buộc quét QR thầy chiếu</label>
+          </div>
+          <div class="gv-actions">
+            <button class="dd-btn" type="submit" id="planBtn">Đặt lịch</button>
+            <button class="dd-btn dd-btn-ghost" type="button" id="nowBtn">Mở ngay 15 phút</button>
+          </div>
+          <p class="dd-hint" id="openMsg" role="status"></p>
+        </form>
+
+        <aside class="gv-aside">
+          <section class="dd-card">
+            <h3 class="dd-label">Link cho sinh viên</h3>
+            <p class="gv-note">Gửi link này vào nhóm Zalo lớp, hoặc in mã QR dán ở cửa lớp. Link cố định, dùng cho mọi buổi.</p>
+            <div class="gv-share">
+              <div class="gv-qr gv-qr-sm" id="shareQr" role="img" aria-label="Mã QR trang điểm danh"></div>
+              <div>
+                <code id="shareUrl"></code>
+                <button class="gv-mini" type="button" id="copyBtn">Sao chép link</button>
+              </div>
+            </div>
+          </section>
+          <section class="dd-card">
+            <h3 class="dd-label">Phòng đã lưu</h3>
+            <ul class="gv-list" id="placeList"></ul>
+            <form class="gv-place-form" id="placeForm">
+              <input id="placeName" maxlength="40" placeholder="Tên phòng, VD: F4.2" required>
+              <button class="gv-mini" type="submit">Lưu vị trí phòng này</button>
+            </form>
+            <p class="gv-note">Đứng trong phòng rồi bấm lưu, trang sẽ lấy GPS của máy thầy.</p>
+            <p class="dd-hint" id="placeMsg" role="status"></p>
+          </section>
+          <section class="dd-card">
+            <h3 class="dd-label">Lịch sắp tới</h3>
+            <ul class="gv-list" id="upcomingList"></ul>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Bảng tháng -->
+    <section data-panel="thang" aria-labelledby="thangTitle" hidden>
+      <h2 class="sec" id="thangTitle">Bảng điểm danh tháng</h2>
+      <div class="dd-card gv-toolbar">
+        <label>Tháng <input type="month" id="monthInput"></label>
+        <label class="gv-file">File mẫu gốc (.xlsx) <input type="file" id="templateInput" accept=".xlsx"></label>
+        <button class="dd-btn" type="button" id="exportBtn">Xuất Excel</button>
+        <p class="dd-hint" id="exportMsg" role="status"></p>
+      </div>
+      <p class="gv-legend">Bấm vào ô để đổi: <b class="m-k">K</b> vắng không phép → <b class="m-p">P</b> có phép → <b class="m-ok">✓</b> có mặt (đánh dấu tay).</p>
+      <div class="gv-table-wrap"><table class="gv-table" id="monthTable"></table></div>
+    </section>
+
+    <!-- Danh sách lớp -->
+    <section data-panel="lop" aria-labelledby="lopTitle" hidden>
+      <h2 class="sec" id="lopTitle">Danh sách lớp</h2>
+      <div class="dd-card">
+        <p>Chọn file Excel danh sách (mẫu BẢNG ĐIỂM DANH). File được đọc ngay trên máy; chỉ MSSV và họ tên được lưu lên máy chủ.</p>
+        <input type="file" id="rosterInput" accept=".xlsx">
+        <p class="dd-hint" id="rosterMsg" role="status"></p>
+      </div>
+      <div class="gv-table-wrap"><table class="gv-table" id="rosterTable"></table></div>
+    </section>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="/assets/diemdanh-xlsx.js"></script>
+<script src="/assets/diemdanh-gv.js"></script>
+</body>
+</html>

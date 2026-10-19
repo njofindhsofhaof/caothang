@@ -1,0 +1,11 @@
+{
+  "name": "caothang",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@upstash/redis": "1.34.3"
+  }
+}
