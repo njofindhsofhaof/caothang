@@ -67,14 +67,17 @@
     return d <= 0.02 || d <= Math.abs(want) * 0.01;
   }
 
-  /** @param {number} x @param {number} [dec=2] @returns {string} so kieu Viet Nam: 2.680 ; 13,43 */
+  /** @param {number} x @param {number} [dec=2] @returns {string} so gon, dau phay thap phan: 2680 ; 13,43 ; 1,8 */
   function fmt(x, dec) {
     var d = dec === undefined ? 2 : dec;
     var s = (Math.round(x * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d);
     if (d > 0) s = s.replace(/0+$/, "").replace(/\.$/, "");
-    var parts = s.split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return parts.join(",");
+    return s.replace(".", ",");
+  }
+
+  /** @param {number} x @returns {string} ket qua theo barem: luon 2 chu so thap phan, vd 12,00 ; 2680,00 */
+  function fmtResult(x) {
+    return (Math.round(x * 100) / 100).toFixed(2).replace(".", ",");
   }
 
   /** @param {number} ohm @returns {string} vd "330 Ω", "1,2 kΩ" */
@@ -84,6 +87,6 @@
 
   root.PA_CALC = {
     parallel: parallel, solve: solve, colorBands: colorBands,
-    parseAnswer: parseAnswer, close: close, fmt: fmt, fmtOhm: fmtOhm
+    parseAnswer: parseAnswer, close: close, fmt: fmt, fmtResult: fmtResult, fmtOhm: fmtOhm
   };
 })(typeof window !== "undefined" ? window : globalThis);

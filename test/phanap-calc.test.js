@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 globalThis.window = globalThis;
 await import('../assets/phanap-calc.js');
 await import('../assets/phanap-data.js');
-const { parallel, solve, colorBands, parseAnswer, close, fmt, fmtOhm } = globalThis.PA_CALC;
+const { parallel, solve, colorBands, parseAnswer, close, fmt, fmtResult, fmtOhm } = globalThis.PA_CALC;
 const byId = Object.fromEntries(globalThis.PA_PROBLEMS.map((p) => [p.id, p]));
 
 const near = (got, want, tol = 0.006) => assert.ok(Math.abs(got - want) <= tol, `${got} != ${want}`);
@@ -89,7 +89,11 @@ test('close accepts rounding error but rejects wrong answers', () => {
 });
 
 test('formats numbers the Vietnamese way', () => {
-  assert.equal(fmt(2680), '2.680');
+  assert.equal(fmt(2680), '2680');
+  assert.equal(fmtResult(12), '12,00');
+  assert.equal(fmtResult(2680), '2680,00');
+  assert.equal(fmtResult(38.7523), '38,75');
+  assert.equal(fmtResult(1.8), '1,80');
   assert.equal(fmt(13.4328), '13,43');
   assert.equal(fmt(12), '12');
   assert.equal(fmtOhm(1200), '1,2 kΩ');

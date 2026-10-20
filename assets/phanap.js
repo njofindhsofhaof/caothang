@@ -38,7 +38,7 @@
     return node;
   }
 
-  var f2 = function (x) { return C.fmt(x, 2); };
+  var f2 = C.fmtResult;
   var mA = function (i) { return f2(i * 1000) + " mA"; };
   function sub(name) { return name.charAt(0) + "_" + name.slice(1); }
 
@@ -92,10 +92,10 @@
           vals.map(C.fmt).join("·") + " / (" + vals.map(C.fmt).join(" + ") + ") = " + C.fmt(sol.stages[k].r) + " Ω");
       } else {
         b.push("1/" + stageSym(p, k) + " = " + syms.map(function (s) { return "1/" + s; }).join(" + ") + " = " +
-          vals.map(function (v) { return "1/" + C.fmt(v); }).join(" + ") + "  ⇒  " + stageSym(p, k) + " = " + C.fmt(sol.stages[k].r) + " Ω");
+          vals.map(function (v) { return "1/" + C.fmt(v); }).join(" + ") + "  ⇒  " + stageSym(p, k) + " = " + f2(sol.stages[k].r) + " Ω");
       }
     });
-    b.push("R_tđ = " + rtdSyms.join(" + ") + " = " + sol.stages.map(function (s) { return C.fmt(s.r); }).join(" + ") + " = " + C.fmt(sol.rtd) + " Ω");
+    b.push("R_tđ = " + rtdSyms.join(" + ") + " = " + sol.stages.map(function (s) { return C.fmt(s.r); }).join(" + ") + " = " + f2(sol.rtd) + " Ω");
 
     c.push("I = V_CC / R_tđ = " + p.vcc + " / " + C.fmt(sol.rtd) + " = " + mA(sol.current));
     p.stages.forEach(function (names, k) {
@@ -231,7 +231,7 @@
     card.appendChild(givens);
     card.appendChild(el("figure", { "class": "pa-fig" }, [SVG.draw(p)]));
     card.appendChild(el("ol", { "class": "pa-asks" }, p.asks.map(function (a) { return rich("li", a); })));
-    card.appendChild(el("p", { "class": "kh-hint", text: "Nhập số, dấu phẩy hoặc chấm đều được (vd 13,43). Sai lệch do làm tròn ≤ 1% vẫn tính đúng." }));
+    card.appendChild(el("p", { "class": "kh-hint", text: "Kết quả làm tròn lấy 2 chữ số sau dấu phẩy (vd 12,00; 13,43). Nhập dấu phẩy hoặc chấm đều được." }));
     card.appendChild(form);
     card.appendChild(solution);
     return card;
