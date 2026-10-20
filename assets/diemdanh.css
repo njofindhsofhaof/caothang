@@ -24,6 +24,7 @@
 .dd-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 .dd-btn[disabled]{opacity:.5;cursor:default;}
 .dd-btn-wide{width:100%;margin-bottom:14px;}
+.dd-btn-big{font-size:20px;min-height:64px;border-radius:var(--radius-lg);box-shadow:0 10px 24px -14px var(--accent);}
 .dd-btn-ghost{background:transparent;color:var(--accent);border:1px solid var(--line);}
 
 .dd-who{display:flex;flex-direction:column;gap:2px;}

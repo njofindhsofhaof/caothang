@@ -87,6 +87,7 @@
     if (!mssv || submitting) return;
     submitting = true;
     $('retryBtn').hidden = true;
+    $('checkinBtn').hidden = true;
     try {
       let proof = '';
       if (qrToken) {
@@ -95,7 +96,7 @@
         if (!tk.ok) return fail(tk.message, tk.code === 'expired_qr' || tk.code === 'closed');
         proof = tk.ticket;
       } else {
-        setStatus('wait', 'Đang tìm buổi điểm danh…');
+        setStatus('wait', 'Đang kiểm tra buổi điểm danh…');
         const cur = await findSession();
         if (!cur) return;
       }
@@ -137,7 +138,7 @@
       return null;
     }
     sessionId = r.active.id;
-    setStatus('wait', `${r.active.label || 'Buổi học'} · ${r.active.placeName || ''}`, `Mở đến ${fmt(r.active.expiresAt)}`);
+    setStatus('idle', `${r.active.label || 'Buổi học'} đang mở điểm danh`, `${r.active.placeName ? `${r.active.placeName} · ` : ''}đến ${fmt(r.active.expiresAt)}`);
     return r.active;
   }
 
@@ -147,7 +148,16 @@
     $('retryBtn').textContent = 'Thử lại';
   }
 
-  $('retryBtn').addEventListener('click', () => submit());
+  $('retryBtn').addEventListener('click', () => (qrToken || sessionId ? submit() : showReady()));
+  $('checkinBtn').addEventListener('click', () => submit());
+
+  // Chế độ khung giờ: hiện buổi đang mở + nút "Điểm danh"; GPS chỉ được xin khi bấm nút.
+  async function showReady() {
+    setStatus('wait', 'Đang kiểm tra buổi điểm danh…');
+    $('retryBtn').hidden = true;
+    const cur = await findSession();
+    $('checkinBtn').hidden = !cur;
+  }
 
   $('mssvForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -160,7 +170,7 @@
     store.set(STORE_MSSV, mssv);
     store.set(STORE_NAME, r.name);
     showWho(mssv, r.name);
-    submit();
+    if (qrToken) submit(); else showReady();
   });
 
   // Khởi động
@@ -168,14 +178,14 @@
     ticketPromise = api('/api/checkin?ticket=1', { s: sessionId, t: qrToken, deviceId: dev })
       .catch(() => ({ ok: false, message: 'Mạng không ổn định. Hãy quét lại.' }));
   }
-  if (store.get(STORE_MSSV) || qrToken) {
+  if (qrToken) {
     positionPromise = getPosition();
     positionPromise.catch(() => {}); // lỗi được báo khi submit
   }
   const savedMssv = store.get(STORE_MSSV);
   if (savedMssv) {
     showWho(savedMssv, store.get(STORE_NAME) || '');
-    submit();
+    if (qrToken) submit(); else showReady();
   } else {
     $('mssvForm').hidden = false;
     setStatus('idle', 'Nhập MSSV để điểm danh', 'Chỉ nhập lần đầu, lần sau mở trang là tự điểm danh.');
