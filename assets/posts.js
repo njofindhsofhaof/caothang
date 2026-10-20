@@ -44,6 +44,14 @@ window.CT_POSTS = [
     parent: "/dientucoban"
   },
   {
+    section: "ontap",
+    title: "Bài tập đọc & tính mã tụ điện",
+    desc: "Mã 1–2 số, mã 3 số, sai số J/K, đổi pF – nF – µF — 6 đề, 144 câu, tự động chấm điểm.",
+    date: "2026-10-20",
+    href: "/madientudien",
+    parent: "/dientucoban"
+  },
+  {
     section: "hoctap",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
     date: "2026-09-19",

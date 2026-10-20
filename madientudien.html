@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập đọc mã tụ điện · Cao đẳng Cao Thắng - DDT26C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/smd.css?v=2">
+<link rel="stylesheet" href="/assets/cap.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập đọc &amp; tính mã tụ điện</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ddt26ccaothang.edu.vn" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ddt26ccaothang.edu.vn</a>
+      <a href="/dientucoban" class="feedbacklink">&larr; Điện Tử Cơ Bản</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+  <p class="kh-intro">6 đề (Đề mẫu + 5 đề tổng hợp), mỗi đề 24 câu. Phần 1: đọc mã in trên thân tụ ra giá trị và chọn sai số. Phần 2: từ giá trị điện dung viết ra mã in. Điền xong bấm Kiểm tra từng phần.</p>
+  <details class="smd-rules" open>
+    <summary>Ghi nhớ quy ước &amp; cách nhập đáp án</summary>
+    <ul>
+      <li>Quy đổi: 1 F = 10⁶ µF = 10⁹ nF = 10¹² pF; 1 µF = 1.000 nF; 1 nF = 1.000 pF.</li>
+      <li>Đơn vị gốc của mã số luôn là picofarad (pF).</li>
+      <li>Mã 1 hoặc 2 chữ số: đọc thẳng theo pF: <code>8J</code> = 8 pF, <code>68K</code> = 68 pF.</li>
+      <li>Mã 3 chữ số: 2 số đầu là giá trị, số thứ 3 là số mũ của 10: <code>472</code> = 47 × 10² = 4.700 pF = 4,7 nF.</li>
+      <li>Bẫy số 0: số cuối là 0 thì nhân 10⁰ = 1: <code>220J</code> = 22 pF.</li>
+      <li>Chữ sai số: <code>J</code> = ±5%, <code>K</code> = ±10%.</li>
+      <li>Phần 1 nhập giá trị kèm đơn vị, ví dụ <code>4,7nF</code>, <code>4700pF</code>, <code>0,1uF</code> hoặc <code>100n</code>. Không ghi đơn vị thì hiểu là pF. Rồi chọn sai số ±5% hoặc ±10%.</li>
+      <li>Phần 2 nhập mã, ví dụ <code>471J</code>. Chữ thường hay hoa đều được.</li>
+    </ul>
+  </details>
+  <main id="capApp"></main>
+</div>
+<script src="/assets/posts.js"></script>
+<script src="/assets/site.js"></script>
+<script src="/assets/cap-code.js"></script>
+<script src="/assets/cap-data.js"></script>
+<script src="/assets/cap.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

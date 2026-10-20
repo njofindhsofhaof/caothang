@@ -1,0 +1,6 @@
+/* Bo sung cho kirchhoff.css + smd.css: o chon sai so o trang bai tap ma tu dien (/madientudien). */
+.cap-tol{font-family:var(--mono);font-size:15px;color:var(--ink);padding:8px 8px;min-height:40px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);}
+.cap-tol:focus{outline:2px solid var(--accent);outline-offset:1px;}
+.cap-tol.ok{border-color:var(--good);background:var(--good-bg);}
+.cap-tol.bad{border-color:var(--bad);background:var(--bad-bg);}
+.smd-row input.smd-val-in{width:126px;}
