@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  var NEWS_LIMIT = 5;
+  var NEWS_LIMIT = 8;
   var NEW_BADGE_DAYS = 7;
   var DAY_MS = 86400000;
 
