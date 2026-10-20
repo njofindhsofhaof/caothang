@@ -55,6 +55,18 @@ window.CT_POSTS = [
     section: "hoctap",
     title: "Hướng dẫn lắp mạch khởi động động cơ thuận nghịch và giới hạn hành trình",
     date: "2026-09-27",
-    href: "https://vt.tiktok.com/ZSbY2Fkov/"
+    href: "https://www.tiktok.com/@ckcddt26c/video/7689804296971488564"
+  },
+  {
+    section: "hoctap",
+    title: "Hướng dẫn lắp mạch và đo mạch điện trở nối tiếp và song song",
+    date: "2026-10-20",
+    href: "https://www.tiktok.com/@ckcddt26c/video/7696094907047480583"
+  },
+  {
+    section: "hoctap",
+    title: "Quy trình làm một board mạch đơn giản",
+    date: "2026-10-20",
+    href: "https://www.tiktok.com/@ckcddt26c/video/7697250102666251527"
   }
 ];
