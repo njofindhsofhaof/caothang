@@ -38,6 +38,7 @@ a.card .pub{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin
 .headright{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
 .feedbacklink{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
 .feedbacklink:hover{color:var(--accent);}
+.badge-new{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent-warm);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
 </style>
 </head>
 <body>
@@ -56,33 +57,10 @@ a.card .pub{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin
       <a class="backlink" href="/">&larr; Về trang chủ</a>
     </div>
   </header>
-  <div class="list">
-    <a class="card" href="/vongmaudientro">
-      <h2>Bài tập tính vòng màu điện trở chân cắm công suất nhỏ</h2>
-      <p>Trắc nghiệm mã màu điện trở chuẩn IEC 60062 — 7 đề, 360 câu, tự động chấm điểm.</p>
-      <span class="pub">Ngày tạo: Thứ Sáu, 11/09/2026</span>
-      <span class="go">vongmaudientro &rarr;</span>
-    </a>
-    <a class="card" href="/dientrodansmd">
-      <h2>Bài tập đọc &amp; tính mã điện trở dán SMD</h2>
-      <p>Mã 3 số, 4 số, chữ R, dải mΩ đến MΩ — 6 đề, 36 câu, tự động chấm điểm.</p>
-      <span class="pub">Ngày tạo: Thứ Ba, 20/10/2026</span>
-      <span class="go">dientrodansmd &rarr;</span>
-    </a>
-    <a class="card" href="/phanapphandong">
-      <h2>Bài tập Định lý phân áp &amp; phân dòng trong mạch</h2>
-      <p>6 bài nâng cao có sơ đồ mạch — R<sub>tđ</sub>, dòng nhánh, điện áp V<sub>O</sub>, vòng màu; tự chấm và lời giải chi tiết.</p>
-      <span class="pub">Ngày tạo: Thứ Ba, 20/10/2026</span>
-      <span class="go">phanapphandong &rarr;</span>
-    </a>
-    <a class="card" href="/madientudien">
-      <h2>Bài tập đọc &amp; tính mã tụ điện</h2>
-      <p>Mã 1–2 số, mã 3 số, sai số J/K, đổi pF – nF – µF — 6 đề, 144 câu, tự động chấm điểm.</p>
-      <span class="pub">Ngày tạo: Thứ Ba, 20/10/2026</span>
-      <span class="go">madientudien &rarr;</span>
-    </a>
-  </div>
+  <div class="list" id="postList" data-parent="/dientucoban"></div>
 </div>
+<script src="/assets/posts.js"></script>
+<script src="/assets/site.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

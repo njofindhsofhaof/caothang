@@ -115,21 +115,35 @@
     container.appendChild(el("table", { "class": "news" }, [thead, tbody]));
   }
 
+  /** Ngay moi nhat cua bai va cac bai con (parent = href cua bai), de trang cha cung bao "Moi". */
+  function withActivity(p) {
+    var latest = posts.reduce(function (d, c) { return c.parent === p.href && c.date > d ? c.date : d; }, p.date);
+    return Object.assign({}, p, { activity: latest });
+  }
+
+  function byActivityDesc(a, b) {
+    return a.activity < b.activity ? 1 : a.activity > b.activity ? -1 : 0;
+  }
+
+  /* data-section="ontap": bai cua trang muc; data-parent="/dientucoban": bai con cua 1 trang chua bai. */
   function renderSectionList(container) {
     var key = container.getAttribute("data-section");
+    var parent = container.getAttribute("data-parent");
     var items = posts
-      .filter(function (p) { return p.section === key && !p.parent; })
-      .sort(byDateDesc);
+      .filter(function (p) { return parent ? p.parent === parent : p.section === key && !p.parent; })
+      .map(withActivity)
+      .sort(parent ? byDateDesc : byActivityDesc);
     var empty = document.getElementById("emptyState");
     if (items.length === 0) return;
     if (empty) empty.hidden = true;
     items.forEach(function (p) {
       var title = el("h2", { text: p.title });
-      if (isRecent(p.date)) title.appendChild(badge());
+      if (isRecent(p.activity)) title.appendChild(badge());
+      var updated = p.activity > p.date ? " · Cập nhật: " + formatDate(p.activity) : "";
       container.appendChild(el("a", postLink(p, { "class": "card" }), [
         title,
         p.desc ? el("p", { text: p.desc }) : null,
-        el("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) })
+        el("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) + updated })
       ]));
     });
   }
