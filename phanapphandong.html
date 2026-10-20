@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập phân áp &amp; phân dòng · Cao đẳng Cao Thắng - DDT26C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/phanap.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập Định lý phân áp &amp; phân dòng</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ddt26ccaothang.edu.vn" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ddt26ccaothang.edu.vn</a>
+      <a href="/dientucoban" class="feedbacklink">&larr; Điện Tử Cơ Bản</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+  <p class="kh-intro">6 bài nâng cao phát triển từ 2 dạng trong vở. Dạng 1 (Bài 1, 3, 5): cụm song song nằm ở đáy, tiếp Mass. Dạng 2 (Bài 2, 4, 6): cụm song song kẹp giữa các tầng nối tiếp. Đọc sơ đồ, tính rồi nhập kết quả để tự chấm; mở lời giải để xem cách làm từng bước.</p>
+  <details class="pa-theory">
+    <summary>Nhắc lại công thức</summary>
+    <ul>
+      <li>Nối tiếp: <span class="f">R<sub>tđ</sub> = R<sub>1</sub> + R<sub>2</sub> + …</span>, dòng như nhau qua mọi điện trở.</li>
+      <li>Song song 2 nhánh: <span class="f">R<sub>12</sub> = R<sub>1</sub>·R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)</span>; nhiều nhánh: <span class="f">1/R = 1/R<sub>1</sub> + 1/R<sub>2</sub> + …</span>. Hai điện trở bằng nhau song song = một nửa.</li>
+      <li>Phân áp: <span class="f">V<sub>Rx</sub> = V<sub>CC</sub>·R<sub>x</sub> / R<sub>tđ</sub></span>. Điện áp tại một điểm đo V<sub>O</sub> (so với Mass) = V<sub>CC</sub> × (tổng điện trở từ điểm đó xuống Mass) / R<sub>tđ</sub>.</li>
+      <li>Phân dòng 2 nhánh: <span class="f">I<sub>1</sub> = I·R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)</span> (dòng qua nhánh này tỉ lệ với điện trở nhánh kia). Nhiều nhánh: <span class="f">I<sub>k</sub> = V<sub>cụm</sub> / R<sub>k</sub></span>, tổng các dòng nhánh = I.</li>
+      <li>Đơn vị nhập: điện trở theo Ω, dòng theo mA, điện áp theo V.</li>
+    </ul>
+  </details>
+  <main id="paApp"></main>
+</div>
+<script src="/assets/posts.js"></script>
+<script src="/assets/site.js"></script>
+<script src="/assets/phanap-calc.js"></script>
+<script src="/assets/phanap-data.js"></script>
+<script src="/assets/phanap-svg.js"></script>
+<script src="/assets/phanap.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

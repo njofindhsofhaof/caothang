@@ -1,0 +1,53 @@
+/* Bo sung cho kirchhoff.css: trang bai tap phan ap & phan dong (/phanapphandong). */
+.pa-theory{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:10px;padding:14px 18px;margin:0 0 18px;font-size:14px;color:var(--ink-soft);}
+.pa-theory summary{cursor:pointer;font-weight:600;color:var(--ink);}
+.pa-theory ul{margin:10px 0 0;padding-left:18px;}
+.pa-theory li{margin:6px 0;}
+.pa-theory .f{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap;}
+
+.pa-prob h2.kh-ask{font-family:var(--serif);font-size:17px;font-weight:600;}
+.pa-givens{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
+.pa-givens li{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:3px 8px;}
+
+.pa-fig{margin:14px 0 6px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 6px;overflow-x:auto;}
+.pa-svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto;}
+.pa-svg text{font-family:var(--sans);font-size:14px;fill:var(--ink);}
+.pa-svg .pa-sub{font-size:10.5px;}
+.pa-svg .pa-val{font-family:var(--mono);font-size:11.5px;fill:var(--ink-soft);}
+.pa-svg .pa-vcc{font-weight:600;}
+.pa-svg .pa-group{font-family:var(--mono);font-size:12px;fill:var(--accent-warm);font-weight:500;}
+.pa-wire{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-linecap:round;}
+.pa-res{fill:var(--surface);stroke:var(--ink);stroke-width:1.6;}
+.pa-dot{fill:var(--ink);}
+.pa-cur{fill:var(--accent-warm);}
+.pa-svg .pa-cur-label{fill:var(--accent-warm);font-size:13px;font-style:italic;}
+.pa-tap{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:4 3;}
+.pa-term{fill:var(--surface);stroke:var(--accent);stroke-width:1.6;}
+.pa-svg .pa-tap-label{fill:var(--accent);font-weight:600;}
+
+.pa-asks{margin:12px 0 4px;padding-left:0;list-style:none;font-size:14.5px;}
+.pa-asks li{margin:4px 0;}
+.pa-group-in{margin-top:12px;}
+.pa-group-in h3{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink-faint);margin:0 0 8px;}
+.pa-prob .kh-field input{width:96px;}
+.pa-prob .kh-actions{margin-top:4px;}
+
+.pa-sol h3{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink);margin:16px 0 6px;}
+.pa-steps{margin:0;padding-left:18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+.pa-steps li{margin:4px 0;overflow-wrap:anywhere;}
+.pa-tablewrap{overflow-x:auto;}
+.pa-colors{border-collapse:collapse;font-size:12.5px;width:100%;}
+.pa-colors th,.pa-colors td{border-top:1px solid var(--line);padding:7px 8px 7px 0;text-align:left;vertical-align:top;}
+.pa-colors th{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+.pa-ohm{font-family:var(--mono);white-space:nowrap;color:var(--ink);}
+.pa-bandtag{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-bottom:3px;}
+.pa-bands{display:flex;flex-wrap:wrap;gap:4px;}
+.pa-band{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:4px;padding:1px 6px 1px 3px;color:var(--ink);background:var(--surface);white-space:nowrap;}
+.pa-sw{display:inline-block;width:10px;height:14px;border-radius:2px;box-shadow:0 0 0 1px var(--ink-faint);}
+.pa-nobands{font-size:12px;color:var(--ink-faint);font-style:italic;}
+
+@media (max-width:600px){
+  .pa-colors tr{display:grid;grid-template-columns:auto 1fr;column-gap:10px;border-top:1px solid var(--line);padding:6px 0;}
+  .pa-colors th,.pa-colors td{border:none;padding:2px 0;}
+  .pa-colors td:nth-child(3),.pa-colors td:nth-child(4){grid-column:1 / -1;}
+}
