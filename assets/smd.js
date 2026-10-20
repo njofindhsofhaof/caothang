@@ -23,7 +23,7 @@
     var input = el("input", {
       type: "text", autocomplete: "off", spellcheck: "false",
       autocapitalize: kind === "code" ? "characters" : "off",
-      placeholder: kind === "code" ? "mã" : "giá trị",
+      placeholder: kind === "code" ? "mã" : "số ohm",
       "class": kind === "code" ? "smd-code-in" : "smd-val-in",
       "aria-label": label
     });
@@ -52,13 +52,13 @@
         fields.push(f);
         parts.push(el("span", { "class": "smd-pair" }, [
           k > 0 ? el("span", { "class": "smd-and", text: "và" }) : null,
-          codeTag(r[k]), el("span", { text: "=" }), f.node
+          codeTag(r[k]), el("span", { text: "=" }), f.node, el("span", { "class": "smd-unit", text: "Ω" })
         ]));
       }
       return row(i, parts);
     });
     return el("div", { "class": "smd-part" }, [
-      el("h3", { text: "Phần 1 · Đọc mã ra giá trị" }),
+      el("h3", { text: "Phần 1 · Đọc mã ra giá trị điện trở (ohm – Ω)" }),
       el("ol", { "class": "smd-rows" }, rows)
     ]);
   }
