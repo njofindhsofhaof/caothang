@@ -2,7 +2,10 @@
    Them bai moi: them 1 dong vao mang duoi day (date dang YYYY-MM-DD).
    - section: gioithieu | ontap | hoctap | hoatdong | event | thongtinlop
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
-   - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai). */
+   - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
+   Trang chua bai (trang cha): khi bai con co "Moi", the trang cha o trang muc cung tu hien "Moi" + ngay cap nhat.
+   Trang cha tu liet ke bai con bang <div class="list" id="postList" data-parent="/href-trang-cha"></div>
+   + nap /assets/posts.js va /assets/site.js (xem dientucoban.html). */
 window.CT_POSTS = [
   {
     section: "ontap",
