@@ -1,0 +1,30 @@
+/* Bo sung cho kirchhoff.css: hang dien dap an cua bai tap dien tro dan SMD. */
+.smd-rules{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:10px;padding:14px 18px;margin:0 0 18px;font-size:14px;color:var(--ink-soft);}
+.smd-rules summary{cursor:pointer;font-weight:600;color:var(--ink);}
+.smd-rules ul{margin:10px 0 0;padding-left:18px;}
+.smd-rules li{margin:4px 0;}
+.smd-rules code,.smd-chip{font-family:var(--mono);}
+
+.smd-q h2.kh-ask{font-family:var(--serif);font-size:17px;font-weight:600;}
+.smd-part{margin-top:14px;}
+.smd-part h3{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 8px;}
+.smd-rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.smd-row{display:grid;grid-template-columns:22px 1fr;align-items:center;column-gap:8px;font-size:14.5px;}
+.smd-body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;}
+.smd-letter{font-family:var(--mono);font-size:12.5px;color:var(--accent);align-self:start;padding-top:11px;}
+.smd-pair{display:inline-flex;align-items:center;gap:8px;}
+.smd-and,.smd-std{font-family:var(--mono);font-size:12px;color:var(--ink-faint);}
+.smd-chip{font-size:15px;font-weight:500;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:3px 8px;min-width:52px;text-align:center;}
+.smd-target strong{font-weight:600;}
+
+.smd-row input{font-family:var(--mono);font-size:16px;color:var(--ink);padding:8px 10px;min-height:40px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);}
+.smd-val-in{width:118px;}
+.smd-code-in{width:84px;text-transform:uppercase;}
+.smd-code-in::placeholder{text-transform:none;}
+.smd-row input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+.smd-row input.ok{border-color:var(--good);background:var(--good-bg);}
+.smd-row input.bad{border-color:var(--bad);background:var(--bad-bg);}
+.smd-q .kh-actions{margin-top:16px;}
+
+.smd-sol{margin:8px 0 0;padding-left:18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+.smd-sol li{margin:3px 0;overflow-wrap:anywhere;}

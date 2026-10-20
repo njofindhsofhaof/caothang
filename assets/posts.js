@@ -28,6 +28,14 @@ window.CT_POSTS = [
     parent: "/dientucoban"
   },
   {
+    section: "ontap",
+    title: "Bài tập đọc & tính mã điện trở dán SMD",
+    desc: "Mã 3 số, 4 số, chữ R, dải mΩ đến MΩ — 6 đề, 36 câu, tự động chấm điểm.",
+    date: "2026-10-20",
+    href: "/dientrodansmd",
+    parent: "/dientucoban"
+  },
+  {
     section: "hoctap",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
     date: "2026-09-19",

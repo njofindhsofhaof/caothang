@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập điện trở dán SMD · Cao đẳng Cao Thắng - DDT26C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/smd.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập đọc &amp; tính mã điện trở dán SMD</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ddt26ccaothang.edu.vn" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ddt26ccaothang.edu.vn</a>
+      <a href="/dientucoban" class="feedbacklink">&larr; Điện Tử Cơ Bản</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+  <p class="kh-intro">6 đề (Đề mẫu + 5 đề ôn luyện), mỗi đề 6 câu. Phần 1: đọc mã ra giá trị. Phần 2: từ giá trị viết ra mã in. Điền xong bấm Kiểm tra từng câu.</p>
+  <details class="smd-rules">
+    <summary>Cách nhập đáp án &amp; quy tắc đọc mã</summary>
+    <ul>
+      <li>Giá trị: nhập số kèm tiền tố, ví dụ <code>10k</code>, <code>4.7k</code> (hoặc <code>4k7</code>), <code>22</code>, <code>0.22</code>, <code>2.2M</code>. Chữ <code>m</code> thường = mili (<code>10m</code> = 0.01 Ω), <code>M</code> hoa = mega.</li>
+      <li>Mã 3 số: 2 số đầu là giá trị, số cuối là số chữ số 0 thêm vào: <code>472</code> = 47 × 10² = 4.7 kΩ.</li>
+      <li>Mã 4 số: 3 số đầu là giá trị, số cuối là số chữ số 0: <code>1002</code> = 100 × 10² = 10 kΩ.</li>
+      <li>Bẫy số 0: số cuối là 0 thì không thêm số 0 nào: <code>100</code> = 10 Ω, <code>1000</code> = 100 Ω.</li>
+      <li>Chữ <code>R</code> là dấu thập phân: <code>4R7</code> = 4.7 Ω, <code>R22</code> = 0.22 Ω, <code>R010</code> = 0.01 Ω = 10 mΩ.</li>
+      <li><code>0</code> hoặc <code>000</code> = 0 Ω (điện trở cầu nối – jumper).</li>
+    </ul>
+  </details>
+  <main id="smdApp"></main>
+</div>
+<script src="/assets/posts.js"></script>
+<script src="/assets/site.js"></script>
+<script src="/assets/smd-code.js"></script>
+<script src="/assets/smd-data.js"></script>
+<script src="/assets/smd.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
