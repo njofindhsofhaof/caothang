@@ -2,6 +2,9 @@ import { haversineMeters, isValidCoord } from './geo.js';
 
 export const MAX_ACCURACY_M = 150;
 const MSSV_RE = /^\d{6,12}$/;
+
+// SV hay gõ thêm số 0 ở đầu (0303261267) trong khi danh sách lưu 303261267.
+export const normalizeMssv = (v) => String(v ?? '').trim().replace(/^0+(?=\d)/, '');
 const DEVICE_RE = /^[A-Za-z0-9-]{16,64}$/;
 
 const fail = (code, message) => ({ ok: false, code, message });
@@ -13,7 +16,7 @@ export function parseCheckinBody(body) {
   const input = {
     sessionId: String(b.s ?? ''),
     token: String(b.t ?? ''),
-    mssv: String(b.mssv ?? '').trim(),
+    mssv: normalizeMssv(b.mssv),
     deviceId: String(b.deviceId ?? ''),
     lat: toNum(b.lat),
     lng: toNum(b.lng),

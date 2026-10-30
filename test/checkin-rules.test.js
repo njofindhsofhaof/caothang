@@ -22,6 +22,7 @@ test('accepts a valid nearby check-in', () => {
 });
 
 test('rejects missing GPS', () => assert.equal(run({ lat: null }).code, 'no_gps'));
+test('strips leading zeros from MSSV', () => assert.equal(run({ mssv: '0100000001' }).ok, true));
 test('rejects bad MSSV format', () => assert.equal(run({ mssv: 'abc' }).code, 'bad_mssv'));
 test('rejects closed session', () => assert.equal(run({}, { session: { ...session, closed: true } }).code, 'closed'));
 test('rejects expired session', () => assert.equal(run({}, { now: NOW + 120_000 }).code, 'closed'));

@@ -2,7 +2,7 @@ import { redis, keys } from './_lib/redis.js';
 import { send, handler, clientIp, requireSecret, vnDate } from './_lib/http.js';
 import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isActive } from './_lib/store.js';
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
-import { parseCheckinBody, evaluateCheckin } from './_lib/checkin-rules.js';
+import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
 
 const DEVICE_BIND_TTL_S = 400 * 86_400;
 
@@ -54,7 +54,7 @@ export default handler(async (req, res) => {
     redis().hget(keys.deviceInSession(input.sessionId), input.deviceId),
     redis().get(keys.device(input.deviceId)),
   ]);
-  const student = roster.find((s) => s.mssv === input.mssv) ?? null;
+  const student = roster.find((s) => normalizeMssv(s.mssv) === input.mssv) ?? null;
   const secret = requireSecret('QR_SECRET');
   const tokenOk = !session?.requireQr
     || verifyTicket(secret, input.sessionId, input.deviceId, input.token, now)

@@ -161,7 +161,7 @@
 
   $('mssvForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const mssv = $('mssvInput').value.trim();
+    const mssv = $('mssvInput').value.trim().replace(/^0+(?=\d)/, '');
     $('mssvMsg').textContent = '';
     if (!/^\d{6,12}$/.test(mssv)) { $('mssvMsg').textContent = 'MSSV gồm 6–12 chữ số.'; return; }
     const r = await api(`/api/roster?mssv=${encodeURIComponent(mssv)}`).catch(() => ({ ok: false, message: 'Mạng không ổn định.' }));
