@@ -72,6 +72,8 @@ test('exact radicals and integers stay exact; other values round to 2 decimals',
   assert.equal(num((10 / 3) * Math.sqrt(5)), '10√5/3');
   assert.equal(num(100), '100');
   assert.equal(num(13.1306), '13,13');
+  assert.equal(num(1.4), '1,4');
+  assert.equal(num(-0.2), '−0,2');
   assert.equal(fmtPolar({ re: 50, im: 50 }), '50√2∠45°');
 });
 

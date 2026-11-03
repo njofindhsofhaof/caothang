@@ -86,13 +86,13 @@
 
   /**
    * So hien thi: so nguyen giu nguyen ("100"), so dang can giu dang can ("50√2", "√2", "10√5/3"),
-   * con lai lam tron 2 chu so thap phan ("4,12"). Dau tru la "−".
+   * con lai lam tron 2 chu so thap phan, bo so 0 thua ("4,12", "1,4"). Dau tru la "−".
    */
   function num(x) {
     var sign = x < 0 ? "−" : "";
     if (isWhole(x)) return Math.round(x) === 0 ? "0" : sign + Math.abs(Math.round(x));
     var r = asRadical(x);
-    if (!r) return f2(x);
+    if (!r) return f2(x).replace(/(,\d*?)0+$/, "$1").replace(/,$/, "");
     return sign + (r.p === 1 ? "" : r.p) + "√" + r.n + (r.q === 1 ? "" : "/" + r.q);
   }
 

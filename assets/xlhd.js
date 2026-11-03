@@ -21,9 +21,12 @@
     return node;
   }
 
-  /** "Z_AB = Z_1·Z_2" -> text co <sub>; "_{..}" cho chi so co dau cach. */
-  function rich(tag, text, attrs) {
-    var node = el(tag, attrs);
+  /** Phan so xep chong (tu tren, mau duoi) dung trong 1 dong loi giai. */
+  function fr(top, bottom) { return { frac: [top, bottom] }; }
+
+  /** "^I_o" -> I co cham tren dau (dang phuc) + chi so <sub>; "_{..}" cho chi so nhieu ky tu. */
+  function richText(node, text) {
+    text = text.replace(/\^([A-Za-z])/g, "$1̇");
     var re = /_(\{[^}]+\}|[0-9A-Za-zđ]+)/g, last = 0, m;
     while ((m = re.exec(text))) {
       if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
@@ -34,13 +37,32 @@
     return node;
   }
 
+  /** 1 dong = chuoi hoac mang [chuoi | fr(tu, mau)]. */
+  function rich(tag, line, attrs) {
+    var node = el(tag, attrs);
+    (Array.isArray(line) ? line : [line]).forEach(function (part) {
+      if (typeof part === "string") { richText(node, part); return; }
+      node.appendChild(el("span", { "class": "xl-frac" }, [
+        richText(el("span", { "class": "xl-num" }), part.frac[0]),
+        richText(el("span", { "class": "xl-den" }), part.frac[1])
+      ]));
+    });
+    return node;
+  }
+
   /** So am hoac so phuc 2 thanh phan thi dat trong ngoac khi dung trong bieu thuc. */
   function term(z) {
     var t = rect(z);
     return /^−| [+−] /.test(t) ? "(" + t + ")" : t;
   }
 
+  function isReal(z) { return Math.round(z.im * 100) === 0; }
+
+  /** Dong/ap: "1,4 − j0,2 = √2∠−8,13°"; so thuc chi ghi dang cuc. */
+  function both(z) { return isReal(z) ? pol(z) : rect(z) + " = " + pol(z); }
+
   function zName(b) { return "Z_" + b.current.split("_")[1]; }
+  function dot(name) { return "^" + name; }
   function lower(name) { return name.charAt(0).toLowerCase() + name.slice(1); }
 
   function allElems(p) {
@@ -49,39 +71,58 @@
 
   function hasSeries(p) { return !!(p.series && p.series.length); }
 
+  function fnName(p) { return p.source.fn === "cos" ? "cos" : "sin"; }
+
+  function resistorLine(p) {
+    var rs = allElems(p).filter(function (e) { return e.kind === "R"; }).map(function (e) { return e.label; });
+    return rs.length ? "Điện trở giữ nguyên giá trị (không đổi sang dạng cực): " + rs.join("; ") + "." : null;
+  }
+
+  /** "U_o = 100 V, φ_u = 0°" tu anh phuc nguon. */
+  function sourceAmp(p) {
+    var v = p.source.type === "V";
+    return (v ? "U_o = " : "I_o = ") + num(p.source.mag) + (v ? " V" : " A") + ", góc pha φ_" + (v ? "u" : "i") + " = " + num(p.source.deg) + "°";
+  }
+
   /* ---------- cac buoc giai ---------- */
 
   function stepComplexify(p) {
     var w = p.source.omega;
-    var lines = ["Nguồn u(t) = " + p.source.label + " V ⇒ ω = " + w + " rad/s; ảnh phức theo biên độ: U = " + p.source.complexLabel + "."];
+    var lines = ["Nguồn u(t) = " + p.source.label + " V ⇒ biên độ " + sourceAmp(p) + ", ω = " + w + " rad/s.",
+      "Ảnh phức của nguồn: " + dot("U_o") + " = " + p.source.complexLabel + "."];
     allElems(p).forEach(function (e) {
       var z = rect(C.impedance(e, w));
       if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm " + e.label + ": Z_L = jωL = j·" + w + "·" + e.h + " = " + z + " Ω");
-      if (e.kind === "C" && e.f != null) lines.push("Tụ " + e.label + ": Z_C = 1/(jωC) = 1/(j·" + w + "·" + e.label.replace(" F", "") + ") = " + z + " Ω");
+      if (e.kind === "C" && e.f != null) {
+        lines.push(["Tụ " + e.label + ": Z_C = ", fr("1", "jωC"), " = ", fr("1", "j·" + w + "·" + e.label.replace(" F", "")), " = " + z + " Ω"]);
+      }
     });
-    var rs = allElems(p).filter(function (e) { return e.kind === "R"; }).map(function (e) { return e.label; });
-    if (rs.length) lines.push("Điện trở giữ nguyên: " + rs.join("; ") + ".");
+    lines.push(resistorLine(p));
     return {
-      title: "Bước 1. Phức hoá mạch", lines: lines,
+      title: "Bước 1. Phức hoá mạch", lines: lines.filter(Boolean),
       caption: "Vẽ lại mạch sau khi phức hoá (mọi phần tử đổi thành tổng trở Ω):", figure: SVG.draw(p, true)
     };
   }
 
   function stepConvention(p) {
     var src = pol(C.polar(p.source.mag, p.source.deg));
-    var what = p.source.type === "V" ? "U = " + src + " V" : "J = " + src + " A";
+    var first = p.source.type === "V"
+      ? "Nguồn áp dạng phức: " + dot("U_o") + " = " + src + " V ⇒ biên độ " + sourceAmp(p) + "."
+      : "Nguồn dòng dạng phức: " + dot("I_o") + " = " + src + " A ⇒ biên độ " + sourceAmp(p) + ".";
     return {
       title: "Bước 1. Nhận xét mạch",
       lines: [
-        "Mạch đã cho ở dạng phức: " + what + " (theo biên độ); cuộn cảm và tụ đã ghi sẵn tổng trở jX_L, −jX_C.",
+        first,
+        "Cuộn cảm và tụ đã ghi sẵn tổng trở jX_L, −jX_C.",
+        resistorLine(p),
         "Đề không cho ω nên phương trình tức thời viết theo ω."
-      ]
+      ].filter(Boolean)
     };
   }
 
   /** "a + b = " truoc ket qua, bo qua khi chi 1 so hang hoac phep cong da chinh la ket qua (vd 1 + j1). */
   function sumPrefix(parts, z) {
-    var expr = parts.join(" + ");
+    var expr = parts.join(" + ").replace(/\+ \(−([^)]*)\)/g, "− $1");
     return parts.length > 1 && expr !== rect(z) ? expr + " = " : "";
   }
 
@@ -94,17 +135,17 @@
     }
     p.branches.forEach(function (b, k) {
       var parts = b.elems.map(function (e) { return term(C.impedance(e, w)); });
-      lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + sumPrefix(parts, s.zBranches[k]) +
-        rect(s.zBranches[k]) + " = " + pol(s.zBranches[k]) + " Ω");
+      lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + sumPrefix(parts, s.zBranches[k]) + rect(s.zBranches[k]) + " Ω");
     });
     var z1 = s.zBranches[0], z2 = s.zBranches[1];
     var n1 = zName(p.branches[0]), n2 = zName(p.branches[1]);
-    lines.push("Hai nhánh song song: Z_AB = " + n1 + "·" + n2 + " / (" + n1 + " + " + n2 + ") = " + term(z1) + "·" + term(z2) +
-      " / " + term(C.add(z1, z2)) + " = " + term(C.mul(z1, z2)) + " / " + term(C.add(z1, z2)) + " = " + rect(s.zPar) + " Ω");
+    lines.push(["Hai nhánh song song: Z_AB = ", fr(n1 + "·" + n2, n1 + " + " + n2), " = ",
+      fr(term(z1) + "·" + term(z2), rect(z1) + " + " + term(z2)), " = ",
+      fr(rect(C.mul(z1, z2)), rect(C.add(z1, z2))), " = " + rect(s.zPar) + " Ω"]);
     if (hasSeries(p)) {
-      lines.push("Toàn mạch: Z_tđ = Z_nt + Z_AB = " + term(s.zSeries) + " + " + term(s.zPar) + " = " + rect(s.zTotal) + " = " + pol(s.zTotal) + " Ω");
+      lines.push("Toàn mạch: Z_tđ = Z_nt + Z_AB = " + term(s.zSeries) + " + " + term(s.zPar) + " = " + rect(s.zTotal) + " Ω");
     } else if (p.source.type === "V") {
-      lines.push("Toàn mạch: Z_tđ = Z_AB = " + pol(s.zPar) + " Ω");
+      lines.push("Toàn mạch: Z_tđ = Z_AB = " + rect(s.zPar) + " Ω");
     }
     return { title: "Bước 2. Tổng trở", lines: lines };
   }
@@ -112,43 +153,44 @@
   function stepCurrents(p, s) {
     var lines = [];
     var src = C.polar(p.source.mag, p.source.deg);
+    var io = s.current;
     if (p.source.type === "V") {
-      lines.push("Dòng toàn mạch: I = U / Z_tđ = " + pol(src) + " / " + pol(s.zTotal) + " = " + pol(s.current) + " A");
-      lines.push(hasSeries(p)
-        ? "Điện áp trên cụm song song: U_AB = I·Z_AB = " + pol(s.current) + " · " + pol(s.zPar) + " = " + pol(s.vPar) + " V"
-        : "Hai nhánh mắc thẳng vào nguồn nên U_AB = U = " + pol(s.vPar) + " V");
+      lines.push(["Dòng toàn mạch (dạng phức): " + dot("I_o") + " = ", fr(dot("U_o"), "Z_tđ"), " = ",
+        fr(pol(src), rect(s.zTotal)), " = " + both(io) + " A"]);
     } else {
-      lines.push("Nguồn dòng J = " + pol(src) + " A chạy vào nút A rồi chia cho hai nhánh.");
-      lines.push("Điện áp trên hai nhánh: U_AB = J·Z_AB = " + pol(src) + " · " + pol(s.zPar) + " = " + pol(s.vPar) + " V");
+      lines.push("Dòng toàn mạch chính là dòng nguồn: " + dot("I_o") + " = " + both(io) + " A");
+      lines.push("Điện áp hai đầu cụm song song: " + dot("U_{AB}") + " = " + dot("I_o") + "·Z_AB = " + term(io) + "·" + term(s.zPar) +
+        " = " + both(s.vPar) + " V");
     }
-    p.branches.forEach(function (b, k) {
-      lines.push(b.current + " = U_AB / " + zName(b) + " = " + pol(s.vPar) + " / " + pol(s.zBranches[k]) +
-        " = " + pol(s.branchI[k]) + " = " + rect(s.branchI[k]) + " A");
-    });
-    lines.push("Kiểm tra Kirchhoff 1: " + p.branches.map(function (b) { return b.current; }).join(" + ") + " = " +
-      rect(C.add(s.branchI[0], s.branchI[1])) + " = " + (p.source.type === "V" ? "I" : "J") + " ✓");
+    var b1 = p.branches[0], b2 = p.branches[1];
+    var z1 = s.zBranches[0], z2 = s.zBranches[1];
+    lines.push(["Chia dòng: " + dot(b1.current) + " = " + dot("I_o") + "·", fr(zName(b2), zName(b1) + " + " + zName(b2)), " = ",
+      fr(term(io) + "·" + term(z2), rect(C.add(z1, z2))), " = " + both(s.branchI[0]) + " A"]);
+    lines.push("Kirchhoff 1: " + dot(b2.current) + " = " + dot("I_o") + " − " + dot(b1.current) + " = " + term(io) + " − " +
+      term(s.branchI[0]) + " = " + both(s.branchI[1]) + " A");
     (p.voltages || []).forEach(function (v) {
-      lines.push(v.text + " = " + pol(s.voltages[v.name]) + " = " + rect(s.voltages[v.name]) + " V");
+      lines.push(v.text + " = " + both(s.voltages[v.name]) + " V");
     });
     return { title: "Bước 3. Dòng điện các nhánh" + ((p.voltages || []).length ? " và điện áp" : ""), lines: lines };
   }
 
-  /** "cos(2t − 8,13°)" hoac "cos(ωt + 45°)" */
-  function cosArg(p, z) {
+  /** "sin(2t − 8,13°)" hoac "cos(ωt + 45°)" */
+  function waveArg(p, z) {
     var deg = Math.round(C.arg(z) * 100) / 100;
     var wt = p.source.omega ? p.source.omega + "t" : "ωt";
-    if (deg === 0) return "cos(" + wt + ")";
-    return "cos(" + wt + (deg < 0 ? " − " : " + ") + num(Math.abs(deg)) + "°)";
+    var f = fnName(p);
+    if (deg === 0) return f + "(" + wt + ")";
+    return f + "(" + wt + (deg < 0 ? " − " : " + ") + num(Math.abs(deg)) + "°)";
   }
 
-  /** Bien do: "2cos" ; "50√2·cos" ; "cos" khi bien do = 1. */
+  /** Bien do: "2sin" ; "50√2·sin" ; "sin" khi bien do = 1. */
   function amp(x) {
     var a = num(x);
     return a === "1" ? "" : a.indexOf("√") >= 0 ? a + "·" : a;
   }
 
   function timeLine(p, name, z, unit) {
-    return lower(name) + "(t) = " + amp(C.abs(z)) + cosArg(p, z) + " " + unit;
+    return lower(name) + "(t) = " + amp(C.abs(z)) + waveArg(p, z) + " " + unit;
   }
 
   /** Binh phuong trong bieu thuc: "1,41²" ; "(50√2)²" */
@@ -159,20 +201,21 @@
 
   function timeLines(p, s) {
     var lines = [];
-    if (p.source.type === "V") lines.push(timeLine(p, "I", s.current, "A"));
+    if (p.source.type === "V") lines.push(timeLine(p, "I_o", s.current, "A"));
     p.branches.forEach(function (b, k) { lines.push(timeLine(p, b.current, s.branchI[k], "A")); });
     (p.voltages || []).forEach(function (v) { lines.push(timeLine(p, v.name, s.voltages[v.name], "V")); });
     return lines;
   }
 
   function stepTime(p, s) {
-    var head = "Ảnh phức theo biên độ nên X∠φ ⇒ x(t) = X·cos(ωt + φ):";
+    var head = fnName(p) === "cos"
+      ? "Đề cho nguồn dạng cos nên viết theo cos: X∠φ ⇒ x(t) = X·cos(ωt + φ):"
+      : "Mặc định viết theo sin: X∠φ ⇒ x(t) = X·sin(ωt + φ):";
     return { title: "Bước 4. Phương trình tức thời", lines: [head].concat(timeLines(p, s)) };
   }
 
   function stepPower(p, s) {
-    var u = p.source.type === "V" ? "U" : "U_AB";
-    var i = p.source.type === "V" ? "I" : "J";
+    var u = dot(p.source.type === "V" ? "U_o" : "U_{AB}");
     var q = Math.round(s.power.im * 100) / 100;
     var nature = q === 0 ? "Q = 0: tải thuần trở" : q < 0 ? "Q < 0: tải mang tính dung" : "Q > 0: tải mang tính cảm";
     var rTerms = [], rSum = 0;
@@ -182,11 +225,12 @@
     return {
       title: "Bước 5. Công suất nguồn cấp cho tải",
       lines: [
-        "S̃ = ½·" + u + "·" + i + "* = ½·" + pol(s.vSource) + " · " + pol(C.conj(s.current)) + " = " + rect(s.power) + " VA  (ảnh phức theo biên độ nên nhân ½)",
+        ["S̃ = ", fr("1", "2"), "·" + u + "·" + dot("I_o") + "* = ", fr("1", "2"), "·" + pol(s.vSource) + "·" + pol(C.conj(s.current)) +
+          " = " + rect(s.power) + " VA  (" + dot("I_o") + "* là số phức liên hợp; theo biên độ nên nhân ", fr("1", "2"), ")"],
         "P = Re(S̃) = " + num(s.power.re) + " W",
         "Q = Im(S̃) = " + num(q) + " VAR  (" + nature + ")",
         "S = |S̃| = √(P² + Q²) = " + num(C.abs(s.power)) + " VA",
-        "Kiểm tra: P = ½·Σ R·I² = ½·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"
+        ["Kiểm tra: P = ", fr("1", "2"), "·Σ R·I² = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
       ]
     };
   }
