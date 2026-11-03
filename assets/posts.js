@@ -98,6 +98,14 @@ window.CT_POSTS = [
     parent: "/lythuyetmach"
   },
   {
+    section: "ontap",
+    title: "Mạch xác lập điều hoà",
+    desc: "4 bài giải bằng ảnh phức có lời giải từng bước — phức hoá mạch, tổng trở, dòng nhánh, phương trình tức thời, công suất P, Q, S.",
+    date: "2026-11-03",
+    href: "/xaclapdieuhoa",
+    parent: "/lythuyetmach"
+  },
+  {
     section: "thongtinlop",
     title: "Lịch thực hành điện tử cơ bản từ 21-26/9/2026",
     date: "2026-09-20",

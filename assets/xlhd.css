@@ -1,0 +1,28 @@
+/* Bo sung cho kirchhoff.css: trang Mach xac lap dieu hoa (/xaclapdieuhoa). */
+.xl-asks{font-size:15px;color:var(--ink);margin:10px 0 0;}
+.xl-fig{margin:14px 0 6px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 6px;overflow-x:auto;}
+.xl-svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;}
+@media (max-width:600px){.xl-svg{min-width:440px;}}
+.xl-svg text{font-family:var(--sans);font-size:14px;fill:var(--ink);}
+.xl-svg .xl-sub{font-size:10.5px;}
+.xl-svg .xl-val{font-family:var(--mono);font-size:12.5px;}
+.xl-svg .xl-src-label{font-family:var(--mono);font-size:13px;font-weight:500;}
+.xl-svg .xl-pm{font-size:15px;font-weight:600;}
+.xl-svg .xl-node{font-family:var(--mono);font-size:12.5px;fill:var(--accent);font-weight:600;}
+.xl-svg .xl-mark{fill:var(--accent);font-weight:600;}
+.xl-svg .xl-cur-label{fill:var(--accent-warm);font-style:italic;}
+.xl-wire{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.xl-src{fill:var(--surface);stroke:var(--ink);stroke-width:1.6;}
+.xl-ink{fill:var(--ink);}
+.xl-dot{fill:var(--ink);}
+.xl-cur{fill:var(--accent-warm);}
+
+.xl-sol{margin-top:18px;border-top:1px solid var(--line);padding-top:6px;}
+.xl-sol-title{font-family:var(--serif);font-size:17px;font-weight:600;margin:8px 0 2px;}
+.xl-sol h4{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 6px;}
+.xl-steps{margin:0;padding-left:18px;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink-soft);}
+.xl-steps li{margin:5px 0;overflow-wrap:anywhere;}
+.xl-cap{font-size:13.5px;color:var(--ink-soft);margin:12px 0 0;}
+.xl-answer{margin-top:18px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:8px;padding:2px 14px 10px;}
+.xl-answer .xl-steps{color:var(--ink);}
+.xl-rule{font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:10px 16px;margin:0 0 14px;}
