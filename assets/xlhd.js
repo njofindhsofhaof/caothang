@@ -169,6 +169,7 @@
     lines.push("Kirchhoff 1: " + dot(b2.current) + " = " + dot("I_o") + " − " + dot(b1.current) + " = " + term(io) + " − " +
       term(s.branchI[0]) + " = " + both(s.branchI[1]) + " A");
     (p.voltages || []).forEach(function (v) {
+      (v.loop || []).forEach(function (l) { lines.push(l); });
       lines.push(v.text + " = " + both(s.voltages[v.name]) + " V");
     });
     return { title: "Bước 3. Dòng điện các nhánh" + ((p.voltages || []).length ? " và điện áp" : ""), lines: lines };
@@ -214,10 +215,22 @@
     return { title: "Bước 4. Phương trình tức thời", lines: [head].concat(timeLines(p, s)) };
   }
 
+  /** Goc pha "30°" ; "(−8,13°)" khi am, de dat trong phep tru. */
+  function degTerm(z) {
+    var d = Math.round(C.arg(z) * 100) / 100;
+    return d < 0 ? "(" + num(d) + "°)" : num(d) + "°";
+  }
+
   function stepPower(p, s) {
-    var u = dot(p.source.type === "V" ? "U_o" : "U_{AB}");
+    var isV = p.source.type === "V";
+    var uName = isV ? "U" : "U_{AB}";
+    var u = s.vSource, i = s.current;
+    var uEff = C.abs(u) / Math.SQRT2, iEff = C.abs(i) / Math.SQRT2;
+    var phi = Math.round((C.arg(u) - C.arg(i)) * 100) / 100;
     var q = Math.round(s.power.im * 100) / 100;
     var nature = q === 0 ? "Q = 0: tải thuần trở" : q < 0 ? "Q < 0: tải mang tính dung" : "Q > 0: tải mang tính cảm";
+    function eff(x) { var a = num(x); return a.indexOf("/") >= 0 ? num(Math.round(x * 100) / 100) : a; }
+    var ui = eff(uEff) + "·" + eff(iEff);
     var rTerms = [], rSum = 0;
     function addR(r, z) { rTerms.push(r + "·" + squared(C.abs(z))); rSum += r * C.abs(z) * C.abs(z); }
     (p.series || []).forEach(function (e) { if (e.kind === "R") addR(e.value, s.current); });
@@ -225,12 +238,13 @@
     return {
       title: "Bước 5. Công suất nguồn cấp cho tải",
       lines: [
-        ["S̃ = ", fr("1", "2"), "·" + u + "·" + dot("I_o") + "* = ", fr("1", "2"), "·" + pol(s.vSource) + "·" + pol(C.conj(s.current)) +
-          " = " + rect(s.power) + " VA  (" + dot("I_o") + "* là số phức liên hợp; theo biên độ nên nhân ", fr("1", "2"), ")"],
-        "P = Re(S̃) = " + num(s.power.re) + " W",
-        "Q = Im(S̃) = " + num(q) + " VAR  (" + nature + ")",
-        "S = |S̃| = √(P² + Q²) = " + num(C.abs(s.power)) + " VA",
-        ["Kiểm tra: P = ", fr("1", "2"), "·Σ R·I² = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
+        ["Hiệu dụng: " + uName + " = ", fr(isV ? "U_o" : "U_{oAB}", "√2"), " = ", fr(num(C.abs(u)), "√2"),
+          " = " + eff(uEff) + " V ;  I = ", fr("I_o", "√2"), " = ", fr(num(C.abs(i)), "√2"), " = " + eff(iEff) + " A"],
+        "φ = φ_u − φ_i = " + degTerm(u) + " − " + degTerm(i) + " = " + num(phi) + "°",
+        "P = " + uName + "·I·cosφ = " + ui + "·cos(" + num(phi) + "°) = " + num(s.power.re) + " W",
+        "Q = " + uName + "·I·sinφ = " + ui + "·sin(" + num(phi) + "°) = " + num(q) + " VAR  (" + nature + ")",
+        "S = " + uName + "·I = " + ui + " = " + num(C.abs(s.power)) + " VA",
+        ["Kiểm tra: P = ", fr("1", "2"), "·Σ R·I_o² = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
       ]
     };
   }

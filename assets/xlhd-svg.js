@@ -112,7 +112,8 @@
         if (el.mark) {
           label(g, bx - 12, ys[i] - 14, "+", "end", "xl-mark");
           label(g, bx - 12, ys[i] + 26, "−", "end", "xl-mark");
-          label(g, bx - 20, ys[i] + 6, el.mark, "end", "xl-mark");
+          var mk = el.mark.split("_"), mt = label(g, bx - 20, ys[i] + 6, mk[0], "end", "xl-mark");
+          if (mk[1]) s("tspan", { dy: 4, "class": "xl-sub" }, mt).textContent = mk[1];
         }
         y = ys[i] + HALF;
       });
@@ -140,6 +141,11 @@
       var t = label(g, (a.x + b.x) / 2, a.y + 5, "+ " + parts[0], "middle", "xl-mark");
       s("tspan", { dy: 4, "class": "xl-sub" }, t).textContent = parts[1];
       s("tspan", { dy: -4 }, t).textContent = " −";
+      if (p.diff.loop) {
+        var cx = (a.x + b.x) / 2, cy = (a.y + BOT) / 2 + 4, r = Math.min(22, (BOT - a.y) / 2 - 8);
+        s("path", { d: "M " + (cx - r) + " " + cy + " A " + r + " " + r + " 0 1 1 " + cx + " " + (cy + r), "class": "xl-loop" }, g);
+        s("path", { d: "M " + (cx + 6) + " " + (cy + r - 6) + " L " + cx + " " + (cy + r) + " L " + (cx + 6) + " " + (cy + r + 6), "class": "xl-loop" }, g);
+      }
     }
 
     var left = SRC_X - SRC_R - 120, w = last + 90 - left, h = BOT + 30;
