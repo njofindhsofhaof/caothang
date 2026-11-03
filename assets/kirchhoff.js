@@ -134,12 +134,43 @@
     return card;
   }
 
+  /** "U_N" / "P_tải" -> chi so <sub>. */
+  function richLine(tag, text) {
+    var node = el(tag), re = /_([0-9A-Za-zÀ-ỹ]+)/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
+      node.appendChild(el("sub", { text: m[1] }));
+      last = re.lastIndex;
+    }
+    if (last < text.length) node.appendChild(document.createTextNode(text.slice(last)));
+    return node;
+  }
+
+  /* ---------- bai giai mau (khong o dap an) ---------- */
+  function buildWorked(p, n) {
+    var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải bài " + n })]);
+    p.steps.forEach(function (st) {
+      sol.appendChild(el("h4", { text: st.title }));
+      sol.appendChild(el("ul", { "class": "kh-steps" }, st.lines.map(function (l) { return richLine("li", l); })));
+    });
+    return el("article", { "class": "kh-prob", "data-id": p.id }, [
+      el("div", { "class": "kh-head" }, [el("span", { "class": "kh-num", text: "Bài " + n }), el("p", { "class": "kh-ask", text: p.ask })]),
+      el("figure", { "class": "kh-fig kh-fig-svg" }, [window.KH_SVG.draw(p)]),
+      sol
+    ]);
+  }
+
   /* ---------- tabs + panels ---------- */
   var tabs = el("div", { "class": "kh-tabs", role: "tablist", "aria-label": "Chọn đề" });
   var panels = el("div");
   var entries = [];
 
   sets.forEach(function (s) {
+    if (s.worked) {
+      var wp = el("section", { role: "tabpanel", id: "de" + s.id, hidden: "" }, s.problems.map(function (p, i) { return buildWorked(p, i + 1); }));
+      addTab(s, wp);
+      return;
+    }
     var score = el("p", { "class": "kh-score" });
     var panel = el("section", { role: "tabpanel", id: "de" + s.id, hidden: "" }, [score]);
     function updateScore() {
@@ -149,12 +180,16 @@
     s.problems.forEach(function (p) { panel.appendChild(buildProblem(p, updateScore)); });
     updateScore();
 
+    addTab(s, panel);
+  });
+
+  function addTab(s, panel) {
     var tab = el("button", { type: "button", role: "tab", text: s.title, "aria-controls": "de" + s.id });
     tab.addEventListener("click", function () { select(s.id, true); });
     tabs.appendChild(tab);
     panels.appendChild(panel);
     entries.push({ id: s.id, tab: tab, panel: panel });
-  });
+  }
 
   function select(id, updateHash) {
     entries.forEach(function (e) {
