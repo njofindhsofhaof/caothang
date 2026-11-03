@@ -6,7 +6,6 @@
   var IMG_BASE = "/assets/kirchhoff/";
   var sets = Array.isArray(window.KH_SETS) ? window.KH_SETS : [];
   var app = document.getElementById("khApp");
-  if (!app) return;
 
   function el(tag, attrs, children) {
     var node = document.createElement(tag);
@@ -159,6 +158,10 @@
       sol
     ]);
   }
+
+  /* The bai nang cao dung lai o trang khac (vd de kiem tra). */
+  window.KH_WORKED_CARD = buildWorked;
+  if (!app) return;
 
   /* ---------- tabs + panels ---------- */
   var tabs = el("div", { "class": "kh-tabs", role: "tablist", "aria-label": "Chọn đề" });

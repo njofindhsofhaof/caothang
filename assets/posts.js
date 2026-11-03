@@ -106,6 +106,14 @@ window.CT_POSTS = [
     parent: "/lythuyetmach"
   },
   {
+    section: "ontap",
+    title: "Đề ôn kiểm tra 1 tiết môn Lý thuyết Mạch",
+    desc: "3 đề, mỗi đề 1 bài Kirchhoff nâng cao + 1 bài mạch xác lập điều hoà, có lời giải từng bước.",
+    date: "2026-11-03",
+    href: "/dekiemtra",
+    parent: "/lythuyetmach"
+  },
+  {
     section: "thongtinlop",
     title: "Lịch thực hành điện tử cơ bản từ 21-26/9/2026",
     date: "2026-09-20",

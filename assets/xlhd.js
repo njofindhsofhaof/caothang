@@ -7,7 +7,7 @@
   var SVG = window.XL_SVG;
   var problems = Array.isArray(window.XL_PROBLEMS) ? window.XL_PROBLEMS : [];
   var app = document.getElementById("xlApp");
-  if (!app || !C || !SVG) return;
+  if (!C || !SVG) return;
 
   var num = C.num, rect = C.fmtRect, pol = C.fmtPolar;
 
@@ -99,7 +99,7 @@
       "Ảnh phức của nguồn: " + dot("U_o") + " = " + p.source.complexLabel + "."];
     allElems(p).forEach(function (e) {
       var z = rect(C.impedance(e, w));
-      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm L = " + e.label + ": " + e.sym + " = jωL = j × " + w + " × " + e.h + " = " + z + " Ω");
+      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm L = " + e.label + ": " + e.sym + " = jωL = j × " + w + " × " + num(e.h) + " = " + z + " Ω");
       if (e.kind === "C" && e.f != null) {
         lines.push(["Tụ C = " + e.label + ": " + e.sym + " = ", fr("1", "jωC"), " = ", fr("1", "j × " + w + " × " + e.label.replace(" F", "")), " = " + z + " Ω"]);
       }
@@ -299,6 +299,10 @@
     card.appendChild(sol);
     return card;
   }
+
+  /* The 1 bai dung lai o trang khac (vd de kiem tra). */
+  window.XL_CARD = buildProblem;
+  if (!app) return;
 
   /* ---------- tabs ---------- */
   var tabs = el("div", { "class": "kh-tabs", role: "tablist", "aria-label": "Chọn bài" });
