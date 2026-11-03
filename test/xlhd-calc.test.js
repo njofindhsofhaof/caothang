@@ -85,3 +85,17 @@ test('formatting uses comma decimals and a real minus sign', () => {
   assert.equal(fmtRect({ re: 1, im: -1 }), '1 − j1');
   assert.equal(fmtPolar({ re: 0, im: -100 }), '100∠−90°');
 });
+
+test('withSymbols names resistors R_1.. in order and L/C as Z_L/Z_C without mutating', () => {
+  const { withSymbols } = globalThis.XL_CALC;
+  const p = {
+    series: [{ kind: 'L', x: 2 }, { kind: 'R', value: 6 }],
+    branches: [{ elems: [{ kind: 'R', value: 2 }] }, { elems: [{ kind: 'R', value: 3 }, { kind: 'C', x: 4 }] }]
+  };
+  const q = withSymbols(p);
+  assert.deepEqual(q.series.map(e => e.sym), ['Z_L', 'R_1']);
+  assert.deepEqual(q.branches.map(b => b.elems.map(e => e.sym)), [['R_2'], ['R_3', 'Z_C']]);
+  assert.equal(p.series[0].sym, undefined);
+  const two = withSymbols({ branches: [{ elems: [{ kind: 'C', x: 1 }] }, { elems: [{ kind: 'C', x: 2 }] }] });
+  assert.deepEqual(two.branches.map(b => b.elems[0].sym), ['Z_C1', 'Z_C2']);
+});

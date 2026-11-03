@@ -74,7 +74,7 @@
   function fnName(p) { return p.source.fn === "cos" ? "cos" : "sin"; }
 
   function resistorLine(p) {
-    var rs = allElems(p).filter(function (e) { return e.kind === "R"; }).map(function (e) { return e.label; });
+    var rs = allElems(p).filter(function (e) { return e.kind === "R"; }).map(function (e) { return e.sym + " = " + e.label; });
     return rs.length ? "Điện trở giữ nguyên giá trị (không đổi sang dạng cực): " + rs.join("; ") + "." : null;
   }
 
@@ -92,9 +92,9 @@
       "Ảnh phức của nguồn: " + dot("U_o") + " = " + p.source.complexLabel + "."];
     allElems(p).forEach(function (e) {
       var z = rect(C.impedance(e, w));
-      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm " + e.label + ": Z_L = jωL = j·" + w + "·" + e.h + " = " + z + " Ω");
+      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm L = " + e.label + ": " + e.sym + " = jωL = j·" + w + "·" + e.h + " = " + z + " Ω");
       if (e.kind === "C" && e.f != null) {
-        lines.push(["Tụ " + e.label + ": Z_C = ", fr("1", "jωC"), " = ", fr("1", "j·" + w + "·" + e.label.replace(" F", "")), " = " + z + " Ω"]);
+        lines.push(["Tụ C = " + e.label + ": " + e.sym + " = ", fr("1", "jωC"), " = ", fr("1", "j·" + w + "·" + e.label.replace(" F", "")), " = " + z + " Ω"]);
       }
     });
     lines.push(resistorLine(p));
@@ -113,7 +113,8 @@
       title: "Bước 1. Nhận xét mạch",
       lines: [
         first,
-        "Cuộn cảm và tụ đã ghi sẵn tổng trở jX_L, −jX_C.",
+        "Cuộn cảm và tụ đã ghi sẵn tổng trở: " + allElems(p).filter(function (e) { return e.kind !== "R"; })
+          .map(function (e) { return e.sym + " = " + e.label; }).join("; ") + ".",
         resistorLine(p),
         "Đề không cho ω nên phương trình tức thời viết theo ω."
       ].filter(Boolean)
@@ -126,16 +127,19 @@
     return parts.length > 1 && expr !== rect(z) ? expr + " = " : "";
   }
 
+  /** "R_1 + Z_C = 1 + (−j1) = 1 − j1" : cong thuc theo ky hieu, the so, roi ket qua. */
+  function zSum(elems, z, w) {
+    var syms = elems.map(function (e) { return e.sym; }).join(" + ");
+    var parts = elems.map(function (e) { return term(C.impedance(e, w)); });
+    return syms + " = " + sumPrefix(parts, z) + rect(z);
+  }
+
   function stepImpedance(p, s) {
     var w = p.source.omega;
     var lines = [];
-    if (hasSeries(p)) {
-      var sp = p.series.map(function (e) { return term(C.impedance(e, w)); });
-      lines.push("Đoạn nối tiếp: Z_nt = " + sumPrefix(sp, s.zSeries) + rect(s.zSeries) + " Ω");
-    }
+    if (hasSeries(p)) lines.push("Đoạn nối tiếp: Z_nt = " + zSum(p.series, s.zSeries, w) + " Ω");
     p.branches.forEach(function (b, k) {
-      var parts = b.elems.map(function (e) { return term(C.impedance(e, w)); });
-      lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + sumPrefix(parts, s.zBranches[k]) + rect(s.zBranches[k]) + " Ω");
+      lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + zSum(b.elems, s.zBranches[k], w) + " Ω");
     });
     var z1 = s.zBranches[0], z2 = s.zBranches[1];
     var n1 = zName(p.branches[0]), n2 = zName(p.branches[1]);
@@ -231,10 +235,14 @@
     var nature = q === 0 ? "Q = 0: tải thuần trở" : q < 0 ? "Q < 0: tải mang tính dung" : "Q > 0: tải mang tính cảm";
     function eff(x) { var a = num(x); return a.indexOf("/") >= 0 ? num(Math.round(x * 100) / 100) : a; }
     var ui = eff(uEff) + "·" + eff(iEff);
-    var rTerms = [], rSum = 0;
-    function addR(r, z) { rTerms.push(r + "·" + squared(C.abs(z))); rSum += r * C.abs(z) * C.abs(z); }
-    (p.series || []).forEach(function (e) { if (e.kind === "R") addR(e.value, s.current); });
-    p.branches.forEach(function (b, n) { b.elems.forEach(function (e) { if (e.kind === "R") addR(e.value, s.branchI[n]); }); });
+    var rSyms = [], rTerms = [], rSum = 0;
+    function addR(e, iName, z) {
+      rSyms.push(e.sym + "·" + iName + "²");
+      rTerms.push(e.value + "·" + squared(C.abs(z)));
+      rSum += e.value * C.abs(z) * C.abs(z);
+    }
+    (p.series || []).forEach(function (e) { if (e.kind === "R") addR(e, "I_o", s.current); });
+    p.branches.forEach(function (b, n) { b.elems.forEach(function (e) { if (e.kind === "R") addR(e, b.current, s.branchI[n]); }); });
     return {
       title: "Bước 5. Công suất nguồn cấp cho tải",
       lines: [
@@ -244,13 +252,14 @@
         "P = " + uName + "·I·cosφ = " + ui + "·cos(" + num(phi) + "°) = " + num(s.power.re) + " W",
         "Q = " + uName + "·I·sinφ = " + ui + "·sin(" + num(phi) + "°) = " + num(q) + " VAR  (" + nature + ")",
         "S = " + uName + "·I = " + ui + " = " + num(C.abs(s.power)) + " VA",
-        ["Kiểm tra: P = ", fr("1", "2"), "·Σ R·I_o² = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
+        ["Kiểm tra: P = ", fr("1", "2"), "·(" + rSyms.join(" + ") + ") = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
       ]
     };
   }
 
   /* ---------- 1 bai ---------- */
-  function buildProblem(p) {
+  function buildProblem(raw) {
+    var p = C.withSymbols(raw);
     var s = C.solve(p);
     var card = el("article", { "class": "kh-prob xl-prob" });
     card.appendChild(el("div", { "class": "kh-head" }, [

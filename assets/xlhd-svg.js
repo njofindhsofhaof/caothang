@@ -27,10 +27,11 @@
   /** "I_1" -> I + chi so 1; text thuong giu nguyen. */
   function label(g, x, y, text, anchor, cls) {
     var t = s("text", { x: x, y: y, "text-anchor": anchor || "start", "class": cls || "" }, g);
-    var m = /^([A-Za-z]+)_(\w+)$/.exec(text);
+    var m = /^([A-Za-z]+)_(\w+)(.*)$/.exec(text);
     if (!m) { t.textContent = text; return t; }
     t.appendChild(document.createTextNode(m[1]));
     s("tspan", { dy: 4, "class": "xl-sub" }, t).textContent = m[2];
+    if (m[3]) s("tspan", { dy: -4 }, t).textContent = m[3];
     return t;
   }
 
@@ -76,7 +77,7 @@
       "aria-label": (complex ? "Mạch đã phức hoá bài " : "Sơ đồ mạch bài ") + p.id
     });
     var g = s("g", {}, svg);
-    var text = function (el) { return complex && el.complexLabel ? el.complexLabel : el.label; };
+    var text = function (el) { return (el.sym ? el.sym + " = " : "") + (complex && el.complexLabel ? el.complexLabel : el.label); };
 
     drawSource(g, p.source, complex);
 
@@ -94,7 +95,7 @@
     }
 
     var first = p.series && p.series.length ? x + 70 : SRC_X + 150;
-    var xs = p.branches.map(function (_, k) { return first + k * 160; });
+    var xs = p.branches.map(function (_, k) { return first + k * 190; });
     var last = xs[xs.length - 1];
     wire(g, x, TOP, last, TOP);
     wire(g, SRC_X, BOT, last, BOT);
@@ -142,13 +143,13 @@
       s("tspan", { dy: 4, "class": "xl-sub" }, t).textContent = parts[1];
       s("tspan", { dy: -4 }, t).textContent = " −";
       if (p.diff.loop) {
-        var cx = (a.x + b.x) / 2, cy = (a.y + BOT) / 2 + 4, r = Math.min(22, (BOT - a.y) / 2 - 8);
+        var cx = a.x + (b.x - a.x) * 0.65, cy = (a.y + BOT) / 2 + 4, r = Math.min(16, (BOT - a.y) / 2 - 8);
         s("path", { d: "M " + (cx - r) + " " + cy + " A " + r + " " + r + " 0 1 1 " + cx + " " + (cy + r), "class": "xl-loop" }, g);
         s("path", { d: "M " + (cx + 6) + " " + (cy + r - 6) + " L " + cx + " " + (cy + r) + " L " + (cx + 6) + " " + (cy + r + 6), "class": "xl-loop" }, g);
       }
     }
 
-    var left = SRC_X - SRC_R - 120, w = last + 90 - left, h = BOT + 30;
+    var left = SRC_X - SRC_R - 120, w = last + 130 - left, h = BOT + 30;
     svg.setAttribute("viewBox", left + " 0 " + w + " " + h);
     svg.setAttribute("width", w);
     svg.setAttribute("height", h);

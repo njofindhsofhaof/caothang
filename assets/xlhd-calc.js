@@ -110,7 +110,27 @@
     return num(abs(z)) + "∠" + num(arg(z)) + "°";
   }
 
+  /**
+   * Ban sao cua bai, moi phan tu co them sym: dien tro R_1, R_2.. theo thu tu (noi tiep truoc, roi tung nhanh);
+   * cuon cam Z_L, tu Z_C (Z_L1, Z_L2.. khi co nhieu hon 1).
+   */
+  function withSymbols(p) {
+    var all = [].concat.apply((p.series || []).slice(), p.branches.map(function (b) { return b.elems; }));
+    var total = { R: 0, L: 0, C: 0 }, seen = { R: 0, L: 0, C: 0 };
+    all.forEach(function (e) { total[e.kind]++; });
+    function sym(e) {
+      var n = ++seen[e.kind];
+      if (e.kind === "R") return "R_" + n;
+      return "Z_" + e.kind + (total[e.kind] > 1 ? n : "");
+    }
+    function mark(e) { return Object.assign({}, e, { sym: sym(e) }); }
+    var series = (p.series || []).map(mark);
+    var branches = p.branches.map(function (b) { return Object.assign({}, b, { elems: b.elems.map(mark) }); });
+    return Object.assign({}, p, p.series ? { series: series } : {}, { branches: branches });
+  }
+
   root.XL_CALC = {
+    withSymbols: withSymbols,
     cx: cx, polar: polar, add: add, mul: mul, div: div, conj: conj, scale: scale, abs: abs, arg: arg,
     impedance: impedance, solve: solve, f2: f2, num: num, fmtRect: fmtRect, fmtPolar: fmtPolar
   };
