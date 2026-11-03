@@ -125,6 +125,13 @@
     return a.activity < b.activity ? 1 : a.activity > b.activity ? -1 : 0;
   }
 
+  /** Bai co "order" (vd. 4 mon o trang On tap) dung yen theo thu tu do, dung truoc bai khong co. */
+  function byOrderThenActivity(a, b) {
+    var oa = a.order == null ? Infinity : a.order;
+    var ob = b.order == null ? Infinity : b.order;
+    return oa !== ob ? oa - ob : byActivityDesc(a, b);
+  }
+
   /* data-section="ontap": bai cua trang muc; data-parent="/dientucoban": bai con cua 1 trang chua bai. */
   function renderSectionList(container) {
     var key = container.getAttribute("data-section");
@@ -132,7 +139,7 @@
     var items = posts
       .filter(function (p) { return parent ? p.parent === parent : p.section === key && !p.parent; })
       .map(withActivity)
-      .sort(parent ? byDateDesc : byActivityDesc);
+      .sort(parent ? byDateDesc : byOrderThenActivity);
     var empty = document.getElementById("emptyState");
     if (items.length === 0) return;
     if (empty) empty.hidden = true;

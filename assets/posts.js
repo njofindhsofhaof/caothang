@@ -2,6 +2,7 @@
    Them bai moi: them 1 dong vao mang duoi day (date dang YYYY-MM-DD).
    - section: gioithieu | ontap | hoctap | hoatdong | event | thongtinlop
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
+   - order: (tuy chon) so thu tu co dinh trong danh sach trang muc (vd. 4 mon On tap); bai khong co order xep sau theo ngay.
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
    Trang chua bai (trang cha): khi bai con co "Moi", the trang cha o trang muc cung tu hien "Moi" + ngay cap nhat.
    Trang cha tu liet ke bai con bang <div class="list" id="postList" data-parent="/href-trang-cha"></div>
@@ -9,10 +10,38 @@
 window.CT_POSTS = [
   {
     section: "ontap",
+    title: "Lý Thuyết Mạch",
+    desc: "Bài tập môn Lý Thuyết Mạch.",
+    date: "2026-11-03",
+    href: "/lythuyetmach",
+    hideFromNews: true,
+    order: 2
+  },
+  {
+    section: "ontap",
+    title: "Đo Lường Điện",
+    desc: "Bài tập môn Đo Lường Điện.",
+    date: "2026-11-03",
+    href: "/doluongdien",
+    hideFromNews: true,
+    order: 3
+  },
+  {
+    section: "ontap",
+    title: "Anh Văn",
+    desc: "Bài tập và đề thi môn Anh Văn.",
+    date: "2026-11-03",
+    href: "/anhvan",
+    hideFromNews: true,
+    order: 4
+  },
+  {
+    section: "ontap",
     title: "Test Đầu Vào Tiếng Anh",
     desc: "Thi trắc nghiệm tiếng Anh đầu vào — 5 đề, mỗi đề 50 câu, tự động chấm điểm.",
     date: "2026-09-11",
-    href: "/testdauvaotienganh"
+    href: "/testdauvaotienganh",
+    parent: "/anhvan"
   },
   {
     section: "ontap",
@@ -20,7 +49,8 @@ window.CT_POSTS = [
     desc: "Bài tập trắc nghiệm môn Điện Tử Cơ Bản.",
     date: "2026-09-11",
     href: "/dientucoban",
-    hideFromNews: true
+    hideFromNews: true,
+    order: 1
   },
   {
     section: "ontap",
@@ -64,7 +94,8 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     date: "2026-09-19",
-    href: "/kirchhoff"
+    href: "/kirchhoff",
+    parent: "/lythuyetmach"
   },
   {
     section: "thongtinlop",
