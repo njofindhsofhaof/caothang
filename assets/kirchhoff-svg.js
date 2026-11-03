@@ -1,4 +1,4 @@
-/* Ve so do mach DC cho bai giai mau Kirchhoff tu danh sach lenh p.draw (xem assets/kirchhoff-worked.js).
+/* Ve so do mach DC cho bai nang cao Kirchhoff tu danh sach lenh p.draw (xem assets/kirchhoff-worked.js).
    Day ve truoc, phan tu ve sau co nen che day nen khong can cat day. */
 (function (root) {
   "use strict";

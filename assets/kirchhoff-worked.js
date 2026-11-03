@@ -1,4 +1,4 @@
-/* Bai giai mau Kirchhoff (K1, K2) - tab rieng trong trang Kirchhoff, trinh bay loi giai thay vi o dap an.
+/* Bai nang cao Kirchhoff (K1, K2) - tab rieng trong trang Kirchhoff, trinh bay loi giai thay vi o dap an.
    draw: so do ve bang assets/kirchhoff-svg.js
      ["w", x1, y1, x2, y2] day noi | ["r", x, y, "h"|"v", nhan] dien tro | ["i", x, y, nhan] nguon dong (mui ten len)
      ["v", x, y, nhan] nguon ap (+ tren) | ["a", x, y, huong r/l/u/d, nhan] chieu dong | ["n", x, y, ten] nut
@@ -6,7 +6,7 @@
    steps: [{ title, lines }]; "_x" trong dong = chi so duoi (U_N, P_tải). */
 window.KH_SETS = (window.KH_SETS || []).concat([{
   id: 6,
-  title: "Bài giải mẫu",
+  title: "Bài nâng cao",
   worked: true,
   problems: [
     {

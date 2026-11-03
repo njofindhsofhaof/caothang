@@ -146,7 +146,7 @@
     return node;
   }
 
-  /* ---------- bai giai mau (khong o dap an) ---------- */
+  /* ---------- bai nang cao (khong o dap an) ---------- */
   function buildWorked(p, n) {
     var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải bài " + n })]);
     p.steps.forEach(function (st) {
