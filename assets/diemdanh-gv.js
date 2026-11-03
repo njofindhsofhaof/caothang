@@ -357,6 +357,8 @@
     const table = $('monthTable');
     if (!dates.length) {
       table.replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Tháng này chưa có buổi điểm danh nào.'))));
+      $('daySummary').replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Chưa có ngày nào có điểm danh.'))));
+      $('dayDetail').hidden = true;
       return;
     }
     const status = Object.fromEntries(dates.map((d) => [d, dayStatus(d)]));
@@ -385,6 +387,54 @@
       );
     }));
     table.replaceChildren(head, body);
+    renderDaySummary(dates);
+  }
+
+  let openDay = null;
+
+  // Mỗi ngày có điểm danh: số có mặt / vắng có phép / vắng không phép; bấm "Xem" để thấy ai vắng.
+  function renderDaySummary(dates) {
+    const rows = dates.map((d) => {
+      const st = dayStatus(d);
+      const sessions = monthData.sessions.filter((s) => s.date === d);
+      const by = { ok: [], P: [], K: [] };
+      for (const s of roster) by[st(s.mssv)].push(s);
+      return { d, sessions, by };
+    }).reverse();
+    const pct = (n) => (roster.length ? Math.round((n / roster.length) * 100) : 0);
+    $('daySummary').replaceChildren(
+      h('thead', {}, h('tr', {},
+        h('th', { class: 'name' }, 'Ngày'), h('th', {}, 'Buổi'), h('th', {}, 'Có mặt'),
+        h('th', {}, 'Vắng P'), h('th', {}, 'Vắng K'), h('th', {}, 'Tỉ lệ'), h('th', {}, ''))),
+      h('tbody', {}, rows.map(({ d, sessions, by }) => h('tr', {},
+        h('td', { class: 'name' }, new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })),
+        h('td', { class: 'mono' }, sessions.map((s) => s.label || fmtTime(s.startsAt)).join(', ')),
+        h('td', { class: 'm-ok' }, String(by.ok.length)),
+        h('td', { class: 'm-p' }, String(by.P.length)),
+        h('td', { class: 'm-k' }, String(by.K.length)),
+        h('td', { class: 'mono' }, `${pct(by.ok.length)}%`),
+        h('td', {}, h('button', { class: 'gv-mini', type: 'button', onclick: () => showDay(d, by) }, openDay === d ? 'Ẩn' : 'Xem vắng')),
+      ))),
+    );
+    if (openDay) {
+      const row = rows.find((r) => r.d === openDay);
+      if (row) showDay(openDay, row.by, true); else $('dayDetail').hidden = true;
+    }
+  }
+
+  function showDay(d, by, keep = false) {
+    if (!keep && openDay === d) { openDay = null; $('dayDetail').hidden = true; renderDaySummary(classDates()); return; }
+    openDay = d;
+    const list = (title, arr, cls) => h('div', {},
+      h('p', { class: `dd-label ${cls}` }, `${title} (${arr.length})`),
+      h('p', { class: 'gv-names' }, arr.length ? arr.map((s) => `${s.stt}. ${fullName(s)}`).join(' · ') : '—'));
+    $('dayDetail').replaceChildren(
+      h('p', { class: 'gv-day-title' }, `Ngày ${d.slice(8)}/${d.slice(5, 7)}`),
+      list('Vắng không phép', by.K, 'm-k'),
+      list('Vắng có phép', by.P, 'm-p'),
+    );
+    $('dayDetail').hidden = false;
+    if (!keep) renderDaySummary(classDates());
   }
 
   // K → P → ✓ (đánh dấu tay) → K

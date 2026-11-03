@@ -133,3 +133,10 @@
   .gv-fields{grid-template-columns:1fr 1fr;}
   .gv-fields .span2{grid-column:1/-1;}
 }
+
+.gv-summary{margin-bottom:16px;}
+.gv-summary .gv-table-wrap{max-height:none;border:0;}
+.gv-summary td.m-ok,.gv-summary td.m-p,.gv-summary td.m-k{font:600 14px var(--mono);}
+.gv-day-detail{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;display:grid;gap:8px;}
+.gv-day-title{font-family:var(--serif);font-weight:600;font-size:17px;margin:0;}
+.gv-names{font-size:13.5px;margin:2px 0 0;line-height:1.7;}

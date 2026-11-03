@@ -122,6 +122,11 @@
         <button class="dd-btn" type="button" id="exportBtn">Xuất Excel</button>
         <p class="dd-hint" id="exportMsg" role="status"></p>
       </div>
+      <section class="dd-card gv-summary" aria-labelledby="sumTitle">
+        <h3 class="dd-label" id="sumTitle">Tổng kết theo ngày</h3>
+        <div class="gv-table-wrap"><table class="gv-table" id="daySummary"></table></div>
+        <div id="dayDetail" class="gv-day-detail" hidden></div>
+      </section>
       <p class="gv-legend">Bấm vào ô để đổi: <b class="m-k">K</b> vắng không phép → <b class="m-p">P</b> có phép → <b class="m-ok">✓</b> có mặt (đánh dấu tay).</p>
       <div class="gv-table-wrap"><table class="gv-table" id="monthTable"></table></div>
     </section>
