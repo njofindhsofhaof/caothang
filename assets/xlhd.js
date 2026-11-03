@@ -282,7 +282,7 @@
       allElems(p).some(function (e) { return e.h != null || e.f != null; }) ? stepComplexify(p) : stepConvention(p),
       stepImpedance(p, s), stepCurrents(p, s), stepTime(p, s), stepPower(p, s)
     ];
-    var sol = el("section", { "class": "xl-sol", "aria-label": "Lời giải bài " + p.id }, [el("h3", { "class": "xl-sol-title", text: "Lời giải" })]);
+    var sol = el("details", { "class": "xl-sol" }, [el("summary", { "class": "xl-sol-btn", text: "Xem lời giải bài " + p.id })]);
     steps.forEach(function (st) {
       sol.appendChild(el("h4", { text: st.title }));
       sol.appendChild(el("ul", { "class": "xl-steps" }, st.lines.map(function (t) { return rich("li", t); })));

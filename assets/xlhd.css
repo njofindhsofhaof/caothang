@@ -18,7 +18,12 @@
 .xl-cur{fill:var(--accent-warm);}
 
 .xl-sol{margin-top:18px;border-top:1px solid var(--line);padding-top:6px;}
-.xl-sol-title{font-family:var(--serif);font-size:17px;font-weight:600;margin:8px 0 2px;}
+.xl-sol-btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--accent);border:1px solid currentColor;border-radius:6px;padding:7px 14px;margin:8px 0 2px;transition:background-color .15s,color .15s;}
+.xl-sol-btn::-webkit-details-marker{display:none;}
+.xl-sol-btn::before{content:"▸";transition:transform .15s;}
+.xl-sol[open]>.xl-sol-btn::before{transform:rotate(90deg);}
+.xl-sol-btn:hover{background:var(--accent);color:var(--paper,#fff);}
+.xl-sol-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 .xl-sol h4{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 6px;}
 .xl-steps{margin:0;padding-left:18px;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink-soft);}
 .xl-steps li{margin:5px 0;overflow-wrap:anywhere;}
