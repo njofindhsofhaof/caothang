@@ -61,7 +61,14 @@
   /** Dong/ap: "1,4 − j0,2 = √2∠−8,13°"; so thuc chi ghi dang cuc. */
   function both(z) { return isReal(z) ? pol(z) : rect(z) + " = " + pol(z); }
 
-  function zName(b) { return "Z_" + b.current.split("_")[1]; }
+  /** Nhanh 1 phan tu goi thang ten phan tu (R_2, Z_C); nhanh nhieu phan tu goi Z_1, Z_2. */
+  function zName(b) { return b.elems.length === 1 ? b.elems[0].sym : "Z_" + b.current.split("_")[1]; }
+
+  /** Cum song song: "Z_{R2C}" khi moi nhanh 1 phan tu (ghi theo vo), nguoc lai "Z_AB". */
+  function parName(p) {
+    if (!p.branches.every(function (b) { return b.elems.length === 1; })) return "Z_AB";
+    return "Z_{" + p.branches.map(function (b) { return b.elems[0].sym.replace(/^Z_|_/g, ""); }).join("") + "}";
+  }
   function dot(name) { return "^" + name; }
   function lower(name) { return name.charAt(0).toLowerCase() + name.slice(1); }
 
@@ -137,19 +144,21 @@
   function stepImpedance(p, s) {
     var w = p.source.omega;
     var lines = [];
-    if (hasSeries(p)) lines.push("Đoạn nối tiếp: Z_nt = " + zSum(p.series, s.zSeries, w) + " Ω");
+    var zp = parName(p);
     p.branches.forEach(function (b, k) {
-      lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + zSum(b.elems, s.zBranches[k], w) + " Ω");
+      if (b.elems.length > 1) lines.push("Nhánh " + (k + 1) + ": " + zName(b) + " = " + zSum(b.elems, s.zBranches[k], w) + " Ω");
     });
     var z1 = s.zBranches[0], z2 = s.zBranches[1];
     var n1 = zName(p.branches[0]), n2 = zName(p.branches[1]);
-    lines.push(["Hai nhánh song song: Z_AB = ", fr(n1 + "·" + n2, n1 + " + " + n2), " = ",
+    lines.push(["Hai nhánh song song: " + zp + " = ", fr(n1 + "·" + n2, n1 + " + " + n2), " = ",
       fr(term(z1) + "·" + term(z2), rect(z1) + " + " + term(z2)), " = ",
       fr(rect(C.mul(z1, z2)), rect(C.add(z1, z2))), " = " + rect(s.zPar) + " Ω"]);
     if (hasSeries(p)) {
-      lines.push("Toàn mạch: Z_tđ = Z_nt + Z_AB = " + term(s.zSeries) + " + " + term(s.zPar) + " = " + rect(s.zTotal) + " Ω");
+      var syms = p.series.map(function (e) { return e.sym; }).concat(zp).join(" + ");
+      var parts = p.series.map(function (e) { return term(C.impedance(e, w)); }).concat(term(s.zPar));
+      lines.push("Toàn mạch: Z_tđ = " + syms + " = " + sumPrefix(parts, s.zTotal) + rect(s.zTotal) + " Ω");
     } else if (p.source.type === "V") {
-      lines.push("Toàn mạch: Z_tđ = Z_AB = " + rect(s.zPar) + " Ω");
+      lines.push("Toàn mạch: Z_tđ = " + zp + " = " + rect(s.zPar) + " Ω");
     }
     return { title: "Bước 2. Tổng trở", lines: lines };
   }
@@ -163,7 +172,7 @@
         fr(pol(src), rect(s.zTotal)), " = " + both(io) + " A"]);
     } else {
       lines.push("Dòng toàn mạch chính là dòng nguồn: " + dot("I_o") + " = " + both(io) + " A");
-      lines.push("Điện áp hai đầu cụm song song: " + dot("U_{AB}") + " = " + dot("I_o") + "·Z_AB = " + term(io) + "·" + term(s.zPar) +
+      lines.push("Điện áp hai đầu cụm song song: " + dot("U_{AB}") + " = " + dot("I_o") + "·" + parName(p) + " = " + term(io) + "·" + term(s.zPar) +
         " = " + both(s.vPar) + " V");
     }
     var b1 = p.branches[0], b2 = p.branches[1];
