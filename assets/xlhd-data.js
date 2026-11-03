@@ -24,7 +24,7 @@ window.XL_PROBLEMS = [
     voltages: [{
       name: "V_12",
       loop: ["Chọn vòng kín 1 → C → B → L → 2 → 1 (vòng trên hình), áp dụng K2:", "^V_12 + ^U_L − ^U_C = 0"],
-      text: "⇒ ^V_12 = ^U_C − ^U_L = ^I_1·Z_C − ^I_2·Z_L = ^I_1·(−j1) − ^I_2·(j1)",
+      text: "⇒ ^V_12 = ^U_C − ^U_L = ^I_1 × Z_C − ^I_2 × Z_L = ^I_1 × (−j1) − ^I_2 × (j1)",
       terms: [{ branch: 0, elem: 1, sign: 1 }, { branch: 1, elem: 1, sign: -1 }]
     }],
     asks: "Viết phương trình dòng điện trên các nhánh và V_12. Tính P, Q, S của nguồn cấp cho các tải."
@@ -37,7 +37,7 @@ window.XL_PROBLEMS = [
       { current: "I_1", elems: [{ kind: "R", value: 5, label: "5 Ω" }, { kind: "L", x: 5, label: "j5 Ω" }] },
       { current: "I_2", elems: [{ kind: "R", value: 2, label: "2 Ω" }, { kind: "C", x: 2, label: "−j2 Ω", mark: "V_x" }] }
     ],
-    voltages: [{ name: "V_x", text: "^V_x = ^I_2·Z_C = ^I_2·(−j2)", terms: [{ branch: 1, elem: 1, sign: 1 }] }],
+    voltages: [{ name: "V_x", text: "^V_x = ^I_2 × Z_C = ^I_2 × (−j2)", terms: [{ branch: 1, elem: 1, sign: 1 }] }],
     asks: "Viết phương trình dòng điện trên các nhánh và V_x. Tính P, Q, S của nguồn cấp cho các tải."
   },
   {
@@ -69,7 +69,7 @@ window.XL_PROBLEMS = [
       { current: "I_1", elems: [{ kind: "R", value: 2, label: "2 Ω", complexLabel: "2 Ω" }] },
       { current: "I_2", elems: [{ kind: "C", f: 0.25, label: "1/4 F", complexLabel: "−j2 Ω", mark: "U_c" }] }
     ],
-    voltages: [{ name: "U_c", text: "^U_c = ^I_2·Z_C = ^I_2·(−j2)", terms: [{ branch: 1, elem: 0, sign: 1 }] }],
+    voltages: [{ name: "U_c", text: "^U_c = ^I_2 × Z_C = ^I_2 × (−j2)", terms: [{ branch: 1, elem: 0, sign: 1 }] }],
     asks: "Viết phương trình dòng điện trên các nhánh và phương trình điện áp u_c(t). Tính P, Q, S của nguồn cấp cho các tải."
   }
 ];

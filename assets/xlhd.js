@@ -99,9 +99,9 @@
       "Ảnh phức của nguồn: " + dot("U_o") + " = " + p.source.complexLabel + "."];
     allElems(p).forEach(function (e) {
       var z = rect(C.impedance(e, w));
-      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm L = " + e.label + ": " + e.sym + " = jωL = j·" + w + "·" + e.h + " = " + z + " Ω");
+      if (e.kind === "L" && e.h != null) lines.push("Cuộn cảm L = " + e.label + ": " + e.sym + " = jωL = j × " + w + " × " + e.h + " = " + z + " Ω");
       if (e.kind === "C" && e.f != null) {
-        lines.push(["Tụ C = " + e.label + ": " + e.sym + " = ", fr("1", "jωC"), " = ", fr("1", "j·" + w + "·" + e.label.replace(" F", "")), " = " + z + " Ω"]);
+        lines.push(["Tụ C = " + e.label + ": " + e.sym + " = ", fr("1", "jωC"), " = ", fr("1", "j × " + w + " × " + e.label.replace(" F", "")), " = " + z + " Ω"]);
       }
     });
     lines.push(resistorLine(p));
@@ -150,8 +150,8 @@
     });
     var z1 = s.zBranches[0], z2 = s.zBranches[1];
     var n1 = zName(p.branches[0]), n2 = zName(p.branches[1]);
-    lines.push(["Hai nhánh song song: " + zp + " = ", fr(n1 + "·" + n2, n1 + " + " + n2), " = ",
-      fr(term(z1) + "·" + term(z2), rect(z1) + " + " + term(z2)), " = ",
+    lines.push(["Hai nhánh song song: " + zp + " = ", fr(n1 + " × " + n2, n1 + " + " + n2), " = ",
+      fr(term(z1) + " × " + term(z2), rect(z1) + " + " + term(z2)), " = ",
       fr(rect(C.mul(z1, z2)), rect(C.add(z1, z2))), " = " + rect(s.zPar) + " Ω"]);
     if (hasSeries(p)) {
       var syms = p.series.map(function (e) { return e.sym; }).concat(zp).join(" + ");
@@ -172,13 +172,13 @@
         fr(pol(src), rect(s.zTotal)), " = " + both(io) + " A"]);
     } else {
       lines.push("Dòng toàn mạch chính là dòng nguồn: " + dot("I_o") + " = " + both(io) + " A");
-      lines.push("Điện áp hai đầu cụm song song: " + dot("U_{AB}") + " = " + dot("I_o") + "·" + parName(p) + " = " + term(io) + "·" + term(s.zPar) +
+      lines.push("Điện áp hai đầu cụm song song: " + dot("U_{AB}") + " = " + dot("I_o") + " × " + parName(p) + " = " + term(io) + " × " + term(s.zPar) +
         " = " + both(s.vPar) + " V");
     }
     var b1 = p.branches[0], b2 = p.branches[1];
     var z1 = s.zBranches[0], z2 = s.zBranches[1];
-    lines.push(["Chia dòng: " + dot(b1.current) + " = " + dot("I_o") + "·", fr(zName(b2), zName(b1) + " + " + zName(b2)), " = ",
-      fr(term(io) + "·" + term(z2), rect(C.add(z1, z2))), " = " + both(s.branchI[0]) + " A"]);
+    lines.push(["Chia dòng: " + dot(b1.current) + " = " + dot("I_o") + " × ", fr(zName(b2), zName(b1) + " + " + zName(b2)), " = ",
+      fr(term(io) + " × " + term(z2), rect(C.add(z1, z2))), " = " + both(s.branchI[0]) + " A"]);
     lines.push("Kirchhoff 1: " + dot(b2.current) + " = " + dot("I_o") + " − " + dot(b1.current) + " = " + term(io) + " − " +
       term(s.branchI[0]) + " = " + both(s.branchI[1]) + " A");
     (p.voltages || []).forEach(function (v) {
@@ -197,10 +197,10 @@
     return f + "(" + wt + (deg < 0 ? " − " : " + ") + num(Math.abs(deg)) + "°)";
   }
 
-  /** Bien do: "2sin" ; "50√2·sin" ; "sin" khi bien do = 1. */
+  /** Bien do: "2sin" ; "50√2 × sin" ; "sin" khi bien do = 1. */
   function amp(x) {
     var a = num(x);
-    return a === "1" ? "" : a.indexOf("√") >= 0 ? a + "·" : a;
+    return a === "1" ? "" : a.indexOf("√") >= 0 ? a + " × " : a;
   }
 
   function timeLine(p, name, z, unit) {
@@ -223,8 +223,8 @@
 
   function stepTime(p, s) {
     var head = fnName(p) === "cos"
-      ? "Đề cho nguồn dạng cos nên viết theo cos: X∠φ ⇒ x(t) = X·cos(ωt + φ):"
-      : "Mặc định viết theo sin: X∠φ ⇒ x(t) = X·sin(ωt + φ):";
+      ? "Đề cho nguồn dạng cos nên viết theo cos: X∠φ ⇒ x(t) = X × cos(ωt + φ):"
+      : "Mặc định viết theo sin: X∠φ ⇒ x(t) = X × sin(ωt + φ):";
     return { title: "Bước 4. Phương trình tức thời", lines: [head].concat(timeLines(p, s)) };
   }
 
@@ -243,11 +243,11 @@
     var q = Math.round(s.power.im * 100) / 100;
     var nature = q === 0 ? "Q = 0: tải thuần trở" : q < 0 ? "Q < 0: tải mang tính dung" : "Q > 0: tải mang tính cảm";
     function eff(x) { var a = num(x); return a.indexOf("/") >= 0 ? num(Math.round(x * 100) / 100) : a; }
-    var ui = eff(uEff) + "·" + eff(iEff);
+    var ui = eff(uEff) + " × " + eff(iEff);
     var rSyms = [], rTerms = [], rSum = 0;
     function addR(e, iName, z) {
-      rSyms.push(e.sym + "·" + iName + "²");
-      rTerms.push(e.value + "·" + squared(C.abs(z)));
+      rSyms.push(e.sym + " × " + iName + "²");
+      rTerms.push(e.value + " × " + squared(C.abs(z)));
       rSum += e.value * C.abs(z) * C.abs(z);
     }
     (p.series || []).forEach(function (e) { if (e.kind === "R") addR(e, "I_o", s.current); });
@@ -258,10 +258,10 @@
         ["Hiệu dụng: " + uName + " = ", fr(isV ? "U_o" : "U_{oAB}", "√2"), " = ", fr(num(C.abs(u)), "√2"),
           " = " + eff(uEff) + " V ;  I = ", fr("I_o", "√2"), " = ", fr(num(C.abs(i)), "√2"), " = " + eff(iEff) + " A"],
         "φ = φ_u − φ_i = " + degTerm(u) + " − " + degTerm(i) + " = " + num(phi) + "°",
-        "P = " + uName + "·I·cosφ = " + ui + "·cos(" + num(phi) + "°) = " + num(s.power.re) + " W",
-        "Q = " + uName + "·I·sinφ = " + ui + "·sin(" + num(phi) + "°) = " + num(q) + " VAR  (" + nature + ")",
-        "S = " + uName + "·I = " + ui + " = " + num(C.abs(s.power)) + " VA",
-        ["Kiểm tra: P = ", fr("1", "2"), "·(" + rSyms.join(" + ") + ") = ", fr("1", "2"), "·(" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
+        "P = " + uName + " × I × cosφ = " + ui + " × cos(" + num(phi) + "°) = " + num(s.power.re) + " W",
+        "Q = " + uName + " × I × sinφ = " + ui + " × sin(" + num(phi) + "°) = " + num(q) + " VAR  (" + nature + ")",
+        "S = " + uName + " × I = " + ui + " = " + num(C.abs(s.power)) + " VA",
+        ["Kiểm tra: P = ", fr("1", "2"), " × (" + rSyms.join(" + ") + ") = ", fr("1", "2"), " × (" + rTerms.join(" + ") + ") = " + num(rSum / 2) + " W ✓"]
       ]
     };
   }
