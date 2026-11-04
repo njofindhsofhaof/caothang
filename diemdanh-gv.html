@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/diemdanh.css?v=late3">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=tpl">
 </head>
 <body>
 <main class="wrap gv">
@@ -125,7 +125,7 @@
         <label>Tháng <input type="month" id="monthInput"></label>
         <button class="dd-btn" type="button" id="exportBtn">Xuất Excel</button>
         <div class="gv-template">
-          <p class="gv-note"><span id="templateInfo"></span> Trang điền P/K vào file BẢNG ĐIỂM DANH trống của trường (đúng file đã dùng ở tab "Danh sách lớp") rồi tải về.</p>
+          <p class="gv-note"><span id="templateInfo"></span> Xuất Excel điền P/K vào mẫu BẢNG ĐIỂM DANH của trường (file đã nhập ở tab "Danh sách lớp", lưu sẵn trên máy chủ) rồi tải về.</p>
           <label class="gv-mini gv-file-btn">Chọn file mẫu khác <input type="file" id="templateInput" accept=".xlsx"></label>
         </div>
         <p class="dd-hint" id="exportMsg" role="status"></p>
@@ -143,7 +143,7 @@
     <section data-panel="lop" aria-labelledby="lopTitle" hidden>
       <h2 class="sec" id="lopTitle">Danh sách lớp</h2>
       <div class="dd-card">
-        <p>Chọn file Excel danh sách (mẫu BẢNG ĐIỂM DANH). File được đọc ngay trên máy; chỉ MSSV và họ tên được lưu lên máy chủ. File cũng được giữ trong trình duyệt máy này làm mẫu để xuất Excel.</p>
+        <p>Chọn file Excel danh sách (mẫu BẢNG ĐIỂM DANH). MSSV, họ tên và chính file này được lưu lên máy chủ — file dùng làm mẫu để xuất Excel trên bất kỳ máy nào.</p>
         <input type="file" id="rosterInput" accept=".xlsx">
         <p class="dd-hint" id="rosterMsg" role="status"></p>
       </div>
@@ -154,6 +154,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
-<script src="/assets/diemdanh-gv.js?v=late3"></script>
+<script src="/assets/diemdanh-gv.js?v=tpl"></script>
 </body>
 </html>

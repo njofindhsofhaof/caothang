@@ -104,7 +104,7 @@
     }
     for (const p of document.querySelectorAll('[data-panel]')) p.hidden = p.dataset.panel !== tab;
     if (tab === 'phien') refreshLive(); else stopLive();
-    if (tab === 'thang') loadMonth();
+    if (tab === 'thang') { loadMonth(); renderTemplateInfo(); }
     if (tab === 'lop') renderRosterTable();
   }
   window.addEventListener('hashchange', route);
@@ -510,43 +510,60 @@
     loadMonth();
   }
 
-  /* ---------- File mẫu Excel: lưu trong trình duyệt của máy này (không gửi lên máy chủ) ---------- */
-  const templateStore = (() => {
-    const open = () => new Promise((resolve, reject) => {
-      const req = indexedDB.open('dd-template', 1);
-      req.onupgradeneeded = () => req.result.createObjectStore('files');
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+  /* ---------- File mẫu Excel: lưu trên máy chủ, dùng chung cho mọi máy ---------- */
+  const toBase64 = async (blob) => {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  };
+  const fromBase64 = (data, name) => new File([Uint8Array.from(atob(data), (c) => c.charCodeAt(0))], name);
+
+  // Bản cũ chỉ giữ file trong trình duyệt (IndexedDB) — đọc ra để đưa lên máy chủ một lần.
+  function legacyLocalTemplate() {
+    return new Promise((resolve) => {
+      try {
+        const req = indexedDB.open('dd-template', 1);
+        req.onupgradeneeded = () => req.result.createObjectStore('files');
+        req.onerror = () => resolve(null);
+        req.onsuccess = () => {
+          const get = req.result.transaction('files', 'readonly').objectStore('files').get('template');
+          get.onsuccess = () => resolve(get.result ?? null);
+          get.onerror = () => resolve(null);
+        };
+      } catch { resolve(null); }
     });
-    const run = async (mode, fn) => {
-      const db = await open();
-      return new Promise((resolve, reject) => {
-        const req = fn(db.transaction('files', mode).objectStore('files'));
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-      });
-    };
-    return {
-      async get() { try { return (await run('readonly', (st) => st.get('template'))) ?? null; } catch { return null; } },
-      async set(file) {
-        try { await run('readwrite', (st) => st.put(file, 'template')); return true; } catch { return false; }
-      },
-    };
-  })();
+  }
+
+  const templateStore = {
+    async get() {
+      const r = await api('/api/template');
+      if (r.ok && r.template) return fromBase64(r.template.data, r.template.name);
+      const local = await legacyLocalTemplate();
+      if (local) await templateStore.set(local);
+      return local;
+    },
+    async set(file) {
+      const r = await api('/api/template', { method: 'PUT', body: { name: file.name, data: await toBase64(file) } });
+      if (!r.ok) throw new Error(r.message);
+    },
+  };
 
   async function renderTemplateInfo() {
     const file = await templateStore.get();
-    $('templateInfo').textContent = file
-      ? `Đang dùng: ${file.name}`
-      : 'Chưa có file mẫu trên máy này.';
+    $('templateInfo').textContent = file ? `File mẫu: ${file.name}.` : 'Chưa có file mẫu — chọn một lần, máy nào cũng dùng được.';
   }
 
   async function rememberTemplate(file) {
-    if (await templateStore.set(file)) renderTemplateInfo();
+    try {
+      await templateStore.set(file);
+      renderTemplateInfo();
+    } catch (err) {
+      $('exportMsg').textContent = `Không lưu được file mẫu: ${err.message}`;
+    }
   }
 
   $('templateInput').addEventListener('change', (e) => { if (e.target.files[0]) rememberTemplate(e.target.files[0]); });
-  renderTemplateInfo();
 
   $('exportBtn').addEventListener('click', async () => {
     const file = $('templateInput').files[0] ?? await templateStore.get();
@@ -591,7 +608,7 @@
       renderRosterInfo();
       renderRosterTable();
       await rememberTemplate(file);
-      $('rosterMsg').textContent = `Đã lưu ${r.count} sinh viên. File này cũng được giữ làm mẫu để xuất Excel.`;
+      $('rosterMsg').textContent = `Đã lưu ${r.count} sinh viên. File này cũng được lưu làm mẫu xuất Excel.`;
     } catch (err) {
       $('rosterMsg').textContent = `Lỗi: ${err.message}`;
     } finally {

@@ -16,6 +16,7 @@ export const keys = {
   roster: 'roster',
   schedule: 'sessions:schedule', // zset: id theo thời điểm bắt đầu
   places: 'places', // hash: placeId -> {name, lat, lng}
+  template: 'template:xlsx', // {name, data(base64)} — file BẢNG ĐIỂM DANH trống để xuất Excel
   session: (id) => `session:${id}`,
   monthSessions: (ym) => `sessions:${ym}`,
   att: (id) => `att:${id}`,
