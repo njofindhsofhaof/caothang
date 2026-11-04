@@ -471,12 +471,71 @@
         h('td', { class: 'm-p' }, String(by.P.length)),
         h('td', { class: 'm-k' }, String(by.K.length)),
         h('td', { class: 'mono' }, `${pct(by.ok.length + by.T.length)}%`),
-        h('td', {}, h('button', { class: 'gv-mini', type: 'button', onclick: () => showDay(d, by) }, openDay === d ? 'Ẩn' : 'Xem vắng')),
+        h('td', { class: 'gv-actions' },
+          h('button', { class: 'gv-mini', type: 'button', onclick: () => showDay(d, by) }, openDay === d ? 'Ẩn' : 'Xem vắng'),
+          subjectsOf(sessions).map(([subject, group], _, all) => h('button', {
+            class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${subject} ngày ${d}`,
+            onclick: (e) => downloadSubjectImage(d, subject, group, e.currentTarget),
+          }, all.length > 1 ? `Ảnh · ${subject}` : 'Tải ảnh')),
+        ),
       ))),
     );
     if (openDay) {
       const row = rows.find((r) => r.d === openDay);
       if (row) showDay(openDay, row.by, true); else $('dayDetail').hidden = true;
+    }
+  }
+
+  /* ---------- Ảnh tổng kết theo môn ---------- */
+  const subjectName = (s) => s.label?.trim() || 'Buổi học';
+
+  // Các môn trong ngày (theo tên buổi), giữ thứ tự giờ học.
+  function subjectsOf(sessions) {
+    const groups = new Map();
+    for (const s of [...sessions].sort((a, b) => a.startsAt - b.startsAt)) {
+      const key = subjectName(s);
+      groups.set(key, [...(groups.get(key) ?? []), s]);
+    }
+    return [...groups];
+  }
+
+  // Có mặt đúng giờ / trễ tính riêng cho môn; vắng P/K theo phép của cả ngày.
+  function subjectReport(d, subject, sessions) {
+    const records = sessions.flatMap((s) => s.records);
+    const onTime = new Set(records.filter((x) => !x.late).map((x) => x.mssv));
+    const lateAt = new Map();
+    for (const x of records.filter((r) => r.late)) lateAt.set(x.mssv, Math.min(lateAt.get(x.mssv) ?? Infinity, x.time));
+    const excuses = monthData.excuses[d] ?? {};
+    const report = { late: [], P: [], K: [] };
+    for (const s of roster) {
+      const item = { stt: s.stt, name: fullName(s) };
+      if (onTime.has(s.mssv)) continue;
+      if (lateAt.has(s.mssv)) report.late.push({ ...item, time: fmtTime(lateAt.get(s.mssv)) });
+      else report[excuses[s.mssv] === 'P' ? 'P' : 'K'].push(item);
+    }
+    const start = Math.min(...sessions.map((s) => s.startsAt));
+    const end = Math.max(...sessions.map((s) => s.expiresAt));
+    return {
+      ...report,
+      subject,
+      dateLabel: new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' }),
+      timeLabel: `${fmtTime(start)}–${fmtTime(end)}`,
+      total: roster.length,
+      present: roster.length - report.P.length - report.K.length,
+    };
+  }
+
+  const fileSlug = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'buoi-hoc';
+
+  async function downloadSubjectImage(d, subject, sessions, btn) {
+    btn.disabled = true;
+    try {
+      await window.DDImage.download(subjectReport(d, subject, sessions), `DiemDanh_${d}_${fileSlug(subject)}.png`);
+    } catch (err) {
+      alert(`Không tạo được ảnh: ${err.message}`);
+    } finally {
+      btn.disabled = false;
     }
   }
 
