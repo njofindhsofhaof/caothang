@@ -111,8 +111,9 @@
 
   /* ---------- Phòng đã lưu ---------- */
   async function loadPlaces() {
-    const r = await api('/api/places');
+    const r = await api('/api/places?past=1');
     places = r.ok ? r.places : [];
+    renderPast(r.ok ? r.past ?? [] : []);
     const keep = $('placeSelect').value;
     $('placeSelect').replaceChildren(
       ...places.map((p) => h('option', { value: p.id }, p.name)),
@@ -140,6 +141,42 @@
       $('placeMsg').textContent = err.message;
     }
   });
+
+  /* ---------- Vị trí các buổi trước ---------- */
+  const fmtCoord = (spot) => `${spot.lat.toFixed(5)}, ${spot.lng.toFixed(5)}`;
+
+  function renderPast(spots) {
+    $('pastBlock').hidden = !spots.length;
+    $('pastList').replaceChildren(...spots.map((spot) => {
+      const li = h('li', {},
+        h('span', { class: 'who' },
+          h('b', {}, spot.label || fmtCoord(spot)),
+          h('small', {}, `${spot.label ? `${fmtCoord(spot)} · ` : ''}${spot.count} buổi · gần nhất ${fmtDay(spot.lastAt)}`)),
+        h('button', { class: 'gv-mini', type: 'button', onclick: () => li.replaceWith(pastSaveForm(spot, li)) }, 'Lưu thành phòng'),
+      );
+      return li;
+    }));
+  }
+
+  function pastSaveForm(spot, row) {
+    const input = h('input', { maxlength: '40', placeholder: 'Tên phòng, VD: F4.2', required: '', 'aria-label': `Tên phòng cho vị trí ${fmtCoord(spot)}` });
+    const form = h('form', { class: 'gv-place-form', onsubmit: async (e) => {
+      e.preventDefault();
+      $('placeMsg').textContent = 'Đang lưu…';
+      const r = await api('/api/places', { method: 'POST', body: { name: input.value, lat: spot.lat, lng: spot.lng } });
+      if (!r.ok) { $('placeMsg').textContent = r.message; return; }
+      $('placeMsg').textContent = `Đã lưu phòng "${input.value.trim()}".`;
+      await loadPlaces();
+      $('placeSelect').value = r.id;
+    } },
+      input,
+      h('button', { class: 'gv-mini', type: 'submit' }, 'Lưu'),
+      h('button', { class: 'gv-mini', type: 'button', onclick: () => li.replaceWith(row) }, 'Huỷ'),
+    );
+    const li = h('li', { class: 'gv-past-edit' }, form);
+    queueMicrotask(() => input.focus());
+    return li;
+  }
 
   async function deletePlace(p) {
     if (!confirm(`Xoá phòng "${p.name}"? Các lịch đã đặt vẫn giữ vị trí cũ.`)) return;

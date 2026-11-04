@@ -2,8 +2,17 @@ import { randomBytes } from 'node:crypto';
 import { redis, keys } from './_lib/redis.js';
 import { send, handler, isTeacher } from './_lib/http.js';
 import { isValidCoord } from './_lib/geo.js';
+import { pastLocations } from './_lib/past-places.js';
 
 const MAX_PLACES = 30;
+const PAST_SESSIONS_SCAN = 300;
+
+// Các buổi đã bắt đầu gần đây nhất (đọc một lần bằng MGET).
+async function recentSessions(now) {
+  const ids = (await redis().zrange(keys.schedule, now, 0, { byScore: true, rev: true, offset: 0, count: PAST_SESSIONS_SCAN })) ?? [];
+  if (!ids.length) return [];
+  return (await redis().mget(...ids.map(keys.session))).filter(Boolean);
+}
 
 // Phòng học đã lưu vị trí — thầy đứng trong phòng, lưu một lần, dùng lại khi đặt lịch.
 export default handler(async (req, res) => {
@@ -11,6 +20,7 @@ export default handler(async (req, res) => {
   if (req.method === 'GET') {
     const map = (await redis().hgetall(keys.places)) ?? {};
     const places = Object.entries(map).map(([id, p]) => ({ id, ...p })).sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+    if (req.query.past) return send(res, 200, { ok: true, places, past: pastLocations(await recentSessions(Date.now()), places) });
     return send(res, 200, { ok: true, places });
   }
   if (req.method === 'POST') {

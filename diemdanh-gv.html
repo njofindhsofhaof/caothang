@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/diemdanh.css?v=fab08e2">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=pastloc">
 </head>
 <body>
 <main class="wrap gv">
@@ -104,6 +104,11 @@
             </form>
             <p class="gv-note">Đứng trong phòng rồi bấm lưu, trang sẽ lấy GPS của máy thầy.</p>
             <p class="dd-hint" id="placeMsg" role="status"></p>
+            <div id="pastBlock" hidden>
+              <h3 class="dd-label gv-sub">Vị trí các buổi trước</h3>
+              <ul class="gv-list" id="pastList"></ul>
+              <p class="gv-note">Các buổi tạo bằng "Vị trí hiện tại", gộp những lần đứng cùng chỗ (trong 30 m). Lưu lại để lần sau chọn ngay.</p>
+            </div>
           </section>
           <section class="dd-card">
             <h3 class="dd-label">Lịch sắp tới</h3>
@@ -146,6 +151,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
-<script src="/assets/diemdanh-gv.js?v=fab08e2"></script>
+<script src="/assets/diemdanh-gv.js?v=pastloc"></script>
 </body>
 </html>
