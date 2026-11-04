@@ -20,6 +20,11 @@ function parseRoster(list) {
   return out;
 }
 
+// Bỏ một MSSV và đánh lại STT liên tục.
+export function removeStudent(roster, mssv) {
+  return roster.filter((s) => normalizeMssv(s.mssv) !== mssv).map((s, i) => ({ ...s, stt: i + 1 }));
+}
+
 export default handler(async (req, res) => {
   if (req.method === 'GET' && req.query.mssv) {
     // Sinh viên tra tên để xác nhận — chỉ trả họ tên của đúng MSSV đó.
@@ -35,6 +40,15 @@ export default handler(async (req, res) => {
     if (!roster) return send(res, 400, { ok: false, message: 'Danh sách không hợp lệ (MSSV trống, trùng hoặc sai định dạng).' });
     await redis().set(keys.roster, roster);
     return send(res, 200, { ok: true, count: roster.length });
+  }
+  if (req.method === 'DELETE') {
+    // Xoá một sinh viên khỏi lớp; điểm danh cũ của bạn đó vẫn giữ trong các buổi đã qua.
+    const want = normalizeMssv(req.query.mssv);
+    const before = await getRoster();
+    const after = removeStudent(before, want);
+    if (after.length === before.length) return send(res, 404, { ok: false, message: 'MSSV không có trong danh sách lớp.' });
+    await redis().set(keys.roster, after);
+    return send(res, 200, { ok: true, count: after.length });
   }
   send(res, 405, { ok: false, message: 'Method not allowed' });
 });

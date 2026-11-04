@@ -1,6 +1,6 @@
 import { redis, keys } from './_lib/redis.js';
 import { send, handler, clientIp, requireSecret, vnDate } from './_lib/http.js';
-import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isActive } from './_lib/store.js';
+import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isOpen } from './_lib/store.js';
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
 import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
 
@@ -14,7 +14,7 @@ async function issueTicket(req, res) {
   if (await isRateLimited(`ip:${clientIp(req)}`, 60)) return send(res, 429, { ok: false, code: 'rate', message: 'Thử quá nhiều lần. Đợi một phút rồi thử lại.' });
   const now = Date.now();
   const session = await getSession(sessionId);
-  if (!isActive(session, now)) return send(res, 400, { ok: false, code: 'closed', message: 'Buổi điểm danh chưa mở hoặc đã kết thúc.' });
+  if (!isOpen(session, now)) return send(res, 400, { ok: false, code: 'closed', message: 'Buổi điểm danh chưa mở hoặc đã kết thúc.' });
   const secret = requireSecret('QR_SECRET');
   if (!verifyToken(secret, sessionId, String(b.t ?? ''), now)) {
     return send(res, 400, { ok: false, code: 'expired_qr', message: 'Mã QR đã hết hạn (mã đổi mỗi 10 giây). Hãy quét lại mã đang chiếu.' });
@@ -25,7 +25,7 @@ async function issueTicket(req, res) {
 // GET công khai: buổi đang mở (không lộ toạ độ), hoặc buổi kế tiếp trong hôm nay.
 async function current(res) {
   const now = Date.now();
-  const pub = (s) => s && ({ id: s.id, label: s.label, placeName: s.placeName, startsAt: s.startsAt, expiresAt: s.expiresAt, requireQr: s.requireQr });
+  const pub = (s) => s && ({ id: s.id, label: s.label, placeName: s.placeName, startsAt: s.startsAt, expiresAt: s.expiresAt, lateUntil: s.lateUntil, late: s.late, requireQr: s.requireQr });
   const active = await getActiveSession(now);
   if (active) return send(res, 200, { ok: true, now, active: pub(active) });
   const next = (await listSessions(now, now + 86_400_000)).find((s) => !s.closed && s.date === vnDate(now));
@@ -66,7 +66,7 @@ export default handler(async (req, res) => {
   if (!result.ok) return send(res, 400, result);
 
   const name = `${student.ho} ${student.ten}`.trim();
-  if (result.already) return send(res, 200, { ok: true, already: true, name, time: result.record.time });
+  if (result.already) return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late) });
 
   // Chiếm chỗ máy trong phiên trước (HSETNX) để hai MSSV gửi đồng thời từ một máy không cùng lọt.
   const claimed = await redis().hsetnx(keys.deviceInSession(input.sessionId), input.deviceId, input.mssv);
@@ -78,5 +78,5 @@ export default handler(async (req, res) => {
     redis().hsetnx(keys.att(input.sessionId), input.mssv, result.record),
     redis().set(keys.device(input.deviceId), input.mssv, { ex: DEVICE_BIND_TTL_S, nx: true }),
   ]);
-  send(res, 200, { ok: true, already: false, name, time: result.record.time, distance: result.record.distance });
+  send(res, 200, { ok: true, already: false, name, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late) });
 });

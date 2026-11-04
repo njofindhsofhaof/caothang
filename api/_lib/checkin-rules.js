@@ -1,4 +1,5 @@
 import { haversineMeters, isValidCoord } from './geo.js';
+import { lateUntil } from './periods.js';
 
 export const MAX_ACCURACY_M = 150;
 const MSSV_RE = /^\d{6,12}$/;
@@ -38,7 +39,7 @@ export function parseCheckinBody(body) {
  */
 export function evaluateCheckin(input, state) {
   const { session, now, tokenOk, student, existing, deviceMssvInSession, boundMssv } = state;
-  if (!session || session.closed || now > session.expiresAt) {
+  if (!session || session.closed || now > lateUntil(session)) {
     return fail('closed', 'Buổi điểm danh đã kết thúc hoặc không tồn tại.');
   }
   if (now < session.startsAt) return fail('not_yet', 'Chưa đến giờ điểm danh.');
@@ -58,10 +59,8 @@ export function evaluateCheckin(input, state) {
   if (distance > session.radius) {
     return fail('too_far', `Bạn đang cách lớp khoảng ${Math.round(distance)} m (cho phép ${session.radius} m).`);
   }
-  return {
-    ok: true,
-    already: false,
-    student,
-    record: { mssv: input.mssv, time: now, distance: Math.round(distance), accuracy: Math.round(input.accuracy), deviceId: input.deviceId },
-  };
+  const record = { mssv: input.mssv, time: now, distance: Math.round(distance), accuracy: Math.round(input.accuracy), deviceId: input.deviceId };
+  // Sau giờ kết thúc buổi (trong khung đến hết tiết) vẫn nhận nhưng ghi là trễ.
+  if (now > session.expiresAt) return { ok: true, already: false, student, record: { ...record, late: true } };
+  return { ok: true, already: false, student, record };
 }

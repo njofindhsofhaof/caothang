@@ -1,4 +1,5 @@
 import { redis, keys } from './redis.js';
+import { lateUntil } from './periods.js';
 
 export async function getRoster() {
   const list = await redis().get(keys.roster);
@@ -14,6 +15,12 @@ export const MAX_SESSION_MS = 4 * 3_600_000;
 
 export const isActive = (s, now) => Boolean(s) && !s.closed && now >= s.startsAt && now <= s.expiresAt;
 
+// Còn nhận điểm danh (kể cả khung trễ đến hết tiết). "Đóng" thì dừng hẳn.
+export const isOpen = (s, now) => Boolean(s) && !s.closed && now >= s.startsAt && now <= lateUntil(s);
+
+// Gắn hạn trễ và cờ "đang trong khung trễ" để trang hiển thị.
+export const withLateWindow = (s, now) => ({ ...s, lateUntil: lateUntil(s), late: now > s.expiresAt });
+
 // Các phiên bắt đầu trong khoảng [from, to] (theo lịch).
 export async function listSessions(from, to) {
   const ids = (await redis().zrange(keys.schedule, from, to, { byScore: true })) ?? [];
@@ -21,10 +28,12 @@ export async function listSessions(from, to) {
   return list.filter(Boolean).sort((a, b) => a.startsAt - b.startsAt);
 }
 
-// Phiên đang mở lúc `now` (nếu trùng giờ, lấy phiên bắt đầu muộn nhất).
+// Phiên còn nhận điểm danh lúc `now`, kể cả khung trễ (nếu trùng giờ, lấy phiên bắt đầu muộn nhất).
 export async function getActiveSession(now) {
   const list = await listSessions(now - MAX_SESSION_MS, now);
-  return list.filter((s) => isActive(s, now)).at(-1) ?? null;
+  const open = list.filter((s) => isOpen(s, now));
+  const s = open.filter((x) => isActive(x, now)).at(-1) ?? open.at(-1);
+  return s ? withLateWindow(s, now) : null;
 }
 
 export async function getAttendance(id) {

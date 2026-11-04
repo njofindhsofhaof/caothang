@@ -297,7 +297,8 @@
       // Lấy token mới ngay khi khung 10 giây đổi; giữa chừng cập nhật danh sách.
       delay = r.nextInMs > POLL_MS ? r.nextInMs - POLL_MS : r.nextInMs + 150;
     }
-    pollTimer = setTimeout(refreshLive, Math.min(delay, Math.max(500, s.expiresAt - r.now + 500)));
+    const edge = r.now < s.expiresAt ? s.expiresAt : s.lateUntil;
+    pollTimer = setTimeout(refreshLive, Math.min(delay, Math.max(500, edge - r.now + 500)));
   }
 
   function renderQr(sessionId, token, nextInMs) {
@@ -319,7 +320,10 @@
     $('countNow').textContent = String(present.size);
     $('countTotal').textContent = String(roster.length);
     $('sessionMeta').textContent = `${session.label || 'Buổi học'} · ${session.placeName} · bán kính ${session.radius} m`;
-    $('countdown').textContent = `${fmtTime(session.startsAt)}–${fmtTime(session.expiresAt)} · còn ${Math.max(0, Math.ceil((session.expiresAt - Date.now()) / 60_000))} phút`;
+    const minsLeft = (until) => Math.max(0, Math.ceil((until - Date.now()) / 60_000));
+    $('countdown').textContent = session.late
+      ? `Hết giờ ${fmtTime(session.expiresAt)} · đang nhận điểm danh TRỄ đến ${fmtTime(session.lateUntil)} (còn ${minsLeft(session.lateUntil)} phút)`
+      : `${fmtTime(session.startsAt)}–${fmtTime(session.expiresAt)} · còn ${minsLeft(session.expiresAt)} phút${session.lateUntil > session.expiresAt ? ` · trễ đến ${fmtTime(session.lateUntil)}` : ''}`;
 
     const absent = roster.filter((s) => !present.has(s.mssv));
     $('absentCount').textContent = String(absent.length);
@@ -333,10 +337,12 @@
       const rec = present.get(s.mssv);
       return h('li', {},
         h('span', { class: 'who' }, h('b', {}, fullName(s)), h('small', {}, s.mssv)),
-        h('span', { class: 'tag' }, rec.manual ? `${fmtTime(rec.time)} · tay` : `${fmtTime(rec.time)} · ${rec.distance} m`),
+        h('span', { class: `tag${rec.late ? ' late' : ''}` }, rec.manual ? `${fmtTime(rec.time)} · tay` : `${rec.late ? `trễ ${lateMinutes(session, rec)}' · ` : ''}${fmtTime(rec.time)} · ${rec.distance} m`),
       );
     }));
   }
+
+  const lateMinutes = (session, rec) => Math.max(1, Math.ceil((rec.time - session.expiresAt) / 60_000));
 
   async function patchLive(action, value) {
     if (!liveSession) return;
@@ -348,7 +354,7 @@
   $('qrBtn').addEventListener('click', () => patchLive('qr', !liveSession?.requireQr));
   $('extendBtn').addEventListener('click', () => patchLive('extend'));
   $('closeBtn').addEventListener('click', () => {
-    if (!confirm('Đóng điểm danh ngay? Sinh viên sẽ không điểm danh được nữa.')) return;
+    if (!confirm('Đóng điểm danh ngay? Sinh viên sẽ không điểm danh được nữa, kể cả điểm danh trễ.')) return;
     if (document.fullscreenElement) document.exitFullscreen();
     patchLive('close');
   });
@@ -379,12 +385,25 @@
     renderMonth();
   }
 
-  // Trạng thái theo ngày: 'ok' (có mặt ở ít nhất 1 buổi) | 'P' | 'K'
+  // Trạng thái theo ngày: 'ok' (đúng giờ ở ít nhất 1 buổi) | 'T' (chỉ có mặt trễ) | 'P' | 'K'
   function dayStatus(date) {
     const sessions = monthData.sessions.filter((s) => s.date === date);
-    const present = new Set(sessions.flatMap((s) => s.records.map((x) => x.mssv)));
+    const records = sessions.flatMap((s) => s.records);
+    const onTime = new Set(records.filter((x) => !x.late).map((x) => x.mssv));
+    const late = new Set(records.filter((x) => x.late).map((x) => x.mssv));
     const excuses = monthData.excuses[date] ?? {};
-    return (mssv) => (present.has(mssv) ? 'ok' : (excuses[mssv] === 'P' ? 'P' : 'K'));
+    return (mssv) => {
+      if (onTime.has(mssv)) return 'ok';
+      if (late.has(mssv)) return 'T';
+      return excuses[mssv] === 'P' ? 'P' : 'K';
+    };
+  }
+
+  // Giờ điểm danh trễ (sớm nhất trong ngày) để hiện khi rê chuột vào ô "T".
+  function lateTime(date, mssv) {
+    const times = monthData.sessions.filter((s) => s.date === date)
+      .flatMap((s) => s.records.filter((x) => x.mssv === mssv && x.late).map((x) => x.time));
+    return times.length ? fmtTime(Math.min(...times)) : '';
   }
 
   const classDates = () => [...new Set(monthData.sessions.map((s) => s.date))].sort();
@@ -410,9 +429,10 @@
         const st = status[d](s.mssv);
         if (st === 'P') p += 1;
         if (st === 'K') k += 1;
-        const label = st === 'ok' ? '✓' : st;
+        const when = st === 'T' ? lateTime(d, s.mssv) : '';
+        const label = st === 'ok' ? '✓' : (st === 'T' ? `T ${when}` : st);
         return h('td', {}, h('button', {
-          class: `gv-cell ${st.toLowerCase()}`, type: 'button', 'aria-label': `${fullName(s)} ngày ${d}: ${label}`,
+          class: `gv-cell ${st.toLowerCase()}`, type: 'button', 'aria-label': `${fullName(s)} ngày ${d}: ${st === 'T' ? `trễ lúc ${when}` : label}`,
           onclick: () => cycleCell(s.mssv, d, st),
         }, label));
       });
@@ -434,22 +454,23 @@
     const rows = dates.map((d) => {
       const st = dayStatus(d);
       const sessions = monthData.sessions.filter((s) => s.date === d);
-      const by = { ok: [], P: [], K: [] };
+      const by = { ok: [], T: [], P: [], K: [] };
       for (const s of roster) by[st(s.mssv)].push(s);
       return { d, sessions, by };
     }).reverse();
     const pct = (n) => (roster.length ? Math.round((n / roster.length) * 100) : 0);
     $('daySummary').replaceChildren(
       h('thead', {}, h('tr', {},
-        h('th', { class: 'name' }, 'Ngày'), h('th', {}, 'Buổi'), h('th', {}, 'Có mặt'),
+        h('th', { class: 'name' }, 'Ngày'), h('th', {}, 'Buổi'), h('th', {}, 'Có mặt'), h('th', {}, 'Trễ'),
         h('th', {}, 'Vắng P'), h('th', {}, 'Vắng K'), h('th', {}, 'Tỉ lệ'), h('th', {}, ''))),
       h('tbody', {}, rows.map(({ d, sessions, by }) => h('tr', {},
         h('td', { class: 'name' }, new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })),
         h('td', { class: 'mono' }, sessions.map((s) => s.label || fmtTime(s.startsAt)).join(', ')),
-        h('td', { class: 'm-ok' }, String(by.ok.length)),
+        h('td', { class: 'm-ok' }, String(by.ok.length + by.T.length)),
+        h('td', { class: 'm-t' }, String(by.T.length)),
         h('td', { class: 'm-p' }, String(by.P.length)),
         h('td', { class: 'm-k' }, String(by.K.length)),
-        h('td', { class: 'mono' }, `${pct(by.ok.length)}%`),
+        h('td', { class: 'mono' }, `${pct(by.ok.length + by.T.length)}%`),
         h('td', {}, h('button', { class: 'gv-mini', type: 'button', onclick: () => showDay(d, by) }, openDay === d ? 'Ẩn' : 'Xem vắng')),
       ))),
     );
@@ -467,6 +488,7 @@
       h('p', { class: 'gv-names' }, arr.length ? arr.map((s) => `${s.stt}. ${fullName(s)}`).join(' · ') : '—'));
     $('dayDetail').replaceChildren(
       h('p', { class: 'gv-day-title' }, `Ngày ${d.slice(8)}/${d.slice(5, 7)}`),
+      list('Đi trễ', by.T.map((s) => ({ ...s, ten: `${s.ten} (${lateTime(d, s.mssv)})` })), 'm-t'),
       list('Vắng không phép', by.K, 'm-k'),
       list('Vắng có phép', by.P, 'm-p'),
     );
@@ -488,9 +510,47 @@
     loadMonth();
   }
 
+  /* ---------- File mẫu Excel: lưu trong trình duyệt của máy này (không gửi lên máy chủ) ---------- */
+  const templateStore = (() => {
+    const open = () => new Promise((resolve, reject) => {
+      const req = indexedDB.open('dd-template', 1);
+      req.onupgradeneeded = () => req.result.createObjectStore('files');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    const run = async (mode, fn) => {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        const req = fn(db.transaction('files', mode).objectStore('files'));
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    };
+    return {
+      async get() { try { return (await run('readonly', (st) => st.get('template'))) ?? null; } catch { return null; } },
+      async set(file) {
+        try { await run('readwrite', (st) => st.put(file, 'template')); return true; } catch { return false; }
+      },
+    };
+  })();
+
+  async function renderTemplateInfo() {
+    const file = await templateStore.get();
+    $('templateInfo').textContent = file
+      ? `Đang dùng: ${file.name}`
+      : 'Chưa có file mẫu trên máy này.';
+  }
+
+  async function rememberTemplate(file) {
+    if (await templateStore.set(file)) renderTemplateInfo();
+  }
+
+  $('templateInput').addEventListener('change', (e) => { if (e.target.files[0]) rememberTemplate(e.target.files[0]); });
+  renderTemplateInfo();
+
   $('exportBtn').addEventListener('click', async () => {
-    const file = $('templateInput').files[0];
-    if (!file) { $('exportMsg').textContent = 'Hãy chọn file mẫu gốc (.xlsx) trước.'; return; }
+    const file = $('templateInput').files[0] ?? await templateStore.get();
+    if (!file) { $('exportMsg').textContent = 'Chưa có file mẫu. Bấm "Chọn file mẫu" và chọn file Excel BẢNG ĐIỂM DANH trống của trường.'; return; }
     if (!monthData) await loadMonth();
     $('exportMsg').textContent = 'Đang tạo file…';
     try {
@@ -500,7 +560,8 @@
         const day = String(Number(d.slice(8)));
         for (const s of roster) {
           const v = st(s.mssv);
-          if (v !== 'ok') (marks[s.mssv] ??= {})[day] = v;
+          // Trễ vẫn tính là có mặt — mẫu Excel chỉ ghi P/K.
+          if (v === 'P' || v === 'K') (marks[s.mssv] ??= {})[day] = v;
         }
       }
       const [y, m] = $('monthInput').value.split('-').map(Number);
@@ -529,7 +590,8 @@
       roster = (fresh.roster ?? []).sort(byStt);
       renderRosterInfo();
       renderRosterTable();
-      $('rosterMsg').textContent = `Đã lưu ${r.count} sinh viên.`;
+      await rememberTemplate(file);
+      $('rosterMsg').textContent = `Đã lưu ${r.count} sinh viên. File này cũng được giữ làm mẫu để xuất Excel.`;
     } catch (err) {
       $('rosterMsg').textContent = `Lỗi: ${err.message}`;
     } finally {
@@ -539,9 +601,23 @@
 
   function renderRosterTable() {
     $('rosterTable').replaceChildren(
-      h('thead', {}, h('tr', {}, h('th', {}, 'STT'), h('th', {}, 'MSSV'), h('th', { class: 'name' }, 'Họ tên'))),
-      h('tbody', {}, roster.map((s) => h('tr', {}, h('td', { class: 'mono' }, String(s.stt)), h('td', { class: 'mono' }, s.mssv), h('td', { class: 'name' }, fullName(s))))),
+      h('thead', {}, h('tr', {}, h('th', {}, 'STT'), h('th', {}, 'MSSV'), h('th', { class: 'name' }, 'Họ tên'), h('th', {}, ''))),
+      h('tbody', {}, roster.map((s) => h('tr', {},
+        h('td', { class: 'mono' }, String(s.stt)), h('td', { class: 'mono' }, s.mssv), h('td', { class: 'name' }, fullName(s)),
+        h('td', {}, h('button', { class: 'gv-mini', type: 'button', 'aria-label': `Xoá ${fullName(s)} khỏi lớp`, onclick: () => removeStudent(s) }, 'Xoá')),
+      ))),
     );
+  }
+
+  async function removeStudent(s) {
+    if (!confirm(`Xoá ${fullName(s)} (MSSV ${s.mssv}) khỏi danh sách lớp? Điểm danh cũ của bạn này vẫn được giữ.`)) return;
+    const r = await api(`/api/roster?mssv=${encodeURIComponent(s.mssv)}`, { method: 'DELETE' });
+    if (!r.ok) { $('rosterMsg').textContent = r.message; return; }
+    const fresh = await api('/api/roster');
+    roster = (fresh.roster ?? []).sort(byStt);
+    renderRosterInfo();
+    renderRosterTable();
+    $('rosterMsg').textContent = `Đã xoá ${fullName(s)}. Lớp còn ${r.count} sinh viên.`;
   }
 
   /* ---------- Khởi động ---------- */

@@ -111,7 +111,8 @@
         return fail(r.message, r.code === 'expired_qr' || r.code === 'closed' || r.code === 'device_bound' || r.code === 'device_used' || r.code === 'unknown_mssv');
       }
       const time = new Date(r.time).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-      setStatus('ok', r.already ? 'Bạn đã điểm danh rồi' : 'Điểm danh thành công', `${r.name} · lúc ${time}`);
+      const title = r.already ? 'Bạn đã điểm danh rồi' : (r.late ? 'Đã điểm danh (trễ)' : 'Điểm danh thành công');
+      setStatus('ok', title, `${r.name} · lúc ${time}${r.late ? ' · ghi trễ' : ''}`);
       if (navigator.vibrate) navigator.vibrate(60);
     } catch {
       fail('Mạng không ổn định. Hãy thử lại.');
@@ -138,7 +139,12 @@
       return null;
     }
     sessionId = r.active.id;
-    setStatus('idle', `${r.active.label || 'Buổi học'} đang mở điểm danh`, `${r.active.placeName ? `${r.active.placeName} · ` : ''}đến ${fmt(r.active.expiresAt)}`);
+    const where = r.active.placeName ? `${r.active.placeName} · ` : '';
+    if (r.active.late) {
+      setStatus('idle', 'Đã hết giờ điểm danh', `${where}vẫn điểm danh được đến ${fmt(r.active.lateUntil)} (hết tiết) nhưng sẽ bị ghi TRỄ.`);
+    } else {
+      setStatus('idle', `${r.active.label || 'Buổi học'} đang mở điểm danh`, `${where}đến ${fmt(r.active.expiresAt)}`);
+    }
     return r.active;
   }
 
