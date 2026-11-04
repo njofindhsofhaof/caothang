@@ -447,43 +447,41 @@
     renderDaySummary(dates);
   }
 
-  let openDay = null;
+  let openKey = null;
 
-  // Mỗi ngày có điểm danh: số có mặt / vắng có phép / vắng không phép; bấm "Xem" để thấy ai vắng.
+  // Mỗi môn trong mỗi ngày là một dòng riêng (ngày nhiều môn thì nhiều dòng).
   function renderDaySummary(dates) {
-    const rows = dates.map((d) => {
-      const st = dayStatus(d);
-      const sessions = monthData.sessions.filter((s) => s.date === d);
-      const by = { ok: [], T: [], P: [], K: [] };
-      for (const s of roster) by[st(s.mssv)].push(s);
-      return { d, sessions, by };
-    }).reverse();
+    const rows = [...dates].reverse().flatMap((d) => {
+      const subjects = subjectsOf(monthData.sessions.filter((s) => s.date === d));
+      return subjects.map(([subject, sessions], i) => ({
+        key: `${d}|${subject}`, d, subject, sessions, first: i === 0, span: subjects.length,
+        report: subjectReport(d, subject, sessions),
+      }));
+    });
     const pct = (n) => (roster.length ? Math.round((n / roster.length) * 100) : 0);
     $('daySummary').replaceChildren(
       h('thead', {}, h('tr', {},
-        h('th', { class: 'name' }, 'Ngày'), h('th', {}, 'Buổi'), h('th', {}, 'Có mặt'), h('th', {}, 'Trễ'),
+        h('th', { class: 'name' }, 'Ngày'), h('th', { class: 'name' }, 'Môn'), h('th', {}, 'Có mặt'), h('th', {}, 'Trễ'),
         h('th', {}, 'Vắng P'), h('th', {}, 'Vắng K'), h('th', {}, 'Tỉ lệ'), h('th', {}, ''))),
-      h('tbody', {}, rows.map(({ d, sessions, by }) => h('tr', {},
-        h('td', { class: 'name' }, new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })),
-        h('td', { class: 'mono' }, sessions.map((s) => s.label || fmtTime(s.startsAt)).join(', ')),
-        h('td', { class: 'm-ok' }, String(by.ok.length + by.T.length)),
-        h('td', { class: 'm-t' }, String(by.T.length)),
-        h('td', { class: 'm-p' }, String(by.P.length)),
-        h('td', { class: 'm-k' }, String(by.K.length)),
-        h('td', { class: 'mono' }, `${pct(by.ok.length + by.T.length)}%`),
+      h('tbody', {}, rows.map((row) => h('tr', { class: row.first ? 'gv-day-start' : '' },
+        row.first ? h('td', { class: 'name', rowspan: String(row.span) }, new Date(`${row.d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })) : null,
+        h('td', { class: 'name' }, h('b', {}, row.subject), h('small', { class: 'gv-sub-time' }, row.report.timeLabel)),
+        h('td', { class: 'm-ok' }, `${row.report.present}/${row.report.total}`),
+        h('td', { class: 'm-t' }, String(row.report.late.length)),
+        h('td', { class: 'm-p' }, String(row.report.P.length)),
+        h('td', { class: 'm-k' }, String(row.report.K.length)),
+        h('td', { class: 'mono' }, `${pct(row.report.present)}%`),
         h('td', { class: 'gv-actions' },
-          h('button', { class: 'gv-mini', type: 'button', onclick: () => showDay(d, by) }, openDay === d ? 'Ẩn' : 'Xem vắng'),
-          subjectsOf(sessions).map(([subject, group], _, all) => h('button', {
-            class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${subject} ngày ${d}`,
-            onclick: (e) => downloadSubjectImage(d, subject, group, e.currentTarget),
-          }, all.length > 1 ? `Ảnh · ${subject}` : 'Tải ảnh')),
+          h('button', { class: 'gv-mini', type: 'button', onclick: () => showSubject(row) }, openKey === row.key ? 'Ẩn' : 'Xem vắng'),
+          h('button', {
+            class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${row.subject} ngày ${row.d}`,
+            onclick: (e) => downloadSubjectImage(row.d, row.subject, row.sessions, e.currentTarget),
+          }, 'Tải ảnh'),
         ),
       ))),
     );
-    if (openDay) {
-      const row = rows.find((r) => r.d === openDay);
-      if (row) showDay(openDay, row.by, true); else $('dayDetail').hidden = true;
-    }
+    const open = rows.find((r) => r.key === openKey);
+    if (open) showSubject(open, true); else { openKey = null; $('dayDetail').hidden = true; }
   }
 
   /* ---------- Ảnh tổng kết theo môn ---------- */
@@ -539,17 +537,17 @@
     }
   }
 
-  function showDay(d, by, keep = false) {
-    if (!keep && openDay === d) { openDay = null; $('dayDetail').hidden = true; renderDaySummary(classDates()); return; }
-    openDay = d;
+  function showSubject(row, keep = false) {
+    if (!keep && openKey === row.key) { openKey = null; $('dayDetail').hidden = true; renderDaySummary(classDates()); return; }
+    openKey = row.key;
     const list = (title, arr, cls) => h('div', {},
       h('p', { class: `dd-label ${cls}` }, `${title} (${arr.length})`),
-      h('p', { class: 'gv-names' }, arr.length ? arr.map((s) => `${s.stt}. ${fullName(s)}`).join(' · ') : '—'));
+      h('p', { class: 'gv-names' }, arr.length ? arr.map((x) => `${x.stt}. ${x.name}${x.time ? ` (${x.time})` : ''}`).join(' · ') : '—'));
     $('dayDetail').replaceChildren(
-      h('p', { class: 'gv-day-title' }, `Ngày ${d.slice(8)}/${d.slice(5, 7)}`),
-      list('Đi trễ', by.T.map((s) => ({ ...s, ten: `${s.ten} (${lateTime(d, s.mssv)})` })), 'm-t'),
-      list('Vắng không phép', by.K, 'm-k'),
-      list('Vắng có phép', by.P, 'm-p'),
+      h('p', { class: 'gv-day-title' }, `${row.subject} · ngày ${row.d.slice(8)}/${row.d.slice(5, 7)}`),
+      list('Đi trễ', row.report.late, 'm-t'),
+      list('Vắng không phép', row.report.K, 'm-k'),
+      list('Vắng có phép', row.report.P, 'm-p'),
     );
     $('dayDetail').hidden = false;
     if (!keep) renderDaySummary(classDates());
