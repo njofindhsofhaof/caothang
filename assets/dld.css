@@ -7,3 +7,6 @@
 .dld-theory{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin:0 0 16px;font-size:14px;}
 .dld-theory summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent);padding:4px 0;}
 .dld-theory li{margin:4px 0;}
+.dld-sys{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:6px 0 4px 4px;font-size:14.5px;line-height:1.9;}
+.dld-brace{border-left:2px solid var(--ink);border-radius:12px 0 0 12px;padding:2px 0 2px 12px;}
+.dld-imp{font-size:18px;color:var(--accent);}

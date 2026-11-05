@@ -36,7 +36,7 @@
   /** Dong dien viet theo SI nhu giao trinh: 100 µA -> "100.10⁻⁶", 20 mA -> "20.10⁻³". */
   function siA(i) {
     if (i < 1e-3) return n(i / 1e-6) + ".10⁻⁶";
-    if (i < 1) return n(i / 1e-3) + ".10⁻³";
+    if (i < 1) return i === 1e-3 ? "10⁻³" : n(i / 1e-3) + ".10⁻³";
     return n(i);
   }
 
@@ -68,25 +68,33 @@
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
 
+  /** Dien tro viet theo SI nhu giao trinh: 1000 -> "10³", 2000 -> "2.10³", 500 -> "500". */
+  function siO(x) {
+    if (x < 1000) return ohm(x);
+    return x === 1000 ? "10³" : n(x / 1000) + ".10³";
+  }
+
+  /* Trinh bay giong vi du 1.18: lap 3 phuong trinh theo 3 vi tri khoa S, roi giai he. */
   function shuntUniSteps(s) {
-    var I = s.b.ranges, x = C.shuntUniversal(s.rg, s.igm, I), sum = ohm(s.rg) + " + " + n(x.rsh);
+    var I = s.b.ranges, g = s.igm, x = C.shuntUniversal(s.rg, g, I);
+    var kB = (I[1] - g) / g, kC = (I[2] - g) / g, cB = s.rg / kB, cC = s.rg / kC;
+    var den = function (i) { return " / (" + siA(i) + " − " + siA(g) + ")"; };
     return {
-      steps: [
-        { title: "Thiết lập 3 phương trình", lines: [
-          "Khi khóa S ở vị trí A: R_S = R₁ + R₂ + R₃, nhánh cơ cấu chỉ có R_g",
-          "⇒ R₁ + R₂ + R₃ = R_g × I_gm / (I_A − I_gm) = " + ohm(s.rg) + " × " + siA(s.igm) + " / (" + siA(I[0]) + " − " + siA(s.igm) + ") = " + n(x.rsh) + " Ω   (1)",
-          "Khi khóa S ở vị trí B: R_S = R₁ + R₂, R₃ nối tiếp cơ cấu ⇒ R₁ + R₂ = (R_g + R₃) × I_gm / (I_B − I_gm)   (2)",
-          "Khi khóa S ở vị trí C: R_S = R₁, R₂ + R₃ nối tiếp cơ cấu ⇒ R₁ = (R_g + R₂ + R₃) × I_gm / (I_C − I_gm)   (3)"
-        ] },
-        { title: "Giải hệ 3 phương trình", lines: [
-          "Từ (2): (R₁ + R₂)(I_B − I_gm) = (R_g + R₃) × I_gm ⇒ (R₁ + R₂) × I_B = (R_g + R₁ + R₂ + R₃) × I_gm",
-          "⇒ R₁ + R₂ = (R_g + R₁ + R₂ + R₃) × I_gm / I_B = (" + sum + ") × " + siA(s.igm) + " / " + siA(I[1]) + " = " + n(x.r12) + " Ω",
-          "Từ (3): R₁ × (I_C − I_gm) = (R_g + R₂ + R₃) × I_gm ⇒ R₁ × I_C = (R_g + R₁ + R₂ + R₃) × I_gm",
-          "⇒ R₁ = (" + sum + ") × " + siA(s.igm) + " / " + siA(I[2]) + " = " + C.fmtOhm(x.r1),
-          "⇒ R₂ = (R₁ + R₂) − R₁ = " + n(x.r12) + " − " + n(x.r1) + " = " + C.fmtOhm(x.r2),
-          "⇒ R₃ = (R₁ + R₂ + R₃) − (R₁ + R₂) = " + n(x.rsh) + " − " + n(x.r12) + " = " + C.fmtOhm(x.r3)
-        ] }
-      ],
+      steps: [{
+        title: "Giải:",
+        lines: [
+          "R₁ + R₂ + R₃ = R_g.I_gm / (I_A − I_gm) = " + siO(s.rg) + "." + siA(g) + den(I[0]) + " = " + n(x.rsh),
+          "R₁ + R₂ = (R_g + R₃).I_gm / (I_B − I_gm) = (" + siO(s.rg) + " + R₃)." + siA(g) + den(I[1]) + " = " + n(cB) + " + R₃/" + n(kB),
+          "R₁ = (R_g + R₂ + R₃).I_gm / (I_C − I_gm) = (" + siO(s.rg) + " + R₂ + R₃)." + siA(g) + den(I[2]) + " = " + n(cC) + " + R₂/" + n(kC) + " + R₃/" + n(kC)
+        ]
+      }, {
+        title: "Giải hệ 3 phương trình:",
+        lines: [],
+        sys: {
+          eqs: ["R₁ + R₂ + R₃ = " + n(x.rsh), "R₁ + R₂ − R₃/" + n(kB) + " = " + n(cB), "R₁ − R₂/" + n(kC) + " − R₃/" + n(kC) + " = " + n(cC)],
+          res: ["R₁ = " + C.fmtOhm(x.r1), "R₂ = " + C.fmtOhm(x.r2), "R₃ = " + C.fmtOhm(x.r3)]
+        }
+      }],
       answer: [x.r1, x.r2, x.r3]
     };
   }
@@ -112,11 +120,18 @@
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
 
+  /** He phuong trinh co dau ngoac nhon: {eqs} ⇒ {res}. */
+  function system(sys) {
+    var brace = function (rows) { return el("div", { "class": "dld-brace" }, rows.map(function (r) { return rich("div", r); })); };
+    return el("div", { "class": "dld-sys" }, [brace(sys.eqs), el("span", { "class": "dld-imp", text: "⇒" }), brace(sys.res)]);
+  }
+
   function card(de, part, ask, fig, caption, solved) {
     var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải câu " + part })]);
     solved.steps.forEach(function (st) {
       sol.appendChild(el("h4", { text: st.title }));
-      sol.appendChild(el("ul", { "class": "kh-steps" }, st.lines.map(function (l) { return rich("li", l); })));
+      if (st.lines.length) sol.appendChild(el("ul", { "class": "kh-steps" }, st.lines.map(function (l) { return rich("li", l); })));
+      if (st.sys) sol.appendChild(system(st.sys));
     });
     sol.appendChild(el("p", { "class": "dld-ans", text: "Đáp số: " + solved.answer.map(function (v, k) { return R[k] + " = " + C.fmtOhm(v); }).join(" ; ") }));
     return el("article", { "class": "kh-prob" }, [
