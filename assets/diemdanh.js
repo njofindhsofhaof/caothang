@@ -5,6 +5,9 @@
   const STORE_NAME = 'dd.name';
   const STORE_DEVICE = 'dd.device';
   const GPS_TIMEOUT_MS = 12_000;
+  const GPS_SAMPLES = 3;
+  const GPS_SAMPLE_GAP_MS = 1_200;
+  const GPS_EXTRA_TIMEOUT_MS = 4_000;
 
   const $ = (id) => document.getElementById(id);
   const store = {
@@ -41,18 +44,35 @@
     return data;
   }
 
-  // Lấy GPS càng sớm càng tốt, chạy song song với việc nhập MSSV.
-  function getPosition() {
+  function readOnce(timeout) {
     return new Promise((resolve, reject) => {
-      if (!navigator.geolocation) return reject(new Error('Trình duyệt không hỗ trợ định vị.'));
       navigator.geolocation.getCurrentPosition(
-        (p) => resolve({ lat: p.coords.latitude, lng: p.coords.longitude, accuracy: p.coords.accuracy }),
-        (err) => reject(new Error(err.code === 1
-          ? 'Bạn đã chặn quyền vị trí. Vào cài đặt trình duyệt → Quyền trang web → Vị trí → Cho phép, rồi quét lại.'
-          : 'Không lấy được vị trí. Hãy bật GPS / Dịch vụ định vị rồi thử lại.')),
-        { enableHighAccuracy: true, timeout: GPS_TIMEOUT_MS, maximumAge: 0 },
+        (p) => resolve({ lat: p.coords.latitude, lng: p.coords.longitude, accuracy: p.coords.accuracy, ts: p.timestamp }),
+        reject,
+        { enableHighAccuracy: true, timeout, maximumAge: 0 },
       );
     });
+  }
+
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // Lấy GPS càng sớm càng tốt, chạy song song với việc nhập MSSV.
+  // Đọc vài lần cách nhau để máy chủ thấy vị trí có dao động tự nhiên hay bị ghim cố định.
+  async function getPosition() {
+    if (!navigator.geolocation) throw new Error('Trình duyệt không hỗ trợ định vị.');
+    let first;
+    try { first = await readOnce(GPS_TIMEOUT_MS); } catch (err) {
+      throw new Error(err.code === 1
+        ? 'Bạn đã chặn quyền vị trí. Vào cài đặt trình duyệt → Quyền trang web → Vị trí → Cho phép, rồi quét lại.'
+        : 'Không lấy được vị trí. Hãy bật GPS / Dịch vụ định vị rồi thử lại.');
+    }
+    const samples = [first];
+    for (let i = 1; i < GPS_SAMPLES; i++) {
+      await wait(GPS_SAMPLE_GAP_MS);
+      try { samples.push(await readOnce(GPS_EXTRA_TIMEOUT_MS)); } catch { break; } // lần đọc thêm hỏng thì dùng số đã có
+    }
+    const best = samples.reduce((a, b) => (b.accuracy < a.accuracy ? b : a));
+    return { lat: best.lat, lng: best.lng, accuracy: best.accuracy, samples };
   }
 
   const params = new URLSearchParams(location.search);

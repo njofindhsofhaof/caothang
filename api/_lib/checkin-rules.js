@@ -1,5 +1,6 @@
 import { haversineMeters, isValidCoord } from './geo.js';
 import { lateUntil } from './periods.js';
+import { parseSamples, checkinFlags, roundCoord } from './suspicion.js';
 
 export const MAX_ACCURACY_M = 150;
 const MSSV_RE = /^\d{6,12}$/;
@@ -22,6 +23,7 @@ export function parseCheckinBody(body) {
     lat: toNum(b.lat),
     lng: toNum(b.lng),
     accuracy: toNum(b.accuracy),
+    samples: parseSamples(b.samples),
   };
   if (!input.sessionId) return { error: fail('closed', 'Hiện không có buổi điểm danh nào đang mở.') };
   if (!MSSV_RE.test(input.mssv)) return { error: fail('bad_mssv', 'MSSV không đúng định dạng.') };
@@ -59,7 +61,12 @@ export function evaluateCheckin(input, state) {
   if (distance > session.radius) {
     return fail('too_far', `Bạn đang cách lớp khoảng ${Math.round(distance)} m (cho phép ${session.radius} m).`);
   }
-  const record = { mssv: input.mssv, time: now, distance: Math.round(distance), accuracy: Math.round(input.accuracy), deviceId: input.deviceId };
+  const flags = checkinFlags(input, session);
+  const record = {
+    mssv: input.mssv, time: now, distance: Math.round(distance), accuracy: Math.round(input.accuracy), deviceId: input.deviceId,
+    lat: roundCoord(input.lat), lng: roundCoord(input.lng),
+    ...(flags.length ? { flags } : {}),
+  };
   // Sau giờ kết thúc buổi (trong khung đến hết tiết) vẫn nhận nhưng ghi là trễ.
   if (now > session.expiresAt) return { ok: true, already: false, student, record: { ...record, late: true } };
   return { ok: true, already: false, student, record };

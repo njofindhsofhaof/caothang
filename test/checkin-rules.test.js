@@ -21,7 +21,20 @@ test('accepts a valid nearby check-in', () => {
   assert.ok(r.record.distance < 100);
 });
 
-test('rejects missing GPS', () => assert.equal(run({ lat: null }).code, 'no_gps'));
+test('stores rounded coords and no flags for a normal check-in', () => {
+  const r = run();
+  assert.equal(r.record.lat, 10.7726);
+  assert.equal(r.record.flags, undefined);
+});
+
+test('flags (but still accepts) a pinned location', () => {
+  const samples = [1, 2, 3].map((ts) => ({ lat: 10.7726, lng: 106.6981, accuracy: 2, ts }));
+  const r = run({ accuracy: 2, samples });
+  assert.equal(r.ok, true);
+  assert.deepEqual(r.record.flags, ['static', 'precise']);
+});
+
+test('rejects missing GPS',() => assert.equal(run({ lat: null }).code, 'no_gps'));
 test('strips leading zeros from MSSV', () => assert.equal(run({ mssv: '0100000001' }).ok, true));
 test('rejects bad MSSV format', () => assert.equal(run({ mssv: 'abc' }).code, 'bad_mssv'));
 test('rejects closed session', () => assert.equal(run({}, { session: { ...session, closed: true } }).code, 'closed'));

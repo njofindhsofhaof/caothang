@@ -4,6 +4,7 @@ import { send, handler, isTeacher, requireSecret, vnDate } from './_lib/http.js'
 import { getSession, getActiveSession, getAttendance, getRoster, listSessions, isActive, MAX_SESSION_MS } from './_lib/store.js';
 import { isValidCoord } from './_lib/geo.js';
 import { makeToken, windowAt, msUntilNextWindow } from './_lib/token.js';
+import { withDuplicateFlags } from './_lib/suspicion.js';
 
 const DEFAULT_RADIUS_M = 100;
 const MIN_RADIUS_M = 30;
@@ -26,7 +27,7 @@ async function status(req, res) {
   ]);
   const body = { ok: true, now, total: roster.length, active, upcoming: upcoming.filter((s) => !s.closed && s.startsAt > now) };
   if (active) {
-    body.records = (await getAttendance(active.id)).map(({ deviceId, ...r }) => r);
+    body.records = withDuplicateFlags((await getAttendance(active.id)).map(({ deviceId, ...r }) => r));
     if (active.requireQr) {
       body.token = makeToken(requireSecret('QR_SECRET'), active.id, windowAt(now));
       body.nextInMs = msUntilNextWindow(now);

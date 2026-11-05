@@ -335,11 +335,28 @@
       .sort((a, b) => present.get(b.mssv).time - present.get(a.mssv).time);
     $('presentList').replaceChildren(...presentRows.map((s) => {
       const rec = present.get(s.mssv);
-      return h('li', {},
-        h('span', { class: 'who' }, h('b', {}, fullName(s)), h('small', {}, s.mssv)),
+      const reasons = flagReasons(rec);
+      return h('li', reasons.length ? { class: 'flagged' } : {},
+        h('span', { class: 'who' }, h('b', {}, fullName(s)), h('small', {}, s.mssv),
+          reasons.length ? h('small', { class: 'flag' }, `⚠ Nghi vấn: ${reasons.join(' · ')}`) : ''),
         h('span', { class: `tag${rec.late ? ' late' : ''}` }, rec.manual ? `${fmtTime(rec.time)} · tay` : `${rec.late ? `trễ ${lateMinutes(session, rec)}' · ` : ''}${fmtTime(rec.time)} · ${rec.distance} m`),
       );
     }));
+  }
+
+  // Dấu vết thường gặp của app fake GPS — chỉ để giáo viên kiểm tra lại, không tự động loại.
+  const FLAG_TEXT = {
+    static: 'GPS đứng yên tuyệt đối',
+    precise: 'sai số nhỏ bất thường',
+    center: 'trùng đúng tâm lớp',
+  };
+  function flagReasons(rec) {
+    const out = (rec.flags ?? []).map((f) => (f === 'precise' ? `sai số ±${rec.accuracy} m bất thường` : FLAG_TEXT[f])).filter(Boolean);
+    if (rec.dupWith?.length) {
+      const names = rec.dupWith.map((m) => { const st = roster.find((x) => x.mssv === m); return st ? fullName(st) : m; });
+      out.push(`trùng toạ độ với ${names.join(', ')}`);
+    }
+    return out;
   }
 
   const lateMinutes = (session, rec) => Math.max(1, Math.ceil((rec.time - session.expiresAt) / 60_000));
@@ -471,13 +488,13 @@
         h('td', { class: 'm-p' }, String(row.report.P.length)),
         h('td', { class: 'm-k' }, String(row.report.K.length)),
         h('td', { class: 'mono' }, `${pct(row.report.present)}%`),
-        h('td', { class: 'gv-actions' },
+        h('td', {}, h('div', { class: 'gv-row-actions' },
           h('button', { class: 'gv-mini', type: 'button', onclick: () => showSubject(row) }, openKey === row.key ? 'Ẩn' : 'Xem vắng'),
           h('button', {
             class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${row.subject} ngày ${row.d}`,
             onclick: (e) => downloadSubjectImage(row.d, row.subject, row.sessions, e.currentTarget),
           }, 'Tải ảnh'),
-        ),
+        )),
       ))),
     );
     const open = rows.find((r) => r.key === openKey);

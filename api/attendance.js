@@ -1,6 +1,7 @@
 import { redis, keys } from './_lib/redis.js';
 import { send, handler, isTeacher, DATE_RE, MONTH_RE } from './_lib/http.js';
 import { getSession, getAttendance } from './_lib/store.js';
+import { withDuplicateFlags } from './_lib/suspicion.js';
 
 const EXCUSE_VALUES = new Set(['P', 'K']);
 
@@ -14,7 +15,7 @@ async function month(ym) {
   const dates = [...new Set(sessions.map((s) => s.date))];
   const excuses = await Promise.all(dates.map(async (d) => [d, (await redis().hgetall(keys.excuse(d))) ?? {}]));
   return {
-    sessions: sessions.map((s, i) => ({ ...s, records: records[i].map(({ deviceId, ...r }) => r) })),
+    sessions: sessions.map((s, i) => ({ ...s, records: withDuplicateFlags(records[i].map(({ deviceId, ...r }) => r)) })),
     excuses: Object.fromEntries(excuses),
   };
 }
