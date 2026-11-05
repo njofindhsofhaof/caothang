@@ -175,4 +175,39 @@
   if (news) renderNews(news);
   var list = document.getElementById("postList");
   if (list) renderSectionList(list);
+  var subForm = document.getElementById("subscribeForm");
+  if (subForm) bindSubscribe(subForm);
+
+  /* Form "Nhan bai moi qua email": POST /api/subscribe -> server gui thu xac nhan. */
+  function bindSubscribe(form) {
+    var msg = form.querySelector(".sub-msg");
+    var button = form.querySelector("button");
+    function show(text, kind) {
+      msg.textContent = text;
+      msg.setAttribute("data-kind", kind);
+    }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = form.elements.email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return show("Email chưa đúng định dạng.", "error");
+      button.disabled = true;
+      show("Đang gửi…", "info");
+      fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, website: form.elements.website.value })
+      })
+        .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+        .then(function (data) {
+          if (data.ok) {
+            show(data.message || "Đã gửi email xác nhận.", "ok");
+            if (!data.already) form.elements.email.value = "";
+          } else {
+            show(data.message || "Không gửi được. Thử lại sau.", "error");
+          }
+        })
+        .catch(function () { show("Mất kết nối. Thử lại sau.", "error"); })
+        .then(function () { button.disabled = false; });
+    });
+  }
 })();

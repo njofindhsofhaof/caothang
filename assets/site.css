@@ -53,3 +53,19 @@ table.news .c-sec a{font-family:var(--mono);font-size:12px;font-weight:400;color
   table.news td{padding:0;border:none;}
   table.news .c-title{grid-column:1/-1;}
 }
+
+/* Form "Nhan bai moi qua email" o trang chu */
+.subscribe{margin-top:28px;}
+.sub-form{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:10px;padding:18px 20px;}
+.sub-label{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:10px;}
+.sub-row{display:flex;gap:8px;flex-wrap:wrap;}
+.sub-row input[type="email"]{flex:1 1 220px;min-height:42px;font:inherit;font-size:15px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:8px 12px;}
+.sub-row input[type="email"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent);}
+.sub-row button{min-height:42px;font-family:var(--mono);font-size:13px;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:7px;padding:8px 18px;cursor:pointer;transition:transform .12s,opacity .12s;}
+.sub-row button:hover{opacity:.9;}
+.sub-row button:active{transform:translateY(1px);}
+.sub-row button:disabled{opacity:.55;cursor:wait;}
+.sub-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+.sub-msg{font-family:var(--mono);font-size:12px;margin:10px 0 0;min-height:1em;color:var(--ink-soft);}
+.sub-msg[data-kind="ok"]{color:var(--accent);}
+.sub-msg[data-kind="error"]{color:#C0392B;}

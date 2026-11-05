@@ -24,4 +24,6 @@ export const keys = {
   device: (deviceId) => `device:${deviceId}`,
   excuse: (date) => `excuse:${date}`,
   rate: (who) => `rl:${who}`,
+  subscribers: 'subscribers', // set: email đã xác nhận nhận bài mới
+  notifySent: 'notify:sent', // set: href bài đã gửi email báo
 };

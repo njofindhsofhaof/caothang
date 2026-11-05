@@ -1,5 +1,11 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/notify.js": { "includeFiles": "assets/posts.js", "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/notify", "schedule": "0 12 * * *" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
