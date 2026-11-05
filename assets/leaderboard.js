@@ -1,14 +1,8 @@
 (() => {
   'use strict';
 
-  // Mốc theo số buổi (môn/ngày) đúng giờ trong tháng.
-  const TIERS = [
-    { min: 20, icon: '🏆', label: 'Huyền thoại', note: 'từ 20 buổi' },
-    { min: 10, icon: '⚡', label: 'Bền bỉ', note: '10–19 buổi' },
-    { min: 5, icon: '🔥', label: 'Đang cháy', note: '5–9 buổi' },
-    { min: 1, icon: '✨', label: 'Khởi động', note: '1–4 buổi' },
-  ];
-  const VISIBLE_CHIPS = 24;
+  const VISIBLE_ROWS = 30;
+  const PODIUM = 3;
 
   const root = document.getElementById('leaderboard');
   if (!root) return;
@@ -22,31 +16,35 @@
     return n;
   };
 
-  function chip(r) {
-    const c = el('li', 'lb-chip');
-    c.append(el('span', 'lb-name', r.name), el('span', 'lb-count', String(r.onTime)));
-    c.title = `${r.name}: ${r.onTime} buổi đúng giờ`;
-    return c;
+  // Nhiều buổi đúng giờ trước, bằng nhau thì theo tên; bằng số buổi thì cùng hạng (1, 1, 3...).
+  function withRanks(list) {
+    const sorted = [...list].sort((a, b) => b.onTime - a.onTime || a.name.localeCompare(b.name, 'vi'));
+    let rank = 0;
+    return sorted.map((r, i) => {
+      if (i === 0 || sorted[i - 1].onTime !== r.onTime) rank = i + 1;
+      return { ...r, rank };
+    });
   }
 
-  function tierBlock(tier, rows) {
-    const box = el('section', 'lb-tier');
-    box.dataset.min = String(tier.min);
-    const head = el('div', 'lb-tier-head');
-    head.append(el('span', 'lb-icon', tier.icon), el('h3', null, tier.label), el('span', 'lb-note', `${tier.note} · ${rows.length} bạn`));
-    const list = el('ul', 'lb-chips');
-    rows.slice(0, VISIBLE_CHIPS).forEach((r) => list.append(chip(r)));
-    box.append(head, list);
-    if (rows.length > VISIBLE_CHIPS) {
-      const more = el('button', 'lb-more', `+ ${rows.length - VISIBLE_CHIPS} bạn khác`);
-      more.type = 'button';
-      more.addEventListener('click', () => {
-        rows.slice(VISIBLE_CHIPS).forEach((r) => list.append(chip(r)));
-        more.remove();
-      });
-      box.append(more);
-    }
-    return box;
+  function row(r) {
+    const li = el('li', 'lb-row');
+    if (r.rank <= PODIUM) li.dataset.podium = String(r.rank);
+    li.append(el('span', 'lb-rank', String(r.rank)), el('span', 'lb-name', r.name), el('span', 'lb-count', `${r.onTime} buổi`));
+    li.title = `${r.name}: ${r.onTime} buổi đúng giờ`;
+    return li;
+  }
+
+  function rankList(rows) {
+    const list = el('ol', 'lb-list');
+    rows.slice(0, VISIBLE_ROWS).forEach((r) => list.append(row(r)));
+    if (rows.length <= VISIBLE_ROWS) return [list];
+    const more = el('button', 'lb-more', `+ ${rows.length - VISIBLE_ROWS} bạn khác`);
+    more.type = 'button';
+    more.addEventListener('click', () => {
+      rows.slice(VISIBLE_ROWS).forEach((r) => list.append(row(r)));
+      more.remove();
+    });
+    return [list, more];
   }
 
   function render(data) {
@@ -57,11 +55,8 @@
       body.replaceChildren();
       return;
     }
-    sub.textContent = `Xếp theo số buổi đi học đúng giờ trong ${monthLabel}. Càng nhiều buổi đúng giờ, rank càng cao.`;
-    const blocks = TIERS.map((t, i) => {
-      const upper = i ? TIERS[i - 1].min : Infinity;
-      return [t, data.list.filter((r) => r.onTime >= t.min && r.onTime < upper)];
-    }).filter(([, rows]) => rows.length).map(([t, rows]) => tierBlock(t, rows));
+    sub.textContent = `Xếp theo số buổi đi học đúng giờ trong ${monthLabel}; bằng nhau thì theo tên.`;
+    const blocks = rankList(withRanks(data.list));
     const when = new Date(data.updatedAt).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
     body.replaceChildren(...blocks, el('p', 'lb-foot', `Cập nhật ${when} · tính theo từng môn mỗi ngày`));
   }
