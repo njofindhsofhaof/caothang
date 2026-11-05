@@ -38,6 +38,19 @@ async function patch(body) {
   return { status: 400, message: 'Thao tác không hợp lệ.' };
 }
 
+// Bỏ cả một ngày (vd. ngày chạy thử) khỏi thống kê tháng; dữ liệu điểm danh vẫn còn.
+async function dropDay(date) {
+  if (!DATE_RE.test(String(date))) return { status: 400, message: 'Ngày không hợp lệ.' };
+  const ym = date.slice(0, 7);
+  const ids = (await redis().smembers(keys.monthSessions(ym))) ?? [];
+  const sessions = await Promise.all(ids.map(getSession));
+  const drop = ids.filter((id, i) => sessions[i]?.date === date);
+  if (!drop.length) return { status: 404, message: 'Ngày này không có buổi nào.' };
+  await redis().sadd(keys.droppedSessions(ym), ...drop);
+  await redis().srem(keys.monthSessions(ym), ...drop);
+  return { status: 200 };
+}
+
 export default handler(async (req, res) => {
   if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
   if (req.method === 'GET') {
@@ -46,7 +59,7 @@ export default handler(async (req, res) => {
     return send(res, 200, { ok: true, ...(await month(ym)) });
   }
   if (req.method === 'POST') {
-    const r = await patch(req.body);
+    const r = req.body?.action === 'dropDay' ? await dropDay(req.body.date) : await patch(req.body);
     return send(res, r.status, r.status === 200 ? { ok: true } : { ok: false, message: r.message });
   }
   send(res, 405, { ok: false, message: 'Method not allowed' });

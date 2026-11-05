@@ -19,6 +19,7 @@ export const keys = {
   template: 'template:xlsx', // {name, data(base64)} — file BẢNG ĐIỂM DANH trống để xuất Excel
   session: (id) => `session:${id}`,
   monthSessions: (ym) => `sessions:${ym}`,
+  droppedSessions: (ym) => `sessions:dropped:${ym}`, // buổi test bị bỏ khỏi thống kê (vẫn giữ dữ liệu)
   att: (id) => `att:${id}`,
   deviceInSession: (id) => `devsess:${id}`,
   device: (deviceId) => `device:${deviceId}`,

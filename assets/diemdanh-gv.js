@@ -494,11 +494,23 @@
             class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${row.subject} ngày ${row.d}`,
             onclick: (e) => downloadSubjectImage(row.d, row.subject, row.sessions, e.currentTarget),
           }, 'Tải ảnh'),
+          row.first ? h('button', {
+            class: 'gv-mini', type: 'button', 'aria-label': `Bỏ ngày ${row.d} khỏi thống kê`,
+            onclick: () => dropDay(row.d),
+          }, 'Bỏ ngày') : null,
         )),
       ))),
     );
     const open = rows.find((r) => r.key === openKey);
     if (open) showSubject(open, true); else { openKey = null; $('dayDetail').hidden = true; }
+  }
+
+  async function dropDay(d) {
+    const label = new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit' });
+    if (!confirm(`Bỏ ${label} khỏi thống kê (vd. ngày chạy thử)? Dữ liệu điểm danh vẫn được giữ, chỉ không tính nữa.`)) return;
+    const r = await api('/api/attendance', { method: 'POST', body: { action: 'dropDay', date: d } });
+    if (!r.ok) { alert(r.message); return; }
+    loadMonth();
   }
 
   /* ---------- Ảnh tổng kết theo môn ---------- */
