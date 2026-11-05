@@ -38,6 +38,8 @@
 .dd-status-msg{font-size:14px;color:var(--ink-soft);margin:0;}
 .dd-tally{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font:500 13px var(--mono);color:var(--ink-soft);}
 .dd-tally[data-warn]{color:var(--bad);}
+.dd-alias{display:block;margin-top:8px;font:400 13px var(--sans);color:var(--ink-soft);}
+.dd-alias b{color:var(--ink);font-weight:600;}
 .dd-streak{display:inline-block;margin-top:8px;padding:4px 10px;border-radius:999px;background:var(--wait-soft);color:var(--accent-warm);font:600 13px var(--sans);}
 .dd-status[data-state="wait"]{background:var(--wait-soft);}
 .dd-status[data-state="wait"] .dd-stamp{animation:dd-spin 1.6s linear infinite;border-color:var(--accent-warm);color:var(--accent-warm);}

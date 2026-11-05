@@ -9,6 +9,13 @@
    + nap /assets/posts.js va /assets/site.js (xem dientucoban.html). */
 window.CT_POSTS = [
   {
+    section: "hoatdong",
+    title: "Leo rank tháng 11",
+    desc: "Thi đua chuyên cần: ai đi học đúng giờ nhiều buổi nhất tháng 11.",
+    date: "2026-11-05",
+    href: "/leorank-thang11"
+  },
+  {
     section: "ontap",
     title: "Lý Thuyết Mạch",
     desc: "Bài tập môn Lý Thuyết Mạch.",

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { monthTally, subjectStreak } from '../api/_lib/tally.js';
+import { monthTally, subjectStreak, classLeaderboard } from '../api/_lib/tally.js';
 
 // Buổi ngoài giờ học (19:00) nên không có khung trễ: lateUntil = expiresAt.
 const at = (date, hm) => new Date(`${date}T${hm}:00+07:00`).getTime();
@@ -62,4 +62,26 @@ test('a perfect month is not broken so earlier months keep counting', () => {
 test('a subject still open without a record neither counts nor breaks', () => {
   const sessions = [sess('a', '2026-11-19', 'Mạch'), sess('b', '2026-11-20', 'Mạch', '22:50')];
   assert.deepEqual(subjectStreak({ sessions, records: { a: { late: false } }, now: NOW }), { count: 1, broken: false });
+});
+
+test('classLeaderboard ranks by on-time subjects; late or absent days do not reset the count', () => {
+  const sessions = ['01', '02', '03', '04'].map((d, i) => sess(`s${i}`, `2026-11-${d}`, 'Mạch'));
+  const roster = [
+    { mssv: '1', ho: 'Nguyễn', ten: 'An' },
+    { mssv: '2', ho: 'Trần', ten: 'Bình' },
+    { mssv: '3', ho: 'Lê', ten: 'Chi' },
+  ];
+  const ok = { late: false };
+  const attendance = {
+    s0: { 1: ok, 2: ok, 3: ok },
+    s1: { 1: ok, 2: ok, 3: { late: true } },
+    s2: { 1: ok, 2: ok, 3: ok },
+    s3: { 1: ok, 3: ok },
+  };
+  assert.deepEqual(classLeaderboard({ sessions, attendance, roster, now: NOW }), [
+    { name: 'Nguyễn An', onTime: 4 },
+    { name: 'Lê Chi', onTime: 3 },
+    { name: 'Trần Bình', onTime: 3 },
+  ]);
+  assert.deepEqual(classLeaderboard({ sessions, attendance: {}, roster, now: NOW }), []);
 });

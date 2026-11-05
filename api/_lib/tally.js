@@ -56,6 +56,24 @@ export function subjectStreak({ sessions, records, now }) {
   return { count, broken: false };
 }
 
+/**
+ * Bảng chuyên cần công khai: xếp theo số buổi (môn/ngày) đúng giờ; chỉ hiện ai có ít nhất 1 buổi, không lộ MSSV.
+ * @param {{ sessions: object[], attendance: Record<string, Record<string, {late?: boolean}>>, roster: object[], now: number }} input
+ * @returns {{ name: string, onTime: number }[]}
+ */
+export function classLeaderboard({ sessions, attendance, roster, now, nameOf = (st) => `${st.ho ?? ''} ${st.ten ?? ''}`.trim() }) {
+  const groups = subjectGroups(sessions, now);
+  return roster.map((st) => {
+    const records = Object.fromEntries(sessions.map((s) => [s.id, attendance[s.id]?.[st.mssv]]).filter(([, r]) => r));
+    return {
+      name: nameOf(st),
+      onTime: groups.filter((list) => groupState(list, records, now) === 'ok').length,
+    };
+  })
+    .filter((r) => r.onTime > 0)
+    .sort((a, b) => b.onTime - a.onTime || a.name.localeCompare(b.name, 'vi'));
+}
+
 async function loadMonth(ym, mssv) {
   const ids = (await redis().smembers(keys.monthSessions(ym))) ?? [];
   const sessions = (await Promise.all(ids.map(getSession))).filter(Boolean);
@@ -63,7 +81,7 @@ async function loadMonth(ym, mssv) {
   return { sessions, records: Object.fromEntries(sessions.map((s, i) => [s.id, recs[i]]).filter(([, r]) => r)) };
 }
 
-const prevMonth = (ym) => {
+export const prevMonth = (ym) => {
   const [y, m] = ym.split('-').map(Number);
   return m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`;
 };

@@ -4,6 +4,7 @@ import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, i
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
 import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
 import { loadCheckinStats } from './_lib/tally.js';
+import { aliasMap } from './_lib/alias.js';
 
 const DEVICE_BIND_TTL_S = 400 * 86_400;
 
@@ -72,8 +73,9 @@ export default handler(async (req, res) => {
   if (!result.ok) return send(res, 400, result);
 
   const name = `${student.ho} ${student.ten}`.trim();
+  const alias = aliasMap(roster).get(input.mssv) ?? null; // tên ẩn danh của bạn này trên bảng Leo rank
   if (result.already) {
-    return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late), tally: await safeTally(session, input.mssv, now) });
+    return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late), alias, tally: await safeTally(session, input.mssv, now) });
   }
 
   // Chiếm chỗ máy trong phiên trước (HSETNX) để hai MSSV gửi đồng thời từ một máy không cùng lọt.
@@ -88,6 +90,6 @@ export default handler(async (req, res) => {
   ]);
   send(res, 200, {
     ok: true, already: false, name, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late),
-    tally: await safeTally(session, input.mssv, now),
+    alias, tally: await safeTally(session, input.mssv, now),
   });
 });

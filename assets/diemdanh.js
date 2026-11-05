@@ -134,6 +134,7 @@
       const title = r.already ? 'Bạn đã điểm danh rồi' : (r.late ? 'Đã điểm danh (trễ)' : 'Điểm danh thành công');
       setStatus('ok', title, `${r.name} · lúc ${time}${r.late ? ' · ghi trễ' : ''}`);
       showTally(r.tally);
+      showAlias(r.alias);
       if (navigator.vibrate) navigator.vibrate(60);
     } catch {
       fail('Mạng không ổn định. Hãy thử lại.');
@@ -158,6 +159,18 @@
       fire.textContent = `🔥 Chuỗi đúng giờ: ${t.streak} buổi liên tiếp`;
       $('statusMsg').append(fire);
     }
+  }
+
+  // Tên ẩn danh của chính bạn trên bảng Leo rank (bảng công khai không hiện tên thật).
+  function showAlias(alias) {
+    if (!alias) return;
+    const line = document.createElement('span');
+    line.className = 'dd-alias';
+    line.append('Tên của bạn trên bảng Leo rank: ');
+    const b = document.createElement('b');
+    b.textContent = alias;
+    line.append(b);
+    $('statusMsg').append(line);
   }
 
   const fmt = (ms) => new Date(ms).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
