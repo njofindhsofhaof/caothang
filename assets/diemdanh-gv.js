@@ -475,6 +475,9 @@
       );
     }));
     table.replaceChildren(head, body);
+    // Hàng môn dính ngay dưới hàng ngày khi cuộn bảng.
+    const h1 = head.rows[0].getBoundingClientRect().height;
+    if (h1) table.style.setProperty('--head1', `${h1}px`);
     renderDaySummary(dates);
   }
 
