@@ -20,6 +20,13 @@ function parseRoster(list) {
   return out;
 }
 
+// Tên rút gọn cho bước xác nhận MSSV công khai: "Nguyễn Thế" + "Anh" → "N. T. Anh".
+// Đủ để sinh viên nhận ra mình, nhưng không cho người ngoài dò ra họ tên đầy đủ của cả lớp.
+export function shortName(ho, ten) {
+  const initials = String(ho ?? '').split(/\s+/).filter(Boolean).map((w) => `${w.charAt(0).toUpperCase()}.`);
+  return [...initials, String(ten ?? '').trim()].filter(Boolean).join(' ');
+}
+
 // Bỏ một MSSV và đánh lại STT liên tục.
 export function removeStudent(roster, mssv) {
   return roster.filter((s) => normalizeMssv(s.mssv) !== mssv).map((s, i) => ({ ...s, stt: i + 1 }));
@@ -27,11 +34,11 @@ export function removeStudent(roster, mssv) {
 
 export default handler(async (req, res) => {
   if (req.method === 'GET' && req.query.mssv) {
-    // Sinh viên tra tên để xác nhận — chỉ trả họ tên của đúng MSSV đó.
+    // Sinh viên tra tên để xác nhận — chỉ trả tên rút gọn của đúng MSSV đó.
     if (await isRateLimited(`lookup:${clientIp(req)}`, 30)) return send(res, 429, { ok: false, message: 'Thử quá nhiều lần. Đợi một phút.' });
     const want = normalizeMssv(req.query.mssv);
     const s = (await getRoster()).find((x) => normalizeMssv(x.mssv) === want);
-    return s ? send(res, 200, { ok: true, name: `${s.ho} ${s.ten}`.trim() }) : send(res, 404, { ok: false, message: 'MSSV không có trong danh sách lớp.' });
+    return s ? send(res, 200, { ok: true, name: shortName(s.ho, s.ten) }) : send(res, 404, { ok: false, message: 'MSSV không có trong danh sách lớp.' });
   }
   if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
   if (req.method === 'GET') return send(res, 200, { ok: true, roster: await getRoster() });

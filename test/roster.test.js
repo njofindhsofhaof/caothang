@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { removeStudent } from '../api/roster.js';
+import { removeStudent, shortName } from '../api/roster.js';
 
 const roster = [
   { stt: 1, mssv: '100000001', ho: 'Nguyễn Văn', ten: 'A' },
@@ -16,4 +16,11 @@ test('removes the student and renumbers STT without touching the input', () => {
 
 test('leaves the roster unchanged for an unknown MSSV', () => {
   assert.equal(removeStudent(roster, '999999999').length, 3);
+});
+
+test('shortName keeps only the given name in full and initials for the rest', () => {
+  assert.equal(shortName('Nguyễn Thế', 'Anh'), 'N. T. Anh');
+  assert.equal(shortName('Đặng Kim Thiên', 'Bảo'), 'Đ. K. T. Bảo');
+  assert.equal(shortName('', 'Uy'), 'Uy');
+  assert.equal(shortName('  Trần   Vũ ', ' Uy '), 'T. V. Uy');
 });
