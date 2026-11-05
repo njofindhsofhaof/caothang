@@ -1,6 +1,10 @@
 // Biệt danh ẩn danh cho bảng công khai: mỗi chữ trong họ tên đổi thành một từ cùng chữ cái đầu
 // (chữ đầu → con vật, chữ giữa → màu/tính từ, chữ cuối → thiên nhiên), vd. "Nguyễn Văn Anh" → "Nhím Vàng Ánh".
 // Cố định theo họ tên và không trùng trong lớp. Tránh các từ hay dùng làm tên người.
+// Biệt danh do lớp tự chọn nằm trong alias-fixed.js (khóa là mã băm họ tên) và được ưu tiên.
+
+import { createHash } from 'node:crypto';
+import { FIXED_ALIASES } from './alias-fixed.js';
 
 const ANIMAL = {
   A: ['Ác'], B: ['Bướm', 'Báo', 'Bê', 'Bói', 'Bò'], C: ['Cá', 'Cò', 'Cú', 'Cáo', 'Cua', 'Chim'], D: ['Dê', 'Dế', 'Dơi', 'Đà'],
@@ -32,6 +36,13 @@ export function baseLetter(word) {
   return String(word).trim().charAt(0).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/, 'D').toUpperCase();
 }
 
+// Khóa tra biệt danh cố định: băm họ tên đã bỏ dấu, viết thường, gộp khoảng trắng (repo công khai nên không lưu tên thật).
+export function nameKey(fullName) {
+  const plain = String(fullName).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd')
+    .toLowerCase().replace(/\s+/g, ' ').trim().replace(/^ngyen /, 'nguyen '); // lỗi gõ "Ngyễn" hay gặp trong danh sách
+  return createHash('sha256').update(`caothang-alias:${plain}`).digest('hex').slice(0, 16);
+}
+
 function hash(text) {
   let h = 2166136261;
   for (const ch of text) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; }
@@ -56,14 +67,22 @@ function aliasOf(fullName, salt) {
 
 /**
  * Biệt danh cho cả lớp, không trùng nhau. Xét theo MSSV tăng dần để kết quả cố định.
+ * Biệt danh cố định được ưu tiên; nếu hai bạn trùng biệt danh cố định thì MSSV nhỏ hơn giữ, bạn kia dùng biệt danh sinh tự động.
  * @param {{ mssv: string, ho?: string, ten?: string }[]} roster
+ * @param {Map<string, string>} [fixed] nameKey(họ tên) → biệt danh
  * @returns {Map<string, string>} mssv → biệt danh
  */
-export function aliasMap(roster) {
+export function aliasMap(roster, fixed = FIXED_ALIASES) {
   const used = new Set();
   const map = new Map();
   for (const s of [...roster].sort((a, b) => String(a.mssv).localeCompare(String(b.mssv)))) {
     const full = `${s.ho ?? ''} ${s.ten ?? ''}`.trim();
+    const chosen = fixed.get(nameKey(full));
+    if (chosen && !used.has(chosen)) {
+      used.add(chosen);
+      map.set(String(s.mssv), chosen);
+      continue;
+    }
     let alias = aliasOf(full, 0);
     for (let salt = 1; used.has(alias) && salt < MAX_TRIES; salt++) alias = aliasOf(full, salt);
     for (let n = 2; used.has(alias); n++) alias = `${aliasOf(full, 0)} ${n}`;
