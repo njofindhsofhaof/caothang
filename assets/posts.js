@@ -28,6 +28,14 @@ window.CT_POSTS = [
   },
   {
     section: "ontap",
+    title: "Đề ôn kiểm tra 1 tiết môn Đo lường điện",
+    desc: "6 đề: Câu 1 mạch Shunt (riêng rẽ + vạn năng) và Câu 2 mạch điện trở phụ (riêng rẽ + vạn năng), có lời giải từng bước.",
+    date: "2026-11-05",
+    href: "/dekiemtradoluong",
+    parent: "/doluongdien"
+  },
+  {
+    section: "ontap",
     title: "Anh Văn",
     desc: "Bài tập và đề thi môn Anh Văn.",
     date: "2026-11-03",
