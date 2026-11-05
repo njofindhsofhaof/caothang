@@ -21,9 +21,23 @@
     return node;
   }
 
-  /** "I_gm" / "R_g" -> chi so <sub>. */
+  /** Phan so viet dung: F("a", "b") -> tu so a tren mau so b (rich() ve thanh phan so). */
+  function F(num, den) { return "{{" + num + "||" + den + "}}"; }
+
+  /** Van ban co phan so {{tu||mau}} va chi so "I_gm" -> <sub>. */
   function rich(tag, text, cls) {
-    var node = el(tag, cls ? { "class": cls } : {}), re = /_([0-9A-Za-zÀ-ỹ]+)/g, last = 0, m;
+    var node = el(tag, cls ? { "class": cls } : {});
+    text.split(/(\{\{.+?\|\|.+?\}\})/).forEach(function (part) {
+      var m = /^\{\{(.+?)\|\|(.+?)\}\}$/.exec(part);
+      if (!m) { appendSubs(node, part); return; }
+      var fr = el("span", { "class": "dld-frac" }, [appendSubs(el("span"), m[1]), appendSubs(el("span"), m[2])]);
+      node.appendChild(fr);
+    });
+    return node;
+  }
+
+  function appendSubs(node, text) {
+    var re = /_([0-9A-Za-zÀ-ỹ]+)/g, last = 0, m;
     while ((m = re.exec(text))) {
       if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
       node.appendChild(el("sub", { text: m[1] }));
@@ -63,7 +77,7 @@
     var lines = ["Điện trở Shunt mắc song song với cơ cấu đo ⇒ U_S = U_g ⇒ R_S × I_S = R_g × I_gm, với I_S = I − I_gm."];
     s.a.ranges.forEach(function (i, k) {
       lines.push("Khi khóa S ở vị trí " + POS[k] + ": R_S = " + R[k] + ", I_S = I_" + POS[k] + " − I_gm");
-      lines.push("⇒ " + R[k] + " = R_g × I_gm / (I_" + POS[k] + " − I_gm) = " + ohm(s.rg) + " × " + siA(s.igm) + " / (" + siA(i) + " − " + siA(s.igm) + ") = " + C.fmtOhm(r[k]));
+      lines.push("⇒ " + R[k] + " = " + F("R_g × I_gm", "I_" + POS[k] + " − I_gm") + " = " + F(ohm(s.rg) + " × " + siA(s.igm), siA(i) + " − " + siA(s.igm)) + " = " + C.fmtOhm(r[k]));
     });
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
@@ -78,20 +92,20 @@
   function shuntUniSteps(s) {
     var I = s.b.ranges, g = s.igm, x = C.shuntUniversal(s.rg, g, I);
     var kB = (I[1] - g) / g, kC = (I[2] - g) / g, cB = s.rg / kB, cC = s.rg / kC;
-    var den = function (i) { return " / (" + siA(i) + " − " + siA(g) + ")"; };
+    var den = function (i) { return siA(i) + " − " + siA(g); };
     return {
       steps: [{
         title: "Giải:",
         lines: [
-          "R₁ + R₂ + R₃ = R_g.I_gm / (I_A − I_gm) = " + siO(s.rg) + "." + siA(g) + den(I[0]) + " = " + n(x.rsh),
-          "R₁ + R₂ = (R_g + R₃).I_gm / (I_B − I_gm) = (" + siO(s.rg) + " + R₃)." + siA(g) + den(I[1]) + " = " + n(cB) + " + R₃/" + n(kB),
-          "R₁ = (R_g + R₂ + R₃).I_gm / (I_C − I_gm) = (" + siO(s.rg) + " + R₂ + R₃)." + siA(g) + den(I[2]) + " = " + n(cC) + " + R₂/" + n(kC) + " + R₃/" + n(kC)
+          "R₁ + R₂ + R₃ = " + F("R_g.I_gm", "I_A − I_gm") + " = " + F(siO(s.rg) + "." + siA(g), den(I[0])) + " = " + n(x.rsh),
+          "R₁ + R₂ = " + F("(R_g + R₃).I_gm", "I_B − I_gm") + " = " + F("(" + siO(s.rg) + " + R₃)." + siA(g), den(I[1])) + " = " + n(cB) + " + " + F("R₃", n(kB)),
+          "R₁ = " + F("(R_g + R₂ + R₃).I_gm", "I_C − I_gm") + " = " + F("(" + siO(s.rg) + " + R₂ + R₃)." + siA(g), den(I[2])) + " = " + n(cC) + " + " + F("R₂", n(kC)) + " + " + F("R₃", n(kC))
         ]
       }, {
         title: "Giải hệ 3 phương trình:",
         lines: [],
         sys: {
-          eqs: ["R₁ + R₂ + R₃ = " + n(x.rsh), "R₁ + R₂ − R₃/" + n(kB) + " = " + n(cB), "R₁ − R₂/" + n(kC) + " − R₃/" + n(kC) + " = " + n(cC)],
+          eqs: ["R₁ + R₂ + R₃ = " + n(x.rsh), "R₁ + R₂ − " + F("R₃", n(kB)) + " = " + n(cB), "R₁ − " + F("R₂", n(kC)) + " − " + F("R₃", n(kC)) + " = " + n(cC)],
           res: ["R₁ = " + C.fmtOhm(x.r1), "R₂ = " + C.fmtOhm(x.r2), "R₃ = " + C.fmtOhm(x.r3)]
         }
       }],
@@ -101,9 +115,9 @@
 
   function multSepSteps(s) {
     var r = C.multSeparate(s.rg, s.igm, s.a.ranges);
-    var lines = ["Điện trở phụ mắc nối tiếp cơ cấu đo; kim lệch hết thang khi I_g = I_gm ⇒ U = I_gm × (R_g + R_P) ⇒ R_P = U / I_gm − R_g."];
+    var lines = ["Điện trở phụ mắc nối tiếp cơ cấu đo; kim lệch hết thang khi I_g = I_gm ⇒ U = I_gm × (R_g + R_P) ⇒ R_P = " + F("U", "I_gm") + " − R_g."];
     s.a.ranges.forEach(function (u, k) {
-      lines.push("Khi khóa S ở vị trí " + POS[k] + ": R_P = " + R[k] + " = U_" + POS[k] + " / I_gm − R_g = " + n(u) + " / " + siA(s.igm) + " − " + ohm(s.rg) + " = " + C.fmtOhm(r[k]));
+      lines.push("Khi khóa S ở vị trí " + POS[k] + ": R_P = " + R[k] + " = " + F("U_" + POS[k], "I_gm") + " − R_g = " + F(n(u), siA(s.igm)) + " − " + ohm(s.rg) + " = " + C.fmtOhm(r[k]));
     });
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
@@ -111,11 +125,11 @@
   function multUniSteps(s) {
     var U = s.b.ranges, r = C.multUniversal(s.rg, s.igm, U);
     var prev = ["", " − " + ohm(r[0]), " − " + ohm(r[0]) + " − " + ohm(r[1])];
-    var sym = ["R_P = R₁ ⇒ R₁ = U_A / I_gm − R_g", "R_P = R₁ + R₂ ⇒ R₂ = U_B / I_gm − R_g − R₁", "R_P = R₁ + R₂ + R₃ ⇒ R₃ = U_C / I_gm − R_g − R₁ − R₂"];
-    var lines = ["Các điện trở phụ nối tiếp nhau: thang sau dùng lại các điện trở của thang trước, R_P = U / I_gm − R_g."];
+    var sym = ["R_P = R₁ ⇒ R₁ = " + F("U_A", "I_gm") + " − R_g", "R_P = R₁ + R₂ ⇒ R₂ = " + F("U_B", "I_gm") + " − R_g − R₁", "R_P = R₁ + R₂ + R₃ ⇒ R₃ = " + F("U_C", "I_gm") + " − R_g − R₁ − R₂"];
+    var lines = ["Các điện trở phụ nối tiếp nhau: thang sau dùng lại các điện trở của thang trước, R_P = " + F("U", "I_gm") + " − R_g."];
     U.forEach(function (u, k) {
       lines.push("Khi khóa S ở vị trí " + POS[k] + ": " + sym[k]);
-      lines.push("= " + n(u) + " / " + siA(s.igm) + " − " + ohm(s.rg) + prev[k] + " = " + C.fmtOhm(r[k]));
+      lines.push("= " + F(n(u), siA(s.igm)) + " − " + ohm(s.rg) + prev[k] + " = " + C.fmtOhm(r[k]));
     });
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
