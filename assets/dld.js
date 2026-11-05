@@ -112,15 +112,15 @@
     return { steps: [{ title: "Lời giải", lines: lines }], answer: r };
   }
 
-  function card(num, ask, fig, caption, solved) {
-    var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải câu " + num })]);
+  function card(de, part, ask, fig, caption, solved) {
+    var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải câu " + part })]);
     solved.steps.forEach(function (st) {
       sol.appendChild(el("h4", { text: st.title }));
       sol.appendChild(el("ul", { "class": "kh-steps" }, st.lines.map(function (l) { return rich("li", l); })));
     });
     sol.appendChild(el("p", { "class": "dld-ans", text: "Đáp số: " + solved.answer.map(function (v, k) { return R[k] + " = " + C.fmtOhm(v); }).join(" ; ") }));
     return el("article", { "class": "kh-prob" }, [
-      el("div", { "class": "kh-head" }, [el("span", { "class": "kh-num", text: "Câu " + num }), rich("p", ask, "kh-ask")]),
+      el("div", { "class": "kh-head" }, [el("span", { "class": "kh-num", text: "Đề " + de + " · câu " + part }), rich("p", ask, "kh-ask")]),
       el("figure", { "class": "kh-fig kh-fig-svg" }, [window.DLD_SVG.draw(fig, caption), el("figcaption", { "class": "dld-cap", text: caption })]),
       sol
     ]);
@@ -128,13 +128,13 @@
 
   function panelFor(s) {
     var q = asks(s), shunt = s.kind === "shunt";
-    var head = el("p", { "class": "dld-lead", text: shunt ? "Câu 1 · Xác định điện trở mở rộng tầm đo của cơ cấu đo từ điện đo dòng điện 1 chiều, mở rộng 3 tầm đo." : "Câu 2 · Xác định điện trở phụ mở rộng tầm đo của cơ cấu đo từ điện đo điện áp 1 chiều, mở rộng 3 tầm đo." });
+    var head = el("p", { "class": "dld-lead", text: shunt ? "Xác định điện trở mở rộng tầm đo của cơ cấu đo từ điện đo dòng điện 1 chiều, mở rộng 3 tầm đo." : "Xác định điện trở phụ mở rộng tầm đo của cơ cấu đo từ điện đo điện áp 1 chiều, mở rộng 3 tầm đo." });
     return [
       head,
-      shunt ? card(s.cau + "a", q[0], "shuntSep", "Mạch Shunt riêng rẽ", shuntSepSteps(s))
-        : card(s.cau + "a", q[0], "multSep", "Mạch điện trở phụ riêng rẽ", multSepSteps(s)),
-      shunt ? card(s.cau + "b", q[1], "shuntUni", "Mạch Shunt vạn năng", shuntUniSteps(s))
-        : card(s.cau + "b", q[1], "multUni", "Mạch điện trở phụ vạn năng", multUniSteps(s))
+      shunt ? card(s.no, "a", q[0], "shuntSep", "Mạch Shunt riêng rẽ", shuntSepSteps(s))
+        : card(s.no, "a", q[0], "multSep", "Mạch điện trở phụ riêng rẽ", multSepSteps(s)),
+      shunt ? card(s.no, "b", q[1], "shuntUni", "Mạch Shunt vạn năng", shuntUniSteps(s))
+        : card(s.no, "b", q[1], "multUni", "Mạch điện trở phụ vạn năng", multUniSteps(s))
     ];
   }
 
@@ -142,9 +142,10 @@
   var panels = el("div");
   var entries = [];
 
-  sets.forEach(function (s) {
-    var panel = el("section", { role: "tabpanel", id: s.id, hidden: "", "aria-label": "Câu " + s.cau + " đề " + s.de }, panelFor(s));
-    var tab = el("button", { type: "button", role: "tab", text: "Câu " + s.cau + " · Đề " + s.de, "aria-controls": s.id });
+  sets.forEach(function (s, idx) {
+    s = Object.assign({}, s, { no: idx + 1 });
+    var panel = el("section", { role: "tabpanel", id: s.id, hidden: "", "aria-label": "Đề " + s.no }, panelFor(s));
+    var tab = el("button", { type: "button", role: "tab", text: "Đề " + s.no, "aria-controls": s.id });
     tab.addEventListener("click", function () { select(s.id, true); });
     tabs.appendChild(tab);
     panels.appendChild(panel);
