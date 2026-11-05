@@ -16,12 +16,12 @@
     return n;
   };
 
-  // Nhiều buổi đúng giờ trước, bằng nhau thì theo tên; bằng số buổi thì cùng hạng (1, 1, 3...).
+  // Nhiều buổi đúng giờ trước, bằng nhau thì theo tên; bằng số buổi thì cùng hạng, hạng liền nhau (1, 1, 2, 3...).
   function withRanks(list) {
     const sorted = [...list].sort((a, b) => b.onTime - a.onTime || a.name.localeCompare(b.name, 'vi'));
     let rank = 0;
     return sorted.map((r, i) => {
-      if (i === 0 || sorted[i - 1].onTime !== r.onTime) rank = i + 1;
+      if (i === 0 || sorted[i - 1].onTime !== r.onTime) rank += 1;
       return { ...r, rank };
     });
   }
