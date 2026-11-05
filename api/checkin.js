@@ -3,8 +3,14 @@ import { send, handler, clientIp, requireSecret, vnDate } from './_lib/http.js';
 import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isOpen } from './_lib/store.js';
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
 import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
+import { loadCheckinStats } from './_lib/tally.js';
 
 const DEVICE_BIND_TTL_S = 400 * 86_400;
+
+// Số lần trễ/vắng trong tháng để báo cho sinh viên; lỗi thì bỏ qua, không chặn điểm danh.
+async function safeTally(session, mssv, now) {
+  try { return await loadCheckinStats(session.date.slice(0, 7), mssv, now); } catch { return null; }
+}
 
 async function issueTicket(req, res) {
   const b = req.body ?? {};
@@ -66,7 +72,9 @@ export default handler(async (req, res) => {
   if (!result.ok) return send(res, 400, result);
 
   const name = `${student.ho} ${student.ten}`.trim();
-  if (result.already) return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late) });
+  if (result.already) {
+    return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late), tally: await safeTally(session, input.mssv, now) });
+  }
 
   // Chiếm chỗ máy trong phiên trước (HSETNX) để hai MSSV gửi đồng thời từ một máy không cùng lọt.
   const claimed = await redis().hsetnx(keys.deviceInSession(input.sessionId), input.deviceId, input.mssv);
@@ -78,5 +86,8 @@ export default handler(async (req, res) => {
     redis().hsetnx(keys.att(input.sessionId), input.mssv, result.record),
     redis().set(keys.device(input.deviceId), input.mssv, { ex: DEVICE_BIND_TTL_S, nx: true }),
   ]);
-  send(res, 200, { ok: true, already: false, name, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late) });
+  send(res, 200, {
+    ok: true, already: false, name, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late),
+    tally: await safeTally(session, input.mssv, now),
+  });
 });

@@ -36,6 +36,9 @@
 .dd-stamp{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:700 30px var(--serif);border:2px dashed var(--ink-faint);color:var(--ink-faint);}
 .dd-status-title{font-family:var(--serif);font-size:20px;font-weight:600;margin:0 0 4px;line-height:1.25;}
 .dd-status-msg{font-size:14px;color:var(--ink-soft);margin:0;}
+.dd-tally{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font:500 13px var(--mono);color:var(--ink-soft);}
+.dd-tally[data-warn]{color:var(--bad);}
+.dd-streak{display:inline-block;margin-top:8px;padding:4px 10px;border-radius:999px;background:var(--wait-soft);color:var(--accent-warm);font:600 13px var(--sans);}
 .dd-status[data-state="wait"]{background:var(--wait-soft);}
 .dd-status[data-state="wait"] .dd-stamp{animation:dd-spin 1.6s linear infinite;border-color:var(--accent-warm);color:var(--accent-warm);}
 .dd-status[data-state="ok"]{background:var(--ok-soft);border-color:var(--ok);}

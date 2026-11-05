@@ -133,11 +133,30 @@
       const time = new Date(r.time).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
       const title = r.already ? 'Bạn đã điểm danh rồi' : (r.late ? 'Đã điểm danh (trễ)' : 'Điểm danh thành công');
       setStatus('ok', title, `${r.name} · lúc ${time}${r.late ? ' · ghi trễ' : ''}`);
+      showTally(r.tally);
       if (navigator.vibrate) navigator.vibrate(60);
     } catch {
       fail('Mạng không ổn định. Hãy thử lại.');
     } finally {
       submitting = false;
+    }
+  }
+
+  // Dòng "Tháng này: trễ x · vắng P y · vắng K z" dưới thông báo thành công.
+  function showTally(t) {
+    if (!t) return;
+    const line = document.createElement('span');
+    line.className = 'dd-tally';
+    line.textContent = (t.late || t.P || t.K)
+      ? `Tháng này: trễ ${t.late} · vắng có phép ${t.P} · vắng không phép ${t.K}`
+      : 'Tháng này: chưa trễ, chưa vắng buổi nào.';
+    if (t.K) line.dataset.warn = '1';
+    $('statusMsg').append(line);
+    if (t.streak > 0) {
+      const fire = document.createElement('span');
+      fire.className = 'dd-streak';
+      fire.textContent = `🔥 Chuỗi đúng giờ: ${t.streak} buổi liên tiếp`;
+      $('statusMsg').append(fire);
     }
   }
 
