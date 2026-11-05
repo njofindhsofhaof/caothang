@@ -41,9 +41,23 @@ export function parsePosts(source) {
   return JSON.parse(JSON.stringify(list));
 }
 
+const SECTION_LABELS = {
+  gioithieu: 'Giới thiệu', ontap: 'Ôn tập', hoctap: 'Học tập',
+  hoatdong: 'Hoạt động', event: 'Event', thongtinlop: 'Thông tin lớp',
+};
+
 // Bài được báo = bài lên bảng "Bài mới" ở trang chủ.
+// Gắn thêm "subject" (tên môn = tiêu đề trang cha, vd. Lý Thuyết Mạch) và "category" (vd. "Ôn tập · Lý Thuyết Mạch").
 export function notifiablePosts(posts) {
-  return posts.filter((p) => p && p.href && p.title && !p.hideFromNews);
+  const titleByHref = new Map(posts.filter((p) => p && p.href).map((p) => [p.href, p.title]));
+  return posts
+    .filter((p) => p && p.href && p.title && !p.hideFromNews)
+    .map((p) => {
+      const subject = (p.parent && titleByHref.get(p.parent)) || undefined;
+      const section = SECTION_LABELS[p.section];
+      const category = [section, subject].filter(Boolean).join(' · ') || undefined;
+      return { ...p, subject, category };
+    });
 }
 
 export function pickNewPosts(posts, notifiedHrefs) {
@@ -80,12 +94,16 @@ ${bodyHtml}
 
 export function buildPostsEmail(posts, { siteUrl, unsubUrl }) {
   const first = posts[0];
-  const subject = posts.length === 1 ? `Bài mới: ${first.title}` : `${posts.length} bài mới trên trang lớp ${SITE_NAME}`;
+  const tag = first.subject ? ` [${first.subject}]` : '';
+  const subject = posts.length === 1 ? `Bài mới${tag}: ${first.title}` : `${posts.length} bài mới trên trang lớp ${SITE_NAME}`;
   const items = posts
     .map((p) => {
       const url = absoluteHref(siteUrl, p.href);
       const desc = p.desc ? `<p style="margin:4px 0 0;font-size:14px;color:#51626F">${escapeHtml(p.desc)}</p>` : '';
-      return `<div style="border-top:1px solid #D2DADE;padding:14px 0">
+      const cat = p.category
+        ? `<p style="margin:0 0 4px;font-size:12px;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;color:#3A7D6B">${escapeHtml(p.category)}</p>`
+        : '';
+      return `<div style="border-top:1px solid #D2DADE;padding:14px 0">${cat}
 <a href="${escapeHtml(url)}" style="font-size:17px;font-weight:bold;color:#2F6690;text-decoration:none">${escapeHtml(p.title)}</a>${desc}
 <p style="margin:6px 0 0;font-size:12px;color:#8697A2">${escapeHtml(formatDate(p.date))}</p></div>`;
     })
@@ -97,7 +115,7 @@ export function buildPostsEmail(posts, { siteUrl, unsubUrl }) {
   const text = [
     posts.length === 1 ? 'Có bài mới:' : `Có ${posts.length} bài mới:`,
     '',
-    ...posts.map((p) => `- ${p.title} (${formatDate(p.date)})\n  ${absoluteHref(siteUrl, p.href)}`),
+    ...posts.map((p) => `- ${p.category ? `[${p.category}] ` : ''}${p.title} (${formatDate(p.date)})\n  ${absoluteHref(siteUrl, p.href)}`),
     '',
     `Huỷ nhận email: ${unsubUrl}`,
   ].join('\n');

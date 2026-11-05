@@ -75,3 +75,24 @@ test('buildPostsEmail lists posts, escapes HTML and includes unsubscribe link', 
   const all = pickNewPosts(POSTS, []);
   assert.equal(buildPostsEmail(all, { siteUrl: SITE, unsubUrl }).subject.startsWith(`${all.length} bài mới`), true);
 });
+
+test('notifiablePosts labels ôn tập posts with the subject of their parent page', () => {
+  const posts = [
+    { section: 'ontap', title: 'Lý Thuyết Mạch', href: '/lythuyetmach', date: '2026-11-03', hideFromNews: true },
+    { section: 'ontap', title: 'Kirchhoff', href: '/kirchhoff', date: '2026-11-04', parent: '/lythuyetmach' },
+    { section: 'hoctap', title: 'Video', href: '/video', date: '2026-11-04' },
+  ];
+  const [kirchhoff, video] = notifiablePosts(posts);
+  assert.equal(kirchhoff.category, 'Ôn tập · Lý Thuyết Mạch');
+  assert.equal(video.category, 'Học tập');
+  assert.equal(posts[1].category, undefined, 'does not mutate input');
+});
+
+test('buildPostsEmail shows the category and puts the subject in the mail subject', () => {
+  const unsubUrl = `${SITE}/api/subscribe?action=unsub`;
+  const post = { title: 'Kirchhoff', href: '/k', date: '2026-11-05', category: 'Ôn tập · Lý Thuyết Mạch', subject: 'Lý Thuyết Mạch' };
+  const mail = buildPostsEmail([post], { siteUrl: SITE, unsubUrl });
+  assert.equal(mail.subject, 'Bài mới [Lý Thuyết Mạch]: Kirchhoff');
+  assert.ok(mail.html.includes('Ôn tập · Lý Thuyết Mạch'));
+  assert.ok(mail.text.includes('[Ôn tập · Lý Thuyết Mạch] Kirchhoff'));
+});

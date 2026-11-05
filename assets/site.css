@@ -41,6 +41,9 @@ table.news a{color:var(--ink);text-decoration:none;font-weight:500;}
 table.news a:hover{color:var(--accent);}
 table.news .c-date{font-family:var(--mono);font-size:12px;color:var(--ink-soft);white-space:nowrap;}
 table.news .c-sec a{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--accent);}
+table.news .c-sec .sep{display:none;font-family:var(--mono);font-size:12px;color:var(--ink-faint);}
+table.news .c-sec a.c-sub{display:block;margin-top:3px;font-weight:500;color:var(--ink-soft);white-space:nowrap;}
+table.news .c-sec a.c-sub:hover{color:var(--accent);}
 
 
 @media (max-width:600px){
@@ -52,6 +55,8 @@ table.news .c-sec a{font-family:var(--mono);font-size:12px;font-weight:400;color
   table.news tr:last-child{border-bottom:none;}
   table.news td{padding:0;border:none;}
   table.news .c-title{grid-column:1/-1;}
+  table.news .c-sec .sep{display:inline;}
+  table.news .c-sec a.c-sub{display:inline;margin-top:0;}
 }
 
 /* Form "Nhan bai moi qua email" o trang chu */

@@ -88,6 +88,17 @@
     return el("span", { "class": "badge-new", text: "Mới" });
   }
 
+  /** Bai con (co parent, vd. bai Kirchhoff thuoc Ly Thuyet Mach) hien them ten mon ben canh muc. */
+  function sectionCell(p) {
+    var cells = [el("a", { href: sectionHref(p.section), text: sectionLabel(p.section) })];
+    var parent = p.parent && posts.filter(function (x) { return x.href === p.parent; })[0];
+    if (parent) {
+      cells.push(el("span", { "class": "sep", "aria-hidden": "true", text: " › " }));
+      cells.push(el("a", { "class": "c-sub", href: parent.href, text: parent.title }));
+    }
+    return cells;
+  }
+
   function renderNews(container) {
     var latest = posts
       .filter(function (p) { return !p.hideFromNews; })
@@ -103,7 +114,7 @@
       if (isRecent(p.date)) titleCell.appendChild(badge());
       tbody.appendChild(el("tr", {}, [
         el("td", { "class": "c-date", text: formatDate(p.date) }),
-        el("td", { "class": "c-sec" }, [el("a", { href: sectionHref(p.section), text: sectionLabel(p.section) })]),
+        el("td", { "class": "c-sec" }, sectionCell(p)),
         titleCell
       ]));
     });
