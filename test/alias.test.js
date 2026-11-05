@@ -13,8 +13,8 @@ const roster = [
   { mssv: '7', ho: 'Lê Trọng', ten: 'Ích' },
 ];
 
-test('each alias word starts with the same letter as the real name word', () => {
-  const map = aliasMap(roster);
+test('each generated alias word starts with the same letter as the real name word', () => {
+  const map = aliasMap(roster, new Map()); // biệt danh tự sinh; biệt danh lớp tự chọn có thể khác chữ cái
   for (const s of roster) {
     const real = `${s.ho} ${s.ten}`.split(/\s+/);
     const fake = map.get(s.mssv).split(' ');
