@@ -403,8 +403,11 @@
   }
 
   // Trạng thái theo ngày: 'ok' (đúng giờ ở ít nhất 1 buổi) | 'T' (chỉ có mặt trễ) | 'P' | 'K'
-  function dayStatus(date) {
-    const sessions = monthData.sessions.filter((s) => s.date === date);
+  const sessionsOn = (date) => monthData.sessions.filter((s) => s.date === date);
+  const dayStatus = (date) => statusOf(date, sessionsOn(date));
+
+  // Như trên nhưng chỉ xét một nhóm buổi (một môn); phép P/K vẫn theo cả ngày.
+  function statusOf(date, sessions) {
     const records = sessions.flatMap((s) => s.records);
     const onTime = new Set(records.filter((x) => !x.late).map((x) => x.mssv));
     const late = new Set(records.filter((x) => x.late).map((x) => x.mssv));
@@ -417,13 +420,20 @@
   }
 
   // Giờ điểm danh trễ (sớm nhất trong ngày) để hiện khi rê chuột vào ô "T".
-  function lateTime(date, mssv) {
-    const times = monthData.sessions.filter((s) => s.date === date)
+  function lateTime(sessions, mssv) {
+    const times = sessions
       .flatMap((s) => s.records.filter((x) => x.mssv === mssv && x.late).map((x) => x.time));
     return times.length ? fmtTime(Math.min(...times)) : '';
   }
 
   const classDates = () => [...new Set(monthData.sessions.map((s) => s.date))].sort();
+
+  // Mỗi cột là một môn trong một ngày (ngày 2 môn thì 2 cột).
+  function monthColumns(dates) {
+    return dates.flatMap((d) => subjectsOf(sessionsOn(d)).map(([subject, sessions], i, all) => ({
+      d, subject, sessions, first: i === 0, span: all.length, status: statusOf(d, sessions),
+    })));
+  }
 
   function renderMonth() {
     const dates = classDates();
@@ -434,23 +444,27 @@
       $('dayDetail').hidden = true;
       return;
     }
-    const status = Object.fromEntries(dates.map((d) => [d, dayStatus(d)]));
-    const head = h('thead', {}, h('tr', {},
-      h('th', { class: 'name' }, 'Sinh viên'),
-      dates.map((d) => h('th', { title: d }, d.slice(8))),
-      h('th', {}, 'P'), h('th', {}, 'K'),
-    ));
+    const cols = monthColumns(dates);
+    const head = h('thead', {},
+      h('tr', {},
+        h('th', { class: 'name', rowspan: '2' }, 'Sinh viên'),
+        cols.filter((c) => c.first).map((c) => h('th', { title: c.d, colspan: String(c.span), class: 'gv-day-col' }, c.d.slice(8))),
+        h('th', { rowspan: '2' }, 'P'), h('th', { rowspan: '2' }, 'K'),
+      ),
+      h('tr', {}, cols.map((c) => h('th', { class: `gv-subj${c.first ? ' gv-day-col' : ''}`, title: `${c.d} · ${c.subject}` }, c.subject))),
+    );
     const body = h('tbody', {}, roster.map((s) => {
       let p = 0; let k = 0;
-      const cells = dates.map((d) => {
-        const st = status[d](s.mssv);
+      const cells = cols.map((c) => {
+        const st = c.status(s.mssv);
         if (st === 'P') p += 1;
         if (st === 'K') k += 1;
-        const when = st === 'T' ? lateTime(d, s.mssv) : '';
+        const when = st === 'T' ? lateTime(c.sessions, s.mssv) : '';
         const label = st === 'ok' ? '✓' : (st === 'T' ? `T ${when}` : st);
-        return h('td', {}, h('button', {
-          class: `gv-cell ${st.toLowerCase()}`, type: 'button', 'aria-label': `${fullName(s)} ngày ${d}: ${st === 'T' ? `trễ lúc ${when}` : label}`,
-          onclick: () => cycleCell(s.mssv, d, st),
+        return h('td', { class: c.first ? 'gv-day-col' : '' }, h('button', {
+          class: `gv-cell ${st.toLowerCase()}`, type: 'button',
+          'aria-label': `${fullName(s)} ngày ${c.d} môn ${c.subject}: ${st === 'T' ? `trễ lúc ${when}` : label}`,
+          onclick: () => cycleCell(s.mssv, c.d, st, c.sessions),
         }, label));
       });
       return h('tr', {},
@@ -583,8 +597,8 @@
   }
 
   // K → P → ✓ (đánh dấu tay) → K
-  async function cycleCell(mssv, date, st) {
-    const sessions = monthData.sessions.filter((s) => s.date === date);
+  // Đánh dấu tay theo môn (cột); phép P/K là của cả ngày.
+  async function cycleCell(mssv, date, st, sessions) {
     let calls;
     if (st === 'K') calls = [{ action: 'excuse', mssv, date, value: 'P' }];
     else if (st === 'P') calls = [{ action: 'excuse', mssv, date, value: '' }, { action: 'present', mssv, sessionId: sessions.at(-1).id }];

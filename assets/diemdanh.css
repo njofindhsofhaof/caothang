@@ -102,6 +102,8 @@
 .gv-table td.name,.gv-table th.name{text-align:left;position:sticky;left:0;background:var(--surface);z-index:2;}
 .gv-table thead th.name{z-index:3;background:var(--surface-2);}
 .gv-table .mono{font-family:var(--mono);color:var(--ink-soft);}
+.gv-table th.gv-subj{font:600 11px var(--sans,inherit);max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-faint);}
+.gv-table .gv-day-col{border-left:2px solid var(--line,currentColor);}
 .gv-cell{font:600 12.5px var(--mono);width:30px;height:28px;border-radius:6px;border:1px solid transparent;cursor:pointer;background:none;color:var(--ink-faint);}
 .gv-cell:hover{border-color:var(--accent);}
 .gv-cell:focus-visible{outline:2px solid var(--accent);}
