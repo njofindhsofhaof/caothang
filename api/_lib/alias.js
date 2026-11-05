@@ -9,8 +9,8 @@ import { FIXED_ALIASES } from './alias-fixed.js';
 const ANIMAL = {
   A: ['Ác'], B: ['Bướm', 'Báo', 'Bê', 'Bói', 'Bò'], C: ['Cá', 'Cò', 'Cú', 'Cáo', 'Cua', 'Chim'], D: ['Dê', 'Dế', 'Dơi', 'Đà'],
   E: ['Ếch', 'Én'], G: ['Gà', 'Gấu'], H: ['Hổ', 'Hươu', 'Hến', 'Hạc', 'Heo'], K: ['Kiến', 'Két', 'Khướu', 'Khỉ'],
-  L: ['Lừa', 'Lửng', 'Lười', 'Lân', 'Lươn'], M: ['Mèo', 'Mực', 'Mòng'], N: ['Nhím', 'Nai', 'Ngựa', 'Nghé', 'Ngỗng'], O: ['Ong', 'Ốc'], P: ['Phượng', 'Pug', 'Poodle', 'Piranha'],
-  Q: ['Quạ'], R: ['Rắn', 'Rùa', 'Rồng'], S: ['Sóc', 'Sói', 'Sứa', 'Sẻ'], T: ['Thỏ', 'Tôm', 'Trâu', 'Tằm'],
+  L: ['Lừa', 'Lửng', 'Lười', 'Lân', 'Lươn'], M: ['Mèo', 'Mực', 'Mòng'], N: ['Nhím', 'Nai', 'Ngựa', 'Nghé', 'Ngỗng', 'Nhạn', 'Ngao'], O: ['Ong', 'Ốc'], P: ['Phượng', 'Pug', 'Poodle', 'Piranha', 'Puma', 'Panda'],
+  Q: ['Quạ'], R: ['Rắn', 'Rùa', 'Rồng'], S: ['Sóc', 'Sói', 'Sứa', 'Sẻ'], T: ['Thỏ', 'Tôm', 'Trâu', 'Tằm', 'Trăn'],
   U: ['Ưng'], V: ['Voi', 'Vịt', 'Vẹt', 'Vượn'], X: ['Xẻ'], Y: ['Yểng'],
 };
 // Chữ đầu (họ) luôn là con vật nếu chữ cái đó có con vật.
