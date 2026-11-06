@@ -12,7 +12,6 @@
     { key: "hoctap", label: "Học tập", href: "/hoctap" },
     { key: "hoatdong", label: "Hoạt động", href: "/hoatdong" },
     { key: "event", label: "Event", href: "/event" },
-    { key: "thongtinlop", label: "Thông tin lớp", href: "/thongtinlop" },
     { key: "diemdanh", label: "Điểm danh", href: "/diemdanh" }
   ];
 

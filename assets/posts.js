@@ -1,6 +1,6 @@
 /* Nguon du lieu duy nhat cho bang "Bai moi" o trang chu va danh sach bai o cac trang con.
    Them bai moi: them 1 dong vao mang duoi day (date dang YYYY-MM-DD).
-   - section: gioithieu | ontap | hoctap | hoatdong | event | thongtinlop
+   - section: gioithieu | ontap | hoctap | hoatdong | event
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
    - order: (tuy chon) so thu tu co dinh trong danh sach trang muc (vd. 4 mon On tap); bai khong co order xep sau theo ngay.
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
@@ -127,12 +127,6 @@ window.CT_POSTS = [
     date: "2026-11-03",
     href: "/dekiemtra",
     parent: "/lythuyetmach"
-  },
-  {
-    section: "thongtinlop",
-    title: "Lịch thực hành điện tử cơ bản từ 21-26/9/2026",
-    date: "2026-09-20",
-    href: "/lichthuchanh"
   },
   {
     section: "hoctap",

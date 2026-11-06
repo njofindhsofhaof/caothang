@@ -43,7 +43,7 @@ export function parsePosts(source) {
 
 const SECTION_LABELS = {
   gioithieu: 'Giới thiệu', ontap: 'Ôn tập', hoctap: 'Học tập',
-  hoatdong: 'Hoạt động', event: 'Event', thongtinlop: 'Thông tin lớp',
+  hoatdong: 'Hoạt động', event: 'Event',
 };
 
 // Bài được báo = bài lên bảng "Bài mới" ở trang chủ.
