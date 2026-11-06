@@ -9,6 +9,13 @@
    + nap /assets/posts.js va /assets/site.js (xem dientucoban.html). */
 window.CT_POSTS = [
   {
+    section: "event",
+    title: "Ghi chú tham quan Vietnam Energy Week 2026",
+    desc: "17 gian hàng năng lượng, data center, HVAC kèm ảnh, và kiến thức kỹ thuật rút ra: biến tần, cảm biến, MCCB, cáp trung thế.",
+    date: "2026-11-06",
+    href: "/energyweek2026"
+  },
+  {
     section: "hoatdong",
     title: "Leo rank tháng 11",
     desc: "Thi đua chuyên cần: ai đi học đúng giờ nhiều buổi nhất tháng 11.",
