@@ -11,7 +11,7 @@
     { key: "ontap", label: "Ôn tập", href: "/ontap" },
     { key: "hoctap", label: "Học tập", href: "/hoctap" },
     { key: "hoatdong", label: "Hoạt động", href: "/hoatdong" },
-    { key: "event", label: "Event", href: "/event" },
+    { key: "event", label: "Bài viết", href: "/event" },
     { key: "diemdanh", label: "Điểm danh", href: "/diemdanh" }
   ];
 
