@@ -45,6 +45,9 @@
 .post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
 .post .steps .ans{color:var(--accent);font-weight:500;}
 .hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
 .hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
 .post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
 .post .easy{font-size:16.5px;margin:4px 0 10px;}
@@ -138,12 +141,20 @@
   <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
 
   <article class="post">
-    <p class="byline">07/11/2026 · Lý Thuyết Mạch · Chương 1</p>
+    <p class="byline">07/11/2026 · Học tập · Năm nhất · Lý thuyết mạch · Chương 1</p>
 
     <div class="hero">
-      <p class="hero-k">Bài học được thiết kế để đơn giản · dễ hiểu · dễ nhớ</p>
-      <p>Đây không phải lý thuyết khô khan. Mỗi khái niệm được so sánh với <strong>nước chảy trong ống</strong>, thứ ai cũng đã thấy: điện áp là độ chênh mực nước, dòng điện là dòng chảy, nguồn là máy bơm, điện trở là ống hẹp… Hiểu hình trước, công thức sẽ tự nhớ.</p>
-      <p>Mỗi phần gồm: <span class="tag">Dễ nhớ</span> câu so sánh ngắn → hình minh hoạ → định nghĩa và công thức để làm bài. Cuối bài là định luật Kirchhoff, bảng tóm tắt 1 trang và link bài tập.</p>
+      <p class="hero-k">Sau khi học Chương 1, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Phân biệt <a href="#dien-the">điện thế</a> và <a href="#dien-ap">điện áp</a>, tính được U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub>.</li>
+        <li>Hiểu <a href="#dong-dien">dòng điện</a> và chiều quy ước; biết đáp án âm nghĩa là dòng chạy ngược chiều giả định.</li>
+        <li>Phân biệt <a href="#nguon-dien">nguồn áp và nguồn dòng</a>; nguồn thực: U = E − I × r.</li>
+        <li>Dùng định luật Ohm U = I × R và tính <a href="#dien-tro">điện trở</a> mắc nối tiếp, song song.</li>
+        <li>Nắm <a href="#dien-dung">điện dung</a>, <a href="#tu-dien">tụ điện</a>, <a href="#cuon-cam">cuộn cảm</a>: ở điện một chiều tụ coi như hở mạch, cuộn cảm coi như ngắn mạch.</li>
+        <li>Tính <a href="#cong-suat">công suất</a> nguồn P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub>, công suất tải P<sub>tải</sub> = R × I² và kiểm tra P<sub>nguồn</sub> = P<sub>tải</sub>.</li>
+        <li>Đổi đơn vị qua các tiền tố M, k, m, µ, n, p (mỗi bậc cách nhau 1 000 lần).</li>
+        <li>Nhận ra <a href="#mach-dien">nhánh, nút, vòng</a>; viết đúng dấu <a href="#kirchhoff">K1, K2</a> và giải mạch 2 nút, 3 nhánh.</li>
+      </ol>
     </div>
     <nav class="toc" aria-label="Mục lục">
       <p>Nội dung</p>
@@ -623,11 +634,11 @@
       </a>
     </div>
 
-    <a class="back" href="/lythuyetmach">← Về trang Lý Thuyết Mạch</a>
+    <a class="back" href="/namnhat-lythuyetmach">← Về Lý thuyết mạch (Năm nhất)</a>
   </article>
 </div>
-<script src="/assets/posts.js?v=20261103c"></script>
-<script src="/assets/site.js?v=20261103"></script>
+<script src="/assets/posts.js?v=20261107"></script>
+<script src="/assets/site.js?v=20261107"></script>
 <script src="/assets/kirchhoff-svg.js?v=1"></script>
 <script>
 (function () {
