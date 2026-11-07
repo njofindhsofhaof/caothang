@@ -2,7 +2,7 @@
 
 Site tĩnh (HTML + JS thuần) deploy bằng Vercel từ nhánh `main`. Danh sách bài và cây mục nằm trong `assets/posts.js` (xem chú thích đầu file).
 
-Menu, bảng "Bài mới" và danh sách bài (`#siteNav`, `#newsBoard`, `#postList`) được **ghi sẵn vào HTML** bằng `scripts/prerender.mjs` (dùng chung hàm vẽ với `assets/site.js`), để bot không chạy JS (Gemini, ChatGPT, Zalo, Facebook) vẫn thấy nội dung. Sửa `posts.js` hoặc thêm trang xong thì chạy `npm run prerender` và commit các file `.html` thay đổi; Vercel cũng tự chạy lại qua `npm run build`. `npm test` (test/prerender.test.js) báo lỗi nếu HTML chưa khớp.
+Menu, bảng "Bài mới" và danh sách bài (`#siteNav`, `#newsBoard`, `#postList`) được **ghi sẵn vào HTML** bằng `scripts/prerender.mjs` (dùng chung hàm vẽ với `assets/site.js`), để bot không chạy JS (Gemini, ChatGPT, Zalo, Facebook) vẫn thấy nội dung. Sửa `posts.js` hoặc thêm trang xong thì chạy `npm run prerender` và commit các file `.html` thay đổi (Vercel phục vụ thẳng file trong repo, **không thêm script `build`** vào package.json: Vercel sẽ đòi thư mục `public` và deploy lỗi). `npm test` (test/prerender.test.js) báo lỗi nếu HTML chưa khớp.
 
 ## Cấu trúc bài học lý thuyết (Học tập › Năm nhất › <môn>)
 

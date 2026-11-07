@@ -1,7 +1,7 @@
 /* Ghi san menu, bang "Bai moi" va danh sach bai (tu assets/posts.js) vao cac trang .html,
    de bot doc link khong chay JavaScript (Gemini, ChatGPT, Zalo, Facebook...) van thay noi dung.
    Dung chung ham ve voi trinh duyet (window.CT_RENDER trong assets/site.js).
-   Chay: npm run prerender (Vercel cung tu chay qua "npm run build" moi lan deploy).
+   Chay: npm run prerender roi commit cac file .html (Vercel phuc vu thang file trong repo, khong co buoc build).
    test/prerender.test.js bao loi neu HTML chua cap nhat theo posts.js. */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
