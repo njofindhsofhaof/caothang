@@ -139,6 +139,83 @@
 .post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 @media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
 .il .warmline{stroke:var(--accent-warm);}
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+.sim .cu{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.sim .ci{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.sim .va{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vw{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vg{fill:none;stroke:var(--flow-g);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .ink{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .dotu{fill:var(--accent);}
+.sim .beer{fill:#E3A92B;}
+.sim .foam{fill:#F4EEDC;stroke:var(--line);}
 </style>
 </head>
 <body>
@@ -279,6 +356,36 @@
     <div class="note"><strong>Lưu ý:</strong> muốn so sánh pha của hai đại lượng thì phải đưa cả hai về <strong>cùng dạng</strong> (cùng sin hoặc cùng cos), <strong>biên độ dương</strong> và cùng tần số dương. Hai phép đổi hay dùng: cos(x) = sin(x + 90°) và −sin(x) = sin(x + 180°) (hoặc sin(x − 180°)).</div>
     <p>Ví dụ: u = 100 cos(ωt) V, i = 2 sin(ωt + 30°) A. Đổi u = 100 sin(ωt + 90°) V ⇒ φ = 90° − 30° = 60° &gt; 0: điện áp sớm pha hơn dòng 60°.</p>
 
+    <figure class="sim" id="simWave">
+      <p class="sim-h">Thử ngay · Vòng quay pha vẽ ra sóng sin</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 220" role="img" aria-labelledby="wvTitle">
+          <title id="wvTitle">Bên trái: hai vectơ u và i quay tròn đều. Bên phải: bóng của đầu vectơ theo thời gian vẽ ra hai đường sin u(t), i(t).</title>
+          <circle class="thin" cx="95" cy="110" r="70"/>
+          <path class="thin" d="M15 110 L175 110 M95 30 L95 190 M195 110 L548 110 M195 30 L195 190"/>
+          <text class="s" x="548" y="126" text-anchor="end">t (0 → 40 ms)</text>
+          <line class="dash" id="wvCur" x1="195" y1="28" x2="195" y2="192"/>
+          <path class="dash" id="wvPu1" d=""/>
+          <path class="cu" id="wvU" d=""/>
+          <path class="ci" id="wvI" d=""/>
+          <path class="va" id="wvVu" d=""/>
+          <path class="vw" id="wvVi" d=""/>
+          <circle class="dotu" id="wvDot" cx="195" cy="110" r="5"/>
+          <text class="b ac" x="20" y="24">u</text><text class="b warm" x="40" y="24">i</text>
+          <text class="s" x="95" y="212" text-anchor="middle">vòng quay pha (đu quay)</text>
+          <text class="s" x="370" y="212" text-anchor="middle">bóng của đầu vectơ = sóng sin</text>
+        </svg>
+      </div>
+      <div class="controls"><button type="button" id="wvPlay" aria-pressed="true">⏸ Tạm dừng</button><button type="button" id="wvReset">↺ Về t = 0</button></div>
+      <div class="sl"><label for="wvUm">Biên độ U<sub>m</sub></label><input type="range" id="wvUm" min="0" max="320" step="10" value="310"><output id="wvUmo" for="wvUm">310 V</output></div>
+      <div class="sl"><label for="wvF">Tần số f</label><input type="range" id="wvF" min="25" max="150" step="25" value="50"><output id="wvFo" for="wvF">50 Hz</output></div>
+      <div class="sl"><label for="wvPu">Pha đầu φ<sub>u</sub></label><input type="range" id="wvPu" min="-180" max="180" step="15" value="30"><output id="wvPuo" for="wvPu">30°</output></div>
+      <div class="sl"><label for="wvIm">Biên độ I<sub>m</sub></label><input type="range" id="wvIm" min="0" max="10" step="0.5" value="6"><output id="wvImo" for="wvIm">6 A</output></div>
+      <div class="sl"><label for="wvPi">Pha đầu φ<sub>i</sub></label><input type="range" id="wvPi" min="-180" max="180" step="15" value="-30"><output id="wvPio" for="wvPi">−30°</output></div>
+      <p class="live" id="wvLive" aria-live="polite"></p>
+      <figcaption>Tăng f thì vòng quay nhanh hơn, sóng dày hơn (T ngắn lại). Đổi φ<sub>u</sub>, φ<sub>i</sub> để xem u sớm hay trễ pha so với i.</figcaption>
+    </figure>
+
     <!-- 4 -->
     <h2 id="hieu-dung"><span class="num">04</span>Trị số hiệu dụng</h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Hiệu dụng = <strong>"tương đương một chiều"</strong>. Dòng xoay chiều đun ấm nước nóng nhanh bằng dòng một chiều bao nhiêu thì đó là trị hiệu dụng của nó.</p>
@@ -383,6 +490,29 @@
     <p>Ví dụ: C = 3 + j4 ⇒ r = √(3² + 4²) = 5; ψ = arctan(4/3) = 53,13° ⇒ C = 5∠53,13°. Ngược lại 10∠−30° = 10cos(−30°) + j10sin(−30°) = 8,66 − j5.</p>
     <div class="note"><strong>Máy tính cầm tay:</strong> chuyển sang chế độ số phức (CMPLX) và chọn đơn vị góc là độ (Deg) để nhập trực tiếp dạng r∠ψ, máy tự cộng trừ nhân chia và đổi qua lại hai dạng. Nên tính tay một lần để hiểu, sau đó dùng máy để kiểm tra.</div>
 
+    <figure class="sim" id="simCx">
+      <p class="sim-h">Thử ngay · Một số phức, hai cách viết</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 225" role="img" aria-labelledby="cxTitle">
+          <title id="cxTitle">Mặt phẳng phức: kéo phần thực a và phần ảo b, mũi tên chỉ tới điểm C, đồng thời hiện môđun r và góc ψ.</title>
+          <rect class="track" x="190" y="22" width="180" height="180" rx="4"/>
+          <path class="thin" d="M170 112 L390 112 M280 14 L280 210"/>
+          <text class="s" x="394" y="116">thực</text><text class="s" x="286" y="20">ảo (j)</text>
+          <path class="dash" id="cxDa" d=""/><path class="dash" id="cxDb" d=""/>
+          <path class="vw" id="cxArc" d=""/>
+          <path class="va" id="cxVec" d=""/>
+          <circle class="dotu" id="cxPt" cx="280" cy="112" r="5"/>
+          <text class="b ac" id="cxLbl" x="290" y="100"></text>
+          <text class="s" x="40" y="60">a = phần thực</text><text class="s" x="40" y="80">b = phần ảo</text>
+          <text class="s ac" x="430" y="60">r = độ dài</text><text class="s warm" x="430" y="80">ψ = góc</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="cxA">Phần thực a</label><input type="range" id="cxA" min="-10" max="10" step="1" value="3"><output id="cxAo" for="cxA">3</output></div>
+      <div class="sl"><label for="cxB">Phần ảo b</label><input type="range" id="cxB" min="-10" max="10" step="1" value="4"><output id="cxBo" for="cxB">4</output></div>
+      <p class="live" id="cxLive" aria-live="polite"></p>
+      <figcaption>Kéo a sang âm để thấy vì sao phải cộng 180° vào arctan(b/a) khi điểm nằm bên trái trục ảo.</figcaption>
+    </figure>
+
     <!-- 7 -->
     <h2 id="anh-phuc"><span class="num">07</span>Ảnh phức của đại lượng điều hoà</h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Ảnh phức = <strong>"thẻ căn cước"</strong> của sóng sin: chỉ ghi 2 thông tin cần thiết là độ lớn và pha đầu. Tần số ω ai cũng như ai nên khỏi ghi.</p>
@@ -443,6 +573,36 @@
     </figure>
     <p class="easy"><span class="tag">Dễ nhớ</span><strong>L: áp đi trước</strong>, <strong>C: dòng đi trước</strong>. Nhớ dấu: Z<sub>L</sub> mang <strong>+j</strong>, Z<sub>C</sub> mang <strong>−j</strong>.</p>
     <div class="note"><strong>Chú ý khi đọc giáo trình:</strong> công thức đầy đủ là Z<sub>L</sub> = jωL và Z<sub>C</sub> = −j/(ωC). Nếu thấy viết gọn "jL" hay "−j/C" là đã ngầm hiểu có ω. Bài tập thường đã phức hoá sẵn (ghi "j5 Ω", "−j2 Ω"); nếu đề cho L theo H và C theo F (vd 1 H, 1/4 F, ω = 2) thì phải tự tính X<sub>L</sub> = ωL = 2 Ω, X<sub>C</sub> = 1/(ωC) = 2 Ω.</div>
+    <figure class="sim" id="simZ">
+      <p class="sim-h">Thử ngay · Mạch R – L – C nối tiếp: trở kháng thay đổi theo tần số</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 232" role="img" aria-labelledby="zTitle">
+          <title id="zTitle">Tam giác trở kháng R, X, Z; hai thanh so sánh cảm kháng và dung kháng; đồ thị vectơ điện áp U và dòng điện I với góc lệch φ.</title>
+          <path class="vg" id="zTR" d=""/><path class="vw" id="zTX" d=""/><path class="va" id="zTZ" d=""/>
+          <text class="s" id="zTRl" x="80" y="130" text-anchor="middle"></text>
+          <text class="s" id="zTXl" x="140" y="80"></text>
+          <text class="s" x="205" y="62">cảm kháng</text>
+          <rect class="track" x="205" y="68" width="150" height="16" rx="8"/><rect class="fillI" id="zBL" x="205" y="68" width="0" height="16" rx="8"/>
+          <text class="s" id="zBLt" x="205" y="100"></text>
+          <text class="s" x="205" y="128">dung kháng</text>
+          <rect class="track" x="205" y="134" width="150" height="16" rx="8"/><rect class="fillU" id="zBC" x="205" y="134" width="0" height="16" rx="8"/>
+          <text class="s" id="zBCt" x="205" y="166"></text>
+          <path class="thin" d="M390 112 L540 112"/>
+          <path class="va" id="zVU" d=""/><path class="vw" id="zVI" d=""/>
+          <text class="b ac" x="514" y="104">U&#775;</text><text class="b warm" id="zVIl" x="480" y="140">I&#775;</text>
+          <text class="s" x="90" y="222" text-anchor="middle">tam giác trở kháng</text>
+          <text class="s" x="280" y="222" text-anchor="middle">X<tspan class="sub" dy="4">L</tspan><tspan dy="-4"> so với X</tspan><tspan class="sub" dy="4">C</tspan></text>
+          <text class="s" x="465" y="222" text-anchor="middle">vectơ U&#775; (gốc 0°) và I&#775;</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="zF">Tần số f</label><input type="range" id="zF" min="10" max="200" step="5" value="50"><output id="zFo" for="zF">50 Hz</output></div>
+      <div class="sl"><label for="zR">Điện trở R</label><input type="range" id="zR" min="0" max="100" step="5" value="30"><output id="zRo" for="zR">30 Ω</output></div>
+      <div class="sl"><label for="zL">Điện cảm L</label><input type="range" id="zL" min="10" max="500" step="5" value="255"><output id="zLo" for="zL">255 mH</output></div>
+      <div class="sl"><label for="zC">Điện dung C</label><input type="range" id="zC" min="10" max="300" step="5" value="80"><output id="zCo" for="zC">80 µF</output></div>
+      <p class="live" id="zLive" aria-live="polite"></p>
+      <figcaption>Kéo f lên: X<sub>L</sub> lớn dần, X<sub>C</sub> nhỏ dần, mạch chuyển từ tính dung sang tính cảm. Tìm tần số làm X = 0 (cộng hưởng).</figcaption>
+    </figure>
+
     <h3>Trở kháng, dẫn nạp của cả đoạn mạch</h3>
     <div class="formula">Z = R + jX = z e<sup>jφ</sup> = z∠φ &nbsp;&nbsp;&nbsp; Y = G + jB = y e<sup>jα</sup><small>R(ω): điện trở · X(ω): điện kháng · z: môđun trở kháng · φ: argument (chính là góc lệch pha u – i)</small></div>
     <ul>
@@ -511,6 +671,31 @@
       <div class="tablewrap"><table class="small"><thead><tr><th>Đại lượng</th><th>Đơn vị</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>P (tác dụng)</td><td>W, kW, MW</td><td>1 kW = 1 000 W · 1 MW = 1 000 kW</td></tr><tr class="base"><td>Q (phản kháng)</td><td>VAr, kVAr</td><td>1 kVAr = 1 000 VAr</td></tr><tr class="base"><td>S (biểu kiến)</td><td>VA, kVA, MVA</td><td>1 kVA = 1 000 VA · 1 MVA = 1 000 kVA</td></tr></tbody></table></div>
       <ul class="units-ex"><li>Máy biến áp ghi 250 kVA: nguồn gánh được S = 250 000 VA</li><li>Động cơ 2,2 kW, cosφ = 0,8 ⇒ S = 2,2/0,8 = 2,75 kVA</li><li>Tụ bù 10 kVAr = 10 000 VAr</li></ul>
     </div>
+
+    <figure class="sim" id="simPQS">
+      <p class="sim-h">Thử ngay · Tam giác công suất và "cốc bia" P, Q, S</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 215" role="img" aria-labelledby="pqTitle">
+          <title id="pqTitle">Tam giác công suất P, Q, S thay đổi theo R và X; cốc bia: phần bia là P, phần bọt ứng với Q, cả cốc là S.</title>
+          <path class="vg" id="pqP" d=""/><path class="vw" id="pqQ" d=""/><path class="va" id="pqS" d=""/>
+          <text class="s" id="pqPl" x="110" y="130" text-anchor="middle"></text>
+          <text class="s" id="pqQl" x="170" y="80"></text>
+          <text class="s ac" x="60" y="200">S = cạnh huyền (VA)</text>
+          <path class="ink" d="M420 36 L428 192 L492 192 L500 36"/>
+          <rect class="foam" id="pqFoam" x="424" y="40" width="72" height="0"/>
+          <rect class="beer" id="pqBeer" x="424" y="190" width="72" height="0"/>
+          <path class="ink" d="M420 36 L428 192 L492 192 L500 36 M500 70 q30 10 0 60"/>
+          <text class="b" id="pqCos" x="460" y="210" text-anchor="middle"></text>
+          <text class="s" x="390" y="80" text-anchor="end">bọt = phần Q</text>
+          <text class="s" x="390" y="160" text-anchor="end">bia = P</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="pqU">Điện áp U (hiệu dụng)</label><input type="range" id="pqU" min="0" max="240" step="10" value="100"><output id="pqUo" for="pqU">100 V</output></div>
+      <div class="sl"><label for="pqR">Điện trở R</label><input type="range" id="pqR" min="0" max="100" step="5" value="30"><output id="pqRo" for="pqR">30 Ω</output></div>
+      <div class="sl"><label for="pqX">Điện kháng X</label><input type="range" id="pqX" min="-100" max="100" step="5" value="40"><output id="pqXo" for="pqX">40 Ω</output></div>
+      <p class="live" id="pqLive" aria-live="polite"></p>
+      <figcaption>X &gt; 0 (tính cảm) thì Q dương, X &lt; 0 (tính dung) thì Q âm. Kéo X về 0: bọt biến mất, cosφ = 1, toàn bộ S thành P.</figcaption>
+    </figure>
 
     <!-- 11 -->
     <h2 id="giai-mach"><span class="num">11</span>Giải mạch xác lập điều hoà bằng số phức</h2>
@@ -654,6 +839,7 @@ window.CT_QUIZ = [
 ];
 </script>
 <script src="/assets/quiz.js?v=1"></script>
+<script src="/assets/lt2-sim.js?v=1"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
