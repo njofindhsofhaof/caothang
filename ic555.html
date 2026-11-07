@@ -49,6 +49,22 @@
 .calc button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 .k-cap{color:var(--sig-cap);font-weight:600;}
 .k-out{color:var(--sig-out);font-weight:600;}
+.k-dis{color:var(--sig-dis);font-weight:600;}
+:root{--sig-dis:#C0392B;}
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0 10px;}
+.sim .scroll{overflow-x:auto;}
+.sim svg{display:block;width:100%;min-width:560px;height:auto;}
+.sim .blk{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.3;transition:stroke .25s,stroke-width .25s;}
+.sim .blk.act{stroke:var(--accent-warm);stroke-width:3;}
+.sim .ov{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.off,.sim .off{opacity:0;}
+@media (prefers-reduced-motion:no-preference){.sim .ov{stroke-dasharray:8 8;animation:flow .9s linear infinite;}}
+@keyframes flow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .desc{font-size:14.5px;margin:0;min-height:4.8em;}
 @media (max-width:600px){.post h2{font-size:21px;}}
 </style>
 </head>
@@ -128,6 +144,85 @@
     </figure>
 
     <h2>Bên trong nó làm gì</h2>
+    <p class="note"><strong>Dễ nhớ:</strong> giống bồn nước có phao. Nước <span class="k-cap">chảy vào</span> tới vạch trên thì phao bật <span class="k-dis">mở van xả</span>; nước rút xuống vạch dưới thì phao bật <span class="k-cap">đóng van</span> lại. Bồn là tụ C, van xả là chân 7, còn cái phao bật qua bật lại chính là chỗ người ta gọi là “555 lật”.</p>
+    <p>Bên trong 555 có 3 khối chính: hai <strong>bộ so sánh</strong> canh áp trên tụ, và một <strong>công tắc nhớ</strong> (tên kỹ thuật là flip-flop). “Lật” nghĩa là công tắc nhớ đổi trạng thái từ CAO sang THẤP hoặc ngược lại. Nó giống công tắc đèn bập bênh: bấm một lần thì nằm yên ở vị trí đó cho tới khi có ai bấm phía bên kia.</p>
+
+    <figure class="sim" aria-label="Mô phỏng 555 lật trạng thái">
+      <div class="scroll">
+      <svg viewBox="0 0 700 310" role="img" aria-labelledby="simTitle">
+        <title id="simTitle">Sơ đồ bên trong 555 đơn giản: hai bộ so sánh, công tắc nhớ, van xả chân 7, tụ C và LED</title>
+        <!-- nguồn + R1 + R2 + C -->
+        <text class="tm" x="40" y="26">+12V</text>
+        <path class="w" d="M80 30 H372 V45"/>
+        <path class="w" d="M80 30 V50 M80 94 V140 M80 184 V215 M80 223 V270"/>
+        <rect class="part" x="72" y="50" width="16" height="44" rx="2"/><text class="t" x="96" y="76">R1</text>
+        <rect class="part" x="72" y="140" width="16" height="44" rx="2"/><text class="t" x="96" y="166">R2</text>
+        <path class="w" d="M62 215 H98 M62 223 H98"/><text class="t" x="30" y="223">C</text>
+        <path class="w" d="M68 270 H92 M72 275 H88 M77 280 H83"/>
+        <!-- chân 7 (có cầu vượt qua dây so sánh) -->
+        <path class="w" d="M80 120 H204 A6 6 0 0 1 216 120 H290"/>
+        <!-- tụ -> chân 6 và chân 2 -->
+        <path class="w" d="M80 205 H210 V82 H268 M210 205 V230 H268"/>
+        <circle class="dot" cx="80" cy="120" r="3"/><circle class="dot" cx="80" cy="205" r="3"/><circle class="dot" cx="210" cy="205" r="3"/>
+        <!-- vỏ IC -->
+        <rect class="ic" x="250" y="45" width="230" height="230" rx="8" fill-opacity=".35"/>
+        <text class="tm" x="372" y="298" text-anchor="middle">NE555 (vẽ đơn giản phần bên trong)</text>
+        <text class="tm" x="240" y="76" text-anchor="end">6</text>
+        <text class="tm" x="240" y="114" text-anchor="end">7</text>
+        <text class="tm" x="240" y="224" text-anchor="end">2</text>
+        <text class="tm" x="378" y="42">8</text>
+        <text class="tm" x="486" y="144">3</text>
+        <!-- bộ so sánh -->
+        <rect id="cmpHi" class="blk" x="268" y="62" width="110" height="40" rx="6"/>
+        <text class="t" x="323" y="79" text-anchor="middle">So sánh trên</text><text class="tm" x="323" y="95" text-anchor="middle">tụ ≥ 8V ?</text>
+        <rect id="cmpLo" class="blk" x="268" y="210" width="110" height="40" rx="6"/>
+        <text class="t" x="323" y="227" text-anchor="middle">So sánh dưới</text><text class="tm" x="323" y="243" text-anchor="middle">tụ ≤ 4V ?</text>
+        <path class="w" d="M378 82 H431 V110 M378 230 H431 V190"/>
+        <text class="tm" x="386" y="76">bấm → THẤP</text>
+        <text class="tm" x="386" y="246">bấm → CAO</text>
+        <!-- công tắc nhớ -->
+        <rect id="ff" class="blk" x="392" y="110" width="78" height="80" rx="6"/>
+        <text class="tm" x="431" y="130" text-anchor="middle">công tắc</text>
+        <text class="tm" x="431" y="144" text-anchor="middle">nhớ</text>
+        <text id="ffState" class="tb" x="431" y="174" text-anchor="middle">CAO</text>
+        <!-- van xả chân 7 -->
+        <line id="swOpen" class="w" x1="290" y1="120" x2="316" y2="106"/>
+        <line id="swClosed" class="w off" x1="290" y1="120" x2="322" y2="120"/>
+        <circle class="dot" cx="290" cy="120" r="2.5"/><circle class="dot" cx="322" cy="120" r="2.5"/>
+        <path class="w" d="M322 120 H340 V142 M330 142 H350 M334 147 H346 M338 152 H342"/>
+        <text class="tm" x="346" y="136">van xả</text>
+        <path class="w" d="M392 160 H305 V126" stroke-dasharray="3 4" opacity=".6"/>
+        <!-- ngõ ra chân 3 + LED -->
+        <path class="w" d="M470 150 H545 V168 M545 184 V196 M545 232 V256 M533 256 H557 M537 261 H553 M542 266 H548"/>
+        <circle id="led" cx="545" cy="176" r="15" fill="var(--sig-out)" opacity=".85"/>
+        <polygon class="part" points="535,168 555,168 545,184"/><path class="w" d="M535 184 H555"/>
+        <rect class="part" x="539" y="196" width="12" height="36" rx="2"/><text class="tm" x="557" y="218">1k</text>
+        <text id="outLbl" class="tm" x="500" y="142">cao 12V</text>
+        <!-- dòng chảy -->
+        <path id="flowCharge" class="ov" stroke="var(--sig-cap)" d="M80 34 V211"/>
+        <path id="flowDis" class="ov off" stroke="var(--sig-dis)" d="M80 211 V120 H204 A6 6 0 0 1 216 120 H290 L322 120 H340 V140"/>
+        <path id="flowOut" class="ov" stroke="var(--sig-out)" d="M470 150 H545 V166"/>
+        <!-- thước đo áp tụ -->
+        <text class="tm" x="615" y="50" text-anchor="middle">áp tụ</text>
+        <rect class="part" x="600" y="60" width="30" height="200" rx="3"/>
+        <rect id="gFill" x="601" y="160" width="28" height="99" fill="var(--sig-cap)" opacity=".75"/>
+        <path class="w" d="M594 127 H636 M594 193 H636" stroke-dasharray="4 3"/>
+        <text class="tm" x="640" y="131">8V</text><text class="tm" x="640" y="197">4V</text>
+        <text id="gVal" class="tb" x="615" y="282" text-anchor="middle">6,0 V</text>
+      </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Điều khiển mô phỏng">
+        <button type="button" data-step="0" aria-pressed="true">Bước 1: Nạp</button>
+        <button type="button" data-step="1" aria-pressed="false">Bước 2: Lật xuống</button>
+        <button type="button" data-step="2" aria-pressed="false">Bước 3: Xả</button>
+        <button type="button" data-step="3" aria-pressed="false">Bước 4: Lật lên</button>
+        <button type="button" id="simRun" aria-pressed="false">▶ Tự chạy</button>
+      </div>
+      <p id="simDesc" class="desc" aria-live="polite"></p>
+    </figure>
+
+    <p>Điểm mấu chốt là chữ <strong>“nhớ”</strong>: khi áp tụ nằm giữa 4V và 8V thì không bộ so sánh nào lên tiếng, nên công tắc cứ giữ trạng thái cũ. Nhờ vậy lúc đi lên tụ nạp một mạch tới 8V, lúc đi xuống xả một mạch về 4V, chứ không bị bật qua bật lại lung tung ở giữa.</p>
+    <p>Tóm lại một vòng:</p>
     <ol>
       <li>Tụ C được <span class="k-cap">nạp</span> qua R1 + R2. Trong lúc này chân 3 ở mức <span class="k-out">cao</span> (LED sáng).</li>
       <li>Khi áp trên tụ lên tới <strong>2/3 áp nguồn</strong>, 555 lật: chân 3 xuống <span class="k-out">thấp</span> (LED tắt), chân 7 mở ra cho tụ <span class="k-cap">xả</span> qua R2.</li>
@@ -184,6 +279,94 @@
     <a class="back" href="/duan">← Về Dự án</a>
   </article>
 </div>
+<script>
+(function () {
+  var VCC = 12, V_HI = 8, V_LO = 4, K_CHARGE = 0.3, K_DISCHARGE = 0.6;
+  var G_TOP = 60, G_H = 200, MAX_DT = 0.05;
+  var TEXT = [
+    "<strong>Bước 1 – Nạp.</strong> Công tắc nhớ đang ở <span class='k-out'>CAO</span>: chân 3 ra 12V, LED sáng. Van xả (chân 7) đang hở, nên dòng đi <span class='k-cap'>+12V → R1 → R2 → tụ C</span>. Áp tụ tăng dần.",
+    "<strong>Bước 2 – Lật xuống.</strong> Áp tụ chạm 8V (2/3 của 12V). Bộ so sánh trên “bấm” công tắc nhớ sang <span class='k-out'>THẤP</span>: chân 3 về 0V, LED tắt, đồng thời van xả chân 7 đóng xuống mass.",
+    "<strong>Bước 3 – Xả.</strong> Van chân 7 nối mass nên tụ <span class='k-dis'>xả qua R2 → chân 7 → mass</span>. Áp tụ giảm. Bộ so sánh trên đã thôi bấm nhưng công tắc vẫn giữ THẤP – đó là chữ “nhớ”. Dòng xả không đi qua R1 nên xả nhanh hơn nạp.",
+    "<strong>Bước 4 – Lật lên.</strong> Áp tụ xuống 4V (1/3 của 12V). Bộ so sánh dưới “bấm” công tắc nhớ về <span class='k-out'>CAO</span>: chân 3 lên 12V, LED sáng lại, van xả hở ra. Quay lại Bước 1, cứ thế lặp mãi."
+  ];
+  var STEPS = [
+    { vc: 6, high: true, flash: "" },
+    { vc: V_HI, high: false, flash: "hi" },
+    { vc: 6, high: false, flash: "" },
+    { vc: V_LO, high: true, flash: "lo" }
+  ];
+  var FLASH_MS = 900;
+  function $(id) { return document.getElementById(id); }
+  if (!$("simDesc")) return;
+  var buttons = document.querySelectorAll(".sim .controls button");
+  var state = { vc: 6, high: true, flash: "", flashUntil: 0 };
+  var running = false, last = 0;
+
+  function phase(now) {
+    var flashing = state.flashUntil > now;
+    if (state.high) return flashing && state.flash === "lo" ? 3 : 0;
+    return flashing && state.flash === "hi" ? 1 : 2;
+  }
+  function toggle(id, on) { $(id).classList.toggle("off", !on); }
+  function render(now) {
+    var p = phase(now), flashing = state.flashUntil > now;
+    var h = (state.vc / VCC) * G_H;
+    $("gFill").setAttribute("y", (G_TOP + G_H - h).toFixed(1));
+    $("gFill").setAttribute("height", Math.max(h - 1, 0).toFixed(1));
+    $("gVal").textContent = state.vc.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " V";
+    $("ffState").textContent = state.high ? "CAO" : "THẤP";
+    $("outLbl").textContent = state.high ? "cao 12V" : "thấp 0V";
+    $("led").setAttribute("opacity", state.high ? ".85" : "0");
+    toggle("swOpen", state.high);
+    toggle("swClosed", !state.high);
+    toggle("flowCharge", state.high);
+    toggle("flowOut", state.high);
+    toggle("flowDis", !state.high);
+    $("cmpHi").classList.toggle("act", flashing && state.flash === "hi");
+    $("cmpLo").classList.toggle("act", flashing && state.flash === "lo");
+    $("ff").classList.toggle("act", flashing);
+    $("simDesc").innerHTML = TEXT[p];
+    if (running) {
+      Array.prototype.forEach.call(buttons, function (b) {
+        if (b.dataset.step) b.setAttribute("aria-pressed", String(Number(b.dataset.step) === p));
+      });
+    }
+  }
+  function tick(t) {
+    if (!running) return;
+    var dt = Math.min((t - last) / 1000, MAX_DT);
+    last = t;
+    if (state.high) {
+      state.vc += (VCC - state.vc) * K_CHARGE * dt;
+      if (state.vc >= V_HI) { state.vc = V_HI; state.high = false; state.flash = "hi"; state.flashUntil = t + FLASH_MS; }
+    } else {
+      state.vc += (0 - state.vc) * K_DISCHARGE * dt;
+      if (state.vc <= V_LO) { state.vc = V_LO; state.high = true; state.flash = "lo"; state.flashUntil = t + FLASH_MS; }
+    }
+    render(t);
+    requestAnimationFrame(tick);
+  }
+  function setRunning(on) {
+    running = on;
+    $("simRun").setAttribute("aria-pressed", String(on));
+    $("simRun").textContent = on ? "⏸ Dừng" : "▶ Tự chạy";
+    if (on) { last = performance.now(); requestAnimationFrame(tick); }
+  }
+  Array.prototype.forEach.call(buttons, function (b) {
+    b.addEventListener("click", function () {
+      if (b.id === "simRun") { setRunning(!running); return; }
+      setRunning(false);
+      var s = STEPS[Number(b.dataset.step)];
+      state = { vc: s.vc, high: s.high, flash: s.flash, flashUntil: s.flash ? Infinity : 0 };
+      Array.prototype.forEach.call(buttons, function (x) {
+        if (x.dataset.step) x.setAttribute("aria-pressed", String(x === b));
+      });
+      render(performance.now());
+    });
+  });
+  render(performance.now());
+})();
+</script>
 <script>
 (function () {
   var LN2 = 0.693;
