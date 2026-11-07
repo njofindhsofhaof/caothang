@@ -11,6 +11,13 @@
 window.CT_POSTS = [
   {
     section: "duan",
+    title: "Mạch hạ áp Buck 24V xuống 12V",
+    desc: "Vì sao không hạ áp bằng biến trở, nguyên lý mạch Buck có hình minh hoạ động, công thức D, so sánh với Boost và cách làm với LM2596.",
+    date: "2026-11-07",
+    href: "/machbuck"
+  },
+  {
+    section: "duan",
     title: "IC 555 phát xung",
     desc: "IC 555 là gì, sơ đồ chân, mạch phát xung nháy LED, công thức tần số và D, kèm máy tính R1 R2 C. Dùng làm bộ tạo xung cho mạch Boost.",
     date: "2026-11-07",

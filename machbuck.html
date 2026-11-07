@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mạch hạ áp Buck 24V xuống 12V · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Nguyên lý mạch hạ áp Buck 24V xuống 12V có hình minh hoạ động: vì sao không dùng biến trở, công tắc, cuộn cảm, diode, tụ, công thức D và cách làm với LM2596.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+:root{--flow-on:#1D9E75;--flow-off:#C97A3D;--flow-heat:#D85A30;}
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:38px 0 10px;}
+.post p{margin:0 0 12px;}
+.post ul,.post ol{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:8px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin:6px 0 12px;}
+.post .note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent-warm);padding:12px 16px;margin:14px 0;}
+.post .back{display:inline-block;margin-top:34px;font-family:var(--mono);font-size:13px;}
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0 10px;}
+.sim .scroll{overflow-x:auto;}
+.sim svg{display:block;width:100%;min-width:540px;height:auto;}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:1.4;}
+.sim .dot{fill:var(--ink);}
+.sim .t{font-family:var(--sans);font-size:13px;fill:var(--ink);}
+.sim .tb{font-family:var(--sans);font-size:15px;font-weight:600;fill:var(--ink);}
+.sim .tm{font-family:var(--mono);font-size:11.5px;fill:var(--ink-soft);}
+.sim .ov{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .off{opacity:0;}
+@media (prefers-reduced-motion:no-preference){.sim .ov{stroke-dasharray:8 8;animation:flow .8s linear infinite;}}
+@keyframes flow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .desc{font-size:14.5px;margin:0;min-height:4.8em;}
+.sim .slider{display:flex;align-items:center;gap:12px;margin:12px 0 0;font-size:14px;}
+.sim .slider input{flex:1;accent-color:var(--accent);}
+.sim .slider b{font-family:var(--mono);font-size:13px;min-width:130px;text-align:right;}
+.sim .outs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:4px 0 0;}
+.sim .o{background:var(--surface-2);border-radius:8px;padding:8px 10px;}
+.sim .o span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+.sim .o b{font-family:var(--serif);font-size:20px;font-weight:600;}
+.sim .o.bad b{color:var(--flow-heat);}
+.sim .o.good b{color:var(--flow-on);}
+.k-on{color:var(--flow-on);font-weight:600;}
+.k-off{color:var(--flow-off);font-weight:600;}
+@media (max-width:600px){.post h2{font-size:21px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Mạch hạ áp Buck 24V xuống 12V</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+
+  <article class="post">
+    <p class="byline">07/11/2026 · Ngao Vui Tính Hẳn</p>
+
+    <p>Có nguồn 24V (acquy xe tải, nguồn tổ ong 24V) mà thiết bị chỉ chịu 12V thì dùng <strong>mạch hạ áp Buck</strong> (buck converter). Đây là "anh em" của <a href="/machboost">mạch tăng áp Boost</a>: cùng một bộ linh kiện, chỉ xếp lại thứ tự. Mạch nguồn dùng LM2596 trong danh sách thực hành Điện tử Cơ bản chính là mạch này.</p>
+
+    <h2>Sao không dùng biến trở cho nhanh?</h2>
+    <p>Ý tưởng đầu tiên ai cũng nghĩ tới: mắc nối tiếp một biến trở cho nó "ăn bớt" 12V. Chạy được, nhưng có hai cái dở. Bấm đổi tải để xem:</p>
+
+    <figure class="sim" aria-label="So sánh biến trở với mạch hạ áp">
+      <div class="controls" role="group" aria-label="Chọn tải">
+        <button type="button" data-r="6" aria-pressed="true">Tải 6Ω (2A)</button>
+        <button type="button" data-r="12" aria-pressed="false">Tải 12Ω (1A)</button>
+        <button type="button" data-r="0" aria-pressed="false">Rút tải ra</button>
+      </div>
+      <div class="outs">
+        <div class="o bad"><span>Biến trở 6Ω: áp ra tải</span><b id="rvOut">12 V</b></div>
+        <div class="o bad"><span>Biến trở: đốt thành nhiệt</span><b id="rvHeat">24 W</b></div>
+        <div class="o good"><span>Mạch Buck: áp ra tải</span><b>12 V</b></div>
+        <div class="o good"><span>Mạch Buck: hao hụt</span><b id="bkHeat">~3 W</b></div>
+      </div>
+    </figure>
+    <ol>
+      <li><strong>Áp ra nhảy theo tải.</strong> Biến trở ăn bớt U = I × R, mà dòng tải lại thay đổi. Tải ăn ít dòng thì biến trở ăn ít áp, rút tải ra thì đầu ra lên nguyên 24V.</li>
+      <li><strong>Phí điện.</strong> Ở 2A, biến trở đốt 12V × 2A = 24W thành nhiệt, bằng đúng phần tải dùng, nên hiệu suất chỉ 50%. Biến trở nhỏ trên board chịu chưa tới 1W nên sẽ cháy.</li>
+    </ol>
+    <p class="note"><strong>Dễ nhớ:</strong> biến trở dùng để <em>chỉnh tín hiệu</em> (vặn âm lượng, đặt ngưỡng), không dùng để <em>hạ áp cấp cho tải</em>.</p>
+
+    <h2>Mạch gồm những gì</h2>
+    <ul>
+      <li><strong>Công tắc (MOSFET):</strong> công tắc điện tử, đóng ngắt hàng chục nghìn lần mỗi giây (LM2596 là khoảng 150 nghìn lần).</li>
+      <li><strong>Cuộn cảm L:</strong> "ghì" dòng lại khi công tắc đóng và nhả năng lượng ra khi công tắc ngắt, nên dòng ra tải đều, không bị giật.</li>
+      <li><strong>Diode:</strong> đường vòng để dòng của cuộn cảm có lối chạy lúc công tắc ngắt.</li>
+      <li><strong>Tụ C:</strong> lọc cho áp ra phẳng.</li>
+    </ul>
+
+    <h2>Nguyên lý: hai bước lặp lại liên tục</h2>
+    <figure class="sim" aria-label="Mô phỏng mạch Buck">
+      <div class="scroll">
+      <svg viewBox="0 0 680 270" role="img" aria-labelledby="bkTitle">
+        <title id="bkTitle">Mạch Buck: nguồn 24V, công tắc, cuộn cảm, diode, tụ và tải</title>
+        <path class="w" d="M60 70 V138 M60 150 V230 H560 V192 M60 70 H170 M222 70 H290 M386 70 H560 V128 M470 70 V138 M470 148 V230 M260 70 V150 M260 170 V230"/>
+        <path class="w" d="M46 138 H74 M53 150 H67 M456 138 H484 M456 148 H484 M249 150 H271"/>
+        <path class="w" d="M290 70 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0"/>
+        <polygon class="part" points="249,170 271,170 260,152"/>
+        <rect class="part" x="552" y="128" width="16" height="64" rx="2"/>
+        <line id="swClosed" class="w" x1="170" y1="70" x2="222" y2="70"/>
+        <line id="swOpen" class="w off" x1="170" y1="70" x2="214" y2="50"/>
+        <circle class="dot" cx="170" cy="70" r="3"/><circle class="dot" cx="222" cy="70" r="3"/>
+        <circle class="dot" cx="260" cy="70" r="3"/><circle class="dot" cx="470" cy="70" r="3"/><circle class="dot" cx="260" cy="230" r="3"/><circle class="dot" cx="470" cy="230" r="3"/>
+        <text class="tb" x="16" y="150">24V</text>
+        <text class="t" x="196" y="36" text-anchor="middle">công tắc</text>
+        <text class="t" x="338" y="44" text-anchor="middle">cuộn cảm L</text>
+        <text class="t" x="280" y="166">diode</text>
+        <text class="t" x="492" y="147">tụ C</text>
+        <text class="t" x="578" y="164">tải</text>
+        <text class="tm" x="600" y="44" text-anchor="middle">áp ra</text>
+        <text id="vOut" class="tb" x="600" y="64" text-anchor="middle">12 V</text>
+        <path id="flowOn" class="ov" stroke="var(--flow-on)" d="M60 128 V70 H560 V124 M560 196 V230 H60 V160"/>
+        <path id="flowOff" class="ov off" stroke="var(--flow-off)" d="M260 220 V70 H560 V124 M560 196 V230 H260"/>
+      </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Điều khiển mô phỏng">
+        <button type="button" data-step="0" aria-pressed="true">Bước 1: Đóng</button>
+        <button type="button" data-step="1" aria-pressed="false">Bước 2: Ngắt</button>
+        <button type="button" id="bkRun" aria-pressed="false">▶ Tự chạy</button>
+      </div>
+      <p id="bkDesc" class="desc" aria-live="polite"></p>
+      <div class="slider">
+        <label for="bkD">Tỉ lệ đóng D</label>
+        <input type="range" id="bkD" min="10" max="90" step="5" value="50">
+        <b id="bkDVal">50% → 12 V</b>
+      </div>
+    </figure>
+    <p>Kéo thanh D sẽ thấy: công tắc đóng càng lâu trong mỗi chu kỳ thì áp ra càng cao. Khi chạy tự động, khúc xanh (đóng) dài hay ngắn so với khúc cam (ngắt) chính là D.</p>
+
+    <h2>Công thức</h2>
+    <p class="formula">V<sub>ra</sub> = D × V<sub>vào</sub> &nbsp;·&nbsp; D = t<sub>đóng</sub> / T</p>
+    <p>Muốn ra 12V từ 24V thì D = 12 / 24 = 0,5: công tắc đóng một nửa thời gian. Cuộn cảm và tụ "san phẳng" các xung 24V tắt mở thành áp trung bình 12V.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>D</th><th>Áp ra (từ 24V)</th><th>Dùng cho</th></tr></thead>
+      <tbody>
+        <tr><td>21%</td><td>5V</td><td>Sạc điện thoại, Arduino</td></tr>
+        <tr><td>50%</td><td>12V</td><td>Quạt, đèn LED, thiết bị xe hơi</td></tr>
+        <tr><td>75%</td><td>18V</td><td>Sạc laptop đời cũ</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Vì sao đổi tải mà áp ra vẫn đứng yên?</strong> IC điều khiển (như LM2596) liên tục đo áp ra. Áp tụt một chút thì nó cho công tắc đóng lâu hơn, áp vượt thì đóng ngắn lại. Đây là <strong>hồi tiếp</strong>, giống mạch zener + BC547 trong bài Boost.</p>
+
+    <h2>Buck và Boost khác nhau chỗ nào</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th>Buck (hạ áp)</th><th>Boost (tăng áp)</th></tr></thead>
+      <tbody>
+        <tr><td>Công tắc</td><td>Đứng đầu, nối với nguồn</td><td>Nối từ cuộn cảm xuống mass</td></tr>
+        <tr><td>Cuộn cảm</td><td>Đứng sau công tắc, nối ra tải</td><td>Đứng đầu, nối với nguồn</td></tr>
+        <tr><td>Diode</td><td>Từ mass lên cuộn cảm</td><td>Từ cuộn cảm ra ngõ ra</td></tr>
+        <tr><td>Công thức</td><td>V<sub>ra</sub> = D × V<sub>vào</sub></td><td>V<sub>ra</sub> = V<sub>vào</sub> / (1 − D)</td></tr>
+        <tr><td>Ý tưởng</td><td>Cắt nhỏ áp rồi san phẳng</td><td>Tích năng lượng rồi chồng thêm áp</td></tr>
+      </tbody>
+    </table></div>
+    <p>Hai mạch đều không tự sinh ra năng lượng: Buck hạ áp thì dòng ra <em>lớn hơn</em> dòng vào. Ví dụ tải 12V 2A (24W), hiệu suất 90% thì nguồn 24V chỉ cấp khoảng 24 / 0,9 / 24 ≈ 1,1A.</p>
+
+    <h2>So 3 cách hạ áp 24V xuống 12V, tải 2A</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Cách</th><th>Áp ra ổn định?</th><th>Hiệu suất</th><th>Nhiệt thải</th></tr></thead>
+      <tbody>
+        <tr><td>Biến trở nối tiếp</td><td>Không, đổi theo tải</td><td>~50%</td><td>24W, cháy biến trở</td></tr>
+        <tr><td>IC ổn áp tuyến tính 7812</td><td>Có</td><td>~50%</td><td>24W, cần tản nhiệt to</td></tr>
+        <tr><td><strong>Mạch Buck (LM2596)</strong></td><td>Có</td><td><strong>~85–90%</strong></td><td>~3W</td></tr>
+      </tbody>
+    </table></div>
+    <p>7812 giống một "biến trở tự vặn": áp ra luôn đúng 12V nhưng vẫn đốt phần dư thành nhiệt. Còn công tắc của mạch Buck chỉ đóng hẳn hoặc ngắt hẳn, cả hai trạng thái đều gần như không đốt nhiệt.</p>
+
+    <h2>Tự làm</h2>
+    <ul>
+      <li><strong>Mức 1, mua module LM2596</strong> (khoảng 25–35 nghìn): có sẵn biến trở đa vòng để chỉnh áp ra. Cấp 24V vào, vặn biến trở trong lúc đo đầu ra bằng VOM cho tới khi được 12V rồi mới gắn tải. Biến trở ở đây chỉ "đặt mục tiêu" cho IC, dòng tải không đi qua nó.</li>
+      <li><strong>Mức 2, mạch nguồn trong danh sách thực hành Điện tử Cơ bản:</strong> cầu diode KBP307 + tụ 2200µF chỉnh lưu điện xoay chiều thành DC, rồi LM2596S-12 hạ xuống cố định 12V với cuộn cảm 47µH, diode HER307 và tụ 1000µF. Đúng sơ đồ trong bài này, chỉ thêm khâu chỉnh lưu phía trước.</li>
+    </ul>
+    <p class="note"><strong>Lưu ý với LM2596:</strong> áp vào tối đa 40V, và phải cao hơn áp ra ít nhất khoảng 1,5V. Dòng ghi 3A nhưng trên 2A nên gắn thêm tản nhiệt. Diode phải là loại nhanh (Schottky như 1N5822, hoặc HER307 như trong danh sách), không dùng 1N4007 vì nó quá chậm so với tần số đóng ngắt.</p>
+
+    <a class="back" href="/duan">← Về Dự án</a>
+  </article>
+</div>
+<script>
+(function () {
+  var V_IN = 24, R_SERIES = 6, BUCK_EFF = 0.9, BUCK_VOUT = 12, CYCLE_MS = 3600;
+  var TEXT = [
+    "<strong>Bước 1 – Đóng.</strong> Công tắc nối nguồn 24V vào. Dòng <span class='k-on'>(xanh)</span> chạy 24V → công tắc → cuộn cảm → tải rồi về nguồn. Cuộn cảm ghì dòng lại, không cho tăng vọt, và tích năng lượng vào từ trường.",
+    "<strong>Bước 2 – Ngắt.</strong> Nguồn bị cắt, nhưng cuộn cảm không chịu để dòng dừng đột ngột: nó nhả năng lượng ra, đẩy dòng <span class='k-off'>(cam)</span> chạy tiếp qua tải rồi vòng lên qua diode. Tải vẫn có điện dù nguồn đang ngắt."
+  ];
+  function $(id) { return document.getElementById(id); }
+  if (!$("bkDesc")) return;
+  var steps = document.querySelectorAll("[data-step]");
+  var step = 0, timer = null, duty = 0.5;
+  function fmt(v) { return v.toLocaleString("vi-VN", { maximumFractionDigits: 1 }); }
+
+  function show(s) {
+    step = s;
+    $("flowOn").classList.toggle("off", s !== 0);
+    $("swClosed").classList.toggle("off", s !== 0);
+    $("flowOff").classList.toggle("off", s !== 1);
+    $("swOpen").classList.toggle("off", s !== 1);
+    $("bkDesc").innerHTML = TEXT[s];
+    Array.prototype.forEach.call(steps, function (b) { b.setAttribute("aria-pressed", String(Number(b.dataset.step) === s)); });
+  }
+  function stop() {
+    clearTimeout(timer); timer = null;
+    $("bkRun").setAttribute("aria-pressed", "false");
+    $("bkRun").textContent = "▶ Tự chạy";
+  }
+  function loop() {
+    show(step === 0 ? 1 : 0);
+    timer = setTimeout(loop, CYCLE_MS * (step === 0 ? duty : 1 - duty));
+  }
+  Array.prototype.forEach.call(steps, function (b) {
+    b.addEventListener("click", function () { stop(); show(Number(b.dataset.step)); });
+  });
+  $("bkRun").addEventListener("click", function () {
+    if (timer) { stop(); return; }
+    $("bkRun").setAttribute("aria-pressed", "true");
+    $("bkRun").textContent = "⏸ Dừng";
+    loop();
+  });
+  $("bkD").addEventListener("input", function (e) {
+    duty = Number(e.target.value) / 100;
+    var v = fmt(V_IN * duty) + " V";
+    $("bkDVal").textContent = Math.round(duty * 100) + "% → " + v;
+    $("vOut").textContent = v;
+  });
+
+  var loads = document.querySelectorAll("[data-r]");
+  function setLoad(btn) {
+    var r = Number(btn.dataset.r);
+    var i = r ? V_IN / (R_SERIES + r) : 0;
+    var vOut = r ? i * r : V_IN;
+    var pOut = r ? (BUCK_VOUT * BUCK_VOUT) / r : 0;
+    $("rvOut").textContent = fmt(vOut) + " V";
+    $("rvHeat").textContent = fmt(i * i * R_SERIES) + " W";
+    $("bkHeat").textContent = "~" + fmt(Math.round(pOut / BUCK_EFF - pOut)) + " W";
+    Array.prototype.forEach.call(loads, function (x) { x.setAttribute("aria-pressed", String(x === btn)); });
+  }
+  Array.prototype.forEach.call(loads, function (b) { b.addEventListener("click", function () { setLoad(b); }); });
+  show(0);
+  setLoad(loads[0]);
+})();
+</script>
+<script src="assets/posts.js?v=20261107d"></script>
+<script src="assets/site.js?v=20261107d"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
