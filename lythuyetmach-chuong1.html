@@ -134,6 +134,67 @@
 .exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
 .post .back{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
 @media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
 </style>
 </head>
 <body>
@@ -262,6 +323,45 @@
       </table>
     </div>
     <p class="easy"><span class="tag">Dễ nhớ</span>Điện thế = <strong>"cao bao nhiêu"</strong>: phải hỏi "so với đâu". Điện áp = <strong>"cao hơn bao nhiêu"</strong>: chỉ cần so 2 điểm với nhau. Vì vậy vôn kế chỉ có 2 que đo, đo <strong>giữa 2 điểm</strong>.</p>
+    <figure class="sim" id="simPot">
+      <p class="sim-h">Thử ngay · Điện thế V<sub>A</sub>, V<sub>B</sub> và điện áp U<sub>AB</sub></p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 232" role="img" aria-labelledby="potTitle">
+          <title id="potTitle">Hai bể nước A và B nối bằng ống ở đáy. Mực nước là điện thế, độ chênh mực nước là điện áp U_AB.</title>
+          <defs><marker id="mkPot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="mk" d="M0 0 L10 5 L0 10 Z"/></marker></defs>
+          <line class="thin" x1="70" y1="200" x2="70" y2="50"/>
+          <path class="thin" d="M64 200 L76 200 M64 150 L76 150 M64 100 L76 100 M64 50 L76 50"/>
+          <text class="s" id="potK0" x="58" y="204" text-anchor="end">0 V</text>
+          <text class="s" id="potK1" x="58" y="154" text-anchor="end">5 V</text>
+          <text class="s" id="potK2" x="58" y="104" text-anchor="end">10 V</text>
+          <text class="s" id="potK3" x="58" y="54" text-anchor="end">15 V</text>
+          <rect class="water" id="potWA" x="130" y="80" width="80" height="120"/>
+          <rect class="water" id="potWB" x="350" y="150" width="80" height="50"/>
+          <rect class="water" x="210" y="183" width="140" height="13"/>
+          <path class="ov lane" id="potFlow" d="M214 189.5 L346 189.5"/>
+          <path class="w" d="M130 40 L130 200 L210 200 L210 196 M210 183 L210 40 M430 40 L430 200 L350 200 L350 196 M350 183 L350 40 M210 183 L350 183 M210 196 L350 196"/>
+          <line class="dash" id="potGA" x1="210" y1="80" x2="292" y2="80"/>
+          <line class="dash" id="potGB" x1="268" y1="150" x2="350" y2="150"/>
+          <line class="uarr" id="potU" x1="280" y1="80" x2="280" y2="150" marker-end="url(#mkPot)"/>
+          <text class="b warm" id="potUT" x="290" y="120">U<tspan class="sub" dy="4">AB</tspan><tspan dy="-4" id="potUv"> = 7 V</tspan></text>
+          <line class="ref" id="potRef" x1="64" y1="200" x2="480" y2="200"/>
+          <text class="s warm" id="potRefT" x="548" y="204" text-anchor="end">mốc 0 V</text>
+          <text class="b ac" x="170" y="30" text-anchor="middle">V<tspan class="sub" dy="4">A</tspan><tspan dy="-4" id="potVA"> = 12 V</tspan></text>
+          <text class="b ac" x="390" y="30" text-anchor="middle">V<tspan class="sub" dy="4">B</tspan><tspan dy="-4" id="potVB"> = 5 V</tspan></text>
+          <text class="s" x="170" y="222" text-anchor="middle">Bể A</text>
+          <text class="s" x="390" y="222" text-anchor="middle">Bể B</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="potA">Bể A (so với đất)</label><input type="range" id="potA" min="0" max="15" step="1" value="12"><output id="potAo" for="potA">12 V</output></div>
+      <div class="sl"><label for="potB">Bể B (so với đất)</label><input type="range" id="potB" min="0" max="15" step="1" value="5"><output id="potBo" for="potB">5 V</output></div>
+      <div class="controls" role="group" aria-label="Chọn mốc 0 V">
+        <button type="button" data-ref="gnd" aria-pressed="true">Mốc 0 V ở đất</button>
+        <button type="button" data-ref="b" aria-pressed="false">Mốc 0 V ở B</button>
+        <button type="button" data-ref="a" aria-pressed="false">Mốc 0 V ở A</button>
+      </div>
+      <p class="live" id="potLive" aria-live="polite"></p>
+      <figcaption>Kéo mực nước rồi đổi mốc: V<sub>A</sub>, V<sub>B</sub> đổi theo mốc, còn U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> thì giữ nguyên.</figcaption>
+    </figure>
 
     <!-- 3 -->
     <h2 id="dong-dien"><span class="num">03</span>Dòng điện</h2>
@@ -295,6 +395,27 @@
       <li><strong>Chiều quy ước</strong>: chiều chuyển động của điện tích dương, tức ở mạch ngoài dòng đi từ cực + sang cực − của nguồn (ngược chiều chuyển động của electron).</li>
     </ul>
     <div class="note"><strong>Chiều giả định:</strong> khi giải mạch ta tự chọn chiều dòng mỗi nhánh (vẽ mũi tên). Nếu kết quả ra số <strong>âm</strong>, dòng thực tế chạy <strong>ngược</strong> chiều đã chọn, trị số vẫn đúng. Đó là lý do bài tập Kirchhoff cho phép nhập đáp án âm.</div>
+    <figure class="sim" id="simCur">
+      <p class="sim-h">Thử ngay · Dòng điện như nước chảy trong ống</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 172" role="img" aria-labelledby="curTitle">
+          <title id="curTitle">Ống có đoạn rộng và đoạn hẹp. Lượng điện tích qua mỗi mặt cắt trong 1 giây là như nhau; ở chỗ hẹp điện tích chạy nhanh hơn.</title>
+          <path class="water" d="M30 50 L230 50 L270 75 L330 75 L370 50 L530 50 L530 130 L370 130 L330 105 L270 105 L230 130 L30 130 Z"/>
+          <path class="ov lane" id="curWide" d="M34 68 L230 68 M34 90 L230 90 M34 112 L230 112 M370 68 L526 68 M370 90 L526 90 M370 112 L526 112"/>
+          <path class="ov lane" id="curNar" d="M230 68 L270 83 L330 83 L370 68 M230 90 L370 90 M230 112 L270 97 L330 97 L370 112"/>
+          <path class="w" d="M30 50 L230 50 L270 75 L330 75 L370 50 L530 50 M30 130 L230 130 L270 105 L330 105 L370 130 L530 130"/>
+          <line class="ref" x1="130" y1="40" x2="130" y2="140"/>
+          <line class="ref" x1="300" y1="65" x2="300" y2="115"/>
+          <text class="b ac" id="curL1" x="130" y="30" text-anchor="middle">chỗ rộng: I = 2 A</text>
+          <text class="b ac" id="curL2" x="300" y="152" text-anchor="middle">chỗ hẹp: I = 2 A</text>
+          <path class="heat" id="curHeat" d="M285 64 q5 -6 0 -12 q-5 -6 0 -12 M315 64 q5 -6 0 -12 q-5 -6 0 -12"/>
+          <text class="s" x="530" y="30" text-anchor="end">chiều dòng: + → −</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="curI">Dòng điện I</label><input type="range" id="curI" min="0" max="3" step="0.5" value="2"><output id="curIo" for="curI">2 A</output></div>
+      <p class="live" id="curLive" aria-live="polite"></p>
+      <figcaption>Kéo I: chấm trắng chạy nhanh hơn ở chỗ hẹp, nhưng số ampe ở mọi mặt cắt luôn bằng nhau.</figcaption>
+    </figure>
 
     <!-- 4 -->
     <h2 id="nguon-dien"><span class="num">04</span>Nguồn điện</h2>
@@ -371,6 +492,84 @@
       <li><strong>Song song</strong>: 1/R<sub>tđ</sub> = 1/R₁ + 1/R₂ + …; hai điện trở: R<sub>tđ</sub> = R₁R₂/(R₁ + R₂) (cùng áp, dòng chia tỉ lệ nghịch với R).</li>
       <li>Công suất tiêu tán: P = U × I = I² × R = U²/R.</li>
     </ul>
+    <figure class="sim" id="simOhm">
+      <p class="sim-h">Thử ngay · Định luật Ohm U = I × R</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 228" role="img" aria-labelledby="ohmTitle">
+          <title id="ohmTitle">Mạch kín gồm nguồn U, ampe kế và điện trở R. Độ dày và tốc độ của dòng chảy cho thấy độ lớn dòng điện I.</title>
+          <path class="w" d="M80 98 L80 50 L440 50 L440 85 M440 155 L440 190 L80 190 L80 142"/>
+          <path class="ov" id="ohmFlow" d="M80 98 L80 50 L440 50 L440 85 M440 155 L440 190 L80 190 L80 142"/>
+          <circle class="src" cx="80" cy="120" r="22"/>
+          <text class="b" x="80" y="115" text-anchor="middle">+</text>
+          <text class="b" x="80" y="136" text-anchor="middle">−</text>
+          <rect class="part" x="427" y="85" width="26" height="70" rx="3"/>
+          <circle class="src" cx="260" cy="50" r="16"/>
+          <text class="b" x="260" y="55" text-anchor="middle">A</text>
+          <text class="b warm" id="ohmUt" x="114" y="125">U = 12 V</text>
+          <text class="b" id="ohmRt" x="466" y="125">R = 6 Ω</text>
+          <text class="b ac" id="ohmIt" x="260" y="24" text-anchor="middle">I = 2 A</text>
+          <text class="s" x="260" y="216" text-anchor="middle">Bơm (U) càng mạnh → dòng càng lớn · Ống (R) càng hẹp → dòng càng nhỏ</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn đại lượng cần tính">
+        <button type="button" data-solve="I" aria-pressed="true">Tìm I = U / R</button>
+        <button type="button" data-solve="U" aria-pressed="false">Tìm U = I × R</button>
+        <button type="button" data-solve="R" aria-pressed="false">Tìm R = U / I</button>
+      </div>
+      <div class="sl"><label for="ohmU">Điện áp U</label><input type="range" id="ohmU" min="0" max="24" step="0.5" value="12"><output id="ohmUo" for="ohmU">12 V</output></div>
+      <div class="sl"><label for="ohmR">Điện trở R</label><input type="range" id="ohmR" min="1" max="24" step="1" value="6"><output id="ohmRo" for="ohmR">6 Ω</output></div>
+      <div class="sl"><label for="ohmI">Dòng điện I</label><input type="range" id="ohmI" min="0" max="6" step="0.1" value="2"><output id="ohmIo" for="ohmI">2 A</output></div>
+      <p class="live" id="ohmLive" aria-live="polite"></p>
+      <figcaption>Chọn đại lượng cần tính rồi kéo 2 thanh còn lại; thanh của đại lượng cần tính bị khoá và tự nhảy theo.</figcaption>
+    </figure>
+
+    <figure class="sim" id="simSP">
+      <p class="sim-h">Thử ngay · Điện trở nối tiếp và song song (nguồn 12 V)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 238" role="img" aria-labelledby="spTitle">
+          <title id="spTitle">Nguồn 12 V nối với hai điện trở R1 và R2, mắc nối tiếp hoặc song song.</title>
+          <g id="spSer">
+            <path class="w" d="M70 103 L70 50 L490 50 L490 200 L70 200 L70 147"/>
+            <path class="ov" id="spSerF" d="M70 103 L70 50 L490 50 L490 200 L70 200 L70 147"/>
+            <rect class="part" x="170" y="38" width="80" height="24" rx="3"/>
+            <rect class="part" x="330" y="38" width="80" height="24" rx="3"/>
+            <text class="b" id="spSR1" x="210" y="28" text-anchor="middle">R₁ = 4 Ω</text>
+            <text class="b" id="spSR2" x="370" y="28" text-anchor="middle">R₂ = 12 Ω</text>
+            <text class="b warm" id="spSU1" x="210" y="84" text-anchor="middle">U₁ = 3 V</text>
+            <text class="b warm" id="spSU2" x="370" y="84" text-anchor="middle">U₂ = 9 V</text>
+            <text class="b ac" id="spSI" x="280" y="224" text-anchor="middle">I = 0,75 A (cùng một dòng)</text>
+          </g>
+          <g id="spPar" display="none">
+            <path class="w" d="M70 103 L70 50 L450 50 L450 200 L70 200 L70 147 M280 50 L280 200"/>
+            <path class="ov" id="spPF" d="M70 103 L70 50 L280 50 M280 200 L70 200 L70 147"/>
+            <path class="ov c-w" id="spP1" d="M280 50 L280 200"/>
+            <path class="ov c-g" id="spP2" d="M280 50 L450 50 L450 200 L280 200"/>
+            <rect class="part" x="268" y="98" width="24" height="54" rx="3"/>
+            <rect class="part" x="438" y="98" width="24" height="54" rx="3"/>
+            <circle class="node" cx="280" cy="50" r="5"/>
+            <circle class="node" cx="280" cy="200" r="5"/>
+            <text class="b" id="spPR1" x="300" y="118">R₁ = 4 Ω</text>
+            <text class="b warm" id="spPI1" x="300" y="140">I₁ = 3 A</text>
+            <text class="b" id="spPR2" x="470" y="118">R₂ = 12 Ω</text>
+            <text class="b grn" id="spPI2" x="470" y="140">I₂ = 1 A</text>
+            <text class="b ac" id="spPI" x="175" y="38" text-anchor="middle">I = 4 A</text>
+            <text class="s" x="280" y="224" text-anchor="middle">cùng điện áp 12 V trên R₁ và R₂</text>
+          </g>
+          <circle class="src" cx="70" cy="125" r="22"/>
+          <text class="b" x="70" y="120" text-anchor="middle">+</text>
+          <text class="b" x="70" y="141" text-anchor="middle">−</text>
+          <text class="b warm" x="102" y="130">U = 12 V</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn cách mắc">
+        <button type="button" data-mode="ser" aria-pressed="true">Nối tiếp</button>
+        <button type="button" data-mode="par" aria-pressed="false">Song song</button>
+      </div>
+      <div class="sl"><label for="spR1">R₁</label><input type="range" id="spR1" min="1" max="12" step="1" value="4"><output id="spR1o" for="spR1">4 Ω</output></div>
+      <div class="sl"><label for="spR2">R₂</label><input type="range" id="spR2" min="1" max="12" step="1" value="12"><output id="spR2o" for="spR2">12 Ω</output></div>
+      <p class="live" id="spLive" aria-live="polite"></p>
+      <figcaption><strong>Dễ nhớ:</strong> nối tiếp = nước đi qua 2 ống hẹp <strong>nối đuôi</strong> (khó đi hơn, R cộng lại); song song = <strong>mở thêm đường</strong> cho nước (dễ đi hơn, R<sub>tđ</sub> nhỏ hơn R nhỏ nhất).</figcaption>
+    </figure>
 
     <!-- 6 -->
     <h2 id="dien-dung"><span class="num">06</span>Điện dung</h2>
@@ -496,6 +695,34 @@
       <li>⇒ P<sub>nguồn</sub> = P<sub>tải</sub> = 36 W ✓</li>
     </ul>
     <p class="easy"><span class="tag">Dễ nhớ</span>Giải xong bài Kirchhoff thì <strong>tính lại công suất để kiểm tra</strong>: hai bên bằng nhau là đúng, lệch nhau là giải sai ở đâu đó.</p>
+    <figure class="sim" id="simPow">
+      <p class="sim-h">Thử ngay · Công suất P = U × I = R × I²</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 196" role="img" aria-labelledby="powTitle">
+          <title id="powTitle">Bóng đèn sáng theo công suất; ba thanh cho thấy điện áp U, dòng I và công suất P.</title>
+          <g class="ray" id="powRay"><line x1="140" y1="18" x2="140" y2="6"/><line x1="82" y1="42" x2="72" y2="34"/><line x1="198" y1="42" x2="208" y2="34"/><line x1="72" y1="88" x2="58" y2="90"/><line x1="208" y1="88" x2="222" y2="90"/></g>
+          <circle class="bulb" id="powBulb" cx="140" cy="80" r="48"/>
+          <path class="w" d="M126 122 L126 94 L134 74 L140 94 L146 74 L154 94 L154 122"/>
+          <rect class="part" x="120" y="128" width="40" height="30" rx="4"/>
+          <path class="w" d="M120 138 L160 138 M120 148 L160 148"/>
+          <text class="b" id="powUt" x="250" y="56">U = 12 V</text>
+          <rect class="track" x="350" y="44" width="180" height="14" rx="7"/>
+          <rect class="fillU" id="powUb" x="350" y="44" width="90" height="14" rx="7"/>
+          <text class="b" id="powIt" x="250" y="96">I = 1,5 A</text>
+          <rect class="track" x="350" y="84" width="180" height="14" rx="7"/>
+          <rect class="fillI" id="powIb" x="350" y="84" width="45" height="14" rx="7"/>
+          <text class="b" id="powPt" x="250" y="136">P = 18 W</text>
+          <rect class="track" x="350" y="124" width="180" height="14" rx="7"/>
+          <rect class="fillP" id="powPb" x="350" y="124" width="22" height="14" rx="7"/>
+          <text class="s" x="140" y="184" text-anchor="middle">đèn sáng theo P</text>
+          <text class="s" x="440" y="170" text-anchor="middle">thanh đầy: 24 V · 6 A · 144 W</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="powU">Điện áp nguồn U</label><input type="range" id="powU" min="0" max="24" step="1" value="12"><output id="powUo" for="powU">12 V</output></div>
+      <div class="sl"><label for="powR">Điện trở tải R</label><input type="range" id="powR" min="4" max="24" step="1" value="8"><output id="powRo" for="powR">8 Ω</output></div>
+      <p class="live" id="powLive" aria-live="polite"></p>
+      <figcaption><strong>Thử:</strong> giữ R, kéo U từ 12 V lên 24 V. I tăng gấp đôi nên P tăng gấp <strong>4</strong> (P = R × I²).</figcaption>
+    </figure>
     <div class="units">
       <p class="units-h">Đổi đơn vị công suất (oát) và điện năng</p>
       <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Megaoát</td><td>MW</td><td>1 MW = 1 000 kW = 10⁶ W</td></tr><tr><td>Kilôoát</td><td>kW</td><td>1 kW = 10³ W = 1 000 W</td></tr><tr class="base"><td>Oát</td><td>W</td><td>đơn vị gốc · 1 W = 1 J/s</td></tr><tr><td>Milioát</td><td>mW</td><td>1 mW = 10⁻³ W = 0,001 W</td></tr><tr><td>Kilôoát giờ</td><td>kWh</td><td>1 kWh = 1 000 Wh = 3,6 × 10⁶ J (1 "số điện")</td></tr></tbody></table></div>
@@ -618,6 +845,49 @@
       <p>P<sub>tải</sub> = R₁ × I₁² + R₂ × I₂² + R₃ × I₃² = 2 × 2² + 2 × 1² + 4 × 3² = 8 + 2 + 36 = 46 W</p>
       <p class="ans">⇒ P<sub>nguồn</sub> = P<sub>tải</sub> = 46 W ✓</p>
     </div>
+    <figure class="sim" id="simKh">
+      <p class="sim-h">Thử ngay · Đi từng bước K1, K2 trên mạch ví dụ (đổi E₁, E₂ tuỳ ý)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 266" role="img" aria-labelledby="khTitle">
+          <title id="khTitle">Mạch ví dụ: E1 và R1 ở nhánh trái, R3 ở nhánh giữa, E2 và R2 ở nhánh phải, hai nút A và B.</title>
+          <path class="w" d="M280 40 L60 40 L60 113 M60 157 L60 230 L500 230 L500 157 M500 113 L500 40 L280 40 L280 105 M280 165 L280 230"/>
+          <path class="ov c-w" id="khF1" d="M276 230 L60 230 L60 40 L276 40"/>
+          <path class="ov c-g" id="khF2" d="M284 230 L500 230 L500 40 L284 40"/>
+          <path class="ov" id="khF3" d="M280 46 L280 224"/>
+          <rect class="part" x="140" y="28" width="80" height="24" rx="3"/>
+          <rect class="part" x="340" y="28" width="80" height="24" rx="3"/>
+          <rect class="part" x="268" y="105" width="24" height="60" rx="3"/>
+          <circle class="src" cx="60" cy="135" r="22"/>
+          <text class="b" x="60" y="130" text-anchor="middle">+</text><text class="b" x="60" y="151" text-anchor="middle">−</text>
+          <circle class="src" cx="500" cy="135" r="22"/>
+          <text class="b" x="500" y="130" text-anchor="middle">+</text><text class="b" x="500" y="151" text-anchor="middle">−</text>
+          <circle class="ring hide" id="khRing" cx="280" cy="40" r="15"/>
+          <circle class="node" cx="280" cy="40" r="6"/><circle class="node" cx="280" cy="230" r="6"/>
+          <text class="b" x="292" y="24">A</text><text class="b" x="292" y="252">B</text>
+          <text class="s" x="180" y="20" text-anchor="middle">R₁ = 2 Ω</text>
+          <text class="s" x="380" y="20" text-anchor="middle">R₂ = 2 Ω</text>
+          <text class="s" x="300" y="128">R₃ = 4 Ω</text>
+          <text class="b" id="khE1" x="90" y="104">E₁ = 16 V</text>
+          <text class="b" id="khE2" x="470" y="104" text-anchor="end">E₂ = 14 V</text>
+          <text class="b warm" id="khI1" x="90" y="74">I₁ = 2 A</text>
+          <text class="b grn" id="khI2" x="470" y="74" text-anchor="end">I₂ = 1 A</text>
+          <text class="b ac" id="khI3" x="300" y="200">I₃ = 3 A</text>
+          <g id="khV1" class="hide"><path class="loopv" d="M158 150 A28 28 0 1 1 180 178"/><path class="loopv" d="M188 172 L180 178 L188 185"/><text class="b warm" x="180" y="155" text-anchor="middle">V₁</text></g>
+          <g id="khV2" class="hide"><path class="loopv" d="M378 150 A28 28 0 1 1 400 178"/><path class="loopv" d="M408 172 L400 178 L408 185"/><text class="b warm" x="400" y="155" text-anchor="middle">V₂</text></g>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn bước">
+        <button type="button" data-step="all" aria-pressed="true">Kết quả</button>
+        <button type="button" data-step="k1" aria-pressed="false">K1 tại nút A</button>
+        <button type="button" data-step="v1" aria-pressed="false">K2 vòng V₁</button>
+        <button type="button" data-step="v2" aria-pressed="false">K2 vòng V₂</button>
+        <button type="button" data-step="p" aria-pressed="false">Cân bằng công suất</button>
+      </div>
+      <div class="sl"><label for="khE1in">Nguồn E₁</label><input type="range" id="khE1in" min="0" max="24" step="1" value="16"><output id="khE1ino" for="khE1in">16 V</output></div>
+      <div class="sl"><label for="khE2in">Nguồn E₂</label><input type="range" id="khE2in" min="0" max="24" step="1" value="14"><output id="khE2ino" for="khE2in">14 V</output></div>
+      <p class="live" id="khLive" aria-live="polite"></p>
+      <figcaption>Mũi tên chạy theo chiều dòng giả định trong lời giải; dòng nào ra số âm thì mũi tên chạy ngược lại.</figcaption>
+    </figure>
 
     <!-- 12 -->
     <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
@@ -691,6 +961,262 @@
       ["k", 135, 175, "V₁"], ["k", 325, 175, "V₂"]
     ]
   }));
+})();
+</script>
+<script>
+/* Mô phỏng tương tác Chương 1: điện thế, dòng điện, Ohm, nối tiếp/song song, công suất, Kirchhoff */
+(function () {
+  "use strict";
+  var each = Array.prototype.forEach;
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function fmt(x) {
+    var r = Math.round(x * 100) / 100;
+    if (Math.abs(r) < 0.005) r = 0;
+    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+  }
+  function par(x) { return Math.round(x * 100) < 0 ? "(" + fmt(x) + ")" : fmt(x); }
+  function setText(id, s) { $(id).textContent = s; }
+  function setAttrs(id, attrs) {
+    var el = $(id);
+    Object.keys(attrs).forEach(function (k) { el.setAttribute(k, String(attrs[k])); });
+  }
+  // Dòng chảy: độ dày + tốc độ theo |i|, chạy ngược khi i < 0, ẩn khi i = 0
+  function setFlow(el, i) {
+    var a = Math.abs(i);
+    el.classList.toggle("off", a < 0.005);
+    el.classList.toggle("rev", i < 0);
+    el.style.strokeWidth = String(clamp(2 + a * 1.1, 2, 9));
+    el.style.setProperty("--dur", clamp(1.6 / (a || 1), 0.25, 4).toFixed(2) + "s");
+  }
+  function slider(id, unit, onChange) {
+    var input = $(id), out = $(id + "o");
+    var api = {
+      input: input, out: out,
+      get: function () { return Number(input.value); },
+      show: function () { out.textContent = fmt(api.get()) + " " + unit; }
+    };
+    input.addEventListener("input", function () { api.show(); onChange(); });
+    return api;
+  }
+  function buttons(figId, attr, onPick) {
+    var btns = $(figId).querySelectorAll("button[" + attr + "]");
+    each.call(btns, function (b) {
+      b.addEventListener("click", function () {
+        each.call(btns, function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        onPick(b.getAttribute(attr));
+      });
+    });
+  }
+
+  /* 1. Điện thế V_A, V_B và điện áp U_AB */
+  function initPotential() {
+    if (!$("simPot")) return;
+    var Y0 = 200, K = 10, ref = "gnd";
+    var REF_NAME = { gnd: "đất", a: "điểm A", b: "điểm B" };
+    var a = slider("potA", "V", render), b = slider("potB", "V", render);
+    buttons("simPot", "data-ref", function (r) { ref = r; render(); });
+    function render() {
+      var va = a.get(), vb = b.get(), r = ref === "a" ? va : ref === "b" ? vb : 0;
+      var yA = Y0 - va * K, yB = Y0 - vb * K, yR = Y0 - r * K, u = va - vb;
+      setAttrs("potWA", { y: yA, height: va * K });
+      setAttrs("potWB", { y: yB, height: vb * K });
+      [0, 1, 2, 3].forEach(function (k) { setText("potK" + k, fmt(k * 5 - r) + " V"); });
+      setAttrs("potRef", { y1: yR, y2: yR });
+      setAttrs("potRefT", { y: yR + 4 });
+      setText("potRefT", "mốc 0 V = " + (ref === "gnd" ? "đất" : ref.toUpperCase()));
+      setText("potVA", " = " + fmt(va - r) + " V");
+      setText("potVB", " = " + fmt(vb - r) + " V");
+      setAttrs("potGA", { y1: yA, y2: yA });
+      setAttrs("potGB", { y1: yB, y2: yB });
+      setAttrs("potU", { y1: yA, y2: yB });
+      $("potU").classList.toggle("hide", u === 0);
+      setAttrs("potUT", { y: (yA + yB) / 2 + 5 });
+      setText("potUv", " = " + fmt(u) + " V");
+      var flow = $("potFlow");
+      flow.classList.toggle("off", u === 0);
+      flow.classList.toggle("rev", u < 0);
+      flow.style.setProperty("--dur", clamp(4 / Math.abs(u || 1), 0.3, 4).toFixed(2) + "s");
+      var dir = u > 0 ? "A cao hơn B nên nước (dòng điện) chảy từ A sang B."
+        : u < 0 ? "U<sub>AB</sub> âm: B cao hơn A nên nước chảy từ B sang A."
+        : "Hai mực bằng nhau: không có chênh lệch nên nước đứng yên, không có dòng.";
+      $("potLive").innerHTML = "Mốc 0 V ở " + REF_NAME[ref] + ": V<sub>A</sub> = " + fmt(va - r) + " V, V<sub>B</sub> = " + fmt(vb - r) +
+        " V ⇒ U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = " + par(va - r) + " − " + par(vb - r) + " = <b>" + fmt(u) + " V</b>. " + dir;
+    }
+    a.show(); b.show(); render();
+  }
+
+  /* 2. Dòng điện như nước chảy trong ống */
+  function initCurrent() {
+    if (!$("simCur")) return;
+    var s = slider("curI", "A", render);
+    function render() {
+      var i = s.get(), d = i ? 2 / i : 1;
+      [$("curWide"), $("curNar")].forEach(function (el) { el.classList.toggle("off", i === 0); });
+      $("curWide").style.setProperty("--dur", d.toFixed(2) + "s");
+      $("curNar").style.setProperty("--dur", (d / 2.5).toFixed(2) + "s");
+      setText("curL1", "chỗ rộng: I = " + fmt(i) + " A");
+      setText("curL2", "chỗ hẹp: I = " + fmt(i) + " A");
+      $("curHeat").style.opacity = String(clamp(i * i / 9, 0, 1));
+      $("curLive").innerHTML = i === 0
+        ? "I = 0: không có điện tích nào dịch chuyển, giống nước đứng yên trong ống."
+        : "Mỗi giây có <b>" + fmt(i) + " C</b> điện tích đi qua <b>mọi</b> mặt cắt ⇒ I = q / t = " + fmt(i) + " / 1 = <b>" + fmt(i) +
+          " A</b>, chỗ rộng hay chỗ hẹp đều vậy. Chỗ hẹp điện tích phải chạy nhanh hơn (khoảng 2,5 lần) nên nóng hơn.";
+    }
+    s.show(); render();
+  }
+
+  /* 3. Định luật Ohm */
+  function initOhm() {
+    if (!$("simOhm")) return;
+    var solve = "I", UNIT = { U: "V", I: "A", R: "Ω" };
+    var sl = { U: slider("ohmU", "V", render), I: slider("ohmI", "A", render), R: slider("ohmR", "Ω", render) };
+    buttons("simOhm", "data-solve", function (k) { solve = k; render(); });
+    function compute() {
+      var v = { U: sl.U.get(), I: sl.I.get(), R: sl.R.get() };
+      if (solve === "I") v.I = v.U / v.R;
+      else if (solve === "U") v.U = v.I * v.R;
+      else v.R = v.I > 0 ? v.U / v.I : NaN;
+      return v;
+    }
+    function explain(v) {
+      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b>. Tăng U (bơm mạnh hơn) thì I tăng; tăng R (ống hẹp hơn) thì I giảm.";
+      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. Muốn đẩy dòng " + fmt(v.I) + " A qua ống hẹp " + fmt(v.R) + " Ω cần độ chênh " + fmt(v.U) + " V.";
+      if (isNaN(v.R)) return "I = 0 thì không chia được: mạch hở, không tính được R.";
+      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.";
+    }
+    function render() {
+      var v = compute(), s = sl[solve], over = false;
+      Object.keys(sl).forEach(function (k) {
+        sl[k].input.disabled = k === solve;
+        sl[k].out.textContent = isNaN(v[k]) ? "?" : fmt(v[k]) + " " + UNIT[k];
+      });
+      if (!isNaN(v[solve])) {
+        over = v[solve] > Number(s.input.max) || v[solve] < Number(s.input.min);
+        s.input.value = String(clamp(v[solve], Number(s.input.min), Number(s.input.max)));
+      }
+      setFlow($("ohmFlow"), isNaN(v.I) ? 0 : v.I);
+      setText("ohmUt", "U = " + fmt(v.U) + " V");
+      setText("ohmRt", "R = " + (isNaN(v.R) ? "?" : fmt(v.R)) + " Ω");
+      setText("ohmIt", "I = " + fmt(v.I) + " A");
+      $("ohmLive").innerHTML = explain(v) + (over ? " (Kết quả vượt thang kéo, thanh dừng ở mép.)" : "");
+    }
+    render();
+  }
+
+  /* 4. Nối tiếp và song song */
+  function initSeriesParallel() {
+    if (!$("simSP")) return;
+    var E = 12, mode = "ser";
+    var r1 = slider("spR1", "Ω", render), r2 = slider("spR2", "Ω", render);
+    buttons("simSP", "data-mode", function (m) { mode = m; render(); });
+    function series(R1, R2) {
+      var R = R1 + R2, I = E / R, U1 = I * R1, U2 = I * R2;
+      setText("spSR1", "R₁ = " + fmt(R1) + " Ω"); setText("spSR2", "R₂ = " + fmt(R2) + " Ω");
+      setText("spSU1", "U₁ = " + fmt(U1) + " V"); setText("spSU2", "U₂ = " + fmt(U2) + " V");
+      setText("spSI", "I = " + fmt(I) + " A (cùng một dòng)");
+      setFlow($("spSerF"), I);
+      return "R<sub>tđ</sub> = R₁ + R₂ = " + fmt(R1) + " + " + fmt(R2) + " = " + fmt(R) + " Ω ⇒ I = U / R<sub>tđ</sub> = 12 / " + fmt(R) +
+        " = <b>" + fmt(I) + " A</b> chạy qua <b>cả hai</b> điện trở.<br>U₁ = I × R₁ = " + fmt(U1) + " V, U₂ = I × R₂ = " + fmt(U2) +
+        " V ⇒ U₁ + U₂ = " + fmt(U1 + U2) + " V = U nguồn. R nào lớn hơn thì \"giành\" nhiều áp hơn.";
+    }
+    function parallel(R1, R2) {
+      var R = R1 * R2 / (R1 + R2), I1 = E / R1, I2 = E / R2, I = I1 + I2;
+      setText("spPR1", "R₁ = " + fmt(R1) + " Ω"); setText("spPR2", "R₂ = " + fmt(R2) + " Ω");
+      setText("spPI1", "I₁ = " + fmt(I1) + " A"); setText("spPI2", "I₂ = " + fmt(I2) + " A");
+      setText("spPI", "I = " + fmt(I) + " A");
+      setFlow($("spPF"), I); setFlow($("spP1"), I1); setFlow($("spP2"), I2);
+      return "R<sub>tđ</sub> = R₁R₂ / (R₁ + R₂) = " + fmt(R1 * R2) + " / " + fmt(R1 + R2) + " = " + fmt(R) + " Ω (nhỏ hơn cả R₁ lẫn R₂) ⇒ I = 12 / " +
+        fmt(R) + " = <b>" + fmt(I) + " A</b>.<br>Cùng áp 12 V: I₁ = 12 / " + fmt(R1) + " = " + fmt(I1) + " A, I₂ = 12 / " + fmt(R2) + " = " + fmt(I2) +
+        " A ⇒ I₁ + I₂ = " + fmt(I) + " A. Nhánh R nhỏ (ống rộng) nhận nhiều dòng hơn.";
+    }
+    function render() {
+      var ser = mode === "ser";
+      $("spSer").setAttribute("display", ser ? "inline" : "none");
+      $("spPar").setAttribute("display", ser ? "none" : "inline");
+      $("spLive").innerHTML = ser ? series(r1.get(), r2.get()) : parallel(r1.get(), r2.get());
+    }
+    r1.show(); r2.show(); render();
+  }
+
+  /* 5. Công suất P = U × I = R × I² */
+  function initPower() {
+    if (!$("simPow")) return;
+    var UMAX = 24, IMAX = 6, PMAX = 144, W = 180;
+    var u = slider("powU", "V", render), r = slider("powR", "Ω", render);
+    function bar(id, f) { $(id).setAttribute("width", String(W * clamp(f, 0, 1))); }
+    function render() {
+      var U = u.get(), R = r.get(), I = U / R, P = U * I, glow = Math.sqrt(P / PMAX);
+      bar("powUb", U / UMAX); bar("powIb", I / IMAX); bar("powPb", P / PMAX);
+      setText("powUt", "U = " + fmt(U) + " V");
+      setText("powIt", "I = " + fmt(I) + " A");
+      setText("powPt", "P = " + fmt(P) + " W");
+      $("powBulb").style.fillOpacity = String(0.06 + 0.84 * glow);
+      $("powRay").style.opacity = String(glow);
+      $("powLive").innerHTML = "I = U / R = " + fmt(U) + " / " + fmt(R) + " = " + fmt(I) + " A<br>" +
+        "P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub> = " + fmt(U) + " × " + fmt(I) + " = <b>" + fmt(P) + " W</b><br>" +
+        "P<sub>tải</sub> = R × I² = " + fmt(R) + " × " + fmt(I) + "² = <b>" + fmt(R * I * I) + " W</b> ⇒ P<sub>nguồn</sub> = P<sub>tải</sub> <span class=\"ok\">✓</span>";
+    }
+    u.show(); r.show(); render();
+  }
+
+  /* 6. Kirchhoff K1, K2 trên mạch ví dụ (R₁ = 2, R₂ = 2, R₃ = 4) */
+  function initKirchhoff() {
+    if (!$("simKh")) return;
+    var R1 = 2, R2 = 2, R3 = 4, step = "all";
+    var SHOW = { all: [1, 1, 1], k1: [1, 1, 1], v1: [1, 0, 1], v2: [0, 1, 1], p: [1, 1, 1] };
+    var e1 = slider("khE1in", "V", render), e2 = slider("khE2in", "V", render);
+    buttons("simKh", "data-step", function (s) { step = s; render(); });
+    function solve(E1, E2) {
+      var I3 = (E1 / R1 + E2 / R2) / (1 + R3 / R1 + R3 / R2);
+      return { I1: (E1 - R3 * I3) / R1, I2: (E2 - R3 * I3) / R2, I3: I3 };
+    }
+    var TEXT = {
+      all: function (E1, E2, s) {
+        var VA = R3 * s.I3;
+        return "Giải hệ: I₁ = <b>" + fmt(s.I1) + " A</b>, I₂ = <b>" + fmt(s.I2) + " A</b>, I₃ = <b>" + fmt(s.I3) + " A</b>.<br>" +
+          "Lấy V<sub>B</sub> = 0 V thì V<sub>A</sub> = R₃ × I₃ = 4 × " + par(s.I3) + " = " + fmt(VA) + " V ⇒ U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = " + fmt(VA) + " V.";
+      },
+      k1: function (E1, E2, s) {
+        return "K1 tại nút A: dòng vào I₁ + I₂ = " + par(s.I1) + " + " + par(s.I2) + " = " + fmt(s.I1 + s.I2) + " A; dòng ra I₃ = " + fmt(s.I3) + " A.<br>" +
+          "I₁ + I₂ − I₃ = " + par(s.I1) + " + " + par(s.I2) + " − " + par(s.I3) + " = <b>" + fmt(s.I1 + s.I2 - s.I3) + "</b> <span class=\"ok\">✓</span>";
+      },
+      v1: function (E1, E2, s) {
+        return "Đi vòng V₁ theo chiều kim đồng hồ: qua E₁ từ − sang + ⇒ −E₁; qua R₁ cùng chiều I₁ ⇒ +I₁R₁; qua R₃ cùng chiều I₃ ⇒ +I₃R₃.<br>" +
+          "−E₁ + I₁ × R₁ + I₃ × R₃ = −" + fmt(E1) + " + " + par(s.I1) + " × 2 + " + par(s.I3) + " × 4 = <b>" + fmt(-E1 + s.I1 * R1 + s.I3 * R3) + "</b> <span class=\"ok\">✓</span>";
+      },
+      v2: function (E1, E2, s) {
+        return "Đi vòng V₂ theo chiều kim đồng hồ: qua R₂ ngược chiều I₂ ⇒ −I₂R₂; qua E₂ từ + sang − ⇒ +E₂; qua R₃ ngược chiều I₃ ⇒ −I₃R₃.<br>" +
+          "−I₂ × R₂ + E₂ − I₃ × R₃ = −" + par(s.I2) + " × 2 + " + fmt(E2) + " − " + par(s.I3) + " × 4 = <b>" + fmt(-s.I2 * R2 + E2 - s.I3 * R3) + "</b> <span class=\"ok\">✓</span>";
+      },
+      p: function (E1, E2, s) {
+        var Pn = E1 * s.I1 + E2 * s.I2, Pt = R1 * s.I1 * s.I1 + R2 * s.I2 * s.I2 + R3 * s.I3 * s.I3;
+        return "P<sub>nguồn</sub> = E₁ × I₁ + E₂ × I₂ = " + fmt(E1) + " × " + par(s.I1) + " + " + fmt(E2) + " × " + par(s.I2) + " = <b>" + fmt(Pn) + " W</b><br>" +
+          "P<sub>tải</sub> = R₁I₁² + R₂I₂² + R₃I₃² = 2 × " + par(s.I1) + "² + 2 × " + par(s.I2) + "² + 4 × " + par(s.I3) + "² = <b>" + fmt(Pt) + " W</b>" +
+          " ⇒ P<sub>nguồn</sub> = P<sub>tải</sub> <span class=\"ok\">✓</span>";
+      }
+    };
+    function negNote(s) {
+      var neg = [["I₁", s.I1], ["I₂", s.I2], ["I₃", s.I3]].filter(function (p) { return Math.round(p[1] * 100) < 0; })
+        .map(function (p) { return p[0]; });
+      return neg.length ? "<br><span class=\"neg\">" + neg.join(", ") + " âm</span>: dòng thực tế chạy ngược chiều giả định (mũi tên chạy ngược), trị số vẫn đúng." : "";
+    }
+    function render() {
+      var E1 = e1.get(), E2 = e2.get(), s = solve(E1, E2), show = SHOW[step];
+      setFlow($("khF1"), show[0] ? s.I1 : 0);
+      setFlow($("khF2"), show[1] ? s.I2 : 0);
+      setFlow($("khF3"), show[2] ? s.I3 : 0);
+      setText("khE1", "E₁ = " + fmt(E1) + " V"); setText("khE2", "E₂ = " + fmt(E2) + " V");
+      setText("khI1", "I₁ = " + fmt(s.I1) + " A"); setText("khI2", "I₂ = " + fmt(s.I2) + " A"); setText("khI3", "I₃ = " + fmt(s.I3) + " A");
+      $("khRing").classList.toggle("hide", step !== "k1");
+      $("khV1").classList.toggle("hide", step !== "v1");
+      $("khV2").classList.toggle("hide", step !== "v2");
+      $("khLive").innerHTML = TEXT[step](E1, E2, s) + negNote(s);
+    }
+    e1.show(); e2.show(); render();
+  }
+
+  initPotential(); initCurrent(); initOhm(); initSeriesParallel(); initPower(); initKirchhoff();
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
