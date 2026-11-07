@@ -49,6 +49,19 @@
 .k-charge{color:var(--flow-charge);font-weight:600;}
 .k-cap{color:var(--flow-cap);font-weight:600;}
 .k-boost{color:var(--flow-boost);font-weight:600;}
+.post h3.sub{font-family:var(--serif);font-size:18px;font-weight:600;margin:26px 0 8px;}
+.post ol{margin:0 0 16px;padding-left:22px;}
+.sch{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:14px 0 10px;overflow-x:auto;}
+.sch svg{display:block;width:100%;min-width:720px;height:auto;}
+.sch figcaption{font-size:13.5px;color:var(--ink-soft);margin-top:8px;}
+.sch .w{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.sch .part{fill:var(--surface);stroke:var(--ink);stroke-width:1.4;}
+.sch .ic{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.6;}
+.sch .term{fill:var(--surface);stroke:var(--ink);stroke-width:1.6;}
+.sch .dot{fill:var(--ink);}
+.sch .t{font-family:var(--sans);font-size:13px;fill:var(--ink);}
+.sch .tb{font-family:var(--sans);font-size:14px;font-weight:600;fill:var(--ink);}
+.sch .tm{font-family:var(--mono);font-size:11.5px;fill:var(--ink-soft);}
 .pbar{display:grid;grid-template-columns:170px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13.5px;margin:8px 0;}
 .pbar .track{height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden;}
 .pbar .track span{display:block;height:100%;border-radius:4px;transition:width .5s ease;}
@@ -147,6 +160,7 @@
         </tbody>
       </table>
     </div>
+    <p><strong>D tính sao?</strong> D = t<sub>đóng</sub> / T, với T = 1 / f là thời gian một chu kỳ. Biết áp vào và áp ra thì D = 1 − V<sub>vào</sub> / V<sub>ra</sub>: từ 12V lên 24V cần D = 0,5. Ví dụ f = 50 kHz thì T = 20 µs, công tắc đóng 10 µs rồi mở 10 µs. Thực tế có hao hụt nên D cần nhỉnh hơn một chút. Không nên đẩy D quá khoảng 0,8: hao hụt tăng vọt, mạch kém ổn định.</p>
     <p>Đóng càng lâu thì cuộn cảm lấy đà càng nhiều, áp ra càng cao. Trên module thật, vặn biến trở là đang chỉnh D: IC tự đo áp ra rồi tăng giảm thời gian đóng để áp luôn đứng đúng mức.</p>
 
     <h2>Cuộn cảm và tụ, ai làm gì?</h2>
@@ -202,16 +216,115 @@
 
     <h2>Tự làm</h2>
     <p><strong>Mức 1, nên làm trước:</strong> mua module <strong>XL6009</strong> (khoảng 30–50k, chịu khoảng 2–3A ngõ vào). Cấp 12V vào, vừa vặn biến trở vừa đo ngõ ra tới khi được 24V. Gắn tải rồi đo áp và dòng ở cả hai đầu để tính hiệu suất.</p>
-    <p><strong>Mức 2, tự ráp từ linh kiện rời</strong> để hiểu sâu hơn:</p>
-    <ul>
-      <li>IC <strong>555</strong> tạo xung khoảng 30–50 kHz, D khoảng 50%.</li>
-      <li>MOSFET <strong>IRFZ44N</strong> làm công tắc.</li>
-      <li>Cuộn cảm khoảng 100 µH, chịu được vài A.</li>
-      <li>Diode Schottky <strong>1N5822</strong> hoặc <strong>SS54</strong>.</li>
-      <li>Tụ ra 470 µF, loại <strong>35V trở lên</strong>.</li>
-    </ul>
+    <p><strong>Mức 2, tự ráp từ linh kiện rời</strong> để hiểu sâu hơn: xem <a href="#so-do">sơ đồ hoàn chỉnh</a> bên dưới. Phần tạo xung dùng IC 555, giải thích trong bài <a href="/ic555">IC 555 phát xung</a>.</p>
     <p class="note"><strong>An toàn:</strong> mạch boost không có hồi tiếp mà chạy <strong>không tải</strong> thì cuộn cảm vẫn tiếp tục bơm vào tụ, áp tăng mãi và có thể làm nổ tụ. Luôn gắn tải hoặc diode zener bảo vệ ở ngõ ra. Thử lần đầu bằng nguồn có giới hạn dòng.</p>
     <p>Muốn "thấy" mạch chạy trước khi mua linh kiện: mở <a href="https://www.falstad.com/circuit/" target="_blank" rel="noopener">Falstad Circuit Simulator</a> trên trình duyệt, vào <em>Circuits → Power Supplies → Boost Converter</em>, rồi chỉnh D, L, C xem áp ra thay đổi ra sao.</p>
+
+    <h2 id="so-do">Sơ đồ hoàn chỉnh để lắp</h2>
+    <p>Mạch gồm 3 khối: <strong>555 tạo xung</strong> (bên trái), <strong>tầng công suất</strong> L1, Q1, D1, C5 (bên phải), và <strong>hồi tiếp</strong> D2, Q2 tự ngắt 555 khi áp ra vượt khoảng 24,6V, nên rút tải ra cũng không bị vọt áp. Trên điện thoại, vuốt ngang để xem hết hình.</p>
+    <figure class="sch">
+      <svg viewBox="0 0 880 460" role="img" aria-labelledby="schT schD">
+        <title id="schT">Sơ đồ mạch Boost 12V lên 24V dùng NE555 và IRFZ44N</title>
+        <desc id="schD">Nguồn 12V qua cầu chì F1, tụ C1 và C4. NE555 phát xung với R1, R2, C2; chân 3 qua R3 vào cổng Q1, R5 kéo cổng xuống mass. Cuộn cảm L1 từ 12V tới cực máng Q1, diode D1 ra tụ C5 và tải. Zener D2 nối tiếp R6 từ ngõ ra vào cực gốc Q2, R7 kéo gốc xuống mass, cực thu Q2 kéo chân 4 của 555 (có R4 lên nguồn).</desc>
+        <defs><g id="gnd"><path class="w" d="M0 0V8M-10 8H10M-6 13H6M-2 18H2"/></g></defs>
+        <path class="w" d="M60 50H80M112 50H560M60 420H830"/>
+        <rect class="part" x="80" y="44" width="32" height="12"/>
+        <circle class="term" cx="60" cy="50" r="4"/><circle class="term" cx="60" cy="420" r="4"/>
+        <text class="tb" x="52" y="55" text-anchor="end">+12V</text><text class="tb" x="52" y="425" text-anchor="end">GND</text>
+        <text class="t" x="80" y="34">F1 3A</text>
+        <path class="w" d="M130 50V220M130 232V420"/><path class="w" d="M115 220H145M115 232H145" style="stroke-width:2.4"/>
+        <text class="tm" x="148" y="216">+</text>
+        <text class="t" x="120" y="252" text-anchor="end">C1</text><text class="t" x="120" y="267" text-anchor="end">470µF 25V</text>
+        <path class="w" d="M195 50V220M195 232V420"/><path class="w" d="M180 220H210M180 232H210" style="stroke-width:2.4"/>
+        <text class="t" x="206" y="252">C4</text><text class="t" x="206" y="267">100nF</text>
+        <path class="w" d="M270 50V70M270 110V185M270 225V320M270 332V420"/>
+        <rect class="part" x="263" y="70" width="14" height="40"/><text class="t" x="282" y="94">R1 4,7k</text>
+        <rect class="part" x="263" y="185" width="14" height="40"/><text class="t" x="282" y="209">R2 10k</text>
+        <path class="w" d="M255 320H285M255 332H285" style="stroke-width:2.4"/><text class="t" x="290" y="331">C2 1,5nF</text>
+        <path class="w" d="M270 170H350M270 255H320M320 240V270M320 240H350M320 270H350"/>
+        <rect class="ic" x="350" y="140" width="120" height="160" rx="4"/>
+        <text class="tb" x="410" y="212" text-anchor="middle">NE555</text><text class="tm" x="410" y="230" text-anchor="middle">U1</text>
+        <text class="tm" x="356" y="174">7</text><text class="tm" x="356" y="244">6</text><text class="tm" x="356" y="274">2</text>
+        <text class="tm" x="384" y="156">8</text><text class="tm" x="444" y="156">4</text>
+        <text class="tm" x="384" y="294">1</text><text class="tm" x="444" y="294">5</text>
+        <text class="tm" x="458" y="224">3</text>
+        <path class="w" d="M380 50V140M380 300V420M440 50V58M440 88V140M440 300V350M440 362V420"/>
+        <rect class="part" x="433" y="58" width="14" height="30"/><text class="t" x="452" y="70">R4 10k</text>
+        <path class="w" d="M425 350H455M425 362H455" style="stroke-width:2.4"/><text class="t" x="460" y="361">C3 10nF</text>
+        <path class="w" d="M520 96V124" style="stroke-width:2.6"/>
+        <path class="w" d="M520 104L508 100H440M520 116L508 120V132"/>
+        <polygon points="508,120 515,113 517,121" style="fill:var(--ink)"/>
+        <use href="#gnd" x="508" y="132"/>
+        <text class="t" x="478" y="184">Q2 BC547</text>
+        <path class="w" d="M520 110H570M610 110H652a8 8 0 0 1 16 0H690M710 110H760M545 110V122M545 152V160"/>
+        <rect class="part" x="570" y="103" width="40" height="14"/><text class="t" x="574" y="96">R6 1k</text>
+        <rect class="part" x="538" y="122" width="14" height="30"/><text class="t" x="558" y="142">R7 10k</text>
+        <use href="#gnd" x="545" y="160"/>
+        <polygon points="690,100 690,120 710,110" style="fill:var(--ink)"/>
+        <path class="w" d="M706 98L710 100V120L714 122"/>
+        <text class="t" x="684" y="94">D2 24V</text>
+        <path class="w" d="M470 220H490M530 220H642M570 220V250M570 290V298"/>
+        <rect class="part" x="490" y="213" width="40" height="14"/><text class="t" x="492" y="206">R3 22Ω</text>
+        <rect class="part" x="563" y="250" width="14" height="40"/><text class="t" x="582" y="274">R5 10k</text>
+        <use href="#gnd" x="570" y="298"/>
+        <path class="w" d="M560 50a10 10 0 0 1 20 0a10 10 0 0 1 20 0a10 10 0 0 1 20 0a10 10 0 0 1 20 0M640 50H690M714 50H830V190M830 260V420"/>
+        <text class="t" x="560" y="30">L1 100µH ≥4A</text>
+        <polygon points="690,38 690,62 714,50" style="fill:var(--ink)"/><path class="w" d="M714 38V62"/>
+        <text class="t" x="680" y="28">D1 1N5822</text>
+        <path class="w" d="M660 50V102M660 118V202H652M652 238H660V420M642 202V238"/>
+        <path class="w" d="M652 196V244" style="stroke-width:2.8"/>
+        <text class="tm" x="666" y="200">D</text><text class="tm" x="666" y="252">S</text><text class="tm" x="630" y="214">G</text>
+        <text class="t" x="672" y="226">Q1 IRFZ44N</text>
+        <path class="w" d="M760 50V230M760 242V420"/><path class="w" d="M745 230H775M745 242H775" style="stroke-width:2.4"/>
+        <text class="tm" x="778" y="226">+</text>
+        <text class="t" x="752" y="276" text-anchor="end">C5</text><text class="t" x="752" y="291" text-anchor="end">470µF 50V</text>
+        <rect class="part" x="820" y="190" width="20" height="70"/><text class="t" x="846" y="230">Tải</text>
+        <text class="tb" x="790" y="36">+24V ra</text>
+        <g class="dot"><circle cx="130" cy="50" r="3"/><circle cx="130" cy="420" r="3"/><circle cx="195" cy="50" r="3"/><circle cx="195" cy="420" r="3"/><circle cx="270" cy="50" r="3"/><circle cx="270" cy="420" r="3"/><circle cx="380" cy="50" r="3"/><circle cx="380" cy="420" r="3"/><circle cx="440" cy="50" r="3"/><circle cx="440" cy="420" r="3"/><circle cx="270" cy="170" r="3"/><circle cx="270" cy="255" r="3"/><circle cx="320" cy="255" r="3"/><circle cx="440" cy="100" r="3"/><circle cx="545" cy="110" r="3"/><circle cx="570" cy="220" r="3"/><circle cx="660" cy="50" r="3"/><circle cx="760" cy="50" r="3"/><circle cx="760" cy="110" r="3"/><circle cx="760" cy="420" r="3"/><circle cx="660" cy="420" r="3"/></g>
+      </svg>
+      <figcaption>Chấm đen là chỗ dây nối nhau. Chỗ dây hồi tiếp "nhảy cầu" qua dây SW là hai dây <strong>không</strong> nối nhau.</figcaption>
+    </figure>
+
+    <h3 class="sub">Thông số đã chọn</h3>
+    <ul>
+      <li><strong>Tần số:</strong> f ≈ 1,44 / ((4,7k + 2 × 10k) × 1,5nF) ≈ <strong>39 kHz</strong>.</li>
+      <li><strong>Chu kỳ:</strong> D = (4,7k + 10k) / (4,7k + 20k) ≈ <strong>0,6</strong>. Nếu không có hồi tiếp, áp ra lý tưởng là 12 / (1 − 0,6) = 30V. D được chọn dư để bù hao hụt khi có tải.</li>
+      <li><strong>Hồi tiếp:</strong> khi áp ra vượt 24V + 0,6V (áp zener + áp mở Q2) ≈ <strong>24,6V</strong>, zener D2 dẫn, Q2 dẫn và kéo chân 4 (RESET) xuống mass, 555 ngừng phát xung, MOSFET mở. Áp tụt xuống dưới ngưỡng thì Q2 tắt và 555 chạy lại. Áp ra nhờ vậy được ghim quanh 24,6V.</li>
+    </ul>
+
+    <h3 class="sub">Danh sách linh kiện</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Ký hiệu</th><th>Linh kiện</th><th>Ghi chú</th></tr></thead>
+        <tbody>
+          <tr><td>U1</td><td>NE555 + đế 8 chân</td><td>Phát xung</td></tr>
+          <tr><td>Q1</td><td>MOSFET IRFZ44N</td><td>55V, gắn tản nhiệt nhỏ</td></tr>
+          <tr><td>Q2</td><td>Transistor BC547 (NPN)</td><td>Hồi tiếp</td></tr>
+          <tr><td>L1</td><td>Cuộn cảm 100µH, chịu ≥ 4A</td><td>Loại cuộn xuyến (toroid)</td></tr>
+          <tr><td>D1</td><td>Diode Schottky 1N5822 (3A 40V)</td><td>Hoặc SS54; vạch trên thân hướng ra ngõ ra</td></tr>
+          <tr><td>D2</td><td>Zener 24V 1W (1N4749A)</td><td>Vạch hướng về ngõ ra 24V</td></tr>
+          <tr><td>C1</td><td>Tụ hóa 470µF 25V</td><td>Lọc ngõ vào</td></tr>
+          <tr><td>C5</td><td>Tụ hóa 470µF 50V</td><td>Lọc ngõ ra, chọn áp dư</td></tr>
+          <tr><td>C2</td><td>Tụ 1,5nF (mã 152)</td><td>Định tần số</td></tr>
+          <tr><td>C3, C4</td><td>Tụ gốm 10nF (103), 100nF (104)</td><td>C4 cắm sát chân 8 và chân 1</td></tr>
+          <tr><td>R1</td><td>4,7kΩ</td><td></td></tr>
+          <tr><td>R2, R4, R5, R7</td><td>10kΩ</td><td></td></tr>
+          <tr><td>R3</td><td>22Ω</td><td>Nối chân 3 vào cổng Q1</td></tr>
+          <tr><td>R6</td><td>1kΩ</td><td>Hạn dòng zener</td></tr>
+          <tr><td>F1</td><td>Cầu chì 3A + đế</td><td>Bảo vệ khi chập</td></tr>
+          <tr><td>Tải thử</td><td>Bóng đèn 24V 5–10W</td><td>Thử tải nhỏ trước</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Thứ tự lắp và đo kiểm</h3>
+    <ol>
+      <li><strong>Ráp khối 555 trước</strong>, chưa gắn L1, Q1. Cấp 12V, đo chân 3 bằng đồng hồ thang DC: thấy khoảng 6V là 555 đang phát xung (đồng hồ hiện giá trị trung bình, khoảng D × 10V).</li>
+      <li><strong>Gắn tầng công suất</strong> L1, Q1, D1, C5 và bóng đèn thử. Cấp nguồn qua cầu chì, tốt nhất dùng nguồn có giới hạn dòng khoảng 1A. Đo ngõ ra phải được khoảng 24V.</li>
+      <li><strong>Gắn hồi tiếp</strong> D2, Q2, R6, R7. Rút bóng đèn ra: áp ra vẫn đứng khoảng 24–25V. Nếu vượt 26V, <strong>ngắt nguồn ngay</strong> và kiểm tra chiều zener, chân Q2.</li>
+      <li><strong>Đo hiệu suất:</strong> đo U, I ở ngõ vào và ngõ ra, tính P<sub>ra</sub> / P<sub>vào</sub>.</li>
+    </ol>
+    <p class="note"><strong>Lưu ý khi lắp:</strong> đường dòng lớn (L1, Q1, D1, C5) đi dây ngắn và to. Breadboard chịu dòng kém, nên thử tải nhỏ (dưới 0,5A) trên breadboard, muốn tải lớn hơn thì hàn lên board đồng lỗ. Mạch không có giới hạn dòng: luôn có cầu chì và không được chập ngõ ra. Q1 nóng thì gắn tản nhiệt.</p>
 
     <a class="back" href="/duan">← Về Dự án</a>
   </article>
@@ -286,8 +399,8 @@
   seg.children[0].click();
 })();
 </script>
-<script src="assets/posts.js?v=20261107b"></script>
-<script src="assets/site.js?v=20261107b"></script>
+<script src="assets/posts.js?v=20261107c"></script>
+<script src="assets/site.js?v=20261107c"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

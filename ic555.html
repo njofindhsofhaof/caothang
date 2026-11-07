@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC 555 phát xung · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="IC 555 là gì, sơ đồ chân, cách ráp mạch phát xung (astable), công thức tần số và chu kỳ làm việc D, kèm máy tính R1 R2 C.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+:root{--sig-cap:#1D9E75;--sig-out:#C97A3D;}
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:38px 0 10px;}
+.post p{margin:0 0 12px;}
+.post ul,.post ol{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:8px;}
+.post .formula{font-family:var(--serif);font-size:19px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin:6px 0 12px;}
+.post .note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent-warm);padding:12px 16px;margin:14px 0;}
+.post .back{display:inline-block;margin-top:34px;font-family:var(--mono);font-size:13px;}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0 10px;overflow-x:auto;}
+.fig svg{display:block;width:100%;height:auto;}
+.fig.wide svg{min-width:560px;}
+.fig figcaption{font-size:13.5px;color:var(--ink-soft);margin-top:8px;}
+.w{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.ic{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.6;}
+.part{fill:var(--surface);stroke:var(--ink);stroke-width:1.4;}
+.dot{fill:var(--ink);}
+.t{font-family:var(--sans);font-size:13px;fill:var(--ink);}
+.tb{font-family:var(--sans);font-size:14px;font-weight:600;fill:var(--ink);}
+.tm{font-family:var(--mono);font-size:11.5px;fill:var(--ink-soft);}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0 10px;}
+.calc .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.calc label{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+.calc input,.calc select{font-family:var(--mono);font-size:14px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;}
+.calc input:focus-visible,.calc select:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+.calc .crow{display:flex;gap:6px;}
+.calc .crow select{width:auto;}
+.calc .err{font-size:13px;color:#C0392B;margin:8px 0 0;min-height:1em;}
+.calc .outs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:12px 0;}
+.calc .o{background:var(--surface-2);border-radius:8px;padding:8px 10px;}
+.calc .o span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+.calc .o b{font-family:var(--serif);font-size:19px;font-weight:600;}
+.calc .presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.calc button{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;}
+.calc button:hover{border-color:var(--accent);color:var(--accent);}
+.calc button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.k-cap{color:var(--sig-cap);font-weight:600;}
+.k-out{color:var(--sig-out);font-weight:600;}
+@media (max-width:600px){.post h2{font-size:21px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>IC 555 phát xung</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+
+  <article class="post">
+    <p class="byline">07/11/2026 · Ngao Vui Tính Hẳn</p>
+
+    <p>Muốn đèn LED tự nhấp nháy, hay muốn đóng cắt MOSFET hàng chục nghìn lần mỗi giây như trong <a href="/machboost">mạch tăng áp Boost</a>, đều cần một mạch <strong>phát xung</strong>. Cách rẻ và dễ nhất là dùng <strong>IC 555</strong>.</p>
+
+    <h2>IC 555 là gì</h2>
+    <p>555 là <strong>một con IC</strong>, một con chip nhỏ 8 chân. Mua ở tiệm linh kiện, tên hay gặp là <strong>NE555</strong>, giá khoảng 2–5 nghìn. Nó <strong>không tự phát xung</strong>: phải gắn thêm 2 điện trở và 1 tụ bên ngoài mới thành "mạch 555". Nguồn nuôi từ 4,5V đến 16V, nên chạy thẳng bằng 5V hoặc 12V được.</p>
+    <p>Dễ nhớ: 555 giống <strong>cái đồng hồ đếm nhịp</strong>. R và C là quả lắc: chọn R, C khác nhau thì nhịp nhanh chậm khác nhau.</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 230" role="img" aria-labelledby="pinT pinD">
+        <title id="pinT">Sơ đồ chân IC 555</title>
+        <desc id="pinD">IC 8 chân nhìn từ trên xuống, khấc ở đầu. Bên trái từ trên xuống: 1 GND, 2 TRIG, 3 OUT, 4 RESET. Bên phải từ dưới lên: 5 CV, 6 THR, 7 DIS, 8 VCC.</desc>
+        <rect class="ic" x="200" y="20" width="120" height="190" rx="6"/>
+        <path class="w" d="M245 20a15 15 0 0 0 30 0"/>
+        <text class="tb" x="260" y="120" text-anchor="middle">555</text>
+        <path class="w" d="M170 50H200M170 100H200M170 150H200M170 195H200M320 50H350M320 100H350M320 150H350M320 195H350"/>
+        <text class="t" x="164" y="54" text-anchor="end">1 · GND (mass)</text>
+        <text class="t" x="164" y="104" text-anchor="end">2 · TRIG (kích)</text>
+        <text class="t" x="164" y="154" text-anchor="end">3 · OUT (ngõ ra)</text>
+        <text class="t" x="164" y="199" text-anchor="end">4 · RESET</text>
+        <text class="t" x="356" y="54">8 · VCC (+nguồn)</text>
+        <text class="t" x="356" y="104">7 · DIS (xả)</text>
+        <text class="t" x="356" y="154">6 · THR (ngưỡng)</text>
+        <text class="t" x="356" y="199">5 · CV (chống nhiễu)</text>
+      </svg>
+      <figcaption>Nhìn từ trên xuống, khấc (hoặc chấm tròn) ở phía trên. Chân 1 nằm ở góc trên bên trái, đếm ngược chiều kim đồng hồ.</figcaption>
+    </figure>
+
+    <h2>Mạch phát xung (astable)</h2>
+    <p>Mạch chuẩn để 555 tự phát xung liên tục, ví dụ cho đèn LED nháy khoảng 1 lần mỗi giây:</p>
+    <figure class="fig wide">
+      <svg viewBox="0 0 640 330" role="img" aria-labelledby="astT astD">
+        <title id="astT">Mạch 555 phát xung nháy LED</title>
+        <desc id="astD">Chân 8 và 4 nối nguồn dương. R1 từ nguồn xuống chân 7, R2 từ chân 7 xuống chân 6 và 2 nối chung, tụ C từ đó xuống mass. Chân 5 có tụ 10nF xuống mass, chân 1 nối mass. Chân 3 qua điện trở 1k tới LED rồi xuống mass.</desc>
+        <path class="w" d="M40 30H560M40 300H560"/>
+        <circle class="dot" cx="40" cy="30" r="3"/><circle class="dot" cx="40" cy="300" r="3"/>
+        <text class="tb" x="44" y="22">+5V…12V</text><text class="tb" x="44" y="320">GND</text>
+        <path class="w" d="M120 30V60M120 100V140M120 180V230M120 242V300"/>
+        <rect class="part" x="113" y="60" width="14" height="40"/><text class="t" x="134" y="84">R1 1k</text>
+        <rect class="part" x="113" y="140" width="14" height="40"/><text class="t" x="134" y="164">R2 68k</text>
+        <path class="w" d="M102 230H138M102 242H138" style="stroke-width:2.4"/>
+        <text class="t" x="144" y="241">C 10µF</text>
+        <circle class="dot" cx="120" cy="120" r="3"/><circle class="dot" cx="120" cy="200" r="3"/>
+        <path class="w" d="M120 120H260M120 200H230V185H260M230 200V215H260"/>
+        <rect class="ic" x="260" y="90" width="120" height="150" rx="4"/>
+        <text class="tb" x="320" y="170" text-anchor="middle">NE555</text>
+        <text class="tm" x="266" y="124">7</text><text class="tm" x="266" y="189">6</text><text class="tm" x="266" y="219">2</text>
+        <text class="tm" x="290" y="104">8</text><text class="tm" x="350" y="104">4</text>
+        <text class="tm" x="290" y="234">1</text><text class="tm" x="350" y="234">5</text>
+        <text class="tm" x="364" y="164">3</text>
+        <path class="w" d="M290 30V90M350 30V90M290 240V300M350 240V256M350 268V300"/>
+        <path class="w" d="M334 256H366M334 268H366" style="stroke-width:2.4"/>
+        <text class="t" x="372" y="267">10nF</text>
+        <path class="w" d="M380 160H430M470 160H500V185"/>
+        <rect class="part" x="430" y="153" width="40" height="14"/><text class="t" x="438" y="146">1k</text>
+        <polygon points="488,185 512,185 500,205" style="fill:var(--ink)"/>
+        <path class="w" d="M488 207H512M500 207V300M516 190l10 -8M516 198l10 -8"/>
+        <text class="t" x="530" y="205">LED</text>
+        <circle class="dot" cx="290" cy="30" r="3"/><circle class="dot" cx="350" cy="30" r="3"/><circle class="dot" cx="290" cy="300" r="3"/><circle class="dot" cx="350" cy="300" r="3"/><circle class="dot" cx="120" cy="30" r="3"/><circle class="dot" cx="120" cy="300" r="3"/><circle class="dot" cx="500" cy="300" r="3"/>
+      </svg>
+      <figcaption>Chân 6 và chân 2 nối chung với nhau. Đổi R1, R2, C là đổi tốc độ nháy.</figcaption>
+    </figure>
+
+    <h2>Bên trong nó làm gì</h2>
+    <ol>
+      <li>Tụ C được <span class="k-cap">nạp</span> qua R1 + R2. Trong lúc này chân 3 ở mức <span class="k-out">cao</span> (LED sáng).</li>
+      <li>Khi áp trên tụ lên tới <strong>2/3 áp nguồn</strong>, 555 lật: chân 3 xuống <span class="k-out">thấp</span> (LED tắt), chân 7 mở ra cho tụ <span class="k-cap">xả</span> qua R2.</li>
+      <li>Khi áp trên tụ xuống còn <strong>1/3 áp nguồn</strong>, 555 lật lại: chân 3 lên cao, tụ nạp tiếp. Lặp lại mãi.</li>
+    </ol>
+    <p>Vì tụ nạp qua cả R1 + R2 nhưng chỉ xả qua R2, thời gian <strong>cao luôn dài hơn thời gian thấp</strong>, nên D luôn lớn hơn 50%.</p>
+
+    <h2>Công thức</h2>
+    <p class="formula">t<sub>cao</sub> = 0,693 × (R1 + R2) × C &nbsp;·&nbsp; t<sub>thấp</sub> = 0,693 × R2 × C</p>
+    <p class="formula">f ≈ 1,44 / ((R1 + 2R2) × C) &nbsp;·&nbsp; D = (R1 + R2) / (R1 + 2R2)</p>
+    <p>D là chu kỳ làm việc, tức tỉ lệ thời gian ngõ ra ở mức cao: D = t<sub>cao</sub> / (t<sub>cao</sub> + t<sub>thấp</sub>). Muốn D gần 50% thì chọn <strong>R1 nhỏ hơn R2 nhiều</strong>.</p>
+
+    <h2>Máy tính 555</h2>
+    <p>Nhập R1, R2, C để xem tần số, D và dạng sóng. <span class="k-cap">Đường xanh</span> là áp trên tụ, <span class="k-out">đường cam</span> là ngõ ra chân 3.</p>
+    <div class="calc">
+      <div class="presets" role="group" aria-label="Ví dụ có sẵn">
+        <button type="button" data-r1="1" data-r2="68" data-c="10" data-u="uF">Nháy LED ~1 Hz</button>
+        <button type="button" data-r1="4.7" data-r2="10" data-c="1.5" data-u="nF">Mạch Boost ~39 kHz</button>
+        <button type="button" data-r1="10" data-r2="10" data-c="10" data-u="nF">R1 = R2</button>
+      </div>
+      <form class="inputs" id="calcForm" novalidate>
+        <div><label for="inR1">R1 (kΩ)</label><input id="inR1" inputmode="decimal" value="1"></div>
+        <div><label for="inR2">R2 (kΩ)</label><input id="inR2" inputmode="decimal" value="68"></div>
+        <div><label for="inC">C</label><div class="crow"><input id="inC" inputmode="decimal" value="10"><select id="inU" aria-label="Đơn vị tụ"><option value="nF">nF</option><option value="uF" selected>µF</option></select></div></div>
+      </form>
+      <p class="err" id="calcErr" role="alert"></p>
+      <div class="outs" aria-live="polite">
+        <div class="o"><span>Tần số f</span><b id="oF">–</b></div>
+        <div class="o"><span>Chu kỳ D</span><b id="oD">–</b></div>
+        <div class="o"><span>Thời gian cao</span><b id="oH">–</b></div>
+        <div class="o"><span>Thời gian thấp</span><b id="oL">–</b></div>
+      </div>
+      <svg viewBox="0 0 600 170" role="img" aria-label="Dạng sóng áp trên tụ và ngõ ra">
+        <text class="tm" x="0" y="34">Tụ</text><text class="tm" x="0" y="124">Ra</text>
+        <path d="M40 25H600M40 65H600" style="stroke:var(--line);stroke-dasharray:4 4;fill:none"/>
+        <text class="tm" x="560" y="21">2/3</text><text class="tm" x="560" y="61">1/3</text>
+        <path id="wCap" style="fill:none;stroke:var(--sig-cap);stroke-width:2"/>
+        <path id="wOut" style="fill:none;stroke:var(--sig-out);stroke-width:2;stroke-linejoin:round"/>
+      </svg>
+    </div>
+
+    <h2>Lắp thử: nháy LED</h2>
+    <ul>
+      <li><strong>Linh kiện:</strong> NE555, R1 1kΩ, R2 68kΩ, C 10µF (chân dài là cực +, nối lên phía chân 6/2), tụ 10nF cho chân 5, điện trở 1kΩ và 1 LED. Nguồn 5V (sạc điện thoại) hoặc 9–12V.</li>
+      <li><strong>Kết quả mong đợi:</strong> f ≈ 1,44 / (137k × 10µF) ≈ 1,05 Hz, tức LED nháy khoảng 1 lần mỗi giây, sáng lâu hơn tắt một chút (D ≈ 50,4%).</li>
+      <li><strong>Thử đổi:</strong> thay C bằng 1µF thì nháy nhanh gấp 10 lần. Thay R2 bằng biến trở 100k để chỉnh tốc độ bằng tay.</li>
+      <li><strong>Không chạy?</strong> Đo chân 8 và 4 có đủ áp nguồn chưa, chân 1 đã xuống mass chưa, và LED có cắm ngược không.</li>
+    </ul>
+
+    <h2>Dùng 555 trong mạch Boost</h2>
+    <p>Trong <a href="/machboost">mạch tăng áp Boost</a>, ngõ ra chân 3 không nối LED mà nối qua điện trở nhỏ (22Ω) vào chân G của MOSFET. Mỗi lần chân 3 lên cao, MOSFET đóng; xuống thấp thì MOSFET mở. Chọn R1 4,7k, R2 10k, C 1,5nF được f ≈ 39 kHz và D ≈ 0,6. Sơ đồ hoàn chỉnh có trong bài Boost.</p>
+    <p class="note">Chân 4 (RESET) kéo xuống mass thì 555 <strong>dừng phát xung</strong>, ngõ ra nằm ở mức thấp. Mạch Boost dùng chính chân này để tự ngắt khi áp ra vượt 24V.</p>
+
+    <a class="back" href="/duan">← Về Dự án</a>
+  </article>
+</div>
+<script>
+(function () {
+  var LN2 = 0.693;
+  var CYCLES = 3, X0 = 40, X1 = 590;
+  var Y_HI = 25, Y_LO = 65, OUT_HI = 105, OUT_LO = 150;
+  function $(id) { return document.getElementById(id); }
+  function parse(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : NaN; }
+  function fmtTime(s) {
+    if (s >= 1) return s.toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " s";
+    if (s >= 1e-3) return (s * 1e3).toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " ms";
+    return (s * 1e6).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " µs";
+  }
+  function fmtFreq(f) {
+    if (f >= 1e3) return (f / 1e3).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " kHz";
+    return f.toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " Hz";
+  }
+  function draw(d) {
+    var w = (X1 - X0) / CYCLES, hi = w * d, cap = "M" + X0 + " " + Y_LO, out = "M" + X0 + " " + OUT_LO + "V" + OUT_HI;
+    for (var i = 0; i < CYCLES; i++) {
+      var x = X0 + i * w;
+      cap += "Q" + (x + hi * 0.45) + " " + (Y_HI - 4) + " " + (x + hi) + " " + Y_HI;
+      cap += "Q" + (x + hi + (w - hi) * 0.45) + " " + (Y_LO + 4) + " " + (x + w) + " " + Y_LO;
+      out += "H" + (x + hi) + "V" + OUT_LO + "H" + (x + w) + (i < CYCLES - 1 ? "V" + OUT_HI : "");
+    }
+    $("wCap").setAttribute("d", cap);
+    $("wOut").setAttribute("d", out);
+  }
+  function clearOut() { ["oF", "oD", "oH", "oL"].forEach(function (id) { $(id).textContent = "–"; }); }
+  function update() {
+    var r1 = parse($("inR1").value) * 1e3, r2 = parse($("inR2").value) * 1e3;
+    var c = parse($("inC").value) * ($("inU").value === "uF" ? 1e-6 : 1e-9);
+    if (isNaN(r1) || isNaN(r2) || isNaN(c)) {
+      $("calcErr").textContent = "Nhập số dương cho R1, R2 và C.";
+      clearOut();
+      return;
+    }
+    $("calcErr").textContent = "";
+    var tHi = LN2 * (r1 + r2) * c, tLo = LN2 * r2 * c, d = tHi / (tHi + tLo);
+    $("oF").textContent = fmtFreq(1 / (tHi + tLo));
+    $("oD").textContent = (d * 100).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " %";
+    $("oH").textContent = fmtTime(tHi);
+    $("oL").textContent = fmtTime(tLo);
+    draw(d);
+  }
+  ["inR1", "inR2", "inC", "inU"].forEach(function (id) { $(id).addEventListener("input", update); });
+  $("calcForm").addEventListener("submit", function (e) { e.preventDefault(); update(); });
+  Array.prototype.forEach.call(document.querySelectorAll(".presets button"), function (b) {
+    b.addEventListener("click", function () {
+      $("inR1").value = b.dataset.r1; $("inR2").value = b.dataset.r2;
+      $("inC").value = b.dataset.c; $("inU").value = b.dataset.u;
+      update();
+    });
+  });
+  update();
+})();
+</script>
+<script src="assets/posts.js?v=20261107c"></script>
+<script src="assets/site.js?v=20261107c"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

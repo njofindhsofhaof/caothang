@@ -11,6 +11,13 @@
 window.CT_POSTS = [
   {
     section: "duan",
+    title: "IC 555 phát xung",
+    desc: "IC 555 là gì, sơ đồ chân, mạch phát xung nháy LED, công thức tần số và D, kèm máy tính R1 R2 C. Dùng làm bộ tạo xung cho mạch Boost.",
+    date: "2026-11-07",
+    href: "/ic555"
+  },
+  {
+    section: "duan",
     title: "Mạch tăng áp Boost 12V lên 24V",
     desc: "Nguyên lý mạch Boost có hình minh hoạ động: cuộn cảm, công tắc MOSFET, diode, tụ. Công thức chu kỳ làm việc và cách tự ráp.",
     date: "2026-11-07",
