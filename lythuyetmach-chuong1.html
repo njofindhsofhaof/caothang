@@ -45,6 +45,13 @@
 .post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
 .post .steps .ans{color:var(--accent);font-weight:500;}
 .hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
 .post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
 .post .goals li{margin-bottom:5px;}
 .post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
@@ -225,6 +232,10 @@
 </svg>
       <figcaption>Điện áp là độ chênh mực nước giữa 2 điểm: có chênh lệch thì nước (điện tích) mới chảy</figcaption>
     </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Digital_Multimeter_%28To_measure_Voltage%2C_Current_and_Resistance%29.jpg/960px-Digital_Multimeter_%28To_measure_Voltage%2C_Current_and_Resistance%29.jpg" width="720" height="960" alt="Đồng hồ vạn năng số" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Đồng hồ vạn năng số.</strong> Đo điện áp: vặn núm sang thang <strong>V</strong>, đặt 2 que đo vào 2 điểm cần đo (mắc <strong>song song</strong>).<span class="credit">Ảnh: K.Venkataramana · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=163067537" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
     <div class="def"><strong>Điện áp</strong> (hiệu điện thế) giữa hai điểm A và B là hiệu số điện thế giữa hai điểm đó. Điện áp là nguyên nhân làm điện tích dịch chuyển, tức tạo ra dòng điện.</div>
     <div class="formula">U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> &nbsp;&nbsp;⇒&nbsp;&nbsp; U<sub>BA</sub> = −U<sub>AB</sub><small>Đơn vị: vôn (V), giống điện thế</small></div>
     <div class="units">
@@ -268,6 +279,10 @@
 </svg>
       <figcaption>Dòng điện như dòng nước chảy trong ống: lượng nước qua mỗi mặt cắt trong 1 giây là như nhau</figcaption>
     </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Clamp-on_ammeter.jpg" width="900" height="600" alt="Ampe kìm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Ampe kìm.</strong> Kẹp hàm kìm quanh <strong>một</strong> sợi dây để đo dòng điện mà không cần cắt mạch. Đo dòng bằng đồng hồ vạn năng thì phải mắc <strong>nối tiếp</strong>.<span class="credit">Ảnh: K. Krallis SV1XV · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=11212162" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
     <div class="def"><strong>Dòng điện</strong> là dòng chuyển dời có hướng của các hạt mang điện. <strong>Cường độ dòng điện</strong> là lượng điện tích dịch chuyển qua tiết diện dây dẫn trong một đơn vị thời gian.</div>
     <div class="formula">I = <span class="frac"><span>q</span><span>t</span></span> &nbsp;&nbsp;hay&nbsp;&nbsp; i = <span class="frac"><span>dq</span><span>dt</span></span><small>I: ampe (A) · q: culông (C) · t: giây (s)</small></div>
     <div class="units">
@@ -297,6 +312,10 @@
   <text class="s" x="280" y="166" text-anchor="middle">Pin 9 V: luôn giữ chênh 9 V, dòng tuỳ tải I = U / R</text>
 </svg>
       <figcaption>Nguồn điện như máy bơm: tạo ra chênh lệch để nước chảy vòng mãi trong mạch kín</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IKEA_LADDA_rechargeable_AA-batteries.jpg/960px-IKEA_LADDA_rechargeable_AA-batteries.jpg" width="720" height="540" alt="Pin AA sạc lại" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Pin AA sạc lại.</strong> Mỗi viên là một nguồn áp một chiều nhỏ (khoảng 1,2 V). Pin, ắc quy, adapter, máy phát điện đều là nguồn điện.<span class="credit">Ảnh: RAIL P (RAIL.PHOTOGRAPHY) · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=159094210" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
     </figure>
     <div class="def"><strong>Nguồn điện</strong> là thiết bị biến đổi các dạng năng lượng khác (hoá năng, cơ năng, quang năng…) thành điện năng, duy trì điện áp giữa hai cực để tạo dòng điện trong mạch. Ví dụ: pin, ắc quy, máy phát điện, pin mặt trời.</div>
     <p>Khả năng sinh công của nguồn được đặc trưng bằng <strong>sức điện động E</strong> (đơn vị V). Trong lý thuyết mạch, nguồn được mô hình hoá thành hai loại:</p>
@@ -332,6 +351,10 @@
   <path class="arr" d="M494 74 L520 74 M514 68 L521 74 L514 80"/><path class="arr" d="M494 162 L520 162 M514 156 L521 162 L514 168"/>
 </svg>
       <figcaption>Điện trở như ống hẹp: cùng một nguồn, ống càng hẹp (R càng lớn) thì dòng càng nhỏ và càng nóng</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Electronic-Axial-Lead-Resistors-Array.png/960px-Electronic-Axial-Lead-Resistors-Array.png" width="720" height="1029" alt="Điện trở chân cắm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Điện trở chân cắm.</strong> Trị số đọc bằng các vòng màu trên thân. Luyện đọc ở bài <a href="/vongmaudientro">vòng màu điện trở</a>.<span class="credit">Ảnh: Evan-Amos · Public domain · <a href="https://commons.wikimedia.org/w/index.php?curid=116881536" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
     </figure>
     <div class="def"><strong>Điện trở</strong> là đại lượng đặc trưng cho khả năng cản trở dòng điện của vật dẫn. Phần tử điện trở biến điện năng thành nhiệt năng (tiêu tán năng lượng).</div>
     <div class="formula">R = ρ <span class="frac"><span>l</span><span>S</span></span><small>ρ: điện trở suất (Ω·m) · l: chiều dài dây (m) · S: tiết diện (m²)</small></div>
@@ -392,6 +415,10 @@
 </svg>
       <figcaption>Tụ điện như cái bình chứa điện tích: nạp từ từ, đầy rồi thì dòng ngừng chảy (DC không qua được tụ)</figcaption>
     </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Selection_of_capacitors.jpg/960px-Selection_of_capacitors.jpg" width="720" height="539" alt="Các loại tụ điện" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Các loại tụ điện.</strong> Tụ hoá (hình trụ, có cực + −, điện dung lớn), tụ gốm (dẹt, nhỏ, đọc mã số), tụ film… Luyện đọc ở bài <a href="/madientudien">mã tụ điện</a>.<span class="credit">Ảnh: WizardTim · CC BY 4.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=119370541" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
     <div class="def"><strong>Tụ điện</strong> gồm hai bản cực dẫn điện đặt song song, ngăn cách bởi lớp điện môi. Tụ điện tích luỹ năng lượng dưới dạng <strong>điện trường</strong>.</div>
     <div class="formula">i = C <span class="frac"><span>du</span><span>dt</span></span> &nbsp;&nbsp;&nbsp; W<sub>C</sub> = ½ C U²<small>Dòng qua tụ tỉ lệ với tốc độ biến thiên điện áp · W: jun (J)</small></div>
     <ul>
@@ -414,6 +441,10 @@
   <path class="curve-ac" d="M80 204 C 170 172, 270 162, 490 160"/><text class="b ac" x="300" y="186">có L: tăng từ từ</text>
 </svg>
       <figcaption>Cuộn cảm như bánh đà nặng: khó tăng tốc, khó dừng lại, nó "ghét" sự thay đổi của dòng điện</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Electronic_component_inductors.jpg/960px-Electronic_component_inductors.jpg" width="720" height="639" alt="Các loại cuộn cảm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Các loại cuộn cảm.</strong> Dây đồng quấn quanh lõi ferit hình xuyến (toroid) hoặc lõi trụ; hay gặp trong mạch lọc nguồn và nguồn xung.<span class="credit">Ảnh: Miguel · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=1534586" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
     </figure>
     <div class="def"><strong>Cuộn cảm</strong> là dây dẫn quấn thành nhiều vòng (có hoặc không có lõi). Cuộn cảm tích luỹ năng lượng dưới dạng <strong>từ trường</strong>. Đại lượng đặc trưng là <strong>điện cảm L</strong>, đơn vị henry (H).</div>
     <div class="formula">u = L <span class="frac"><span>di</span><span>dt</span></span> &nbsp;&nbsp;&nbsp; W<sub>L</sub> = ½ L I²<small>Điện áp trên cuộn cảm tỉ lệ với tốc độ biến thiên dòng điện</small></div>
@@ -443,6 +474,10 @@
   <text class="b big" x="260" y="146">P = U × I = 12 × 1,5 = 18 W</text>
 </svg>
       <figcaption>Công suất là "tốc độ dùng năng lượng": áp càng cao, dòng càng lớn thì đèn càng sáng</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Stromzaehler-01_hg.jpg/960px-Stromzaehler-01_hg.jpg" width="720" height="854" alt="Công tơ điện" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Công tơ điện.</strong> Đếm điện năng tiêu thụ theo <strong>kWh</strong> (1 kWh = 1 "số điện"). Hoá đơn tiền điện tính theo số này.<span class="credit">Ảnh: Hannes Grobe · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=159251038" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
     </figure>
     <div class="def"><strong>Công suất</strong> là năng lượng mà một phần tử cấp ra hoặc tiêu thụ trong 1 giây. Trong mạch có 2 loại: <strong>công suất nguồn</strong> (nguồn cấp ra) và <strong>công suất tải</strong> (tải tiêu thụ).</div>
     <div class="formula">P = U × I &nbsp;&nbsp;&nbsp; A = P × t<small>P: oát (W) · A (điện năng): jun (J) hoặc kWh</small></div>

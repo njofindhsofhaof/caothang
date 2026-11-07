@@ -11,6 +11,7 @@ Mẫu chuẩn: `lythuyetmach-chuong1.html`. Bài mới theo đúng khung này:
 3. **Các khái niệm trước**, mỗi khái niệm gồm theo thứ tự:
    - câu **Dễ nhớ** (so sánh đời thường, ví dụ nước chảy trong ống),
    - **hình minh hoạ SVG đơn giản** vẽ inline, dùng biến màu của site để xem được cả nền sáng và tối,
+   - **ảnh thiết bị thực tế** (nếu có): ảnh giấy phép tự do từ Wikimedia Commons (ưu tiên CC0/public domain, tránh logo hãng nổi bật), kèm chú thích cách dùng và dòng ghi nguồn tác giả · giấy phép · link,
    - định nghĩa (`.def`) + công thức (`.formula`),
    - **bảng đổi đơn vị** đủ các bậc (vd. MV, kV, V, mV, µV) ghi giá trị quy đổi và ví dụ thực tế.
 4. Phần định luật / phương pháp giải, có ví dụ giải mẫu từng bước và kiểm tra lại kết quả.
