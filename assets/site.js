@@ -1,4 +1,6 @@
-/* Menu chung, bang "Bai moi" (toi da 5 tin) va danh sach bai theo trang. Doc du lieu tu assets/posts.js. */
+/* Menu chung, bang "Bai moi" va danh sach bai theo trang. Doc du lieu tu assets/posts.js.
+   scripts/prerender.mjs chay file nay trong Node (window.CT_RENDER) de ghi san menu/bai vao HTML,
+   giup bot doc link (Gemini, ChatGPT, Zalo...) khong chay JS van thay noi dung; trinh duyet ve lai kem nhan "Moi". */
 (function () {
   "use strict";
 
@@ -17,14 +19,21 @@
 
   var posts = Array.isArray(window.CT_POSTS) ? window.CT_POSTS : [];
 
-  function el(tag, attrs, children) {
-    var node = document.createElement(tag);
-    Object.keys(attrs || {}).forEach(function (k) {
-      if (k === "text") node.textContent = attrs[k];
-      else node.setAttribute(k, attrs[k]);
+  function esc(v) {
+    return String(v).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
-    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
-    return node;
+  }
+
+  /* Tao chuoi HTML (dung chung cho trinh duyet va scripts/prerender.mjs). */
+  function tag(name, attrs, inner) {
+    var text = null;
+    var a = Object.keys(attrs || {}).map(function (k) {
+      if (k === "text") { text = attrs[k]; return ""; }
+      return " " + k + '="' + esc(attrs[k]) + '"';
+    }).join("");
+    var body = text != null ? esc(text) : (inner || []).filter(Boolean).join("");
+    return "<" + name + a + ">" + body + "</" + name + ">";
   }
 
   function findSection(key) {
@@ -59,19 +68,26 @@
     return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
   }
 
-  function currentPath() {
-    var p = location.pathname.replace(/\.html$/, "").replace(/\/+$/, "");
+  function pathKey(pathname) {
+    var p = String(pathname).replace(/\.html$/, "").replace(/\/+$/, "");
     return p === "" || p === "/index" ? "/" : p;
   }
 
-  function renderMenu(container) {
-    var here = currentPath();
-    var items = [{ label: "Trang chủ", href: "/" }].concat(SECTIONS);
-    items.forEach(function (it) {
-      var a = el("a", { href: it.href, text: it.label });
-      if (it.href === here) a.setAttribute("aria-current", "page");
-      container.appendChild(a);
+  function currentPath() {
+    return pathKey(location.pathname);
+  }
+
+  /* Moi ham *Items tra ve mang chuoi HTML; badges=false khi prerender (nhan "Moi" phu thuoc ngay xem). */
+  function menuItems(here) {
+    return [{ label: "Trang chủ", href: "/" }].concat(SECTIONS).map(function (it) {
+      var attrs = { href: it.href, text: it.label };
+      if (it.href === here) attrs["aria-current"] = "page";
+      return tag("a", attrs);
     });
+  }
+
+  function renderMenu(container) {
+    container.innerHTML = menuItems(currentPath()).join("");
     // Tren dien thoai menu cuon ngang: dua muc dang mo vao tam nhin.
     var current = container.querySelector('[aria-current="page"]');
     if (current && container.scrollWidth > container.clientWidth) {
@@ -89,45 +105,46 @@
   }
 
   function badge() {
-    return el("span", { "class": "badge-new", text: "Mới" });
+    return tag("span", { "class": "badge-new", text: "Mới" });
   }
 
   /** Bai con (co parent, vd. bai Kirchhoff thuoc Ly Thuyet Mach) hien them ten mon ben canh muc. */
   function sectionCell(p) {
-    var cells = [el("a", { href: sectionHref(p.section), text: sectionLabel(p.section) })];
+    var cells = [tag("a", { href: sectionHref(p.section), text: sectionLabel(p.section) })];
     var parent = p.parent && posts.filter(function (x) { return x.href === p.parent; })[0];
     if (parent) {
-      cells.push(el("span", { "class": "sep", "aria-hidden": "true", text: " › " }));
-      cells.push(el("a", { "class": "c-sub", href: parent.href, text: parent.title }));
+      cells.push(tag("span", { "class": "sep", "aria-hidden": "true", text: " › " }));
+      cells.push(tag("a", { "class": "c-sub", href: parent.href, text: parent.title }));
     }
     return cells;
   }
 
-  function renderNews(container) {
+  function newsItems(badges) {
     var latest = posts
       .filter(function (p) { return !p.hideFromNews; })
       .sort(byDateDesc)
       .slice(0, NEWS_LIMIT);
-    if (latest.length === 0) {
-      container.appendChild(el("p", { "class": "empty", text: "Chưa có bài mới." }));
-      return;
-    }
-    var tbody = el("tbody");
-    latest.forEach(function (p) {
-      var titleCell = el("td", { "class": "c-title" }, [el("a", postLink(p, { text: p.title }))]);
-      if (isRecent(p.date)) titleCell.appendChild(badge());
-      tbody.appendChild(el("tr", {}, [
-        el("td", { "class": "c-date", text: formatDate(p.date) }),
-        el("td", { "class": "c-sec" }, sectionCell(p)),
-        titleCell
-      ]));
+    if (latest.length === 0) return [tag("p", { "class": "empty", text: "Chưa có bài mới." })];
+    var rows = latest.map(function (p) {
+      return tag("tr", {}, [
+        tag("td", { "class": "c-date", text: formatDate(p.date) }),
+        tag("td", { "class": "c-sec" }, sectionCell(p)),
+        tag("td", { "class": "c-title" }, [
+          tag("a", postLink(p, { text: p.title })),
+          badges && isRecent(p.date) ? badge() : null
+        ])
+      ]);
     });
-    var thead = el("thead", {}, [el("tr", {}, [
-      el("th", { text: "Ngày" }),
-      el("th", { text: "Trang" }),
-      el("th", { text: "Bài mới" })
+    var thead = tag("thead", {}, [tag("tr", {}, [
+      tag("th", { text: "Ngày" }),
+      tag("th", { text: "Trang" }),
+      tag("th", { text: "Bài mới" })
     ])]);
-    container.appendChild(el("table", { "class": "news" }, [thead, tbody]));
+    return [tag("table", { "class": "news" }, [thead, tag("tbody", {}, rows)])];
+  }
+
+  function renderNews(container) {
+    container.innerHTML = newsItems(true).join("");
   }
 
   /** Ngay moi nhat cua bai va moi bai con chau (parent long nhau), de trang cha cung bao "Moi". */
@@ -156,27 +173,30 @@
   }
 
   /* data-section="ontap": bai cua trang muc; data-parent="/dientucoban": bai con cua 1 trang chua bai. */
-  function renderSectionList(container) {
-    var key = container.getAttribute("data-section");
-    var parent = container.getAttribute("data-parent");
-    var items = posts
+  function listItems(key, parent, badges) {
+    return posts
       .filter(function (p) { return parent ? p.parent === parent : p.section === key && !p.parent; })
       .map(withActivity)
-      .sort(byOrderThenActivity);
-    var empty = document.getElementById("emptyState");
-    if (items.length === 0) return;
-    if (empty) empty.hidden = true;
-    items.forEach(function (p) {
-      var title = el("h2", { text: p.title });
-      if (isRecent(p.activity)) title.appendChild(badge());
-      var updated = p.activity > p.date ? " · Cập nhật: " + formatDate(p.activity) : "";
-      container.appendChild(el("a", postLink(p, { "class": "card" }), [
-        title,
-        p.desc ? el("p", { text: p.desc }) : null,
-        el("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) + updated })
-      ]));
-    });
+      .sort(byOrderThenActivity)
+      .map(function (p) {
+        var updated = p.activity > p.date ? " · Cập nhật: " + formatDate(p.activity) : "";
+        return tag("a", postLink(p, { "class": "card" }), [
+          tag("h2", {}, [esc(p.title), badges && isRecent(p.activity) ? badge() : null]),
+          p.desc ? tag("p", { text: p.desc }) : null,
+          tag("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) + updated })
+        ]);
+      });
   }
+
+  function renderSectionList(container) {
+    var items = listItems(container.getAttribute("data-section"), container.getAttribute("data-parent"), true);
+    if (items.length === 0) return;
+    var empty = document.getElementById("emptyState");
+    if (empty) empty.hidden = true;
+    container.innerHTML = items.join("");
+  }
+
+  window.CT_RENDER = { pathKey: pathKey, menuItems: menuItems, newsItems: newsItems, listItems: listItems };
 
   function warmPages() {
     var conn = navigator.connection;
