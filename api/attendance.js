@@ -1,6 +1,6 @@
 import { redis, keys } from './_lib/redis.js';
-import { send, handler, isTeacher, DATE_RE, MONTH_RE } from './_lib/http.js';
-import { getSession, getAttendance } from './_lib/store.js';
+import { send, handler, DATE_RE, MONTH_RE } from './_lib/http.js';
+import { getSession, getAttendance, teacherGate } from './_lib/store.js';
 import { withDuplicateFlags } from './_lib/suspicion.js';
 
 const EXCUSE_VALUES = new Set(['P', 'K']);
@@ -52,7 +52,8 @@ async function dropDay(date) {
 }
 
 export default handler(async (req, res) => {
-  if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
+  const denied = await teacherGate(req);
+  if (denied) return send(res, denied.status, { ok: false, message: denied.message });
   if (req.method === 'GET') {
     const ym = String(req.query.month ?? '');
     if (!MONTH_RE.test(ym)) return send(res, 400, { ok: false, message: 'Tháng không hợp lệ (YYYY-MM).' });

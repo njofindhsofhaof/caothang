@@ -1,6 +1,6 @@
 import { redis, keys } from './_lib/redis.js';
-import { send, handler, isTeacher, clientIp } from './_lib/http.js';
-import { getRoster, isRateLimited } from './_lib/store.js';
+import { send, handler, clientIp } from './_lib/http.js';
+import { getRoster, isRateLimited, teacherGate } from './_lib/store.js';
 import { normalizeMssv } from './_lib/checkin-rules.js';
 
 const MSSV_RE = /^\d{6,12}$/;
@@ -40,7 +40,8 @@ export default handler(async (req, res) => {
     const s = (await getRoster()).find((x) => normalizeMssv(x.mssv) === want);
     return s ? send(res, 200, { ok: true, name: shortName(s.ho, s.ten) }) : send(res, 404, { ok: false, message: 'MSSV không có trong danh sách lớp.' });
   }
-  if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
+  const denied = await teacherGate(req);
+  if (denied) return send(res, denied.status, { ok: false, message: denied.message });
   if (req.method === 'GET') return send(res, 200, { ok: true, roster: await getRoster() });
   if (req.method === 'PUT') {
     const roster = parseRoster(req.body?.roster);

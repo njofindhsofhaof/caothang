@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { redis, keys } from './_lib/redis.js';
-import { send, handler, isTeacher, requireSecret, vnDate } from './_lib/http.js';
-import { getSession, getActiveSession, getAttendance, getRoster, listSessions, isActive, MAX_SESSION_MS } from './_lib/store.js';
+import { send, handler, requireSecret, vnDate } from './_lib/http.js';
+import { getSession, getActiveSession, getAttendance, getRoster, listSessions, isActive, MAX_SESSION_MS, teacherGate } from './_lib/store.js';
 import { isValidCoord } from './_lib/geo.js';
 import { makeToken, windowAt, msUntilNextWindow } from './_lib/token.js';
 import { withDuplicateFlags } from './_lib/suspicion.js';
@@ -116,7 +116,8 @@ async function remove(req, res) {
 }
 
 export default handler(async (req, res) => {
-  if (!isTeacher(req)) return fail(res, 'Sai mã PIN giáo viên.', 401);
+  const denied = await teacherGate(req);
+  if (denied) return fail(res, denied.message, denied.status);
   if (req.method === 'GET') return status(req, res);
   if (req.method === 'POST') return create(req, res);
   if (req.method === 'PATCH') return update(req, res);

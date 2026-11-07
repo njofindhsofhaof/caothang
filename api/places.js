@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { redis, keys } from './_lib/redis.js';
-import { send, handler, isTeacher } from './_lib/http.js';
+import { teacherGate } from './_lib/store.js';
+import { send, handler } from './_lib/http.js';
 import { isValidCoord } from './_lib/geo.js';
 import { pastLocations } from './_lib/past-places.js';
 
@@ -16,7 +17,8 @@ async function recentSessions(now) {
 
 // Phòng học đã lưu vị trí — thầy đứng trong phòng, lưu một lần, dùng lại khi đặt lịch.
 export default handler(async (req, res) => {
-  if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
+  const denied = await teacherGate(req);
+  if (denied) return send(res, denied.status, { ok: false, message: denied.message });
   if (req.method === 'GET') {
     const map = (await redis().hgetall(keys.places)) ?? {};
     const places = Object.entries(map).map(([id, p]) => ({ id, ...p })).sort((a, b) => a.name.localeCompare(b.name, 'vi'));

@@ -1,5 +1,21 @@
 import { redis, keys } from './redis.js';
 import { lateUntil } from './periods.js';
+import { isTeacher, clientIp } from './http.js';
+
+const PIN_MAX_FAILS = 8;
+const PIN_LOCK_S = 15 * 60;
+
+// Kiem tra PIN giao vien co chan do PIN: IP sai qua PIN_MAX_FAILS lan bi khoa PIN_LOCK_S giay
+// (ke ca nhap dung, de do mo khong co ket qua). Tra ve null neu hop le, nguoc lai { status, message }.
+export async function teacherGate(req, db = redis()) {
+  const key = keys.rate(`pinfail:${clientIp(req)}`);
+  const fails = Number(await db.get(key)) || 0;
+  if (fails >= PIN_MAX_FAILS) return { status: 429, message: 'Nhập sai PIN quá nhiều lần. Đợi 15 phút rồi thử lại.' };
+  if (isTeacher(req)) return null;
+  const n = await db.incr(key);
+  if (n === 1) await db.expire(key, PIN_LOCK_S);
+  return { status: 401, message: 'Sai mã PIN giáo viên.' };
+}
 
 export async function getRoster() {
   const list = await redis().get(keys.roster);

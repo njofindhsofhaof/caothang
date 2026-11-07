@@ -1,5 +1,6 @@
 import { redis, keys } from './_lib/redis.js';
-import { send, handler, isTeacher } from './_lib/http.js';
+import { teacherGate } from './_lib/store.js';
+import { send, handler } from './_lib/http.js';
 
 // File mẫu ~vài chục KB; chặn trên để vừa giới hạn một bản ghi Redis.
 export const MAX_BASE64_CHARS = 1_000_000;
@@ -15,7 +16,8 @@ export function parseTemplate(body) {
 
 // File mẫu Excel dùng chung cho mọi máy của giáo viên.
 export default handler(async (req, res) => {
-  if (!isTeacher(req)) return send(res, 401, { ok: false, message: 'Sai mã PIN giáo viên.' });
+  const denied = await teacherGate(req);
+  if (denied) return send(res, denied.status, { ok: false, message: denied.message });
   if (req.method === 'GET') return send(res, 200, { ok: true, template: (await redis().get(keys.template)) ?? null });
   if (req.method === 'PUT') {
     const { template, error } = parseTemplate(req.body);

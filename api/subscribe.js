@@ -5,6 +5,7 @@ import { mailer, fromAddress, siteUrl, subscribeSecret } from './_lib/mailer.js'
 import { normalizeEmail, verifyEmailToken, actionUrl, buildConfirmEmail, resultPage } from './_lib/subscribe.js';
 
 const MAX_SUBSCRIBERS = 2000;
+const MAX_CONFIRM_PER_DAY = 100; // giu tai khoan Gmail gui thu khong bi khoa vi spam
 
 function page(res, status, title, message) {
   res.setHeader('Cache-Control', 'no-store');
@@ -22,6 +23,12 @@ async function requestSubscribe(req, res) {
   if (!email) return send(res, 400, { ok: false, message: 'Email không hợp lệ.' });
   if (await redis().sismember(keys.subscribers, email)) {
     return send(res, 200, { ok: true, already: true, message: 'Email này đã đăng ký rồi.' });
+  }
+  if (await isRateLimited(`subto:${email}`, 1, 3600)) {
+    return send(res, 200, { ok: true, message: 'Email xác nhận đã được gửi tới địa chỉ này. Kiểm tra hộp thư (cả mục Spam), hoặc thử lại sau 1 giờ.' });
+  }
+  if (await isRateLimited('sub:all', MAX_CONFIRM_PER_DAY, 86_400)) {
+    return send(res, 429, { ok: false, message: 'Hôm nay trang đã gửi quá nhiều email xác nhận. Thử lại vào ngày mai.' });
   }
   if ((await redis().scard(keys.subscribers)) >= MAX_SUBSCRIBERS) {
     return send(res, 503, { ok: false, message: 'Danh sách đã đầy. Liên hệ lớp để được hỗ trợ.' });
