@@ -194,6 +194,15 @@ window.CT_POSTS = [
     order: 1
   },
   {
+    section: "hoctap",
+    parent: "/namnhat-lythuyetmach",
+    title: "Chương 2: Mạch xác lập điều hoà",
+    desc: "Đại lượng điều hoà, góc lệch pha, trị hiệu dụng, số phức và ảnh phức, trở kháng – dẫn nạp, Ohm và Kirchhoff dạng phức, công suất P, Q, S — có hình minh hoạ và ví dụ giải mẫu.",
+    date: "2026-11-07",
+    href: "/lythuyetmach-chuong2",
+    order: 2
+  },
+  {
     section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     date: "2026-09-19",

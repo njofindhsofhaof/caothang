@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 2: Mạch xác lập điều hoà · Lý Thuyết Mạch · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Lý thuyết mạch Chương 2: đại lượng điều hoà, góc lệch pha, trị hiệu dụng, số phức, ảnh phức, trở kháng và dẫn nạp, định luật Ohm và Kirchhoff dạng phức, công suất P, Q, S.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+.il .warmline{stroke:var(--accent-warm);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lý thuyết mạch – Chương 2: Mạch xác lập điều hoà</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+
+
+  <article class="post">
+    <p class="byline">07/11/2026 · Học tập · Năm nhất · Lý thuyết mạch · Chương 2</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 2, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Đọc được một <a href="#dai-luong">đại lượng điều hoà</a> u(t) = U<sub>m</sub> sin(ωt + φ): chỉ ra biên độ, tần số góc, pha đầu.</li>
+        <li>Tính được <a href="#thong-so">chu kỳ T, tần số f, tần số góc ω</a> và đổi qua lại: ω = 2πf, T = 1/f.</li>
+        <li>Tính <a href="#lech-pha">góc lệch pha</a> φ = φ<sub>u</sub> − φ<sub>i</sub> và nói được điện áp sớm, trễ hay cùng pha với dòng điện.</li>
+        <li>Đổi giữa <a href="#hieu-dung">biên độ và trị số hiệu dụng</a>: U = U<sub>m</sub>/√2 (ổ điện 220 V có biên độ ≈ 311 V).</li>
+        <li>Đổi <a href="#so-phuc">số phức</a> giữa dạng đại số a + jb và dạng cực (mũ) |C|∠ψ; biết cộng trừ, nhân chia số phức.</li>
+        <li>Viết được <a href="#anh-phuc">ảnh phức</a> của dòng, áp và đổi ngược kết quả về phương trình tức thời.</li>
+        <li>Tính <a href="#tro-khang">trở kháng</a> Z<sub>R</sub> = R, Z<sub>L</sub> = jωL, Z<sub>C</sub> = −j/(ωC) và dẫn nạp Y = 1/Z; ghép nối tiếp, song song.</li>
+        <li>Viết định luật <a href="#dinh-luat">Ohm, K1, K2 dạng phức</a>.</li>
+        <li>Tính <a href="#cong-suat">công suất P, Q, S</a> và hệ số công suất cosφ, kiểm tra P = Σ R × I².</li>
+        <li>Giải trọn một <a href="#giai-mach">mạch xác lập điều hoà</a> bằng số phức theo 5 bước.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#dai-luong">Đại lượng điều hoà</a></li>
+        <li><a href="#thong-so">Các thông số đặc trưng</a></li>
+        <li><a href="#lech-pha">Góc lệch pha</a></li>
+        <li><a href="#hieu-dung">Trị số hiệu dụng</a></li>
+        <li><a href="#vecto">Biểu diễn bằng vectơ</a></li>
+        <li><a href="#so-phuc">Số phức</a></li>
+        <li><a href="#anh-phuc">Ảnh phức của đại lượng điều hoà</a></li>
+        <li><a href="#tro-khang">Trở kháng và dẫn nạp</a></li>
+        <li><a href="#dinh-luat">Ohm, Kirchhoff dạng phức</a></li>
+        <li><a href="#cong-suat">Công suất P, Q, S</a></li>
+        <li><a href="#giai-mach">Giải mạch bằng số phức</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#bai-tap">Bài tập</a></li>
+      </ol>
+    </nav>
+    <p>Chương 1 làm việc với điện <strong>một chiều</strong> (áp, dòng không đổi). Chương 2 chuyển sang điện <strong>xoay chiều hình sin</strong>: mọi nguồn trong mạch cùng biến thiên hình sin với một tần số góc ω, và sau khi mạch đã ổn định (<strong>xác lập</strong>) thì dòng, áp trên mọi nhánh cũng là hình sin cùng tần số ω. Công cụ chính của chương là <strong>số phức</strong>: nó biến bài toán đạo hàm, tích phân thành phép tính giống hệt định luật Ohm ở Chương 1.</p>
+
+    <!-- 1 -->
+    <h2 id="dai-luong"><span class="num">01</span>Đại lượng điều hoà</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Đại lượng điều hoà = <strong>cái bóng của một điểm trên vòng đu quay</strong>. Đu quay quay đều, bóng của nó chiếu lên tường cứ lên cao nhất, xuống thấp nhất rồi lặp lại: đó là đường hình sin.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 215" role="img" aria-label="Đồ thị hình sin u(t) với biên độ Um và chu kỳ T">
+  <path class="axis" d="M70 110 L540 110 M70 200 L70 20"/>
+  <text class="s" x="544" y="114">t</text><text class="s" x="62" y="24" text-anchor="end">u</text>
+  <path class="dash" d="M70 40 L162 40 M70 180 L340 180"/>
+  <text class="s" x="62" y="44" text-anchor="end">U<tspan class="sub" dy="4">m</tspan></text><text class="s" x="62" y="184" text-anchor="end">−U<tspan class="sub" dy="4">m</tspan></text>
+  <path class="curve-ac" d="M70.0 110.0 L81.5 96.0 L93.0 82.6 L104.5 70.4 L116.0 59.6 L127.5 51.0 L139.0 44.6 L150.5 41.0 L162.0 40.0 L173.5 41.9 L185.0 46.6 L196.5 53.7 L208.0 63.2 L219.5 74.5 L231.0 87.2 L242.5 100.9 L254.0 114.9 L265.5 128.7 L277.0 141.8 L288.5 153.6 L300.0 163.6 L311.5 171.5 L323.0 176.9 L334.5 179.7 L346.0 179.6 L357.5 176.8 L369.0 171.2 L380.5 163.2 L392.0 153.1 L403.5 141.2 L415.0 128.1 L426.5 114.3 L438.0 100.3 L449.5 86.6 L461.0 73.9 L472.5 62.7 L484.0 53.4 L495.5 46.3 L507.0 41.8 L518.5 40.0 L530.0 41.1"/>
+  <path class="arr-ac" d="M162 104 L162 46 M156 52 L162 44 L168 52"/><text class="b ac" x="172" y="80">biên độ U<tspan class="sub" dy="4">m</tspan></text>
+  <path class="arr" d="M76 200 L424 200 M84 194 L76 200 L84 206 M416 194 L424 200 L416 206"/>
+  <path class="dash" d="M430 110 L430 206"/>
+  <text class="b warm" x="250" y="194" text-anchor="middle">1 chu kỳ T</text>
+  <text class="s" x="470" y="160">lặp lại…</text>
+</svg>
+      <figcaption>Đại lượng điều hoà lên xuống đều đặn quanh trục 0, cứ sau một chu kỳ T lại lặp lại y như cũ</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Oscilloscope_sine_square_%28cropped%29.jpg" width="706" height="649" alt="Màn hình máy hiện sóng hiển thị sóng sin và sóng vuông" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Máy hiện sóng (oscilloscope).</strong> Vẽ điện áp theo thời gian lên màn hình, nên nhìn thấy được dạng sóng sin, đọc được biên độ (trục dọc) và chu kỳ (trục ngang). Đồng hồ vạn năng chỉ cho một con số, máy hiện sóng cho cả hình dạng.<span class="credit">Ảnh: Xato · Public domain · <a href="https://commons.wikimedia.org/w/index.php?curid=127192891" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <div class="def"><strong>Đại lượng điều hoà</strong> là đại lượng biến thiên theo thời gian theo quy luật hàm sin (hoặc cos). Dòng điện i(t), điện áp u(t), sức điện động e(t) trong mạch xoay chiều đều là đại lượng điều hoà.</div>
+    <div class="formula">f(t) = F<sub>m</sub> sin(ωt + φ) &nbsp;&nbsp;hoặc&nbsp;&nbsp; f(t) = F<sub>m</sub> cos(ωt + φ)<small>f(t) có thể là i(t), u(t), e(t) · F<sub>m</sub>: biên độ · ω: tần số góc · φ: pha đầu</small></div>
+    <ul>
+      <li><strong>Mạch xác lập điều hoà</strong>: các nguồn kích thích đều hình sin cùng tần số ω; khi mạch đã ổn định, mọi dòng, áp trong mạch cũng hình sin <strong>cùng tần số ω</strong>, chỉ khác biên độ và pha.</li>
+      <li>Vì tần số ω giống nhau ở mọi chỗ, khi giải mạch ta chỉ cần tìm <strong>2 con số</strong> cho mỗi đại lượng: biên độ và pha đầu. Đó là lý do dùng số phức (mục 06, 07).</li>
+    </ul>
+
+    <!-- 2 -->
+    <h2 id="thong-so"><span class="num">02</span>Các thông số đặc trưng</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Với vòng đu quay: <strong>biên độ</strong> = bán kính vòng · <strong>chu kỳ T</strong> = thời gian quay hết 1 vòng · <strong>tần số f</strong> = số vòng quay trong 1 giây · <strong>pha</strong> = góc đang ở đâu trên vòng.</p>
+    <div class="formula">u(t) = U<sub>m</sub> sin(ωt + φ)</div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Thông số</th><th>Ký hiệu</th><th>Đơn vị</th><th>Ý nghĩa</th></tr></thead>
+        <tbody>
+          <tr><td>Trị số tức thời</td><td>u, i</td><td>V, A</td><td>Giá trị của điện áp, dòng điện tại thời điểm t</td></tr>
+          <tr><td>Biên độ</td><td>U<sub>m</sub>, I<sub>m</sub> &gt; 0</td><td>V, A</td><td>Trị số cực đại (đỉnh sóng)</td></tr>
+          <tr><td>Tần số góc</td><td>ω &gt; 0</td><td>rad/s</td><td>Tốc độ "quay" của pha</td></tr>
+          <tr><td>Pha</td><td>ωt + φ</td><td>rad hoặc độ</td><td>Xác định trị số và chiều của u tại thời điểm t</td></tr>
+          <tr><td>Pha đầu</td><td>φ</td><td>rad hoặc độ</td><td>Pha tại t = 0; có thể âm, dương hoặc 0; thường lấy −180° ≤ φ ≤ 180°</td></tr>
+          <tr><td>Chu kỳ</td><td>T</td><td>s</td><td>Thời gian ngắn nhất để hàm lặp lại giá trị cũ</td></tr>
+          <tr><td>Tần số</td><td>f</td><td>Hz</td><td>Số chu kỳ thực hiện trong 1 giây</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula">T = <span class="frac"><span>2π</span><span>ω</span></span> &nbsp;&nbsp;&nbsp; f = <span class="frac"><span>1</span><span>T</span></span> &nbsp;&nbsp;&nbsp; ω = 2πf<small>Đổi độ ↔ radian: 180° = π rad · 90° = π/2 · 60° = π/3 · 30° = π/6</small></div>
+    <p>Ví dụ: điện lưới Việt Nam có f = 50 Hz ⇒ T = 1/50 = 0,02 s = 20 ms; ω = 2π × 50 ≈ 314 rad/s. Vì vậy hay gặp đề cho dạng u = 220√2 sin(314t) V.</p>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị tần số (héc) và chu kỳ (giây)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Gigahéc</td><td>GHz</td><td>1 GHz = 1 000 MHz = 10⁹ Hz</td></tr><tr><td>Megahéc</td><td>MHz</td><td>1 MHz = 1 000 kHz = 10⁶ Hz</td></tr><tr><td>Kilôhéc</td><td>kHz</td><td>1 kHz = 10³ Hz = 1 000 Hz</td></tr><tr class="base"><td>Héc</td><td>Hz</td><td>đơn vị gốc · 1 Hz = 1 chu kỳ/giây</td></tr><tr><td>Giây</td><td>s</td><td>đơn vị gốc của chu kỳ · 1 s = 1 000 ms</td></tr><tr><td>Mili giây</td><td>ms</td><td>1 ms = 10⁻³ s · 1 ms = 1 000 µs</td></tr><tr><td>Micro giây</td><td>µs</td><td>1 µs = 10⁻⁶ s</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Điện lưới 50 Hz ⇒ T = 20 ms</li><li>Âm thanh 1 kHz ⇒ T = 1 ms</li><li>Đài FM 100 MHz ⇒ T = 0,01 µs</li><li>Wi-Fi 2,4 GHz = 2 400 MHz</li></ul>
+    </div>
+
+    <!-- 3 -->
+    <h2 id="lech-pha"><span class="num">03</span>Góc lệch pha</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Hai người chạy cùng tốc độ trên một vòng tròn: ai xuất phát trước thì luôn <strong>đi trước</strong> một góc không đổi. Góc đó là góc lệch pha.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 210" role="img" aria-label="Hai sóng u và i cùng tần số, u đạt đỉnh trước i một góc φ">
+  <path class="axis" d="M70 110 L540 110 M70 195 L70 25"/>
+  <text class="s" x="544" y="114">ωt</text>
+  <path class="curve-ac" d="M70.0 110.0 L81.5 96.0 L93.0 82.6 L104.5 70.4 L116.0 59.6 L127.5 51.0 L139.0 44.6 L150.5 41.0 L162.0 40.0 L173.5 41.9 L185.0 46.6 L196.5 53.7 L208.0 63.2 L219.5 74.5 L231.0 87.2 L242.5 100.9 L254.0 114.9 L265.5 128.7 L277.0 141.8 L288.5 153.6 L300.0 163.6 L311.5 171.5 L323.0 176.9 L334.5 179.7 L346.0 179.6 L357.5 176.8 L369.0 171.2 L380.5 163.2 L392.0 153.1 L403.5 141.2 L415.0 128.1 L426.5 114.3 L438.0 100.3 L449.5 86.6 L461.0 73.9 L472.5 62.7 L484.0 53.4 L495.5 46.3 L507.0 41.8 L518.5 40.0 L530.0 41.1"/>
+  <path class="curve-warm" d="M70.0 144.5 L81.5 138.0 L93.0 130.4 L104.5 122.0 L116.0 113.1 L127.5 104.1 L139.0 95.3 L150.5 87.2 L162.0 79.9 L173.5 73.8 L185.0 69.2 L196.5 66.2 L208.0 65.0 L219.5 65.6 L231.0 68.0 L242.5 72.0 L254.0 77.6 L265.5 84.5 L277.0 92.4 L288.5 101.0 L300.0 110.0 L311.5 119.0 L323.0 127.6 L334.5 135.5 L346.0 142.4 L357.5 148.0 L369.0 152.0 L380.5 154.4 L392.0 155.0 L403.5 153.8 L415.0 150.8 L426.5 146.2 L438.0 140.1 L449.5 132.8 L461.0 124.7 L472.5 115.9 L484.0 106.9 L495.5 98.0 L507.0 89.6 L518.5 82.0 L530.0 75.5"/>
+  <path class="dash" d="M162 40 L162 22 M210 65 L210 22"/>
+  <path class="arr" d="M168 26 L204 26 M198 20 L205 26 L198 32"/><text class="b" x="186" y="16" text-anchor="middle">φ</text>
+  <text class="b ac" x="128" y="38" text-anchor="end">u</text><text class="b warm" x="232" y="60">i</text>
+  <text class="s" x="300" y="200" text-anchor="middle">u đạt đỉnh trước i ⇒ φ &gt; 0: điện áp sớm pha hơn dòng điện</text>
+</svg>
+      <figcaption>Cùng tần số nhưng lệch nhau một góc φ: đỉnh của u đến trước đỉnh của i</figcaption>
+    </figure>
+    <div class="def"><strong>Góc lệch pha</strong> giữa hai đại lượng điều hoà cùng tần số là hiệu số pha đầu của chúng. Trong mạch thường xét góc lệch pha giữa điện áp và dòng điện.</div>
+    <div class="formula">u(t) = U<sub>m</sub> sin(ωt + φ<sub>u</sub>) &nbsp;&nbsp; i(t) = I<sub>m</sub> sin(ωt + φ<sub>i</sub>)<br>φ = φ<sub>u</sub> − φ<sub>i</sub></div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Dấu của φ</th><th>Ý nghĩa</th><th>Gặp ở</th></tr></thead>
+        <tbody>
+          <tr><td>φ &gt; 0</td><td>Điện áp <strong>nhanh (sớm) pha</strong> hơn dòng điện</td><td>Mạch có tính cảm (L trội)</td></tr>
+          <tr><td>φ &lt; 0</td><td>Điện áp <strong>chậm (trễ) pha</strong> hơn dòng điện</td><td>Mạch có tính dung (C trội)</td></tr>
+          <tr><td>φ = 0</td><td>Điện áp <strong>cùng pha</strong> dòng điện</td><td>Mạch thuần trở, mạch cộng hưởng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Lưu ý:</strong> muốn so sánh pha của hai đại lượng thì phải đưa cả hai về <strong>cùng dạng</strong> (cùng sin hoặc cùng cos), <strong>biên độ dương</strong> và cùng tần số dương. Hai phép đổi hay dùng: cos(x) = sin(x + 90°) và −sin(x) = sin(x + 180°) (hoặc sin(x − 180°)).</div>
+    <p>Ví dụ: u = 100 cos(ωt) V, i = 2 sin(ωt + 30°) A. Đổi u = 100 sin(ωt + 90°) V ⇒ φ = 90° − 30° = 60° &gt; 0: điện áp sớm pha hơn dòng 60°.</p>
+
+    <!-- 4 -->
+    <h2 id="hieu-dung"><span class="num">04</span>Trị số hiệu dụng</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Hiệu dụng = <strong>"tương đương một chiều"</strong>. Dòng xoay chiều đun ấm nước nóng nhanh bằng dòng một chiều bao nhiêu thì đó là trị hiệu dụng của nó.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 205" role="img" aria-label="Đồ thị i bình phương dao động giữa 0 và Im bình phương, trung bình bằng một nửa">
+  <path class="axis" d="M70 150 L460 150 M70 175 L70 25"/>
+  <text class="s" x="466" y="154">t</text><text class="s" x="62" y="30" text-anchor="end">i²</text>
+  <path class="curve-warm" d="M70.0 150.0 L79.0 147.3 L88.0 139.5 L97.0 127.3 L106.0 112.0 L115.0 95.0 L124.0 78.0 L133.0 62.7 L142.0 50.5 L151.0 42.7 L160.0 40.0 L169.0 42.7 L178.0 50.5 L187.0 62.7 L196.0 78.0 L205.0 95.0 L214.0 112.0 L223.0 127.3 L232.0 139.5 L241.0 147.3 L250.0 150.0 L259.0 147.3 L268.0 139.5 L277.0 127.3 L286.0 112.0 L295.0 95.0 L304.0 78.0 L313.0 62.7 L322.0 50.5 L331.0 42.7 L340.0 40.0 L349.0 42.7 L358.0 50.5 L367.0 62.7 L376.0 78.0 L385.0 95.0 L394.0 112.0 L403.0 127.3 L412.0 139.5 L421.0 147.3 L430.0 150.0"/>
+  <path class="curve-ac" d="M70 95 L440 95"/>
+  <path class="dash" d="M70 40 L160 40"/>
+  <text class="s" x="62" y="44" text-anchor="end">I<tspan class="sub" dy="4">m</tspan><tspan dy="-4">²</tspan></text>
+  <text class="s ac" x="62" y="99" text-anchor="end">I<tspan class="sub" dy="4">m</tspan><tspan dy="-4">²/2</tspan></text>
+  <text class="b ac" x="446" y="92">= I²</text><text class="s ac" x="446" y="112">(trung bình)</text>
+  <text class="s" x="250" y="190" text-anchor="middle">⇒ I = I<tspan class="sub" dy="4">m</tspan><tspan dy="-4"> / √2 ≈ 0,707 × I</tspan><tspan class="sub" dy="4">m</tspan></text>
+</svg>
+      <figcaption>Nhiệt toả ra trên R tỉ lệ với i². Trung bình của i² trong một chu kỳ đúng bằng nửa đỉnh, nên I = I<sub>m</sub>/√2</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Digital_Multimeter_%28To_measure_Voltage%2C_Current_and_Resistance%29.jpg/960px-Digital_Multimeter_%28To_measure_Voltage%2C_Current_and_Resistance%29.jpg" width="720" height="960" alt="Đồng hồ vạn năng số" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Đồng hồ vạn năng ở thang V~ (AC).</strong> Đo ổ điện thấy khoảng 220 V: đó là trị <strong>hiệu dụng</strong>, còn đỉnh sóng thật là 220√2 ≈ 311 V. Số ghi trên thiết bị (220 V, 5 A…) cũng đều là trị hiệu dụng.<span class="credit">Ảnh: K.Venkataramana · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=163067537" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <div class="def"><strong>Trị số hiệu dụng</strong> của dòng điện i(t) là trị số của dòng điện không đổi I mà khi chạy qua cùng một điện trở R thì tạo ra cùng công suất (cùng nhiệt lượng trong một chu kỳ) như i(t).</div>
+    <div class="formula">W = ∫<sub>0</sub><sup>T</sup> R i² dt &nbsp;&nbsp;&nbsp; P = <span class="frac"><span>1</span><span>T</span></span>∫<sub>0</sub><sup>T</sup> R i² dt = R × I²<small>W: điện năng tiêu thụ trong 1 chu kỳ · P: công suất trung bình</small></div>
+    <div class="formula">I = √( <span class="frac"><span>1</span><span>T</span></span>∫<sub>0</sub><sup>T</sup> i² dt ) &nbsp;&nbsp;⇒&nbsp;&nbsp; I = <span class="frac"><span>I<sub>m</sub></span><span>√2</span></span> &nbsp;&nbsp; U = <span class="frac"><span>U<sub>m</sub></span><span>√2</span></span><small>Công thức I = I<sub>m</sub>/√2 chỉ đúng cho dạng sóng hình sin</small></div>
+    <ul>
+      <li>Ký hiệu: chữ <strong>có chỉ số m</strong> (U<sub>m</sub>, I<sub>m</sub>) là biên độ; chữ <strong>in hoa không chỉ số</strong> (U, I) là hiệu dụng; chữ <strong>thường</strong> (u, i) là tức thời.</li>
+      <li>Công suất luôn tính bằng trị <strong>hiệu dụng</strong>. Nếu đề cho biên độ thì phải chia √2 trước khi tính P, Q, S.</li>
+    </ul>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Biên độ</th><th>Hiệu dụng</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>220√2 ≈ 311 V</td><td>220 V</td><td>Điện lưới 1 pha</td></tr>
+          <tr><td>380√2 ≈ 537 V</td><td>380 V</td><td>Điện áp dây lưới 3 pha</td></tr>
+          <tr><td>100 V</td><td>50√2 ≈ 70,71 V</td><td>Đề cho U<sub>m</sub> = 100 V</td></tr>
+          <tr><td>2 A</td><td>√2 ≈ 1,41 A</td><td>Đề cho I<sub>m</sub> = 2 A</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5 -->
+    <h2 id="vecto"><span class="num">05</span>Biểu diễn bằng vectơ</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Thay vì vẽ cả đường sóng, ta <strong>chụp ảnh vòng đu quay tại t = 0</strong>: chỉ cần một mũi tên có độ dài (độ lớn) và góc (pha đầu) là đủ thông tin.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Đồ thị vectơ: vectơ U ở góc 30 độ, vectơ I ở góc âm 20 độ, góc lệch phi giữa chúng">
+  <path class="axis" d="M120 150 L470 150 M120 205 L120 20"/>
+  <text class="s" x="476" y="154">x</text>
+  <path class="arr-ac" d="M120 150 L259 70 M248 70 L259 70 L253 80"/>
+  <path class="arr warmline" d="M120 150 L223 188 M212 191 L223 188 L216 180"/>
+  <text class="b ac" x="266" y="66">U = 100 V</text><text class="s ac" x="266" y="84">góc 30°</text>
+  <text class="b warm" x="230" y="204">I = 2 A</text><text class="s warm" x="290" y="204">góc −20°</text>
+  <path class="dash" d="M190 150 A70 70 0 0 0 181 115"/><text class="s" x="196" y="134">30°</text>
+  <path class="loopv" d="M222 91 A118 118 0 0 1 231 190"/>
+  <text class="b" x="248" y="138">φ = 30° − (−20°) = 50°</text>
+</svg>
+      <figcaption>Mỗi đại lượng sin là một vectơ: dài bằng trị hiệu dụng, hợp với trục Ox một góc bằng pha đầu</figcaption>
+    </figure>
+    <div class="def"><strong>Đồ thị vectơ</strong>: biểu diễn mỗi đại lượng hình sin bằng một vectơ có độ lớn bằng trị hiệu dụng (hoặc biên độ) và góc tạo với trục Ox bằng góc pha đầu của đại lượng đó.</div>
+    <ul>
+      <li>Cộng, trừ các đại lượng sin <strong>cùng tần số</strong> tương ứng với cộng, trừ các vectơ biểu diễn chúng. Cộng trực tiếp hai hàm sin rất khó, cộng hai vectơ thì dễ.</li>
+      <li>Góc giữa vectơ U và vectơ I chính là góc lệch pha φ. Vectơ U nằm trên (quay ngược chiều kim đồng hồ) so với I ⇒ φ &gt; 0.</li>
+      <li>Vectơ trên mặt phẳng chính là một <strong>số phức</strong>: đó là cầu nối sang mục tiếp theo.</li>
+    </ul>
+
+    <!-- 6 -->
+    <h2 id="so-phuc"><span class="num">06</span>Số phức</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Số phức = <strong>toạ độ của một điểm trên bản đồ</strong>. Có 2 cách chỉ đường: "đi ngang a bước, đi lên b bước" (dạng đại số) hoặc "đi thẳng r bước theo hướng góc ψ" (dạng cực). Cùng một điểm, chỉ khác cách nói.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Mặt phẳng phức: điểm C có phần thực a, phần ảo b, môđun r và góc psi">
+  <path class="axis" d="M80 170 L500 170 M140 205 L140 20"/>
+  <text class="s" x="506" y="174">+1</text><text class="s" x="506" y="190">(thực)</text><text class="s" x="148" y="26">+j (ảo)</text>
+  <path class="dash" d="M140 60 L340 60 M340 60 L340 170"/>
+  <path class="arr-ac" d="M140 170 L340 60 M328 61 L340 60 L334 71"/>
+  <circle class="node" cx="340" cy="60" r="5"/>
+  <text class="b ac" x="350" y="52">C = a + jb = r∠ψ</text>
+  <text class="b warm" x="240" y="190" text-anchor="middle">a (phần thực)</text>
+  <text class="b warm" x="350" y="120">b (phần ảo)</text>
+  <text class="b ac" x="226" y="104" text-anchor="end">r = |C|</text>
+  <path class="dash" d="M200 170 A60 60 0 0 0 193 142"/><text class="s" x="206" y="158">ψ</text>
+</svg>
+      <figcaption>Cùng một số phức: dạng đại số (a, b) và dạng cực (r, ψ)</figcaption>
+    </figure>
+    <div class="def"><strong>Đơn vị ảo</strong> j được định nghĩa: j² = −1 (trong ngành điện dùng j thay cho i để khỏi nhầm với dòng điện). Một số phức có hai dạng viết.</div>
+    <h3>a. Dạng đại số</h3>
+    <div class="formula">C = a + jb<small>a = Re C: phần thực · b = Im C: phần ảo · a, b là số thực</small></div>
+    <h3>b. Dạng mũ (dạng cực)</h3>
+    <div class="formula">C = |C| e<sup>jψ</sup> = |C|∠ψ<small>|C| = r: môđun (độ dài) · ψ: argument (góc), −180° &lt; ψ ≤ 180°</small></div>
+    <h3>Đổi qua lại giữa hai dạng</h3>
+    <div class="formula">r = √(a² + b²) &nbsp;&nbsp; ψ = arctan<span class="frac"><span>b</span><span>a</span></span><br>a = r cosψ &nbsp;&nbsp; b = r sinψ<small>Khi a &lt; 0 phải cộng hoặc trừ 180° vào ψ (điểm nằm bên trái trục ảo)</small></div>
+    <h3>Phép tính</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Phép tính</th><th>Dùng dạng</th><th>Cách làm</th></tr></thead>
+        <tbody>
+          <tr><td>Cộng, trừ</td><td>Đại số</td><td>(a₁ + jb₁) ± (a₂ + jb₂) = (a₁ ± a₂) + j(b₁ ± b₂)</td></tr>
+          <tr><td>Nhân</td><td>Cực</td><td>r₁∠ψ₁ × r₂∠ψ₂ = (r₁ × r₂)∠(ψ₁ + ψ₂)</td></tr>
+          <tr><td>Chia</td><td>Cực</td><td>r₁∠ψ₁ / r₂∠ψ₂ = (r₁ / r₂)∠(ψ₁ − ψ₂)</td></tr>
+          <tr><td>Nhân với j</td><td>–</td><td>j = 1∠90°: xoay vectơ thêm 90° · −j = 1∠−90° · 1/j = −j</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Ví dụ: C = 3 + j4 ⇒ r = √(3² + 4²) = 5; ψ = arctan(4/3) = 53,13° ⇒ C = 5∠53,13°. Ngược lại 10∠−30° = 10cos(−30°) + j10sin(−30°) = 8,66 − j5.</p>
+    <div class="note"><strong>Máy tính cầm tay:</strong> chuyển sang chế độ số phức (CMPLX) và chọn đơn vị góc là độ (Deg) để nhập trực tiếp dạng r∠ψ, máy tự cộng trừ nhân chia và đổi qua lại hai dạng. Nên tính tay một lần để hiểu, sau đó dùng máy để kiểm tra.</div>
+
+    <!-- 7 -->
+    <h2 id="anh-phuc"><span class="num">07</span>Ảnh phức của đại lượng điều hoà</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Ảnh phức = <strong>"thẻ căn cước"</strong> của sóng sin: chỉ ghi 2 thông tin cần thiết là độ lớn và pha đầu. Tần số ω ai cũng như ai nên khỏi ghi.</p>
+    <div class="def"><strong>Ảnh phức</strong> (biên độ phức) của đại lượng điều hoà là số phức có môđun bằng biên độ và argument bằng pha đầu của nó. Ký hiệu bằng chữ in hoa <strong>có dấu chấm trên đầu</strong>.</div>
+    <div class="formula">i(t) = I<sub>m</sub> sin(ωt + ψ<sub>i</sub>) &nbsp;⟷&nbsp; I&#775; = I<sub>m</sub>∠ψ<sub>i</sub><br>u(t) = U<sub>m</sub> sin(ωt + ψ<sub>u</sub>) &nbsp;⟷&nbsp; U&#775; = U<sub>m</sub>∠ψ<sub>u</sub><small>Chiều đi: bỏ ωt, giữ biên độ và pha đầu · Chiều về: X∠φ ⇒ x(t) = X sin(ωt + φ)</small></div>
+    <ul>
+      <li>Phép <strong>đạo hàm</strong> theo thời gian ứng với <strong>nhân jω</strong>, phép tích phân ứng với chia jω. Nhờ vậy phương trình vi phân của mạch R, L, C trở thành phương trình đại số với số phức.</li>
+      <li>Nếu đề cho dạng <strong>cos</strong> thì giữ nguyên cos khi đổi về (u = 10cos2t ⇒ U&#775; = 10∠0° ⇒ kết quả viết lại theo cos), miễn là cả bài dùng một dạng thống nhất.</li>
+    </ul>
+    <div class="note"><strong>Quy ước dùng trong trang bài tập lớp:</strong> mọi giá trị đề cho là <strong>biên độ</strong>, ảnh phức lấy môđun bằng biên độ. Một số sách lấy môđun bằng trị hiệu dụng (U = U<sub>m</sub>/√2), khi đó công suất tính thẳng không cần chia √2. Hai cách cho cùng đáp số nếu dùng nhất quán.</div>
+    <p>Ví dụ: u = 220√2 sin(314t + 30°) V ⇒ U&#775; = 220√2∠30° V. Ngược lại tính ra I&#775; = 4∠−15° A ⇒ i(t) = 4 sin(314t − 15°) A.</p>
+
+    <!-- 8 -->
+    <h2 id="tro-khang"><span class="num">08</span>Trở kháng và dẫn nạp</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Trở kháng = <strong>tất cả những gì cản dòng xoay chiều</strong>. R như <strong>ống hẹp</strong>: cản đều ở mọi tần số. L như <strong>bánh đà</strong>: dòng đổi chiều càng nhanh càng khó (tần số cao cản mạnh). C như <strong>màng cao su bịt ống</strong>: nước không chảy thẳng qua được nhưng đẩy qua đẩy lại được, đẩy càng nhanh càng dễ (tần số cao cản yếu).</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Đồ thị theo tần số: điện trở R nằm ngang, cảm kháng XL tăng dần, dung kháng XC giảm dần">
+  <path class="axis" d="M70 190 L520 190 M70 190 L70 20"/>
+  <text class="s" x="526" y="194">f</text><text class="s" x="62" y="26" text-anchor="end">Ω</text>
+  <path class="dash" d="M70 130 L500 130"/>
+  <path class="curve-ac" d="M70 190 L500 30"/>
+  <path class="curve-warm" d="M90.0 30.0 L100.2 63.1 L110.5 95.2 L120.8 114.3 L131.0 127.0 L141.2 136.1 L151.5 142.9 L161.8 148.1 L172.0 152.4 L182.2 155.8 L192.5 158.7 L202.8 161.1 L213.0 163.1 L223.2 164.9 L233.5 166.5 L243.8 167.9 L254.0 169.1 L264.2 170.2 L274.5 171.2 L284.8 172.1 L295.0 172.9 L305.2 173.7 L315.5 174.4 L325.8 175.0 L336.0 175.6 L346.2 176.1 L356.5 176.6 L366.8 177.1 L377.0 177.5 L387.2 177.9 L397.5 178.3 L407.8 178.6 L418.0 179.0 L428.2 179.3 L438.5 179.6 L448.8 179.9 L459.0 180.1 L469.2 180.4 L479.5 180.6 L489.8 180.9 L500.0 181.1"/>
+  <text class="b ac" x="440" y="40" text-anchor="end">X<tspan class="sub" dy="4">L</tspan><tspan dy="-4"> = ωL tăng theo f</tspan></text>
+  <text class="b" x="500" y="122" text-anchor="end">R không đổi</text>
+  <text class="b warm" x="128" y="64">X<tspan class="sub" dy="4">C</tspan><tspan dy="-4"> = 1/(ωC) giảm theo f</tspan></text>
+  <text class="s" x="290" y="212" text-anchor="middle">f = 0 (một chiều): X<tspan class="sub" dy="4">L</tspan><tspan dy="-4"> = 0 → L ngắn mạch · X</tspan><tspan class="sub" dy="4">C</tspan><tspan dy="-4"> → ∞ → C hở mạch</tspan></text>
+</svg>
+      <figcaption>Cảm kháng tăng, dung kháng giảm khi tần số tăng; ở f = 0 ta gặp lại kết luận của Chương 1</figcaption>
+    </figure>
+    <div class="def"><strong>Trở kháng</strong> Z của một phần tử (hay một đoạn mạch hai cực không nguồn) là tỉ số giữa ảnh phức điện áp và ảnh phức dòng điện chạy qua nó. <strong>Dẫn nạp</strong> Y là nghịch đảo của trở kháng.</div>
+    <div class="formula">Z = <span class="frac"><span>U&#775;</span><span>I&#775;</span></span> &nbsp;&nbsp;&nbsp; Y = <span class="frac"><span>1</span><span>Z</span></span> = <span class="frac"><span>I&#775;</span><span>U&#775;</span></span><small>Z: ôm (Ω) · Y: simen (S)</small></div>
+    <h3>Trở kháng của từng phần tử R, L, C</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Phần tử</th><th>Trở kháng</th><th>Độ lớn</th><th>Quan hệ pha u – i</th></tr></thead>
+        <tbody>
+          <tr><td>Điện trở R</td><td>Z<sub>R</sub> = <span class="frac"><span>U&#775;<sub>R</sub></span><span>I&#775;<sub>R</sub></span></span> = R</td><td>R</td><td>Cùng pha (φ = 0)</td></tr>
+          <tr><td>Cuộn cảm L</td><td>Z<sub>L</sub> = <span class="frac"><span>U&#775;<sub>L</sub></span><span>I&#775;<sub>L</sub></span></span> = jωL = jX<sub>L</sub></td><td>X<sub>L</sub> = ωL (cảm kháng)</td><td>u sớm pha hơn i 90°</td></tr>
+          <tr><td>Tụ điện C</td><td>Z<sub>C</sub> = <span class="frac"><span>U&#775;<sub>C</sub></span><span>I&#775;<sub>C</sub></span></span> = <span class="frac"><span>1</span><span>jωC</span></span> = −j<span class="frac"><span>1</span><span>ωC</span></span> = −jX<sub>C</sub></td><td>X<sub>C</sub> = 1/(ωC) (dung kháng)</td><td>u trễ pha hơn i 90°</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 175" role="img" aria-label="Đồ thị vectơ của R, L, C: R áp cùng pha dòng, L áp sớm 90 độ, C áp trễ 90 độ">
+  <text class="b" x="90" y="20" text-anchor="middle">R</text><text class="b" x="280" y="20" text-anchor="middle">L</text><text class="b" x="470" y="20" text-anchor="middle">C</text>
+  <path class="arr warmline" d="M30 96 L130 96 M120 90 L131 96 L120 102"/>
+  <path class="arr-ac" d="M30 82 L160 82 M150 76 L161 82 L150 88"/>
+  <text class="b warm" x="70" y="118">I&#775;</text><text class="b ac" x="164" y="80">U&#775;</text>
+  <path class="arr warmline" d="M230 110 L330 110 M320 104 L331 110 L320 116"/>
+  <path class="arr-ac" d="M230 110 L230 32 M224 42 L230 31 L236 42"/>
+  <text class="b warm" x="334" y="114">I&#775;</text><text class="b ac" x="240" y="40">U&#775;</text><text class="s" x="244" y="96">90°</text>
+  <path class="arr warmline" d="M420 60 L520 60 M510 54 L521 60 L510 66"/>
+  <path class="arr-ac" d="M420 60 L420 138 M414 128 L420 139 L426 128"/>
+  <text class="b warm" x="524" y="64">I&#775;</text><text class="b ac" x="430" y="136">U&#775;</text><text class="s" x="434" y="82">−90°</text>
+  <text class="s" x="90" y="160" text-anchor="middle">cùng pha</text><text class="s" x="280" y="160" text-anchor="middle">áp sớm 90° (× j)</text><text class="s" x="470" y="160" text-anchor="middle">áp trễ 90° (× −j)</text>
+</svg>
+      <figcaption>Nhân với j là xoay vectơ +90°, nhân với −j là xoay −90°</figcaption>
+    </figure>
+    <p class="easy"><span class="tag">Dễ nhớ</span><strong>L: áp đi trước</strong>, <strong>C: dòng đi trước</strong>. Nhớ dấu: Z<sub>L</sub> mang <strong>+j</strong>, Z<sub>C</sub> mang <strong>−j</strong>.</p>
+    <div class="note"><strong>Chú ý khi đọc giáo trình:</strong> công thức đầy đủ là Z<sub>L</sub> = jωL và Z<sub>C</sub> = −j/(ωC). Nếu thấy viết gọn "jL" hay "−j/C" là đã ngầm hiểu có ω. Bài tập thường đã phức hoá sẵn (ghi "j5 Ω", "−j2 Ω"); nếu đề cho L theo H và C theo F (vd 1 H, 1/4 F, ω = 2) thì phải tự tính X<sub>L</sub> = ωL = 2 Ω, X<sub>C</sub> = 1/(ωC) = 2 Ω.</div>
+    <h3>Trở kháng, dẫn nạp của cả đoạn mạch</h3>
+    <div class="formula">Z = R + jX = z e<sup>jφ</sup> = z∠φ &nbsp;&nbsp;&nbsp; Y = G + jB = y e<sup>jα</sup><small>R(ω): điện trở · X(ω): điện kháng · z: môđun trở kháng · φ: argument (chính là góc lệch pha u – i)</small></div>
+    <ul>
+      <li>Z và Y <strong>không phụ thuộc</strong> U, I mà chỉ phụ thuộc thông số các phần tử, cách nối ghép và tần số ω: chúng là các hàm phức của ω.</li>
+      <li>X &gt; 0: mạch có <strong>tính cảm</strong>; X &lt; 0: mạch có <strong>tính dung</strong>; X = 0: thuần trở (cộng hưởng).</li>
+      <li><strong>Nối tiếp</strong>: Z<sub>tđ</sub> = Z₁ + Z₂ + … &nbsp; <strong>Song song</strong>: Y<sub>tđ</sub> = Y₁ + Y₂ + …, hai nhánh: Z<sub>tđ</sub> = Z₁Z₂/(Z₁ + Z₂). Giống hệt cách ghép điện trở ở Chương 1, chỉ khác là tính bằng số phức.</li>
+    </ul>
+    <h3>Ví dụ: Z, Y của mạch R – L – C nối tiếp và song song</h3>
+    <div class="steps">
+      <h4>R – L – C nối tiếp (R = 30 Ω, X<sub>L</sub> = 80 Ω, X<sub>C</sub> = 40 Ω)</h4>
+      <p>Z = R + jX<sub>L</sub> − jX<sub>C</sub> = 30 + j(80 − 40) = 30 + j40 Ω</p>
+      <p>z = √(30² + 40²) = 50 Ω; φ = arctan(40/30) = 53,13° ⇒ Z = 50∠53,13° Ω (tính cảm)</p>
+      <p class="ans">Y = 1/Z = 1/(50∠53,13°) = 0,02∠−53,13° S = 0,012 − j0,016 S</p>
+      <h4>R – L – C song song (R = 10 Ω, X<sub>L</sub> = 5 Ω, X<sub>C</sub> = 10 Ω)</h4>
+      <p>Y = 1/R + 1/(jX<sub>L</sub>) + 1/(−jX<sub>C</sub>) = 0,1 − j0,2 + j0,1 = 0,1 − j0,1 S</p>
+      <p>y = √(0,1² + 0,1²) = 0,1√2 S; α = −45° ⇒ Y = 0,1√2∠−45° S</p>
+      <p class="ans">Z = 1/Y = (1/(0,1√2))∠45° = 5√2∠45° Ω = 5 + j5 Ω (tính cảm vì nhánh L có X nhỏ hơn, cho dòng qua nhiều hơn)</p>
+    </div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị trở kháng (ôm) và dẫn nạp (simen)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kilôôm</td><td>kΩ</td><td>1 kΩ = 1 000 Ω</td></tr><tr class="base"><td>Ôm</td><td>Ω</td><td>đơn vị gốc của Z, R, X</td></tr><tr class="base"><td>Simen</td><td>S</td><td>đơn vị gốc của Y, G, B · 1 S = 1/Ω</td></tr><tr><td>Milisimen</td><td>mS</td><td>1 mS = 10⁻³ S = 0,001 S</td></tr><tr><td>Microsimen</td><td>µS</td><td>1 µS = 10⁻⁶ S</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Z = 50 Ω ⇒ Y = 0,02 S = 20 mS</li><li>Z = 2 kΩ ⇒ Y = 0,5 mS = 500 µS</li><li>L = 0,1 H ở 50 Hz: X<sub>L</sub> = 314 × 0,1 = 31,4 Ω</li><li>C = 100 µF ở 50 Hz: X<sub>C</sub> = 1/(314 × 10⁻⁴) ≈ 31,85 Ω</li></ul>
+    </div>
+
+    <!-- 9 -->
+    <h2 id="dinh-luat"><span class="num">09</span>Định luật Ohm, Kirchhoff dạng phức</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Mọi thứ đã học ở Chương 1 vẫn đúng, chỉ cần <strong>đổi R thành Z, đổi số thường thành số phức</strong>.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Định luật</th><th>Chương 1 (một chiều)</th><th>Chương 2 (dạng phức)</th></tr></thead>
+        <tbody>
+          <tr><td>Ohm</td><td>U = R × I</td><td>U&#775; = Z × I&#775; &nbsp;⇔&nbsp; I&#775; = U&#775; / Z</td></tr>
+          <tr><td>K1 tại nút</td><td>Σ I = 0</td><td>Σ I&#775; = 0 (dòng vào +, dòng ra −)</td></tr>
+          <tr><td>K2 trên vòng</td><td>Σ U = 0</td><td>Σ U&#775; = 0 ⇔ Σ E&#775; = Σ Z × I&#775;</td></tr>
+          <tr><td>Phân dòng 2 nhánh</td><td>I₁ = I × R₂/(R₁ + R₂)</td><td>I&#775;₁ = I&#775; × Z₂/(Z₁ + Z₂)</td></tr>
+          <tr><td>Phân áp nối tiếp</td><td>U₁ = U × R₁/(R₁ + R₂)</td><td>U&#775;₁ = U&#775; × Z₁/(Z₁ + Z₂)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Cẩn thận:</strong> K1, K2 đúng với <strong>số phức</strong>, không đúng với độ lớn. Ví dụ R – L nối tiếp có U<sub>R</sub> = 60 V, U<sub>L</sub> = 80 V thì điện áp nguồn là √(60² + 80²) = 100 V chứ <strong>không phải</strong> 140 V, vì hai điện áp lệch pha nhau 90°.</div>
+
+    <!-- 10 -->
+    <h2 id="cong-suat"><span class="num">10</span>Công suất P, Q, S</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Công suất xoay chiều = <strong>cốc bia</strong>. Phần bia uống được là <strong>P</strong> (công suất tác dụng, sinh ra nhiệt, ánh sáng, cơ năng). Phần bọt là <strong>Q</strong> (công suất phản kháng, chỉ qua lại giữa nguồn với L, C). Cả cốc là <strong>S</strong> (công suất biểu kiến, nguồn phải gánh).</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Tam giác công suất: cạnh đáy P, cạnh đứng Q, cạnh huyền S, góc phi">
+  <path class="arr" d="M150 190 L390 46"/>
+  <path class="curve-ac" d="M150 190 L390 190"/><path class="curve-warm" d="M390 190 L390 46"/>
+  <path class="dash" d="M210 190 A60 60 0 0 0 201 159"/><text class="b" x="216" y="178">φ</text>
+  <text class="b ac" x="270" y="210" text-anchor="middle">P = U × I × cosφ (W)</text>
+  <text class="b warm" x="400" y="122">Q = U × I × sinφ (VAr)</text>
+  <text class="b" x="256" y="106" text-anchor="end">S = U × I (VA)</text>
+  <text class="s" x="40" y="40">S² = P² + Q²</text><text class="s" x="40" y="60">cosφ = P / S</text>
+</svg>
+      <figcaption>Tam giác công suất: S là cạnh huyền, P và Q là hai cạnh góc vuông, góc giữa P và S là φ</figcaption>
+    </figure>
+    <div class="def"><strong>Công suất tác dụng P</strong> là công suất trung bình thực sự tiêu thụ trên các điện trở. <strong>Công suất phản kháng Q</strong> đặc trưng cho năng lượng trao đổi qua lại giữa nguồn và các phần tử L, C (không tiêu hao). <strong>Công suất biểu kiến S</strong> là tích hiệu dụng U × I, cho biết nguồn, máy biến áp phải chịu tải bao nhiêu.</div>
+    <div class="formula">P = U × I × cosφ &nbsp;&nbsp; Q = U × I × sinφ &nbsp;&nbsp; S = U × I = √(P² + Q²)<small>U, I: trị hiệu dụng · φ = φ<sub>u</sub> − φ<sub>i</sub> · cosφ: hệ số công suất</small></div>
+    <ul>
+      <li><strong>Kiểm tra cân bằng</strong>: P<sub>nguồn</sub> = Σ R × I² (chỉ điện trở tiêu thụ P); Q<sub>nguồn</sub> = Σ X<sub>L</sub> × I² − Σ X<sub>C</sub> × I² (L nhận Q dương, C nhận Q âm). I là dòng hiệu dụng qua từng phần tử.</li>
+      <li>Q &gt; 0: mạch tính cảm (động cơ, máy biến áp); Q &lt; 0: mạch tính dung. Tụ bù được lắp để triệt bớt Q của động cơ, nâng cosφ lên gần 1.</li>
+      <li>Nếu ảnh phức lấy theo biên độ: U = U<sub>m</sub>/√2, I = I<sub>m</sub>/√2 ⇒ S = U<sub>m</sub> × I<sub>m</sub> / 2.</li>
+    </ul>
+    <div class="units">
+      <p class="units-h">Đơn vị của 3 loại công suất</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đại lượng</th><th>Đơn vị</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>P (tác dụng)</td><td>W, kW, MW</td><td>1 kW = 1 000 W · 1 MW = 1 000 kW</td></tr><tr class="base"><td>Q (phản kháng)</td><td>VAr, kVAr</td><td>1 kVAr = 1 000 VAr</td></tr><tr class="base"><td>S (biểu kiến)</td><td>VA, kVA, MVA</td><td>1 kVA = 1 000 VA · 1 MVA = 1 000 kVA</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Máy biến áp ghi 250 kVA: nguồn gánh được S = 250 000 VA</li><li>Động cơ 2,2 kW, cosφ = 0,8 ⇒ S = 2,2/0,8 = 2,75 kVA</li><li>Tụ bù 10 kVAr = 10 000 VAr</li></ul>
+    </div>
+
+    <!-- 11 -->
+    <h2 id="giai-mach"><span class="num">11</span>Giải mạch xác lập điều hoà bằng số phức</h2>
+    <p>Mọi bài trong trang bài tập đều đi theo <strong>5 bước</strong>:</p>
+    <ol>
+      <li><strong>Phức hoá mạch</strong>: nguồn → ảnh phức (E&#775;, J&#775;); R giữ nguyên, L → jωL, C → −j/(ωC). Bỏ qua nếu đề đã cho sẵn dạng "j…Ω".</li>
+      <li><strong>Tính trở kháng tương đương</strong> Z<sub>tđ</sub> nhìn từ nguồn (nối tiếp cộng Z, song song dùng Z₁Z₂/(Z₁ + Z₂)).</li>
+      <li><strong>Tính dòng, áp</strong> bằng Ohm phức, phân dòng, phân áp hoặc K1, K2 dạng phức.</li>
+      <li><strong>Đổi về tức thời</strong>: X∠φ ⇒ x(t) = X sin(ωt + φ).</li>
+      <li><strong>Tính P, Q, S</strong> của nguồn và kiểm tra lại bằng Σ R × I².</li>
+    </ol>
+    <h3>Ví dụ giải mẫu</h3>
+    <p>Cho mạch R – L – C nối tiếp: u(t) = 100 sin(100t) V, R = 30 Ω, L = 0,8 H, C = 250 µF. Viết phương trình dòng điện i(t), điện áp trên từng phần tử và tính P, Q, S của nguồn.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Mạch R, L, C nối tiếp với nguồn xoay chiều">
+  <path class="wire" d="M70 92 L70 40 L140 40 M200 40 L250 40 M330 40 L390 40 M410 40 L490 40 L490 200 L70 200 L70 128"/>
+  <circle class="srcc" cx="70" cy="110" r="18"/><path class="wire" d="M60 110 q5 -9 10 0 q5 9 10 0"/>
+  <path class="wire" d="M140 40 L146 40 L149 33 L155 47 L161 33 L167 47 L173 33 L179 47 L185 33 L191 47 L194 40 L200 40"/>
+  <path class="wire" d="M250 40 A10 10 0 0 1 270 40 A10 10 0 0 1 290 40 A10 10 0 0 1 310 40 A10 10 0 0 1 330 40"/>
+  <path class="plate" d="M390 24 L390 56 M410 24 L410 56" style="stroke-width:3"/>
+  <text class="b" x="170" y="24" text-anchor="middle">R = 30 Ω</text>
+  <text class="b" x="290" y="20" text-anchor="middle">L = 0,8 H</text>
+  <text class="b" x="400" y="16" text-anchor="middle">C = 250 µF</text>
+  <text class="b ac" x="96" y="106">u(t)</text><text class="s" x="96" y="124">100 sin(100t) V</text>
+  <path class="arr warmline" d="M210 200 L250 200 M244 194 L251 200 L244 206"/>
+  <text class="b warm" x="230" y="222" text-anchor="middle">i(t)</text>
+  <text class="s ac" x="170" y="68" text-anchor="middle">+ u<tspan class="sub" dy="4">R</tspan><tspan dy="-4"> −</tspan></text>
+  <text class="s ac" x="290" y="68" text-anchor="middle">+ u<tspan class="sub" dy="4">L</tspan><tspan dy="-4"> −</tspan></text>
+  <text class="s ac" x="400" y="80" text-anchor="middle">+ u<tspan class="sub" dy="4">C</tspan><tspan dy="-4"> −</tspan></text>
+</svg>
+      <figcaption>Mạch R – L – C nối tiếp, ω = 100 rad/s</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Phức hoá mạch</h4>
+      <p>U&#775; = 100∠0° V (biên độ 100 V, pha đầu 0°)</p>
+      <p>Z<sub>R</sub> = 30 Ω</p>
+      <p>Z<sub>L</sub> = jωL = j × 100 × 0,8 = j80 Ω</p>
+      <p>Z<sub>C</sub> = −j/(ωC) = −j/(100 × 250 × 10⁻⁶) = −j40 Ω</p>
+      <h4>Bước 2 – Trở kháng tương đương</h4>
+      <p>Z = 30 + j80 − j40 = 30 + j40 = 50∠53,13° Ω</p>
+      <h4>Bước 3 – Dòng điện và điện áp từng phần tử</h4>
+      <p>I&#775; = U&#775; / Z = 100∠0° / 50∠53,13° = 2∠−53,13° A</p>
+      <p>U&#775;<sub>R</sub> = I&#775; × Z<sub>R</sub> = 2∠−53,13° × 30 = 60∠−53,13° V</p>
+      <p>U&#775;<sub>L</sub> = I&#775; × Z<sub>L</sub> = 2∠−53,13° × 80∠90° = 160∠36,87° V</p>
+      <p>U&#775;<sub>C</sub> = I&#775; × Z<sub>C</sub> = 2∠−53,13° × 40∠−90° = 80∠−143,13° V</p>
+      <h4>Bước 4 – Phương trình tức thời</h4>
+      <p class="ans">i(t) = 2 sin(100t − 53,13°) A</p>
+      <p class="ans">u<sub>R</sub>(t) = 60 sin(100t − 53,13°) V</p>
+      <p class="ans">u<sub>L</sub>(t) = 160 sin(100t + 36,87°) V</p>
+      <p class="ans">u<sub>C</sub>(t) = 80 sin(100t − 143,13°) V</p>
+      <h4>Bước 5 – Công suất nguồn</h4>
+      <p>U = 100/√2 = 50√2 V; I = 2/√2 = √2 A; φ = φ<sub>u</sub> − φ<sub>i</sub> = 0° − (−53,13°) = 53,13°</p>
+      <p>S = U × I = 50√2 × √2 = 100 VA</p>
+      <p>P = S × cosφ = 100 × cos53,13° = 100 × 0,6 = 60 W</p>
+      <p>Q = S × sinφ = 100 × sin53,13° = 100 × 0,8 = 80 VAr</p>
+      <p class="ans">⇒ P = 60 W, Q = 80 VAr, S = 100 VA, cosφ = 0,6 (mạch tính cảm, dòng trễ pha áp 53,13°)</p>
+      <h4>Kiểm tra lại</h4>
+      <p>K2: U&#775;<sub>R</sub> + U&#775;<sub>L</sub> + U&#775;<sub>C</sub> = (36 − j48) + (128 + j96) + (−64 − j48) = 100 + j0 = U&#775; ✓</p>
+      <p>P = R × I² = 30 × (√2)² = 60 W ✓ &nbsp;&nbsp; Q = (X<sub>L</sub> − X<sub>C</sub>) × I² = (80 − 40) × 2 = 80 VAr ✓</p>
+      <p>Để ý: U<sub>L</sub> = 160 V còn lớn hơn điện áp nguồn 100 V. Không sai, vì U&#775;<sub>L</sub> và U&#775;<sub>C</sub> ngược pha nhau và triệt tiêu một phần.</p>
+    </div>
+    <div class="note"><strong>Mạch có nhánh song song</strong> (như các bài trong trang bài tập): ở Bước 3 tính dòng tổng I&#775;<sub>o</sub> = U&#775; / Z<sub>tđ</sub>, rồi chia dòng vào hai nhánh bằng I&#775;₁ = I&#775;<sub>o</sub> × Z₂/(Z₁ + Z₂), I&#775;₂ = I&#775;<sub>o</sub> − I&#775;₁ (K1). Với nguồn dòng thì dòng nguồn đã biết, chỉ cần chia dòng.</div>
+
+    <!-- 12 -->
+    <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nội dung</th><th>Ký hiệu</th><th>Đơn vị</th><th>Công thức chính</th></tr></thead>
+        <tbody>
+          <tr><td>Đại lượng điều hoà</td><td>u(t), i(t)</td><td>V, A</td><td>u = U<sub>m</sub> sin(ωt + φ<sub>u</sub>)</td></tr>
+          <tr><td>Tần số góc, tần số, chu kỳ</td><td>ω, f, T</td><td>rad/s, Hz, s</td><td>ω = 2πf; T = 1/f = 2π/ω</td></tr>
+          <tr><td>Góc lệch pha</td><td>φ</td><td>độ, rad</td><td>φ = φ<sub>u</sub> − φ<sub>i</sub> (&gt; 0: áp sớm; &lt; 0: áp trễ)</td></tr>
+          <tr><td>Trị hiệu dụng</td><td>U, I</td><td>V, A</td><td>U = U<sub>m</sub>/√2; I = I<sub>m</sub>/√2</td></tr>
+          <tr><td>Số phức</td><td>C</td><td>–</td><td>a + jb = r∠ψ; r = √(a² + b²); ψ = arctan(b/a)</td></tr>
+          <tr><td>Ảnh phức</td><td>U&#775;, I&#775;</td><td>V, A</td><td>U<sub>m</sub> sin(ωt + ψ) ⟷ U<sub>m</sub>∠ψ</td></tr>
+          <tr><td>Trở kháng R, L, C</td><td>Z<sub>R</sub>, Z<sub>L</sub>, Z<sub>C</sub></td><td>Ω</td><td>R; jωL; −j/(ωC)</td></tr>
+          <tr><td>Trở kháng, dẫn nạp</td><td>Z, Y</td><td>Ω, S</td><td>Z = U&#775;/I&#775; = R + jX; Y = 1/Z = G + jB</td></tr>
+          <tr><td>Ghép phần tử</td><td colspan="2">Nối tiếp / song song</td><td>Z<sub>tđ</sub> = ΣZ; Y<sub>tđ</sub> = ΣY</td></tr>
+          <tr><td>Ohm, K1, K2</td><td colspan="2">Dạng phức</td><td>U&#775; = Z × I&#775;; ΣI&#775; = 0; ΣU&#775; = 0</td></tr>
+          <tr><td>Công suất</td><td>P, Q, S</td><td>W, VAr, VA</td><td>P = UIcosφ; Q = UIsinφ; S = UI</td></tr>
+          <tr><td>Kiểm tra công suất</td><td colspan="2">Toàn mạch</td><td>P = ΣR × I²; Q = ΣX<sub>L</sub>I² − ΣX<sub>C</sub>I²</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Chương 2 = Chương 1 + số phức. <strong>Cộng trừ dùng dạng đại số, nhân chia dùng dạng cực.</strong> Viết kết quả: môđun là biên độ, góc là pha đầu; tính công suất thì nhớ chia √2.</p>
+    <div class="note"><strong>Khi ω → 0 (điện một chiều):</strong> Z<sub>L</sub> = jωL → 0 (cuộn cảm ngắn mạch), Z<sub>C</sub> = −j/(ωC) → ∞ (tụ hở mạch), đúng như mẹo nhớ ở Chương 1.</div>
+
+    <!-- 13 -->
+    <h2 id="bai-tap"><span class="num">13</span>Bài tập</h2>
+    <p>Làm bài để luyện phức hoá mạch, tính trở kháng, dòng nhánh, phương trình tức thời và công suất P, Q, S:</p>
+    <div class="exlist">
+      <a class="card" href="/xaclapdieuhoa">
+        <h2>Bài tập Mạch xác lập điều hoà</h2>
+        <p>4 bài giải bằng ảnh phức có lời giải từng bước: nguồn áp, nguồn dòng, mạch chưa phức hoá dạng cos.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+    </div>
+
+    <a class="back" href="/namnhat-lythuyetmach">← Về Lý thuyết mạch (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261107d"></script>
+<script src="/assets/site.js?v=20261107d"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
