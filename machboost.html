@@ -49,7 +49,12 @@
 .k-charge{color:var(--flow-charge);font-weight:600;}
 .k-cap{color:var(--flow-cap);font-weight:600;}
 .k-boost{color:var(--flow-boost);font-weight:600;}
-@media (max-width:600px){.post h2{font-size:21px;}.sim .readout{grid-template-columns:1fr;}}
+.pbar{display:grid;grid-template-columns:170px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13.5px;margin:8px 0;}
+.pbar .track{height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden;}
+.pbar .track span{display:block;height:100%;border-radius:4px;transition:width .5s ease;}
+.pbar b{font-family:var(--mono);font-size:12.5px;font-weight:500;text-align:right;}
+.sim .pnote{font-size:14.5px;margin:12px 0 0;}
+@media (max-width:600px){.post h2{font-size:21px;}.sim .readout{grid-template-columns:1fr;}.pbar{grid-template-columns:110px minmax(0,1fr) 56px;font-size:12.5px;}}
 </style>
 </head>
 <body>
@@ -158,7 +163,42 @@
     <p>Trị số cuộn cảm ảnh hưởng tới chất lượng: chọn vừa thì dòng chảy đều, áp ra phẳng. Chọn quá nhỏ thì dòng giật cục, mạch nóng và áp ra gợn nhiều. Quan trọng không kém trị số µH là <strong>dòng chịu đựng</strong>: vượt mức thì lõi bão hòa, cuộn cảm mất tác dụng và dòng tăng vọt, có thể làm cháy MOSFET.</p>
 
     <h2>Công suất không tự sinh ra</h2>
-    <p>Áp tăng gấp đôi thì dòng ngõ vào cũng phải khoảng gấp đôi dòng ra. Ví dụ ngõ ra 24V 1A (24W), hiệu suất khoảng 90%, thì nguồn 12V phải cấp được khoảng <strong>2,2A</strong>. Chọn nguồn và dây theo dòng ngõ vào, đừng theo dòng ngõ ra.</p>
+    <p>Mạch boost chỉ <strong>đổi áp</strong>, không sinh thêm năng lượng, nên dùng nó không tiết kiệm điện mà còn tốn hơn một chút. Lý tưởng thì công suất vào bằng công suất ra. Thực tế luôn có hao hụt thành nhiệt trong cuộn cảm, MOSFET và diode:</p>
+    <p class="formula">P<sub>ra</sub> = η × P<sub>vào</sub></p>
+    <p>η là hiệu suất, ở mạch boost khoảng 85–95%. Áp ra gấp đôi áp vào thì <strong>dòng vào phải lớn hơn gấp đôi dòng ra</strong>. Dễ nhớ: giống đổi 2 tờ 10k lấy 1 tờ 20k, số tờ đổi nhưng tổng tiền không đổi, còn chỗ đổi lấy thêm chút phí.</p>
+
+    <h2>Tải quyết định công suất</h2>
+    <p>Mạch giữ áp ra cố định 24V. Dòng ra <strong>do tải quyết định</strong>, theo định luật Ôm I = U / R: điện trở tải càng nhỏ thì tải kéo dòng càng lớn. Tải kéo bao nhiêu thì nguồn 12V phải cấp bấy nhiêu, cộng thêm phần hao hụt. Bấm đổi mức tải để xem:</p>
+    <figure class="sim">
+      <div class="controls" id="loadSeg" role="group" aria-label="Chọn dòng tải"></div>
+      <div class="pbar"><span>Công suất ra (tải dùng)</span><div class="track"><span id="barOut" style="background:var(--flow-cap)"></span></div><b id="valOut"></b></div>
+      <div class="pbar"><span>Hao hụt thành nhiệt</span><div class="track"><span id="barLoss" style="background:var(--flow-boost)"></span></div><b id="valLoss"></b></div>
+      <div class="pbar"><span>Công suất vào (từ 12V)</span><div class="track"><span id="barIn" style="background:var(--flow-charge)"></span></div><b id="valIn"></b></div>
+      <p class="pnote" aria-live="polite">Tải <b id="valR"></b> kéo <b id="valIo"></b> ở 24V → nguồn 12V phải cấp <b id="valIi"></b> (hiệu suất 90%).</p>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Điện trở tải</th><th>Dòng ra (24V)</th><th>Công suất ra</th><th>Dòng vào (12V)</th></tr></thead>
+        <tbody>
+          <tr><td>48 Ω</td><td>0,5 A</td><td>12 W</td><td>≈ 1,1 A</td></tr>
+          <tr><td>24 Ω</td><td>1 A</td><td>24 W</td><td>≈ 2,2 A</td></tr>
+          <tr><td>12 Ω</td><td>2 A</td><td>48 W</td><td>≈ 4,4 A</td></tr>
+          <tr><td>≈ 0 Ω (chập)</td><td>rất lớn</td><td>—</td><td>Quá tải, có thể cháy mạch</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Tải thay đổi khi đổi thiết bị (bóng 24W kéo nhiều hơn bóng 12W), khi mắc thêm thiết bị song song, hoặc ngay lúc đang chạy: động cơ bị gánh nặng hay vừa khởi động kéo dòng gấp nhiều lần lúc chạy không tải. Vì vậy chọn mạch và nguồn theo <strong>công suất lớn nhất tải có thể đòi</strong>, và chọn dây phía 12V theo dòng vào, đừng theo dòng ra.</p>
+
+    <h2>Tính ngược từ tải về nguồn</h2>
+    <p>Ở đầu vào chỉ biết trước U = 12V. Dòng vào chưa biết, phải tính ngược từ tải. Ví dụ tải 48 Ω:</p>
+    <ul>
+      <li><strong>Biết:</strong> U<sub>vào</sub> = 12V, U<sub>ra</sub> = 24V, I<sub>ra</sub> = 24 / 48 = 0,5A, hiệu suất η ≈ 90% (lấy từ datasheet hoặc tự đo).</li>
+      <li><strong>Bước 1, công suất tải dùng:</strong> P<sub>ra</sub> = U<sub>ra</sub> × I<sub>ra</sub> = 24 × 0,5 = <strong>12 W</strong>.</li>
+      <li><strong>Bước 2, công suất lấy từ nguồn:</strong> P<sub>vào</sub> = P<sub>ra</sub> / η = 12 / 0,9 ≈ <strong>13,3 W</strong>.</li>
+      <li><strong>Bước 3, dòng vào:</strong> I<sub>vào</sub> = P<sub>vào</sub> / U<sub>vào</sub> = 13,3 / 12 ≈ <strong>1,11 A</strong>.</li>
+      <li><strong>Kiểm tra:</strong> hao hụt = 13,3 − 12 = 1,3 W, đúng bằng 10% của 13,3 W.</li>
+    </ul>
+    <p class="note"><strong>Bài thực hành đo hiệu suất:</strong> dùng đồng hồ vạn năng đo U và I ở đầu vào, nhân lại được P<sub>vào</sub>. Đo U và I ở đầu ra, được P<sub>ra</sub>. Lấy P<sub>ra</sub> / P<sub>vào</sub> là ra hiệu suất thật của mạch. Thử với vài mức tải để xem hiệu suất thay đổi thế nào.</p>
 
     <h2>Tự làm</h2>
     <p><strong>Mức 1, nên làm trước:</strong> mua module <strong>XL6009</strong> (khoảng 30–50k, chịu khoảng 2–3A ngõ vào). Cấp 12V vào, vừa vặn biến trở vừa đo ngõ ra tới khi được 24V. Gắn tải rồi đo áp và dòng ở cả hai đầu để tính hiệu suất.</p>
@@ -210,6 +250,40 @@
   $("btnStep2").addEventListener("click", function () { stopAuto(); setPhase(2); });
   $("btnAuto").addEventListener("click", function () { if (timer) stopAuto(); else startAuto(); });
   setPhase(1);
+})();
+(function () {
+  var V_IN = 12, V_OUT = 24, ETA = 0.9;
+  var LOADS = [0.5, 1, 2];
+  var MAX_IN = V_OUT * LOADS[LOADS.length - 1] / ETA;
+  function $(id) { return document.getElementById(id); }
+  function num(x, d) { return x.toLocaleString("vi-VN", { maximumFractionDigits: d }); }
+  function bar(barId, valId, watts) {
+    $(barId).style.width = (watts / MAX_IN * 100).toFixed(1) + "%";
+    $(valId).textContent = num(watts, 1) + " W";
+  }
+  function setLoad(iOut) {
+    var pOut = V_OUT * iOut, pIn = pOut / ETA;
+    bar("barOut", "valOut", pOut);
+    bar("barLoss", "valLoss", pIn - pOut);
+    bar("barIn", "valIn", pIn);
+    $("valR").textContent = num(V_OUT / iOut, 0) + " Ω";
+    $("valIo").textContent = num(iOut, 1) + " A";
+    $("valIi").textContent = "≈ " + num(pIn / V_IN, 2) + " A";
+  }
+  var seg = $("loadSeg");
+  LOADS.forEach(function (iOut) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = "Tải " + num(iOut, 1) + " A";
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(seg.children, function (c) { c.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+      setLoad(iOut);
+    });
+    seg.appendChild(b);
+  });
+  seg.children[0].click();
 })();
 </script>
 <script src="assets/posts.js?v=20261107b"></script>
