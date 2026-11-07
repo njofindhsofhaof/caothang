@@ -21,6 +21,8 @@ Mẫu chuẩn: `lythuyetmach-chuong1.html`. Bài mới theo đúng khung này:
 6. **Trắc nghiệm ôn tập: 10 câu hỏi lý thuyết**, mỗi câu 4 phương án kèm giải thích (nêu vì sao đúng và vì sao các phương án nhiễu sai), để tóm tắt kiến thức của chương. Dùng component chung: `<div class="quiz" id="quiz"></div>`, khai báo `window.CT_QUIZ = [{ q, opts: [4 phương án], a: chỉ số đáp án đúng, why }]`, nạp `/assets/quiz.css` và `/assets/quiz.js` (xem `lythuyetmach-chuong2.html`).
 7. Cuối bài: link bài tập **chỉ của đúng chương đó**.
 
+Tên riêng và đơn vị viết theo **tên gốc quốc tế**, không phiên âm tiếng Việt: định luật Ohm (không viết Ôm), Kirchhoff, Thevenin, Norton; đơn vị volt, ampere, ohm, watt, joule, coulomb, siemens, hertz, farad, henry (Kilovolt, Miliampere, Kiloohm…). Riêng tên dụng cụ đo giữ cách gọi quen thuộc: vôn kế, ampe kế, ampe kìm.
+
 Quy ước ký hiệu: điện thế viết `V_A`, `V_B` (không dùng φ); điện áp `U_AB = V_A − V_B`; công suất nguồn `P_N = U_N × I_N`, công suất tải `P_tải = R × I²`, cân bằng `P_nguồn = P_tải`. Dấu K1, K2 theo trang `/kirchhoff`.
 
 Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `parent` là trang môn (vd. `/namnhat-lythuyetmach`) và `order` theo số chương.
