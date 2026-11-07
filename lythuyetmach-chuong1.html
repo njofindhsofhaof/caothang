@@ -193,6 +193,12 @@
 .sim .live b{color:var(--accent);}
 .sim .live .ok{color:var(--flow-g);font-weight:600;}
 .sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
 .post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
 @media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
 </style>
@@ -626,6 +632,49 @@
       <li>Điện áp trên tụ không thể thay đổi đột ngột (cần thời gian nạp, xả).</li>
       <li><strong>Song song</strong>: C<sub>tđ</sub> = C₁ + C₂ + …; <strong>nối tiếp</strong>: 1/C<sub>tđ</sub> = 1/C₁ + 1/C₂ + … (ngược với điện trở).</li>
     </ul>
+    <figure class="sim" id="rcSim">
+      <p class="sim-h">Thử ngay · Tụ điện "giữ" điện áp (mạch nạp / xả RC)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 244" role="img" aria-labelledby="rcTitle">
+          <title id="rcTitle">Nguồn 12 V, khoá 2 vị trí, điện trở R và tụ C. Đồ thị bên phải vẽ điện áp tụ u_C và dòng i theo thời gian.</title>
+          <path class="w" d="M130 50 L230 50 L230 118 M230 132 L230 200 L40 200 L40 147 M40 103 L40 40 L90 40 M90 64 L90 200"/>
+          <path class="ov" id="rcF1" d="M40 103 L40 40 L90 40 L130 50 L230 50 L230 200 L40 200 L40 147"/>
+          <path class="ov" id="rcF2" d="M90 64 L130 50 L230 50 L230 200 L90 200 L90 64"/>
+          <rect class="gap" x="212" y="120" width="36" height="10"/>
+          <path class="plate" d="M208 118 L252 118 M208 132 L252 132"/>
+          <text class="b warm" id="rcQp" x="204" y="114" text-anchor="end">+ +</text>
+          <text class="b ac" id="rcQn" x="204" y="148" text-anchor="end">− −</text>
+          <text class="b" x="200" y="96" text-anchor="end">C</text>
+          <rect class="water" id="rcMeter" x="262" y="155" width="20" height="0"/>
+          <rect class="thin" x="262" y="95" width="20" height="60"/>
+          <text class="s" x="272" y="172" text-anchor="middle">mực u</text>
+          <circle class="src" cx="40" cy="125" r="22"/>
+          <text class="b" x="40" y="120" text-anchor="middle">+</text><text class="b" x="40" y="141" text-anchor="middle">−</text>
+          <text class="b" x="70" y="130">E</text>
+          <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
+          <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
+          <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <line class="w" id="rcBlade" x1="130" y1="50" x2="90" y2="64"/>
+          <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
+          <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
+          <path class="thin" d="M300 40 L300 220 M300 130 L548 130"/>
+          <path class="dash" id="rcEv" d="M0 0"/>
+          <polyline class="cu" id="rcU" points=""/>
+          <polyline class="ci" id="rcI" points=""/>
+          <text class="b warm" x="304" y="24">u<tspan class="sub" dy="4">C</tspan><tspan dy="-4" id="rcUt"> = 0 V</tspan></text>
+          <text class="b ac" x="440" y="24">i<tspan id="rcIt"> = 0 A</tspan></text>
+          <text class="s" x="306" y="52">+12 V · +3 A</text>
+          <text class="s" x="306" y="214">−12 V · −3 A</text>
+          <text class="s" x="548" y="238" text-anchor="end">thời gian →</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Vị trí khoá">
+        <button type="button" data-pos="1" aria-pressed="false">1 · Nạp (nối nguồn)</button>
+        <button type="button" data-pos="2" aria-pressed="true">2 · Xả (bỏ nguồn)</button>
+      </div>
+      <p class="live" id="rcLive" aria-live="polite"></p>
+      <figcaption><strong>Dễ nhớ:</strong> mỗi lần gạt khoá, đường <span class="k-i">i</span> được phép <strong>nhảy thẳng đứng</strong>, còn đường <span class="k-u">u<sub>C</sub></span> luôn <strong>liền nét</strong> ⇒ tụ điện <strong>giữ điện áp</strong>. Nạp đầy thì i = 0: tụ chặn dòng một chiều.</figcaption>
+    </figure>
 
     <!-- 8 -->
     <h2 id="cuon-cam"><span class="num">08</span>Cuộn cảm</h2>
@@ -658,6 +707,45 @@
       <li>Dòng điện qua cuộn cảm không thể thay đổi đột ngột (khi ngắt mạch đột ngột sinh điện áp cảm ứng lớn, gây tia lửa ở tiếp điểm).</li>
       <li><strong>Nối tiếp</strong>: L<sub>tđ</sub> = L₁ + L₂ + …; <strong>song song</strong>: 1/L<sub>tđ</sub> = 1/L₁ + 1/L₂ + … (giống điện trở).</li>
     </ul>
+    <figure class="sim" id="rlSim">
+      <p class="sim-h">Thử ngay · Cuộn cảm "giữ" dòng điện (mạch RL)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 244" role="img" aria-labelledby="rlTitle">
+          <title id="rlTitle">Nguồn 12 V, khoá 2 vị trí, điện trở R và cuộn cảm L. Đồ thị bên phải vẽ dòng i và điện áp cuộn cảm u_L theo thời gian.</title>
+          <path class="w" d="M130 50 L230 50 L230 95 M230 159 L230 200 L40 200 L40 147 M40 103 L40 40 L90 40 M90 64 L90 200"/>
+          <path class="ov" id="rlF1" d="M40 103 L40 40 L90 40 L130 50 L230 50 L230 200 L40 200 L40 147"/>
+          <path class="ov" id="rlF2" d="M90 64 L130 50 L230 50 L230 200 L90 200 L90 64"/>
+          <path class="w" d="M230 95 A8 8 0 0 1 230 111 A8 8 0 0 1 230 127 A8 8 0 0 1 230 143 A8 8 0 0 1 230 159"/>
+          <text class="b" x="212" y="132" text-anchor="end">L</text>
+          <g id="rlWheel"><circle class="part" cx="272" cy="127" r="15"/><path class="w" d="M257 127 L287 127 M272 112 L272 142"/></g>
+          <text class="s" x="272" y="160" text-anchor="middle">bánh đà</text>
+          <circle class="src" cx="40" cy="125" r="22"/>
+          <text class="b" x="40" y="120" text-anchor="middle">+</text><text class="b" x="40" y="141" text-anchor="middle">−</text>
+          <text class="b" x="70" y="130">E</text>
+          <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
+          <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
+          <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <line class="w" id="rlBlade" x1="130" y1="50" x2="90" y2="64"/>
+          <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
+          <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
+          <path class="thin" d="M300 40 L300 220 M300 130 L548 130"/>
+          <path class="dash" id="rlEv" d="M0 0"/>
+          <polyline class="cu" id="rlU" points=""/>
+          <polyline class="ci" id="rlI" points=""/>
+          <text class="b warm" x="304" y="24">u<tspan class="sub" dy="4">L</tspan><tspan dy="-4" id="rlUt"> = 0 V</tspan></text>
+          <text class="b ac" x="440" y="24">i<tspan id="rlIt"> = 0 A</tspan></text>
+          <text class="s" x="306" y="52">+12 V · +3 A</text>
+          <text class="s" x="306" y="214">−12 V · −3 A</text>
+          <text class="s" x="548" y="238" text-anchor="end">thời gian →</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Vị trí khoá">
+        <button type="button" data-pos="1" aria-pressed="false">1 · Đóng nguồn</button>
+        <button type="button" data-pos="2" aria-pressed="true">2 · Bỏ nguồn (xả)</button>
+      </div>
+      <p class="live" id="rlLive" aria-live="polite"></p>
+      <figcaption><strong>Dễ nhớ:</strong> mỗi lần gạt khoá, đường <span class="k-u">u<sub>L</sub></span> được phép <strong>nhảy thẳng đứng</strong>, còn đường <span class="k-i">i</span> luôn <strong>liền nét</strong> ⇒ cuộn cảm <strong>giữ dòng điện</strong>. Ổn định rồi thì u<sub>L</sub> = 0: cuộn cảm như một đoạn dây (ngắn mạch).</figcaption>
+    </figure>
 
     <!-- 9 -->
     <h2 id="cong-suat"><span class="num">09</span>Công suất</h2>
@@ -1216,7 +1304,94 @@
     e1.show(); e2.show(); render();
   }
 
+  /* 7–8. Tụ điện giữ áp, cuộn cảm giữ dòng (mạch RC, RL với khoá 2 vị trí, τ = 1 s) */
+  var SE = 12, SR = 4, SIMAX = SE / SR, TAU = 1, TS = 0.05, NS = 160;
+  var STORE = {
+    C: {
+      // Tụ: u_C biến thiên liên tục, i = (nguồn − u_C) / R được nhảy
+      step: function (s, dt, pos) {
+        var target = pos === 1 ? SE : 0, u = target + (s.u - target) * Math.exp(-dt / TAU);
+        return { u: u, i: (target - u) / SR };
+      },
+      text: [
+        "Khoá đang ở 2, tụ chưa tích điện. Bấm <b>1 · Nạp</b> rồi xem hai đường trên đồ thị.",
+        "Khoá ở 1: nguồn nạp cho tụ. Dòng <span class=\"k-i\">i</span> <b>nhảy ngay</b> lên rồi giảm dần; điện áp <span class=\"k-u\">u<sub>C</sub></span> <b>tăng từ từ</b> từ giá trị cũ, không nhảy. Đầy rồi thì i = 0 (DC không qua tụ).",
+        "Khoá ở 2: bỏ nguồn, tụ xả qua R. Dòng <span class=\"k-i\">i</span> <b>đổi chiều ngay</b> (âm), còn <span class=\"k-u\">u<sub>C</sub></span> <b>giảm từ từ</b>. Lúc này tụ đóng vai một nguồn áp nhỏ."
+      ]
+    },
+    L: {
+      // Cuộn cảm: i biến thiên liên tục, u_L = nguồn − R × i được nhảy
+      step: function (s, dt, pos) {
+        var src = pos === 1 ? SE : 0, target = src / SR, i = target + (s.i - target) * Math.exp(-dt / TAU);
+        return { u: src - SR * i, i: i };
+      },
+      text: [
+        "Khoá đang ở 2, chưa có dòng. Bấm <b>1 · Đóng nguồn</b> rồi xem hai đường trên đồ thị.",
+        "Khoá ở 1: đóng nguồn vào cuộn cảm. Điện áp <span class=\"k-u\">u<sub>L</sub></span> <b>nhảy ngay</b> lên 12 V rồi giảm dần; dòng <span class=\"k-i\">i</span> <b>tăng từ từ</b> như bánh đà được đẩy. Ổn định thì u<sub>L</sub> = 0.",
+        "Khoá ở 2: bỏ nguồn. Dòng <span class=\"k-i\">i</span> <b>vẫn chạy cùng chiều</b> rồi giảm từ từ (bánh đà còn quay), còn <span class=\"k-u\">u<sub>L</sub></span> <b>đảo dấu ngay</b> để đẩy dòng đi tiếp. Nếu cắt hẳn mạch, dòng không có đường đi nên u<sub>L</sub> vọt rất cao → tia lửa ở công tắc."
+      ]
+    }
+  };
+  function round1(x) { return fmt(Math.round(x * 10) / 10); }
+  function plotPoints(hist, key, max) {
+    var xs = 248 / (NS - 1);
+    return hist.map(function (h, k) { return (300 + k * xs).toFixed(1) + "," + (130 - h[key] / max * 85).toFixed(1); }).join(" ");
+  }
+  function initStorage(p, kind) {
+    var fig = $(p + "Sim");
+    if (!fig) return;
+    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false;
+    buttons(p + "Sim", "data-pos", function (v) {
+      pos = Number(v); mark = true;
+      $(p + "Live").innerHTML = cfg.text[pos];
+      $(p + "Blade").setAttribute("y2", pos === 1 ? "40" : "64");
+    });
+    function paint() {
+      var ev = "", xs = 248 / (NS - 1);
+      hist.forEach(function (h, k) { if (h.ev) ev += "M" + (300 + k * xs).toFixed(1) + " 40 L" + (300 + k * xs).toFixed(1) + " 220 "; });
+      $(p + "U").setAttribute("points", plotPoints(hist, "u", SE));
+      $(p + "I").setAttribute("points", plotPoints(hist, "i", SIMAX));
+      $(p + "Ev").setAttribute("d", ev || "M0 0");
+      setText(p + "Ut", " = " + round1(st.u) + " V");
+      setText(p + "It", " = " + round1(st.i) + " A");
+      setFlow($(p + "F1"), pos === 1 ? st.i : 0);
+      setFlow($(p + "F2"), pos === 2 ? st.i : 0);
+      if (kind === "C") {
+        var h = 60 * clamp(st.u / SE, 0, 1);
+        setAttrs(p + "Meter", { y: 155 - h, height: h });
+        $(p + "Qp").style.opacity = $(p + "Qn").style.opacity = String(clamp(st.u / SE, 0, 1));
+      }
+    }
+    function frame(ts) {
+      if (!running) return;
+      var dt = last ? Math.min((ts - last) / 1000, 0.1) : 0;
+      last = ts;
+      st = cfg.step(st, dt, pos);
+      acc += dt;
+      while (acc >= TS) {
+        acc -= TS;
+        hist.push({ u: st.u, i: st.i, ev: mark });
+        mark = false;
+        if (hist.length > NS) hist.shift();
+      }
+      if (kind === "L") {
+        angle = (angle + st.i * dt * 120) % 360;
+        $(p + "Wheel").setAttribute("transform", "rotate(" + angle.toFixed(1) + " 272 127)");
+      }
+      if (ts - lastPaint > 80) { lastPaint = ts; paint(); }
+      requestAnimationFrame(frame);
+    }
+    function start() { if (running) return; running = true; last = 0; requestAnimationFrame(frame); }
+    // Chỉ chạy khi mô phỏng đang hiện trên màn hình
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else running = false; }).observe(fig);
+    } else { start(); }
+    $(p + "Live").innerHTML = cfg.text[0];
+    paint();
+  }
+
   initPotential(); initCurrent(); initOhm(); initSeriesParallel(); initPower(); initKirchhoff();
+  initStorage("rc", "C"); initStorage("rl", "L");
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
