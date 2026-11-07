@@ -194,7 +194,12 @@
         <path class="w" d="M392 160 H305 V126" stroke-dasharray="3 4" opacity=".6"/>
         <!-- ngõ ra chân 3 + LED -->
         <path class="w" d="M470 150 H545 V168 M545 184 V196 M545 232 V256 M533 256 H557 M537 261 H553 M542 266 H548"/>
-        <circle id="led" cx="545" cy="176" r="15" fill="var(--sig-out)" opacity=".85"/>
+        <circle id="led" cx="545" cy="176" r="20" fill="var(--sig-out)" opacity=".85"/>
+        <g id="ledRays" stroke="var(--sig-out)" stroke-width="2.2" stroke-linecap="round">
+          <line x1="566" y1="164" x2="577" y2="157"/><line x1="569" y1="177" x2="582" y2="177"/><line x1="566" y1="190" x2="577" y2="197"/>
+        </g>
+        <text class="tm" x="510" y="214" text-anchor="middle">LED</text>
+        <text id="ledTxt" class="tb" x="510" y="231" text-anchor="middle" fill="var(--sig-out)">SÁNG</text>
         <polygon class="part" points="535,168 555,168 545,184"/><path class="w" d="M535 184 H555"/>
         <rect class="part" x="539" y="196" width="12" height="36" rx="2"/><text class="tm" x="557" y="218">1k</text>
         <text id="outLbl" class="tm" x="500" y="142">cao 12V</text>
@@ -317,6 +322,9 @@
     $("ffState").textContent = state.high ? "CAO" : "THẤP";
     $("outLbl").textContent = state.high ? "cao 12V" : "thấp 0V";
     $("led").setAttribute("opacity", state.high ? ".85" : "0");
+    toggle("ledRays", state.high);
+    $("ledTxt").textContent = state.high ? "SÁNG" : "TẮT";
+    $("ledTxt").setAttribute("fill", state.high ? "var(--sig-out)" : "var(--ink-soft)");
     toggle("swOpen", state.high);
     toggle("swClosed", !state.high);
     toggle("flowCharge", state.high);
