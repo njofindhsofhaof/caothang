@@ -91,3 +91,7 @@ table.news .c-sec a.c-sub:hover{color:var(--accent);}
 .practice-d{grid-column:2;font-size:13.5px;color:var(--ink-soft);}
 .practice-go{grid-column:3;grid-row:1 / span 2;font-family:var(--mono);font-size:12.5px;color:var(--accent);white-space:nowrap;}
 @media (max-width:600px){.post a.practice{grid-template-columns:minmax(0,1fr) auto;}.practice-k{grid-row:auto;grid-column:1 / -1;justify-self:start;margin-bottom:4px;}.practice-d{grid-column:1;}.practice-go{grid-column:2;grid-row:2 / span 2;}}
+/* Cach doc tieng Viet ben canh ten don vi goc, vd. volt /vôn/ */
+.say{font-family:var(--sans);font-size:.85em;font-style:italic;font-weight:400;color:var(--ink-soft);white-space:nowrap;}
+.say::before{content:"/";}
+.say::after{content:"/";}

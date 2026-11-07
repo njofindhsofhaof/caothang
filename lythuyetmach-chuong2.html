@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=20261107q">
+<link rel="stylesheet" href="/assets/site.css?v=20261107r">
 <link rel="stylesheet" href="/assets/quiz.css?v=1">
 <style>
 .post{max-width:760px;font-size:16px;line-height:1.65;}
@@ -331,7 +331,7 @@
     <p>Ví dụ: điện lưới Việt Nam có f = 50 Hz ⇒ T = 1/50 = 0,02 s = 20 ms; ω = 2π × 50 ≈ 314 rad/s. Vì vậy hay gặp đề cho dạng u = 220√2 sin(314t) V.</p>
     <div class="units">
       <p class="units-h">Đổi đơn vị tần số (hertz) và chu kỳ (giây)</p>
-      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Gigahertz</td><td>GHz</td><td>1 GHz = 1 000 MHz = 10⁹ Hz</td></tr><tr><td>Megahertz</td><td>MHz</td><td>1 MHz = 1 000 kHz = 10⁶ Hz</td></tr><tr><td>Kilohertz</td><td>kHz</td><td>1 kHz = 10³ Hz = 1 000 Hz</td></tr><tr class="base"><td>Hertz</td><td>Hz</td><td>đơn vị gốc · 1 Hz = 1 chu kỳ/giây</td></tr><tr><td>Giây</td><td>s</td><td>đơn vị gốc của chu kỳ · 1 s = 1 000 ms</td></tr><tr><td>Mili giây</td><td>ms</td><td>1 ms = 10⁻³ s · 1 ms = 1 000 µs</td></tr><tr><td>Micro giây</td><td>µs</td><td>1 µs = 10⁻⁶ s</td></tr></tbody></table></div>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Gigahertz</td><td>GHz</td><td>1 GHz = 1 000 MHz = 10⁹ Hz</td></tr><tr><td>Megahertz</td><td>MHz</td><td>1 MHz = 1 000 kHz = 10⁶ Hz</td></tr><tr><td>Kilohertz</td><td>kHz</td><td>1 kHz = 10³ Hz = 1 000 Hz</td></tr><tr class="base"><td>Hertz <span class="say" title="Cách đọc">héc</span></td><td>Hz</td><td>đơn vị gốc · 1 Hz = 1 chu kỳ/giây</td></tr><tr><td>Giây</td><td>s</td><td>đơn vị gốc của chu kỳ · 1 s = 1 000 ms</td></tr><tr><td>Mili giây</td><td>ms</td><td>1 ms = 10⁻³ s · 1 ms = 1 000 µs</td></tr><tr><td>Micro giây</td><td>µs</td><td>1 µs = 10⁻⁶ s</td></tr></tbody></table></div>
       <ul class="units-ex"><li>Điện lưới 50 Hz ⇒ T = 20 ms</li><li>Âm thanh 1 kHz ⇒ T = 1 ms</li><li>Đài FM 100 MHz ⇒ T = 0,01 µs</li><li>Wi-Fi 2,4 GHz = 2 400 MHz</li></ul>
     </div>
 
@@ -553,7 +553,7 @@
       <figcaption>Cảm kháng tăng, dung kháng giảm khi tần số tăng; ở f = 0 ta gặp lại kết luận của Chương 1</figcaption>
     </figure>
     <div class="def"><strong>Trở kháng</strong> Z của một phần tử (hay một đoạn mạch hai cực không nguồn) là tỉ số giữa ảnh phức điện áp và ảnh phức dòng điện chạy qua nó. <strong>Dẫn nạp</strong> Y là nghịch đảo của trở kháng.</div>
-    <div class="formula">Z = <span class="frac"><span>U&#775;</span><span>I&#775;</span></span> &nbsp;&nbsp;&nbsp; Y = <span class="frac"><span>1</span><span>Z</span></span> = <span class="frac"><span>I&#775;</span><span>U&#775;</span></span><small>Z: ohm (Ω) · Y: siemens (S)</small></div>
+    <div class="formula">Z = <span class="frac"><span>U&#775;</span><span>I&#775;</span></span> &nbsp;&nbsp;&nbsp; Y = <span class="frac"><span>1</span><span>Z</span></span> = <span class="frac"><span>I&#775;</span><span>U&#775;</span></span><small>Z: ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · Y: siemens <span class="say" title="Cách đọc">si-men</span> (S)</small></div>
     <h3>Trở kháng của từng phần tử R, L, C</h3>
     <div class="tablewrap">
       <table>
@@ -633,7 +633,7 @@
     </div>
     <div class="units">
       <p class="units-h">Đổi đơn vị trở kháng (ohm) và dẫn nạp (siemens)</p>
-      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kiloohm</td><td>kΩ</td><td>1 kΩ = 1 000 Ω</td></tr><tr class="base"><td>Ohm</td><td>Ω</td><td>đơn vị gốc của Z, R, X</td></tr><tr class="base"><td>Siemens</td><td>S</td><td>đơn vị gốc của Y, G, B · 1 S = 1/Ω</td></tr><tr><td>Milisiemens</td><td>mS</td><td>1 mS = 10⁻³ S = 0,001 S</td></tr><tr><td>Microsiemens</td><td>µS</td><td>1 µS = 10⁻⁶ S</td></tr></tbody></table></div>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kiloohm</td><td>kΩ</td><td>1 kΩ = 1 000 Ω</td></tr><tr class="base"><td>Ohm <span class="say" title="Cách đọc">ôm</span></td><td>Ω</td><td>đơn vị gốc của Z, R, X</td></tr><tr class="base"><td>Siemens <span class="say" title="Cách đọc">si-men</span></td><td>S</td><td>đơn vị gốc của Y, G, B · 1 S = 1/Ω</td></tr><tr><td>Milisiemens</td><td>mS</td><td>1 mS = 10⁻³ S = 0,001 S</td></tr><tr><td>Microsiemens</td><td>µS</td><td>1 µS = 10⁻⁶ S</td></tr></tbody></table></div>
       <ul class="units-ex"><li>Z = 50 Ω ⇒ Y = 0,02 S = 20 mS</li><li>Z = 2 kΩ ⇒ Y = 0,5 mS = 500 µS</li><li>L = 0,1 H ở 50 Hz: X<sub>L</sub> = 314 × 0,1 = 31,4 Ω</li><li>C = 100 µF ở 50 Hz: X<sub>C</sub> = 1/(314 × 10⁻⁴) ≈ 31,85 Ω</li></ul>
     </div>
 
