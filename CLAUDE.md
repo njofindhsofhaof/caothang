@@ -16,7 +16,8 @@ Mẫu chuẩn: `lythuyetmach-chuong1.html`. Bài mới theo đúng khung này:
    - **bảng đổi đơn vị** đủ các bậc (vd. MV, kV, V, mV, µV) ghi giá trị quy đổi và ví dụ thực tế.
 4. Phần định luật / phương pháp giải, có ví dụ giải mẫu từng bước và kiểm tra lại kết quả.
 5. Bảng tóm tắt 1 trang (gồm bảng tiền tố đơn vị nếu cần).
-6. Cuối bài: link bài tập **chỉ của đúng chương đó**.
+6. **Trắc nghiệm ôn tập: 10 câu hỏi lý thuyết**, mỗi câu 4 phương án kèm giải thích (nêu vì sao đúng và vì sao các phương án nhiễu sai), để tóm tắt kiến thức của chương. Dùng component chung: `<div class="quiz" id="quiz"></div>`, khai báo `window.CT_QUIZ = [{ q, opts: [4 phương án], a: chỉ số đáp án đúng, why }]`, nạp `/assets/quiz.css` và `/assets/quiz.js` (xem `lythuyetmach-chuong2.html`).
+7. Cuối bài: link bài tập **chỉ của đúng chương đó**.
 
 Quy ước ký hiệu: điện thế viết `V_A`, `V_B` (không dùng φ); điện áp `U_AB = V_A − V_B`; công suất nguồn `P_N = U_N × I_N`, công suất tải `P_tải = R × I²`, cân bằng `P_nguồn = P_tải`. Dấu K1, K2 theo trang `/kirchhoff`.
 

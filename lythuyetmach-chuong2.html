@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
 <style>
 .post{max-width:760px;font-size:16px;line-height:1.65;}
 .post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
@@ -182,6 +183,7 @@
         <li><a href="#cong-suat">Công suất P, Q, S</a></li>
         <li><a href="#giai-mach">Giải mạch bằng số phức</a></li>
         <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
         <li><a href="#bai-tap">Bài tập</a></li>
       </ol>
     </nav>
@@ -593,7 +595,12 @@
     <div class="note"><strong>Khi ω → 0 (điện một chiều):</strong> Z<sub>L</sub> = jωL → 0 (cuộn cảm ngắn mạch), Z<sub>C</sub> = −j/(ωC) → ∞ (tụ hở mạch), đúng như mẹo nhớ ở Chương 1.</div>
 
     <!-- 13 -->
-    <h2 id="bai-tap"><span class="num">13</span>Bài tập</h2>
+    <h2 id="trac-nghiem"><span class="num">13</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <!-- 14 -->
+    <h2 id="bai-tap"><span class="num">14</span>Bài tập</h2>
     <p>Làm bài để luyện phức hoá mạch, tính trở kháng, dòng nhánh, phương trình tức thời và công suất P, Q, S:</p>
     <div class="exlist">
       <a class="card" href="/xaclapdieuhoa">
@@ -608,6 +615,41 @@
 </div>
 <script src="/assets/posts.js?v=20261107d"></script>
 <script src="/assets/site.js?v=20261107d"></script>
+<script>
+window.CT_QUIZ = [
+  { q: "Cho u(t) = 220√2 sin(314t + 30°) V. Biên độ và pha đầu của u là:",
+    opts: ["220 V và 314°", "220√2 V và 30°", "220√2 V và 314 rad", "220 V và 30°"], a: 1,
+    why: "Dạng chuẩn U<sub>m</sub> sin(ωt + φ): số đứng trước sin là biên độ U<sub>m</sub> = 220√2 V; 314 là tần số góc ω (rad/s); 30° là pha đầu φ." },
+  { q: "Điện lưới có f = 50 Hz. Chu kỳ T và tần số góc ω là:",
+    opts: ["T = 50 ms, ω = 100 rad/s", "T = 2 ms, ω = 157 rad/s", "T = 20 ms, ω ≈ 314 rad/s", "T = 0,2 s, ω = 50 rad/s"], a: 2,
+    why: "T = 1/f = 1/50 = 0,02 s = 20 ms; ω = 2πf = 2π × 50 ≈ 314 rad/s." },
+  { q: "u = 100 cos(ωt) V và i = 2 sin(ωt + 30°) A. Góc lệch pha φ = φ<sub>u</sub> − φ<sub>i</sub> là:",
+    opts: ["−30°: áp trễ pha hơn dòng", "30°: áp sớm pha hơn dòng", "60°: áp sớm pha hơn dòng", "120°: áp sớm pha hơn dòng"], a: 2,
+    why: "Phải đưa về cùng dạng sin trước: cos(ωt) = sin(ωt + 90°) ⇒ φ<sub>u</sub> = 90°. φ = 90° − 30° = 60° &gt; 0 nên điện áp sớm pha hơn dòng điện." },
+  { q: "Đồng hồ đo ổ điện chỉ 220 V. Biên độ (giá trị đỉnh) của điện áp này khoảng:",
+    opts: ["156 V", "220 V", "311 V", "440 V"], a: 2,
+    why: "Đồng hồ và nhãn thiết bị ghi trị hiệu dụng U. Biên độ U<sub>m</sub> = U × √2 = 220 × 1,414 ≈ 311 V." },
+  { q: "Số phức 3 + j4 viết ở dạng cực là:",
+    opts: ["7∠45°", "5∠53,13°", "5∠36,87°", "25∠53,13°"], a: 1,
+    why: "Môđun r = √(3² + 4²) = 5; góc ψ = arctan(4/3) = 53,13° (a &gt; 0 nên không cần cộng 180°)." },
+  { q: "Nhân hai số phức 2∠30° × 3∠−50° được:",
+    opts: ["5∠−20°", "6∠80°", "6∠−20°", "6∠−1500°"], a: 2,
+    why: "Nhân dạng cực: nhân môđun (2 × 3 = 6), cộng góc (30° + (−50°) = −20°). Cộng trừ thì dùng dạng đại số, nhân chia dùng dạng cực." },
+  { q: "Tụ điện C = 250 µF ở tần số góc ω = 100 rad/s có trở kháng phức là:",
+    opts: ["j40 Ω", "−j40 Ω", "−j0,025 Ω", "j25 000 Ω"], a: 1,
+    why: "Z<sub>C</sub> = −j/(ωC) = −j/(100 × 250 × 10⁻⁶) = −j/0,025 = −j40 Ω. Tụ điện luôn mang dấu −j." },
+  { q: "Với cuộn cảm thuần L, quan hệ pha giữa điện áp và dòng điện là:",
+    opts: ["u cùng pha với i", "u sớm pha hơn i 90°", "u trễ pha hơn i 90°", "u ngược pha với i (180°)"], a: 1,
+    why: "Z<sub>L</sub> = jωL, nhân với j là xoay vectơ +90°, nên U&#775; = jωL × I&#775; sớm pha 90° so với I&#775;. Mẹo nhớ: L áp đi trước, C dòng đi trước." },
+  { q: "Mạch R – L nối tiếp đo được U<sub>R</sub> = 60 V, U<sub>L</sub> = 80 V (hiệu dụng). Điện áp nguồn là:",
+    opts: ["20 V", "70 V", "100 V", "140 V"], a: 2,
+    why: "K2 đúng với số phức, không đúng với độ lớn. U<sub>R</sub> và U<sub>L</sub> lệch nhau 90° nên U = √(60² + 80²) = 100 V, không phải 60 + 80 = 140 V." },
+  { q: "Mạch có Z = 30 + j40 Ω, dòng điện có biên độ I<sub>m</sub> = 2 A. Công suất tác dụng P là:",
+    opts: ["60 W", "80 W", "100 W", "120 W"], a: 0,
+    why: "Chỉ điện trở tiêu thụ P. Dòng hiệu dụng I = 2/√2 = √2 A ⇒ P = R × I² = 30 × 2 = 60 W. Đáp án 120 W là do quên chia √2; 80 là Q (VAr), 100 là S (VA)." }
+];
+</script>
+<script src="/assets/quiz.js?v=1"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

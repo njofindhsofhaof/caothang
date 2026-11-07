@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
 <style>
 .post{max-width:760px;font-size:16px;line-height:1.65;}
 .post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
@@ -245,6 +246,7 @@
         <li><a href="#mach-dien">Mạch điện: nhánh, nút, vòng</a></li>
         <li><a href="#kirchhoff">Định luật Kirchhoff K1, K2</a></li>
         <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
         <li><a href="#bai-tap">Bài tập</a></li>
       </ol>
     </nav>
@@ -1017,7 +1019,12 @@
     <div class="note"><strong>Mẹo nhớ ở chế độ DC xác lập:</strong> tụ điện = hở mạch, cuộn cảm = ngắn mạch. Điện trở mắc nối tiếp thì cộng, tụ điện mắc song song thì cộng.</div>
 
     <!-- 13 -->
-    <h2 id="bai-tap"><span class="num">13</span>Bài tập</h2>
+    <h2 id="trac-nghiem"><span class="num">13</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <!-- 14 -->
+    <h2 id="bai-tap"><span class="num">14</span>Bài tập</h2>
     <p>Làm bài để luyện định luật K1, K2 và tính công suất:</p>
     <div class="exlist">
       <a class="card" href="/kirchhoff">
@@ -1394,6 +1401,41 @@
   initStorage("rc", "C"); initStorage("rl", "L");
 })();
 </script>
+<script>
+window.CT_QUIZ = [
+  { q: "Điện thế V<sub>A</sub> = 12 V, V<sub>B</sub> = 5 V. Điện áp U<sub>AB</sub> bằng:",
+    opts: ["17 V", "7 V", "−7 V", "2,4 V"], a: 1,
+    why: "U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = 12 − 5 = 7 V. Còn U<sub>BA</sub> = −7 V." },
+  { q: "Khi đổi điểm chọn làm mốc 0 V trong mạch thì:",
+    opts: ["Điện thế và điện áp đều đổi", "Điện thế không đổi, điện áp đổi", "Điện thế đổi, điện áp giữa hai điểm không đổi", "Cả hai đều không đổi"], a: 2,
+    why: "Điện thế là giá trị tương đối so với mốc nên thay đổi. Điện áp là hiệu hai điện thế: cả hai cùng tăng hoặc giảm như nhau nên hiệu không đổi." },
+  { q: "Giải mạch Kirchhoff ra I₂ = −1,5 A. Điều đó có nghĩa là:",
+    opts: ["Giải sai, dòng không thể âm", "Dòng thực tế 1,5 A chạy ngược chiều đã giả định", "Dòng bằng 0", "Nhánh đó là nguồn dòng"], a: 1,
+    why: "Chiều dòng mỗi nhánh do ta tự giả định. Kết quả âm nghĩa là dòng thực tế chạy ngược chiều mũi tên đã vẽ, trị số 1,5 A vẫn đúng." },
+  { q: "Nguồn thực có E = 12 V, điện trở trong r = 0,5 Ω, đang cấp dòng I = 2 A. Điện áp hai cực nguồn là:",
+    opts: ["12 V", "13 V", "11 V", "6 V"], a: 2,
+    why: "Nguồn áp thực: U = E − I × r = 12 − 2 × 0,5 = 11 V. Dòng càng lớn, điện áp ra càng giảm." },
+  { q: "Hai điện trở 6 Ω và 3 Ω mắc song song. Điện trở tương đương là:",
+    opts: ["9 Ω", "4,5 Ω", "2 Ω", "18 Ω"], a: 2,
+    why: "Song song hai điện trở: R<sub>tđ</sub> = R₁R₂/(R₁ + R₂) = 18/9 = 2 Ω, luôn nhỏ hơn điện trở nhỏ nhất. 9 Ω là kết quả nối tiếp." },
+  { q: "Ở chế độ một chiều (DC) đã xác lập, tụ điện và cuộn cảm lý tưởng được coi là:",
+    opts: ["Tụ ngắn mạch, cuộn cảm hở mạch", "Tụ hở mạch, cuộn cảm ngắn mạch", "Cả hai đều hở mạch", "Cả hai đều ngắn mạch"], a: 1,
+    why: "Áp DC không đổi ⇒ i = C du/dt = 0: tụ hở mạch. Dòng DC không đổi ⇒ u = L di/dt = 0: cuộn cảm như đoạn dây, ngắn mạch." },
+  { q: "Tụ điện 0,1 µF bằng bao nhiêu nanofara?",
+    opts: ["1 nF", "10 nF", "100 nF", "1 000 nF"], a: 2,
+    why: "1 µF = 1 000 nF ⇒ 0,1 µF = 0,1 × 1 000 = 100 nF. Mỗi bậc tiền tố cách nhau 1 000 lần." },
+  { q: "Điện trở R = 4 Ω có dòng I = 3 A chạy qua. Công suất tải P<sub>tải</sub> là:",
+    opts: ["12 W", "36 W", "48 W", "0,75 W"], a: 1,
+    why: "P<sub>tải</sub> = R × I² = 4 × 3² = 36 W. Đáp án 12 W là U = I × R (điện áp), không phải công suất." },
+  { q: "Trong mạch điện, nút là:",
+    opts: ["Mọi điểm nối giữa hai phần tử", "Điểm gặp nhau của từ 3 nhánh trở lên", "Cực dương của nguồn", "Đường khép kín qua các nhánh"], a: 1,
+    why: "Nút là chỗ gặp nhau của từ 3 nhánh trở lên. Chỗ chỉ nối 2 phần tử (mắc nối tiếp) không phải nút. Đường khép kín là vòng." },
+  { q: "Mạch có 2 nút và 3 nhánh. Cần viết bao nhiêu phương trình K1 và K2?",
+    opts: ["2 phương trình K1 và 1 phương trình K2", "1 phương trình K1 và 2 phương trình K2", "3 phương trình K1", "2 phương trình K1 và 3 phương trình K2"], a: 1,
+    why: "Viết n − 1 = 1 phương trình K1 và m − (n − 1) = 3 − 1 = 2 phương trình K2, đủ 3 phương trình cho 3 ẩn dòng nhánh." }
+];
+</script>
+<script src="/assets/quiz.js?v=1"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
