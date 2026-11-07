@@ -200,6 +200,8 @@
 .sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
 .sim .k-u{color:var(--accent-warm);font-weight:600;}
 .sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
 .post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
 @media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
 </style>
@@ -656,6 +658,8 @@
           <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
           <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
           <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <g class="iarr hide" id="rcArr"><path id="rcA1" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(230 180) rotate(90)"/><path id="rcA2" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(160 200) rotate(180)"/></g>
+          <text class="s" id="rcDir" x="112" y="232">i = 0: không có dòng</text>
           <line class="w" id="rcBlade" x1="130" y1="50" x2="90" y2="64"/>
           <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
           <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
@@ -727,6 +731,8 @@
           <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
           <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
           <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <g class="iarr hide" id="rlArr"><path id="rlA1" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(230 180) rotate(90)"/><path id="rlA2" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(160 200) rotate(180)"/></g>
+          <text class="s" id="rlDir" x="112" y="232">i = 0: không có dòng</text>
           <line class="w" id="rlBlade" x1="130" y1="50" x2="90" y2="64"/>
           <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
           <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
@@ -1082,7 +1088,7 @@
     el.classList.toggle("off", a < 0.005);
     el.classList.toggle("rev", i < 0);
     el.style.strokeWidth = String(clamp(2 + a * 1.1, 2, 9));
-    el.style.setProperty("--dur", clamp(1.6 / (a || 1), 0.25, 4).toFixed(2) + "s");
+    el.style.setProperty("--dur", clamp(3.2 / (a || 1), 0.6, 5).toFixed(2) + "s");
   }
   function slider(id, unit, onChange) {
     var input = $(id), out = $(id + "o");
@@ -1363,11 +1369,23 @@
       setText(p + "It", " = " + round1(st.i) + " A");
       setFlow($(p + "F1"), pos === 1 ? st.i : 0);
       setFlow($(p + "F2"), pos === 2 ? st.i : 0);
+      paintDirection();
       if (kind === "C") {
         var h = 60 * clamp(st.u / SE, 0, 1);
         setAttrs(p + "Meter", { y: 155 - h, height: h });
         $(p + "Qp").style.opacity = $(p + "Qn").style.opacity = String(clamp(st.u / SE, 0, 1));
       }
+    }
+    // Mũi tên chiều dòng: xanh = cùng chiều quy ước (i > 0), cam = chạy ngược lại (i < 0)
+    function paintDirection() {
+      var neg = st.i < 0, has = Math.abs(st.i) >= 0.02, dir = $(p + "Dir");
+      $(p + "Arr").classList.toggle("hide", !has);
+      $(p + "Arr").classList.toggle("neg", neg);
+      $(p + "A1").setAttribute("transform", "translate(230 180) rotate(" + (neg ? 270 : 90) + ")");
+      $(p + "A2").setAttribute("transform", "translate(160 200) rotate(" + (neg ? 0 : 180) + ")");
+      [$(p + "F1"), $(p + "F2")].forEach(function (el) { el.classList.toggle("c-w", neg); });
+      dir.setAttribute("class", !has ? "s" : neg ? "b warm" : "b ac");
+      dir.textContent = !has ? "i = 0: không có dòng" : neg ? "i < 0: dòng chạy NGƯỢC lại" : "i > 0: dòng chạy theo chiều quy ước";
     }
     function frame(ts) {
       if (!running) return;
