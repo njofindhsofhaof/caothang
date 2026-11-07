@@ -660,7 +660,35 @@
         </tbody>
       </table>
     </div>
-    <div class="note"><strong>Cẩn thận:</strong> K1, K2 đúng với <strong>số phức</strong>, không đúng với độ lớn. Ví dụ R – L nối tiếp có U<sub>R</sub> = 60 V, U<sub>L</sub> = 80 V thì điện áp nguồn là √(60² + 80²) = 100 V chứ <strong>không phải</strong> 140 V, vì hai điện áp lệch pha nhau 90°.</div>
+    <div class="note"><strong>Cẩn thận: không cộng thẳng số đọc của vôn kế.</strong> K1, K2 vẫn đúng, nhưng phải cộng <strong>số phức</strong> (mũi tên có cả độ dài lẫn góc pha), không cộng độ lớn. Ví dụ R – L nối tiếp, vôn kế đo được U<sub>R</sub> = 60 V, U<sub>L</sub> = 80 V. Điện áp nguồn <strong>không phải</strong> 60 + 80 = 140 V mà chỉ 100 V.</div>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Giống đi bộ: đi 60 m về hướng Đông rồi rẽ vuông góc đi 80 m về hướng Bắc. Bạn đã bước 140 m nhưng chỉ cách chỗ xuất phát √(60² + 80²) = <strong>100 m</strong>. Điện áp xoay chiều cũng cộng như cộng đường đi.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 230" role="img" aria-label="Cộng điện áp lệch pha: mũi tên U_R 60 V nằm ngang, U_L 80 V dựng đứng, tổng U là cạnh huyền 100 V; cộng thẳng 60 + 80 = 140 V là sai">
+  <path class="dash" d="M168 190 L168 178 L180 178"/>
+  <path class="arr-ac" d="M60 190 L180 190"/><path class="bar-ac" d="M180 190 L170 185 L170 195 Z"/>
+  <path class="curve-warm" d="M180 190 L180 32"/><path class="bar-warm" d="M180 30 L175 41 L185 41 Z"/>
+  <path class="arr" d="M60 190 L178 33"/><path d="M180 30 L178 42 L170 36 Z" fill="currentColor"/>
+  <text class="b ac" x="120" y="212" text-anchor="middle">U<tspan dy="4" font-size="10">R</tspan><tspan dy="-4"> = 60 V</tspan></text>
+  <text class="b warm" x="190" y="116">U<tspan dy="4" font-size="10">L</tspan><tspan dy="-4"> = 80 V</tspan></text>
+  <text class="b" x="112" y="102" text-anchor="end">U = 100 V</text>
+  <text class="s" x="150" y="174">90°</text>
+  <line class="axis" x1="290" y1="20" x2="290" y2="215"/>
+  <text class="s" x="310" y="38">Cộng thẳng số đọc (sai):</text>
+  <rect class="bar-ac" x="310" y="48" width="108" height="18"/><rect class="bar-warm" x="418" y="48" width="144" height="18"/>
+  <text class="b warm" x="310" y="88">60 + 80 = 140 V ✗</text>
+  <text class="s" x="310" y="128">Cộng mũi tên (đúng):</text>
+  <rect class="base" x="310" y="138" width="180" height="18"/>
+  <text class="b" x="310" y="178">√(60² + 80²) = 100 V ✓</text>
+  <text class="s" x="310" y="204">Ngắn hơn 140 V vì hai điện áp</text>
+  <text class="s" x="310" y="220">không đạt đỉnh cùng lúc</text>
+</svg>
+      <figcaption>Trái: U<sub>R</sub> nằm ngang (cùng pha dòng i), U<sub>L</sub> dựng đứng (sớm pha 90°), điện áp nguồn U là cạnh huyền. Phải: cộng thẳng cho 140 V là sai, cộng mũi tên cho 100 V</figcaption>
+    </figure>
+    <ul>
+      <li><strong>Vì sao không cộng thẳng?</strong> u<sub>R</sub> cùng pha với dòng i, còn u<sub>L</sub> sớm pha 90° (sớm 1/4 chu kỳ). Lúc u<sub>R</sub> lớn nhất thì u<sub>L</sub> bằng 0 và ngược lại, nên hai điện áp không bao giờ cùng đạt đỉnh để cộng ra 140 V.</li>
+      <li><strong>Dạng phức:</strong> U&#775;<sub>R</sub> = 60∠0° = 60, U&#775;<sub>L</sub> = 80∠90° = j80 ⇒ U&#775; = 60 + j80 ⇒ U = √(60² + 80²) = 100 V, sớm pha hơn dòng góc φ = arctan(80/60) ≈ 53,13°.</li>
+      <li>Đo thực tế thấy U<sub>R</sub> = 60 V, U<sub>L</sub> = 80 V mà nguồn chỉ 100 V là <strong>bình thường</strong>, không phải vôn kế đo sai.</li>
+    </ul>
 
     <!-- 10 -->
     <h2 id="cong-suat"><span class="num">10</span>Công suất P, Q, S</h2>
