@@ -165,6 +165,14 @@ window.CT_POSTS = [
   },
   {
     section: "ontap",
+    title: "Lý thuyết mạch – Chương 1: Khái niệm cơ bản về mạch điện",
+    desc: "Điện thế, điện áp, dòng điện, nguồn điện, điện trở, điện dung, tụ điện, cuộn cảm, công suất và định luật Kirchhoff K1, K2 — có ví dụ giải mẫu và video minh hoạ.",
+    date: "2026-11-07",
+    href: "/lythuyetmach-chuong1",
+    parent: "/lythuyetmach"
+  },
+  {
+    section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     date: "2026-09-19",
     href: "/kirchhoff",

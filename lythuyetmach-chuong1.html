@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 1: Khái niệm cơ bản về mạch điện · Lý Thuyết Mạch · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Lý thuyết mạch Chương 1: điện thế, điện áp, dòng điện, nguồn điện, điện trở, điện dung, tụ điện, cuộn cảm, công suất và định luật Kirchhoff K1, K2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lý thuyết mạch – Chương 1: Khái niệm cơ bản về mạch điện</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính"></nav>
+
+  <article class="post">
+    <p class="byline">07/11/2026 · Lý Thuyết Mạch · Chương 1</p>
+
+    <div class="hero">
+      <p class="hero-k">Bài học được thiết kế để đơn giản · dễ hiểu · dễ nhớ</p>
+      <p>Đây không phải lý thuyết khô khan. Mỗi khái niệm được so sánh với <strong>nước chảy trong ống</strong>, thứ ai cũng đã thấy: điện áp là độ chênh mực nước, dòng điện là dòng chảy, nguồn là máy bơm, điện trở là ống hẹp… Hiểu hình trước, công thức sẽ tự nhớ.</p>
+      <p>Mỗi phần gồm: <span class="tag">Dễ nhớ</span> câu so sánh ngắn → hình minh hoạ → định nghĩa và công thức để làm bài. Cuối bài là định luật Kirchhoff, bảng tóm tắt 1 trang và link bài tập.</p>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#dien-the">Điện thế</a></li>
+        <li><a href="#dien-ap">Điện áp</a></li>
+        <li><a href="#dong-dien">Dòng điện</a></li>
+        <li><a href="#nguon-dien">Nguồn điện</a></li>
+        <li><a href="#dien-tro">Điện trở</a></li>
+        <li><a href="#dien-dung">Điện dung</a></li>
+        <li><a href="#tu-dien">Tụ điện</a></li>
+        <li><a href="#cuon-cam">Cuộn cảm</a></li>
+        <li><a href="#cong-suat">Công suất</a></li>
+        <li><a href="#mach-dien">Mạch điện: nhánh, nút, vòng</a></li>
+        <li><a href="#kirchhoff">Định luật Kirchhoff K1, K2</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#bai-tap">Bài tập</a></li>
+      </ol>
+    </nav>
+
+    <div class="vidone">
+      <iframe src="https://www.tiktok.com/player/v1/7705304353254427905?music_info=0&amp;description=1&amp;rel=0" title="Video: 8 khái niệm cơ bản của Lý thuyết mạch, giải thích dễ hiểu" loading="lazy" allow="fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <p>▶ Video: 8 khái niệm cơ bản của Lý thuyết mạch, giải thích dễ hiểu · <a href="https://www.tiktok.com/@ckcddt26c/video/7705304353254427905" target="_blank" rel="noopener">Mở trên TikTok ↗</a></p>
+    </div>
+
+
+    <!-- 1 -->
+    <h2 id="dien-the"><span class="num">01</span>Điện thế</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện thế = <strong>mực nước</strong> ở một điểm. Muốn đo mực nước phải chọn mốc, trong mạch điện mốc là đất (GND) = 0 V.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 215" role="img" aria-label="Hai bể nước có mực nước khác nhau, đo so với mặt đất 0 V">
+  <line class="ruler" x1="150" y1="180" x2="150" y2="30"/>
+  <g class="tk"><line x1="144" y1="180" x2="156" y2="180"/><line x1="144" y1="130" x2="156" y2="130"/><line x1="144" y1="80" x2="156" y2="80"/><line x1="144" y1="30" x2="156" y2="30"/></g>
+  <text class="s" x="136" y="184" text-anchor="end">0 V</text><text class="s" x="136" y="134" text-anchor="end">5 V</text><text class="s" x="136" y="84" text-anchor="end">10 V</text><text class="s" x="136" y="34" text-anchor="end">15 V</text>
+  <rect class="water" x="200" y="60" width="80" height="120"/><path class="tank" d="M200 30 L200 180 L280 180 L280 30"/>
+  <rect class="water" x="380" y="130" width="80" height="50"/><path class="tank" d="M380 30 L380 180 L460 180 L460 30"/>
+  <line class="dash" x1="156" y1="60" x2="200" y2="60"/><line class="dash" x1="280" y1="130" x2="380" y2="130"/>
+  <text class="b ac" x="240" y="52" text-anchor="middle">V<tspan class="sub" dy="4">A</tspan><tspan dy="-4"> = 12 V</tspan></text>
+  <text class="b ac" x="420" y="122" text-anchor="middle">V<tspan class="sub" dy="4">B</tspan><tspan dy="-4"> = 5 V</tspan></text>
+  <text class="t" x="240" y="24" text-anchor="middle">Điểm A</text><text class="t" x="420" y="24" text-anchor="middle">Điểm B</text>
+  <line class="ground" x1="162" y1="180" x2="520" y2="180"/>
+  <text class="s" x="330" y="204" text-anchor="middle">Mặt đất = mốc 0 V (GND)</text>
+</svg>
+      <figcaption>Điện thế giống mực nước tại một điểm, đo so với mốc 0 V</figcaption>
+    </figure>
+    <div class="def"><strong>Điện thế</strong> tại một điểm là đại lượng đặc trưng cho năng lượng của điện trường tại điểm đó, tính trên một đơn vị điện tích dương, so với một điểm gốc được chọn có điện thế bằng 0.</div>
+    <div class="formula">V<sub>A</sub> = <span class="frac"><span>W<sub>A</sub></span><span>q</span></span><small>V<sub>A</sub>: điện thế tại A, đơn vị vôn (V) · W: jun (J) · q: culông (C) · cách đổi mV, kV… xem mục Điện áp</small></div>
+    <ul>
+      <li>Điểm gốc thường chọn là <strong>đất (mass, GND)</strong> hoặc cực âm của nguồn: V<sub>GND</sub> = 0 V.</li>
+      <li>Điện thế là giá trị <strong>tương đối</strong>: đổi điểm gốc thì điện thế mọi điểm đều đổi.</li>
+    </ul>
+
+    <!-- 2 -->
+    <h2 id="dien-ap"><span class="num">02</span>Điện áp</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện áp = <strong>độ chênh mực nước</strong> giữa 2 điểm. Hai bể cao bằng nhau thì nước đứng yên; có chênh lệch thì nước mới chảy.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="Hai bể nước nối bằng ống, nước chảy từ bể cao sang bể thấp">
+  <rect class="water" x="60" y="50" width="100" height="120"/><path class="tank" d="M60 25 L60 170 L160 170 L160 25"/>
+  <rect class="water" x="400" y="120" width="100" height="50"/><path class="tank" d="M400 25 L400 170 L500 170 L500 25"/>
+  <rect class="water" x="160" y="150" width="240" height="16"/><path class="tank" d="M160 150 L400 150 M160 166 L400 166"/>
+  <g class="dot"><circle cx="190" cy="158" r="3"/><circle cx="230" cy="158" r="3"/><circle cx="270" cy="158" r="3"/><circle cx="310" cy="158" r="3"/><circle cx="350" cy="158" r="3"/></g>
+  <path class="arr" d="M372 158 L386 158 M380 152 L387 158 L380 164"/>
+  <line class="dash" x1="160" y1="50" x2="300" y2="50"/><line class="dash" x1="260" y1="120" x2="400" y2="120"/>
+  <path class="arr-ac" d="M280 56 L280 114 M274 62 L280 54 L286 62 M274 108 L280 116 L286 108"/>
+  <text class="b ac" x="292" y="92">U = V<tspan class="sub" dy="4">A</tspan><tspan dy="-4"> − V</tspan><tspan class="sub" dy="4">B</tspan></text>
+  <text class="t" x="110" y="18" text-anchor="middle">A (cao)</text><text class="t" x="450" y="18" text-anchor="middle">B (thấp)</text>
+  <text class="s" x="280" y="192" text-anchor="middle">dòng chảy từ nơi cao → nơi thấp</text>
+</svg>
+      <figcaption>Điện áp là độ chênh mực nước giữa 2 điểm: có chênh lệch thì nước (điện tích) mới chảy</figcaption>
+    </figure>
+    <div class="def"><strong>Điện áp</strong> (hiệu điện thế) giữa hai điểm A và B là hiệu số điện thế giữa hai điểm đó. Điện áp là nguyên nhân làm điện tích dịch chuyển, tức tạo ra dòng điện.</div>
+    <div class="formula">U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> &nbsp;&nbsp;⇒&nbsp;&nbsp; U<sub>BA</sub> = −U<sub>AB</sub><small>Đơn vị: vôn (V), giống điện thế</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện áp (vôn)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Megavôn</td><td>MV</td><td>1 MV = 1 000 kV = 10⁶ V = 1 000 000 V</td></tr><tr><td>Kilôvôn</td><td>kV</td><td>1 kV = 10³ V = 1 000 V</td></tr><tr class="base"><td>Vôn</td><td>V</td><td>đơn vị gốc · 1 V = 1 000 mV</td></tr><tr><td>Milivôn</td><td>mV</td><td>1 mV = 10⁻³ V = 0,001 V · 1 mV = 1 000 µV</td></tr><tr><td>Microvôn</td><td>µV</td><td>1 µV = 10⁻⁶ V = 0,000 001 V</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Điện lưới gia đình 220 V = 0,22 kV</li><li>Đường dây trung thế 22 kV = 22 000 V</li><li>Đường dây 500 kV = 0,5 MV</li><li>Tín hiệu cảm biến 25 mV = 0,025 V</li></ul>
+    </div>
+    <ul>
+      <li>Chiều điện áp quy ước từ điểm có điện thế cao sang điểm có điện thế thấp. Đo bằng <strong>vôn kế mắc song song</strong> với phần tử.</li>
+      <li>Khác với điện thế, điện áp <strong>không phụ thuộc</strong> điểm gốc (xem ví dụ bên dưới).</li>
+      <li>Trên điện trở, dòng điện chạy từ đầu có điện thế cao sang đầu có điện thế thấp: điện áp và dòng điện <strong>cùng chiều</strong>.</li>
+    </ul>
+    <h3>Vì sao điện áp không phụ thuộc điểm gốc?</h3>
+    <p>Giống đo chiều cao: hai người đứng ở độ cao 12 m và 5 m so với mặt đất, người A cao hơn B 7 m. Đổi mốc sang tầng 5 m thì A còn 7 m, B còn 0 m, nhưng A <strong>vẫn cao hơn B 7 m</strong>. Đổi mốc thì cả hai cùng tăng hoặc cùng giảm như nhau, nên hiệu không đổi.</p>
+    <p>Trong mạch: pin 12 V, cực + là A, cực − là B.</p>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Chọn mốc 0 V ở đâu</th><th>V<sub>A</sub></th><th>V<sub>B</sub></th><th>U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub></th></tr></thead>
+        <tbody>
+          <tr><td>Cực − (B)</td><td>12 V</td><td>0 V</td><td><strong>12 V</strong></td></tr>
+          <tr><td>Cực + (A)</td><td>0 V</td><td>−12 V</td><td><strong>12 V</strong></td></tr>
+          <tr><td>Điểm thấp hơn B 3 V</td><td>15 V</td><td>3 V</td><td><strong>12 V</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện thế = <strong>"cao bao nhiêu"</strong>: phải hỏi "so với đâu". Điện áp = <strong>"cao hơn bao nhiêu"</strong>: chỉ cần so 2 điểm với nhau. Vì vậy vôn kế chỉ có 2 que đo, đo <strong>giữa 2 điểm</strong>.</p>
+
+    <!-- 3 -->
+    <h2 id="dong-dien"><span class="num">03</span>Dòng điện</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Dòng điện = <strong>lượng nước chảy qua ống mỗi giây</strong>. Ống rộng hay hẹp thì lượng nước đi qua mỗi giây vẫn như nhau.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 182" role="img" aria-label="Ống nước có đoạn rộng và đoạn hẹp, dòng chảy như nhau ở mọi mặt cắt">
+  <path class="water" d="M30 50 L230 50 L270 75 L330 75 L370 50 L530 50 L530 130 L370 130 L330 105 L270 105 L230 130 L30 130 Z"/>
+  <path class="tank" d="M30 50 L230 50 L270 75 L330 75 L370 50 L530 50 M30 130 L230 130 L270 105 L330 105 L370 130 L530 130"/>
+  <g class="dot"><circle cx="60" cy="70" r="3"/><circle cx="100" cy="110" r="3"/><circle cx="140" cy="80" r="3"/><circle cx="180" cy="105" r="3"/><circle cx="215" cy="68" r="3"/><circle cx="280" cy="85" r="3"/><circle cx="292" cy="96" r="3"/><circle cx="304" cy="84" r="3"/><circle cx="316" cy="95" r="3"/><circle cx="400" cy="75" r="3"/><circle cx="440" cy="110" r="3"/><circle cx="480" cy="72" r="3"/><circle cx="510" cy="100" r="3"/></g>
+  <line class="cut" x1="130" y1="40" x2="130" y2="140"/><line class="cut" x1="300" y1="65" x2="300" y2="115"/>
+  <text class="b ac" x="130" y="32" text-anchor="middle">chỗ rộng: I = 2 A</text>
+  <text class="b ac" x="300" y="148" text-anchor="middle">chỗ hẹp: I = 2 A</text>
+  <text class="s warm" x="300" y="170" text-anchor="middle">chỗ hẹp điện tích chạy nhanh hơn → nóng hơn</text>
+  <path class="arr" d="M440 30 L500 30 M494 24 L501 30 L494 36"/><text class="s" x="430" y="34" text-anchor="end">chiều dòng: + → −</text>
+</svg>
+      <figcaption>Dòng điện như dòng nước chảy trong ống: lượng nước qua mỗi mặt cắt trong 1 giây là như nhau</figcaption>
+    </figure>
+    <div class="def"><strong>Dòng điện</strong> là dòng chuyển dời có hướng của các hạt mang điện. <strong>Cường độ dòng điện</strong> là lượng điện tích dịch chuyển qua tiết diện dây dẫn trong một đơn vị thời gian.</div>
+    <div class="formula">I = <span class="frac"><span>q</span><span>t</span></span> &nbsp;&nbsp;hay&nbsp;&nbsp; i = <span class="frac"><span>dq</span><span>dt</span></span><small>I: ampe (A) · q: culông (C) · t: giây (s)</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị dòng điện (ampe)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kilôampe</td><td>kA</td><td>1 kA = 10³ A = 1 000 A</td></tr><tr class="base"><td>Ampe</td><td>A</td><td>đơn vị gốc · 1 A = 1 000 mA</td></tr><tr><td>Miliampe</td><td>mA</td><td>1 mA = 10⁻³ A = 0,001 A · 1 mA = 1 000 µA</td></tr><tr><td>Microampe</td><td>µA</td><td>1 µA = 10⁻⁶ A = 0,000 001 A</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Đèn LED 20 mA = 0,02 A</li><li>Sạc điện thoại 2,4 A = 2 400 mA</li><li>Dòng ngắn mạch 6 kA = 6 000 A</li><li>Dòng rò 30 mA (ngưỡng CB chống giật) = 0,03 A</li></ul>
+    </div>
+    <ul>
+      <li>Ký hiệu: <strong>I</strong> (dòng một chiều, không đổi), <strong>i</strong> (dòng biến thiên theo thời gian). Đo bằng <strong>ampe kế mắc nối tiếp</strong>.</li>
+      <li><strong>Chiều quy ước</strong>: chiều chuyển động của điện tích dương, tức ở mạch ngoài dòng đi từ cực + sang cực − của nguồn (ngược chiều chuyển động của electron).</li>
+    </ul>
+    <div class="note"><strong>Chiều giả định:</strong> khi giải mạch ta tự chọn chiều dòng mỗi nhánh (vẽ mũi tên). Nếu kết quả ra số <strong>âm</strong>, dòng thực tế chạy <strong>ngược</strong> chiều đã chọn, trị số vẫn đúng. Đó là lý do bài tập Kirchhoff cho phép nhập đáp án âm.</div>
+
+    <!-- 4 -->
+    <h2 id="nguon-dien"><span class="num">04</span>Nguồn điện</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nguồn điện = <strong>máy bơm</strong>. Bơm đẩy nước lên cao để nó chảy vòng qua mạch rồi quay về bơm, lặp lại mãi.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 212" role="img" aria-label="Vòng ống kín có máy bơm là nguồn và chỗ hẹp là tải">
+  <rect class="loop" x="90" y="35" width="380" height="150" rx="22"/>
+  <g class="dot"><circle cx="160" cy="35" r="3"/><circle cx="230" cy="35" r="3"/><circle cx="300" cy="35" r="3"/><circle cx="370" cy="35" r="3"/><circle cx="160" cy="185" r="3"/><circle cx="230" cy="185" r="3"/><circle cx="300" cy="185" r="3"/><circle cx="370" cy="185" r="3"/></g>
+  <path class="arr" d="M255 22 L285 22 M279 16 L286 22 L279 28"/><path class="arr" d="M285 199 L255 199 M261 193 L254 199 L261 205"/>
+  <circle class="pump" cx="90" cy="110" r="32"/>
+  <path class="blade" d="M72 92 L108 128 M108 92 L72 128"/>
+  <text class="b" x="134" y="106">Máy bơm</text><text class="b warm" x="134" y="124">= Nguồn E</text>
+  <rect class="load" x="448" y="82" width="44" height="56" rx="4"/>
+  <text class="b" x="438" y="106" text-anchor="end">Tải R</text><text class="s" x="438" y="124" text-anchor="end">(bóng đèn, động cơ…)</text>
+  <text class="s" x="280" y="166" text-anchor="middle">Pin 9 V: luôn giữ chênh 9 V, dòng tuỳ tải I = U / R</text>
+</svg>
+      <figcaption>Nguồn điện như máy bơm: tạo ra chênh lệch để nước chảy vòng mãi trong mạch kín</figcaption>
+    </figure>
+    <div class="def"><strong>Nguồn điện</strong> là thiết bị biến đổi các dạng năng lượng khác (hoá năng, cơ năng, quang năng…) thành điện năng, duy trì điện áp giữa hai cực để tạo dòng điện trong mạch. Ví dụ: pin, ắc quy, máy phát điện, pin mặt trời.</div>
+    <p>Khả năng sinh công của nguồn được đặc trưng bằng <strong>sức điện động E</strong> (đơn vị V). Trong lý thuyết mạch, nguồn được mô hình hoá thành hai loại:</p>
+    <h3>Nguồn áp (nguồn sức điện động)</h3>
+    <ul>
+      <li><strong>Lý tưởng</strong>: điện áp hai cực luôn bằng E, không phụ thuộc dòng điện qua nó (điện trở trong r = 0).</li>
+      <li><strong>Thực tế</strong>: gồm E nối tiếp điện trở trong r. Dòng càng lớn, điện áp ra càng giảm:</li>
+    </ul>
+    <div class="formula">U = E − I × r</div>
+    <h3>Nguồn dòng</h3>
+    <ul>
+      <li><strong>Lý tưởng</strong>: luôn cấp ra dòng điện J không đổi, bất kể tải. Điện áp trên nguồn dòng (U<sub>J</sub>) do mạch ngoài quyết định, thường là ẩn cần tính.</li>
+      <li><strong>Thực tế</strong>: gồm J mắc song song điện trở trong r.</li>
+    </ul>
+    <div class="note"><strong>Lưu ý khi viết K2:</strong> không có định luật Ohm cho nguồn dòng, nên nếu vòng đi qua nguồn dòng thì phải thêm ẩn U<sub>J</sub>. Cách gọn hơn là chọn vòng không đi qua nguồn dòng.</div>
+
+    <!-- 5 -->
+    <h2 id="dien-tro"><span class="num">05</span>Điện trở</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện trở = <strong>ống hẹp</strong>. Ống càng hẹp nước càng khó qua, dòng càng nhỏ, và phần bị cản biến thành nhiệt.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 215" role="img" aria-label="Một bể nước chảy ra hai ống: ống rộng dòng lớn, ống hẹp dòng nhỏ và nóng lên">
+  <rect class="water" x="30" y="45" width="80" height="150"/><path class="tank" d="M30 25 L30 195 L110 195 L110 25"/>
+  <text class="b" x="70" y="118" text-anchor="middle">Nguồn</text><text class="b" x="70" y="136" text-anchor="middle">U = 6 V</text>
+  <rect class="water" x="110" y="62" width="370" height="24"/><path class="tank" d="M110 62 L480 62 M110 86 L480 86"/>
+  <g class="dot"><circle cx="150" cy="74" r="3"/><circle cx="190" cy="74" r="3"/><circle cx="230" cy="74" r="3"/><circle cx="270" cy="74" r="3"/><circle cx="310" cy="74" r="3"/><circle cx="350" cy="74" r="3"/><circle cx="390" cy="74" r="3"/><circle cx="430" cy="74" r="3"/></g>
+  <text class="b ac" x="295" y="52" text-anchor="middle">R = 2 Ω → I = 6 / 2 = 3 A</text>
+  <path class="water" d="M110 150 L230 150 L250 157 L370 157 L390 150 L480 150 L480 174 L390 174 L370 167 L250 167 L230 174 L110 174 Z"/>
+  <path class="tank" d="M110 150 L230 150 L250 157 L370 157 L390 150 L480 150 M110 174 L230 174 L250 167 L370 167 L390 174 L480 174"/>
+  <g class="dot"><circle cx="170" cy="162" r="3"/><circle cx="310" cy="162" r="3"/><circle cx="440" cy="162" r="3"/></g>
+  <text class="b ac" x="295" y="140" text-anchor="middle">R = 6 Ω → I = 6 / 6 = 1 A</text>
+  <path class="heat" d="M280 196 q5 -6 0 -12 q-5 -6 0 -12 M310 196 q5 -6 0 -12 q-5 -6 0 -12 M340 196 q5 -6 0 -12 q-5 -6 0 -12"/>
+  <text class="s warm" x="360" y="198">nóng lên!</text>
+  <path class="arr" d="M494 74 L520 74 M514 68 L521 74 L514 80"/><path class="arr" d="M494 162 L520 162 M514 156 L521 162 L514 168"/>
+</svg>
+      <figcaption>Điện trở như ống hẹp: cùng một nguồn, ống càng hẹp (R càng lớn) thì dòng càng nhỏ và càng nóng</figcaption>
+    </figure>
+    <div class="def"><strong>Điện trở</strong> là đại lượng đặc trưng cho khả năng cản trở dòng điện của vật dẫn. Phần tử điện trở biến điện năng thành nhiệt năng (tiêu tán năng lượng).</div>
+    <div class="formula">R = ρ <span class="frac"><span>l</span><span>S</span></span><small>ρ: điện trở suất (Ω·m) · l: chiều dài dây (m) · S: tiết diện (m²)</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện trở (ôm)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Megaôm</td><td>MΩ</td><td>1 MΩ = 1 000 kΩ = 10⁶ Ω = 1 000 000 Ω</td></tr><tr><td>Kilôôm</td><td>kΩ</td><td>1 kΩ = 10³ Ω = 1 000 Ω</td></tr><tr class="base"><td>Ôm</td><td>Ω</td><td>đơn vị gốc</td></tr><tr><td>Miliôm</td><td>mΩ</td><td>1 mΩ = 10⁻³ Ω = 0,001 Ω</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>4,7 kΩ = 4 700 Ω</li><li>2,2 MΩ = 2 200 kΩ = 2 200 000 Ω</li><li>560 Ω = 0,56 kΩ</li><li>Điện trở shunt 50 mΩ = 0,05 Ω</li></ul>
+    </div>
+    <p><strong>Định luật Ohm</strong> cho đoạn mạch chỉ có điện trở (dòng và áp cùng chiều):</p>
+    <div class="formula">U = I × R &nbsp;&nbsp;⇔&nbsp;&nbsp; I = <span class="frac"><span>U</span><span>R</span></span><small>R: ôm (Ω)</small></div>
+    <ul>
+      <li><strong>Điện dẫn</strong> G = 1/R, đơn vị simen (S).</li>
+      <li><strong>Nối tiếp</strong>: R<sub>tđ</sub> = R₁ + R₂ + … (cùng dòng, áp chia theo tỉ lệ R).</li>
+      <li><strong>Song song</strong>: 1/R<sub>tđ</sub> = 1/R₁ + 1/R₂ + …; hai điện trở: R<sub>tđ</sub> = R₁R₂/(R₁ + R₂) (cùng áp, dòng chia tỉ lệ nghịch với R).</li>
+      <li>Công suất tiêu tán: P = U × I = I² × R = U²/R.</li>
+    </ul>
+
+    <!-- 6 -->
+    <h2 id="dien-dung"><span class="num">06</span>Điện dung</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện dung = <strong>độ rộng của bình</strong>. Bình càng rộng thì chứa càng nhiều nước mà mực nước (điện áp) vẫn thấp.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Bình rộng và bình hẹp cùng chứa một lượng nước, mực nước khác nhau">
+  <rect class="water" x="70" y="150" width="180" height="40"/><path class="tank" d="M70 40 L70 190 L250 190 L250 40"/>
+  <rect class="water" x="360" y="70" width="60" height="120"/><path class="tank" d="M360 40 L360 190 L420 190 L420 40"/>
+  <text class="b warm" x="160" y="30" text-anchor="middle">C lớn</text><text class="b warm" x="390" y="30" text-anchor="middle">C nhỏ</text>
+  <path class="arr-ac" d="M268 188 L268 152 M262 158 L268 150 L274 158"/><text class="b ac" x="280" y="174">U thấp</text>
+  <path class="arr-ac" d="M438 188 L438 72 M432 78 L438 70 L444 78"/><text class="b ac" x="450" y="132">U cao</text>
+  <text class="s" x="280" y="212" text-anchor="middle">Rót cùng một lượng điện tích Q vào hai tụ</text>
+</svg>
+      <figcaption>Điện dung như độ rộng của bình: rót cùng một lượng nước, bình rộng (C lớn) dâng ít, bình hẹp (C nhỏ) dâng cao</figcaption>
+    </figure>
+    <div class="def"><strong>Điện dung</strong> là đại lượng đặc trưng cho khả năng tích điện của tụ điện, bằng tỉ số giữa điện tích tích được trên mỗi bản cực và điện áp đặt vào hai bản cực.</div>
+    <div class="formula">C = <span class="frac"><span>q</span><span>U</span></span> &nbsp;&nbsp;&nbsp; C = ε <span class="frac"><span>S</span><span>d</span></span><small>C: fara (F) · ε: hằng số điện môi tuyệt đối (F/m) · S: diện tích bản cực · d: khoảng cách hai bản</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện dung (fara)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>Fara</td><td>F</td><td>đơn vị gốc (rất lớn, ít gặp)</td></tr><tr><td>Milifara</td><td>mF</td><td>1 mF = 10⁻³ F = 1 000 µF</td></tr><tr><td>Microfara</td><td>µF</td><td>1 µF = 10⁻⁶ F = 1 000 nF</td></tr><tr><td>Nanofara</td><td>nF</td><td>1 nF = 10⁻⁹ F = 1 000 pF</td></tr><tr><td>Picofara</td><td>pF</td><td>1 pF = 10⁻¹² F</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Tụ 0,1 µF = 100 nF = 100 000 pF</li><li>Tụ 4,7 nF = 4 700 pF = 0,0047 µF</li><li>Tụ lọc nguồn 2 200 µF = 2,2 mF</li><li>Tụ 22 pF = 0,022 nF</li></ul>
+    </div>
+    <ul>
+      <li>Điện dung chỉ phụ thuộc cấu tạo tụ (diện tích bản, khoảng cách, chất điện môi), không phụ thuộc điện áp đặt vào.</li>
+    </ul>
+
+    <!-- 7 -->
+    <h2 id="tu-dien"><span class="num">07</span>Tụ điện</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Tụ điện = <strong>bình chứa điện tích</strong>. Mới nạp thì nước chảy vào mạnh, gần đầy thì chảy chậm, đầy rồi thì dừng.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Pin nạp điện cho tụ, đồ thị điện áp tụ tăng dần còn dòng giảm dần">
+  <path class="wire" d="M60 92 L60 30 L470 30 L470 96 M470 124 L470 195 L60 195 L60 118"/>
+  <path class="wire" d="M44 92 L76 92 M52 118 L68 118" style="stroke-width:3"/>
+  <text class="pm" x="84" y="88">+</text><text class="pm" x="84" y="132">−</text>
+  <path class="plate" d="M430 96 L510 96 M430 124 L510 124"/>
+  <text class="b warm" x="447" y="88" text-anchor="middle">+ +</text><text class="b warm" x="493" y="88" text-anchor="middle">+ +</text><text class="b ac" x="447" y="144" text-anchor="middle">− −</text><text class="b ac" x="493" y="144" text-anchor="middle">− −</text>
+  <g class="qdot"><circle cx="150" cy="30" r="4"/><circle cx="230" cy="30" r="4"/><circle cx="310" cy="30" r="4"/><circle cx="390" cy="30" r="4"/></g>
+  <text class="s" x="400" y="114" text-anchor="end">đang nạp…</text>
+  <path class="axis" d="M140 175 L140 60 M140 175 L360 175"/><text class="s" x="366" y="179">t</text>
+  <path class="curve-warm" d="M140 172 C 175 100, 230 72, 350 66"/><text class="b warm" x="300" y="58">uC tăng dần</text>
+  <path class="curve-ac" d="M140 70 C 175 140, 230 166, 350 171"/><text class="b ac" x="232" y="124">i giảm dần</text>
+</svg>
+      <figcaption>Tụ điện như cái bình chứa điện tích: nạp từ từ, đầy rồi thì dòng ngừng chảy (DC không qua được tụ)</figcaption>
+    </figure>
+    <div class="def"><strong>Tụ điện</strong> gồm hai bản cực dẫn điện đặt song song, ngăn cách bởi lớp điện môi. Tụ điện tích luỹ năng lượng dưới dạng <strong>điện trường</strong>.</div>
+    <div class="formula">i = C <span class="frac"><span>du</span><span>dt</span></span> &nbsp;&nbsp;&nbsp; W<sub>C</sub> = ½ C U²<small>Dòng qua tụ tỉ lệ với tốc độ biến thiên điện áp · W: jun (J)</small></div>
+    <ul>
+      <li><strong>Với điện một chiều (xác lập)</strong>: điện áp không đổi ⇒ du/dt = 0 ⇒ i = 0. Tụ coi như <strong>hở mạch</strong> ("tụ chặn DC").</li>
+      <li><strong>Với điện xoay chiều</strong>: tụ cho dòng đi qua, dung kháng X<sub>C</sub> = 1/(ωC); tần số càng cao dòng qua càng dễ.</li>
+      <li>Điện áp trên tụ không thể thay đổi đột ngột (cần thời gian nạp, xả).</li>
+      <li><strong>Song song</strong>: C<sub>tđ</sub> = C₁ + C₂ + …; <strong>nối tiếp</strong>: 1/C<sub>tđ</sub> = 1/C₁ + 1/C₂ + … (ngược với điện trở).</li>
+    </ul>
+
+    <!-- 8 -->
+    <h2 id="cuon-cam"><span class="num">08</span>Cuộn cảm</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Cuộn cảm = <strong>bánh đà nặng</strong>. Đẩy cho quay thì phải từ từ, đang quay muốn dừng cũng không dừng ngay được.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 225" role="img" aria-label="Cuộn dây có từ trường bao quanh; đồ thị dòng điện tăng từ từ thay vì nhảy ngay">
+  <ellipse class="field" cx="280" cy="62" rx="150" ry="42"/><ellipse class="field" cx="280" cy="62" rx="185" ry="56"/>
+  <path class="wire" d="M40 62 L196 62 A14 14 0 0 1 224 62 A14 14 0 0 1 252 62 A14 14 0 0 1 280 62 A14 14 0 0 1 308 62 A14 14 0 0 1 336 62 A14 14 0 0 1 364 62 L520 62"/>
+  <text class="s ac" x="280" y="136" text-anchor="middle">từ trường</text>
+  <path class="axis" d="M80 205 L80 145 M80 205 L500 205"/><text class="s" x="506" y="209">t</text><text class="s" x="72" y="150" text-anchor="end">i</text>
+  <path class="dash" d="M80 205 L80 158 L490 158"/><text class="s" x="96" y="152">không có L: nhảy ngay</text>
+  <path class="curve-ac" d="M80 204 C 170 172, 270 162, 490 160"/><text class="b ac" x="300" y="186">có L: tăng từ từ</text>
+</svg>
+      <figcaption>Cuộn cảm như bánh đà nặng: khó tăng tốc, khó dừng lại, nó "ghét" sự thay đổi của dòng điện</figcaption>
+    </figure>
+    <div class="def"><strong>Cuộn cảm</strong> là dây dẫn quấn thành nhiều vòng (có hoặc không có lõi). Cuộn cảm tích luỹ năng lượng dưới dạng <strong>từ trường</strong>. Đại lượng đặc trưng là <strong>điện cảm L</strong>, đơn vị henry (H).</div>
+    <div class="formula">u = L <span class="frac"><span>di</span><span>dt</span></span> &nbsp;&nbsp;&nbsp; W<sub>L</sub> = ½ L I²<small>Điện áp trên cuộn cảm tỉ lệ với tốc độ biến thiên dòng điện</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện cảm (henry)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>Henry</td><td>H</td><td>đơn vị gốc · 1 H = 1 000 mH</td></tr><tr><td>Milihenry</td><td>mH</td><td>1 mH = 10⁻³ H = 0,001 H · 1 mH = 1 000 µH</td></tr><tr><td>Microhenry</td><td>µH</td><td>1 µH = 10⁻⁶ H = 0,000 001 H</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Cuộn lọc 10 mH = 0,01 H</li><li>Cuộn cảm nguồn xung 47 µH = 0,047 mH</li><li>Cuộn 0,5 H = 500 mH</li></ul>
+    </div>
+    <ul>
+      <li><strong>Với điện một chiều (xác lập)</strong>: dòng không đổi ⇒ di/dt = 0 ⇒ u = 0. Cuộn cảm (lý tưởng) coi như <strong>ngắn mạch</strong> (một đoạn dây dẫn).</li>
+      <li><strong>Với điện xoay chiều</strong>: cảm kháng X<sub>L</sub> = ωL; tần số càng cao cuộn cảm cản càng mạnh.</li>
+      <li>Dòng điện qua cuộn cảm không thể thay đổi đột ngột (khi ngắt mạch đột ngột sinh điện áp cảm ứng lớn, gây tia lửa ở tiếp điểm).</li>
+      <li><strong>Nối tiếp</strong>: L<sub>tđ</sub> = L₁ + L₂ + …; <strong>song song</strong>: 1/L<sub>tđ</sub> = 1/L₁ + 1/L₂ + … (giống điện trở).</li>
+    </ul>
+
+    <!-- 9 -->
+    <h2 id="cong-suat"><span class="num">09</span>Công suất</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Công suất = <strong>độ sáng của bóng đèn</strong>. Điện áp càng cao (U) và dòng càng lớn (I) thì đèn càng sáng: P = U × I.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 190" role="img" aria-label="Bóng đèn sáng với thanh điện áp và dòng điện, công suất bằng tích hai đại lượng">
+  <g class="ray"><line x1="140" y1="12" x2="140" y2="2"/><line x1="82" y1="40" x2="72" y2="32"/><line x1="198" y1="40" x2="208" y2="32"/><line x1="70" y1="88" x2="58" y2="90"/><line x1="210" y1="88" x2="222" y2="90"/></g>
+  <circle class="bulb" cx="140" cy="78" r="48"/>
+  <path class="wire" d="M126 120 L126 92 L134 72 L140 92 L146 72 L154 92 L154 120"/>
+  <rect class="base" x="120" y="126" width="40" height="30" rx="4"/><path class="wire" d="M120 136 L160 136 M120 146 L160 146"/>
+  <text class="b" x="260" y="56">U = 12 V</text><rect class="bar-warm" x="350" y="44" width="180" height="14" rx="7"/>
+  <text class="b" x="260" y="96">I = 1,5 A</text><rect class="bar-ac" x="350" y="84" width="68" height="14" rx="7"/>
+  <text class="b big" x="260" y="146">P = U × I = 12 × 1,5 = 18 W</text>
+</svg>
+      <figcaption>Công suất là "tốc độ dùng năng lượng": áp càng cao, dòng càng lớn thì đèn càng sáng</figcaption>
+    </figure>
+    <div class="def"><strong>Công suất</strong> là năng lượng mà một phần tử cấp ra hoặc tiêu thụ trong 1 giây. Trong mạch có 2 loại: <strong>công suất nguồn</strong> (nguồn cấp ra) và <strong>công suất tải</strong> (tải tiêu thụ).</div>
+    <div class="formula">P = U × I &nbsp;&nbsp;&nbsp; A = P × t<small>P: oát (W) · A (điện năng): jun (J) hoặc kWh</small></div>
+    <h3>Công suất nguồn</h3>
+    <div class="formula">P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub><small>U<sub>N</sub>: điện áp nguồn (với nguồn áp U<sub>N</sub> = E) · I<sub>N</sub>: dòng qua nguồn</small></div>
+    <p>Mạch có nhiều nguồn thì cộng công suất các nguồn: P<sub>nguồn</sub> = U<sub>1</sub> × I<sub>1</sub> + U<sub>2</sub> × I<sub>2</sub> + …</p>
+    <h3>Công suất tải</h3>
+    <div class="formula">P<sub>tải</sub> = R × I²<small>R: điện trở tải · I: dòng qua điện trở đó (cũng có thể tính P = U² / R)</small></div>
+    <p>Mạch có nhiều điện trở thì cộng công suất từng điện trở: P<sub>tải</sub> = R<sub>1</sub> × I<sub>1</sub>² + R<sub>2</sub> × I<sub>2</sub>² + …</p>
+    <h3>Cân bằng công suất</h3>
+    <div class="formula">P<sub>nguồn</sub> = P<sub>tải</sub><small>Mạch cân bằng: nguồn cấp ra bao nhiêu, tải tiêu thụ đúng bấy nhiêu</small></div>
+    <p>Ví dụ: nguồn 12 V nối điện trở 4 Ω ⇒ I = 12 / 4 = 3 A.</p>
+    <ul>
+      <li>P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub> = 12 × 3 = 36 W</li>
+      <li>P<sub>tải</sub> = R × I² = 4 × 3² = 36 W</li>
+      <li>⇒ P<sub>nguồn</sub> = P<sub>tải</sub> = 36 W ✓</li>
+    </ul>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Giải xong bài Kirchhoff thì <strong>tính lại công suất để kiểm tra</strong>: hai bên bằng nhau là đúng, lệch nhau là giải sai ở đâu đó.</p>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị công suất (oát) và điện năng</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Megaoát</td><td>MW</td><td>1 MW = 1 000 kW = 10⁶ W</td></tr><tr><td>Kilôoát</td><td>kW</td><td>1 kW = 10³ W = 1 000 W</td></tr><tr class="base"><td>Oát</td><td>W</td><td>đơn vị gốc · 1 W = 1 J/s</td></tr><tr><td>Milioát</td><td>mW</td><td>1 mW = 10⁻³ W = 0,001 W</td></tr><tr><td>Kilôoát giờ</td><td>kWh</td><td>1 kWh = 1 000 Wh = 3,6 × 10⁶ J (1 "số điện")</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Máy lạnh 1,5 kW = 1 500 W</li><li>Bóng đèn 18 W chạy 10 giờ = 180 Wh = 0,18 kWh</li><li>Nhà máy điện mặt trời 50 MW = 50 000 kW</li><li>Điện trở ¼ W = 0,25 W = 250 mW</li></ul>
+    </div>
+
+    <!-- 10 -->
+    <h2 id="mach-dien"><span class="num">10</span>Mạch điện: nhánh, nút, vòng</h2>
+    <p><strong>Mạch điện</strong> là tập hợp các phần tử (nguồn, tải, dây dẫn) nối với nhau thành đường khép kín cho dòng điện chạy qua. Nguồn biến năng lượng khác thành điện năng; tải (điện trở, cuộn cảm, tụ điện, động cơ…) nhận điện năng và biến thành dạng khác.</p>
+    <figure>
+      <svg class="sym" viewBox="0 0 640 125" role="img" aria-label="Ký hiệu các phần tử mạch: điện trở, cuộn cảm, tụ điện, nguồn áp, nguồn dòng">
+        <!-- Dien tro -->
+        <path class="w" d="M14 50 L40 50 L44 43 L52 57 L60 43 L68 57 L76 43 L84 57 L88 50 L114 50"/>
+        <text class="t" x="64" y="30" text-anchor="middle">R</text>
+        <text class="lbl" x="64" y="112" text-anchor="middle">Điện trở</text>
+        <!-- Cuon cam -->
+        <path class="w" d="M142 50 L160 50 A8 8 0 0 1 176 50 A8 8 0 0 1 192 50 A8 8 0 0 1 208 50 A8 8 0 0 1 224 50 L242 50"/>
+        <text class="t" x="192" y="30" text-anchor="middle">L</text>
+        <text class="lbl" x="192" y="112" text-anchor="middle">Cuộn cảm</text>
+        <!-- Tu dien -->
+        <path class="w" d="M270 50 L314 50 M314 32 L314 68 M326 32 L326 68 M326 50 L370 50"/>
+        <text class="t" x="320" y="24" text-anchor="middle">C</text>
+        <text class="lbl" x="320" y="112" text-anchor="middle">Tụ điện</text>
+        <!-- Nguon ap -->
+        <path class="w" d="M448 8 L448 32 M448 68 L448 92"/>
+        <circle class="src" cx="448" cy="50" r="18"/>
+        <text class="pm" x="448" y="47" text-anchor="middle">+</text>
+        <text class="pm" x="448" y="63" text-anchor="middle">−</text>
+        <text class="t" x="474" y="55">E</text>
+        <text class="lbl" x="448" y="112" text-anchor="middle">Nguồn áp</text>
+        <!-- Nguon dong -->
+        <path class="w" d="M576 8 L576 32 M576 68 L576 92"/>
+        <circle class="src" cx="576" cy="50" r="18"/>
+        <path class="w" d="M576 61 L576 41 M571 47 L576 40 L581 47"/>
+        <text class="t" x="602" y="55">J</text>
+        <text class="lbl" x="576" y="112" text-anchor="middle">Nguồn dòng</text>
+      </svg>
+      <figcaption>Ký hiệu các phần tử cơ bản dùng trong môn học</figcaption>
+    </figure>
+    <p>Ba khái niệm cần nhớ để áp dụng Kirchhoff (xem hình):</p>
+    <ul>
+      <li><strong>Nhánh</strong>: đoạn mạch gồm các phần tử mắc nối tiếp, có <strong>cùng một dòng điện</strong> chạy qua. Hình dưới có 3 nhánh, tô 3 màu.</li>
+      <li><strong>Nút</strong>: điểm gặp nhau của <strong>từ 3 nhánh trở lên</strong>. Hình có 2 nút A và B. Chỗ chỉ nối 2 phần tử (như giữa R₃ và R₄) không phải là nút.</li>
+      <li><strong>Vòng</strong>: đường khép kín đi qua các nhánh, mỗi nhánh đi qua không quá một lần. Hình có 3 vòng: V₁, V₂ và vòng ngoài V₃. Vòng không chứa nhánh nào bên trong gọi là <strong>mắt lưới</strong> (V₁, V₂).</li>
+    </ul>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 260" role="img" aria-label="Mạch có 3 nhánh tô 3 màu và 2 nút A, B">
+  <path class="br1" d="M280 40 L60 40 L60 220 L280 220"/><path class="br2" d="M280 40 L280 220"/><path class="br3" d="M280 40 L500 40 L500 220 L280 220"/><circle class="srcc" cx="60" cy="130" r="18"/><text class="pm" x="60" y="127" text-anchor="middle">+</text><text class="pm" x="60" y="144" text-anchor="middle">−</text><rect class="mask" x="145" y="31" width="50" height="18"/><path class="br1" d="M146 40 L152 40 L155 34 L161 46 L167 34 L173 46 L179 34 L185 46 L188 40 L194 40"/><rect class="mask" x="271" y="105" width="18" height="50"/><path class="br2" d="M280 106 L280 112 L274 115 L286 121 L274 127 L286 133 L274 139 L286 145 L280 148 L280 154"/><rect class="mask" x="365" y="31" width="50" height="18"/><path class="br3" d="M366 40 L372 40 L375 34 L381 46 L387 34 L393 46 L399 34 L405 46 L408 40 L414 40"/><rect class="mask" x="491" y="105" width="18" height="50"/><path class="br3" d="M500 106 L500 112 L494 115 L506 121 L494 127 L506 133 L494 139 L506 145 L500 148 L500 154"/>
+  <circle class="node" cx="280" cy="40" r="7"/><circle class="node" cx="280" cy="220" r="7"/><text class="b big" x="292" y="30">Nút A</text><text class="b big" x="292" y="248">Nút B</text>
+  <text class="b c1" x="74" y="78">Nhánh 1</text><text class="s" x="74" y="96">(nguồn + R₁)</text>
+  <text class="b c2" x="294" y="168">Nhánh 2</text><text class="s" x="294" y="186">(R₂)</text>
+  <text class="b c3" x="420" y="78" text-anchor="middle">Nhánh 3</text><text class="s" x="420" y="96" text-anchor="middle">(R₃ + R₄)</text>
+</svg>
+      <figcaption>3 nhánh (3 màu) gặp nhau ở 2 nút A và B</figcaption>
+    </figure>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 260" role="img" aria-label="Cùng mạch đó với 3 vòng: 2 mắt lưới và vòng ngoài">
+  <rect class="outer" x="22" y="12" width="516" height="236" rx="18"/>
+  <path class="wire" d="M280 40 L60 40 L60 220 L280 220"/><path class="wire" d="M280 40 L280 220"/><path class="wire" d="M280 40 L500 40 L500 220 L280 220"/><circle class="srcc" cx="60" cy="130" r="18"/><text class="pm" x="60" y="127" text-anchor="middle">+</text><text class="pm" x="60" y="144" text-anchor="middle">−</text><rect class="mask" x="145" y="31" width="50" height="18"/><path class="wire" d="M146 40 L152 40 L155 34 L161 46 L167 34 L173 46 L179 34 L185 46 L188 40 L194 40"/><rect class="mask" x="271" y="105" width="18" height="50"/><path class="wire" d="M280 106 L280 112 L274 115 L286 121 L274 127 L286 133 L274 139 L286 145 L280 148 L280 154"/><rect class="mask" x="365" y="31" width="50" height="18"/><path class="wire" d="M366 40 L372 40 L375 34 L381 46 L387 34 L393 46 L399 34 L405 46 L408 40 L414 40"/><rect class="mask" x="491" y="105" width="18" height="50"/><path class="wire" d="M500 106 L500 112 L494 115 L506 121 L494 127 L506 133 L494 139 L506 145 L500 148 L500 154"/>
+  <path class="loopv" d="M148 130 A28 28 0 1 1 170 158"/><path class="loopv" d="M178 152 L170 158 L178 165"/>
+  <text class="b ac" x="170" y="135" text-anchor="middle">V₁</text>
+  <path class="loopv" d="M368 130 A28 28 0 1 1 390 158"/><path class="loopv" d="M398 152 L390 158 L398 165"/>
+  <text class="b ac" x="390" y="135" text-anchor="middle">V₂</text>
+  <text class="s" x="170" y="200" text-anchor="middle">mắt lưới 1</text><text class="s" x="390" y="200" text-anchor="middle">mắt lưới 2</text>
+  <text class="b warm" x="530" y="30" text-anchor="end">V₃ = vòng ngoài</text>
+</svg>
+      <figcaption>3 vòng: V₁ và V₂ là mắt lưới, V₃ là vòng ngoài</figcaption>
+    </figure>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nhánh = <strong>đoạn ống</strong> (nước trong một đoạn ống chảy như nhau) · Nút = <strong>ngã ba</strong> chia nước · Vòng = <strong>đường đi vòng</strong> quay về chỗ cũ.</p>
+
+    <!-- 11 -->
+    <h2 id="kirchhoff"><span class="num">11</span>Định luật Kirchhoff K1, K2</h2>
+    <h3>Định luật Kirchhoff 1 (K1) – định luật về dòng điện tại nút</h3>
+    <div class="def"><strong>K1:</strong> Tổng đại số các dòng điện tại một nút bằng 0. Nói cách khác: tổng dòng đi vào nút bằng tổng dòng đi ra khỏi nút.</div>
+    <div class="formula">Σ I = 0 &nbsp;&nbsp;⇔&nbsp;&nbsp; Σ I<sub>vào</sub> = Σ I<sub>ra</sub><small>Quy ước: dòng đi vào nút mang dấu +, dòng đi ra khỏi nút mang dấu −</small></div>
+    <p>Ví dụ: nút có I₁ đi vào, I₂ và I₃ đi ra ⇒ I₁ − I₂ − I₃ = 0.</p>
+
+    <h3>Định luật Kirchhoff 2 (K2) – định luật về điện áp trên vòng</h3>
+    <div class="def"><strong>K2:</strong> Đi theo một vòng khép kín, tổng đại số các điện áp trên các phần tử bằng 0.</div>
+    <div class="formula">Σ U = 0 &nbsp;&nbsp;⇔&nbsp;&nbsp; Σ E = Σ R × I<small>Chọn chiều đi vòng (thường theo chiều kim đồng hồ) rồi cộng điện áp từng phần tử</small></div>
+    <p>Quy ước dấu khi viết dạng Σ U = 0 (giống cách trình bày trong trang bài tập Kirchhoff):</p>
+    <ul>
+      <li><strong>Điện trở</strong>: chiều đi vòng <strong>cùng</strong> chiều dòng ⇒ ghi <strong>+I × R</strong>; <strong>ngược</strong> chiều dòng ⇒ ghi <strong>−I × R</strong>.</li>
+      <li><strong>Nguồn áp</strong>: đi vào cực − ra cực + (tăng thế) ⇒ ghi <strong>−E</strong>; đi vào cực + ra cực − ⇒ ghi <strong>+E</strong>.</li>
+    </ul>
+
+    <h3>Số phương trình cần viết</h3>
+    <p>Mạch có <strong>n nút</strong> và <strong>m nhánh</strong> (m ẩn dòng nhánh):</p>
+    <ul>
+      <li>Viết <strong>n − 1</strong> phương trình K1 (bỏ một nút bất kỳ, vì phương trình nút cuối suy ra được từ các nút còn lại).</li>
+      <li>Viết <strong>m − (n − 1)</strong> phương trình K2, thường chọn các mắt lưới.</li>
+    </ul>
+
+    <div class="vidone">
+      <iframe src="https://www.tiktok.com/player/v1/7703822250734128391?music_info=0&amp;description=1&amp;rel=0" title="Video: Giải nhanh định luật Kirchhoff K1 &amp; K2, kèm 3 bài giải mẫu" loading="lazy" allow="fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <p>▶ Video: Giải nhanh định luật Kirchhoff K1 &amp; K2, kèm 3 bài giải mẫu · <a href="https://www.tiktok.com/@ckcddt26c/video/7703822250734128391" target="_blank" rel="noopener">Mở trên TikTok ↗</a></p>
+    </div>
+
+    <h3>Ví dụ giải mẫu</h3>
+    <p>Cho mạch như hình: E₁ = 16 V, E₂ = 14 V, R₁ = 2 Ω, R₂ = 2 Ω, R₃ = 4 Ω. Tính dòng điện các nhánh và kiểm tra cân bằng công suất.</p>
+    <figure>
+      <div id="kh-example"></div>
+      <figcaption>Mạch 2 nút (A, B), 3 nhánh, 2 mắt lưới V₁, V₂</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Phân tích mạch</h4>
+      <p>n = 2 nút, m = 3 nhánh ⇒ 1 phương trình K1 + 2 phương trình K2.</p>
+      <p>Chọn chiều dòng như hình: I₁ và I₂ đi vào nút A, I₃ đi ra khỏi nút A.</p>
+      <h4>Bước 2 – Viết hệ phương trình</h4>
+      <p>K1 tại nút A: I₁ + I₂ − I₃ = 0   (1)</p>
+      <p>K2 vòng V₁: −E₁ + I₁ × R₁ + I₃ × R₃ = 0 ⇒ 2I₁ + 4I₃ = 16   (2)</p>
+      <p>K2 vòng V₂: −I₂ × R₂ + E₂ − I₃ × R₃ = 0 ⇒ 2I₂ + 4I₃ = 14   (3)</p>
+      <p>(V₂ đi qua R₂ ngược chiều I₂ ⇒ −I₂R₂; qua E₂ từ + sang − ⇒ +E₂; qua R₃ ngược chiều I₃ ⇒ −I₃R₃)</p>
+      <h4>Bước 3 – Giải hệ</h4>
+      <p>Từ (2): I₁ = 8 − 2I₃. Từ (3): I₂ = 7 − 2I₃.</p>
+      <p>Thay vào (1): (8 − 2I₃) + (7 − 2I₃) − I₃ = 0 ⇒ 15 − 5I₃ = 0 ⇒ I₃ = 3 A</p>
+      <p class="ans">⇒ I₁ = 2 A, I₂ = 1 A, I₃ = 3 A (đều dương: chiều thực tế đúng như giả định)</p>
+      <h4>Bước 4 – Kiểm tra cân bằng công suất</h4>
+      <p>P<sub>nguồn</sub> = E₁ × I₁ + E₂ × I₂ = 16 × 2 + 14 × 1 = 32 + 14 = 46 W</p>
+      <p>P<sub>tải</sub> = R₁ × I₁² + R₂ × I₂² + R₃ × I₃² = 2 × 2² + 2 × 1² + 4 × 3² = 8 + 2 + 36 = 46 W</p>
+      <p class="ans">⇒ P<sub>nguồn</sub> = P<sub>tải</sub> = 46 W ✓</p>
+    </div>
+
+    <!-- 12 -->
+    <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Đại lượng</th><th>Ký hiệu</th><th>Đơn vị</th><th>Công thức chính</th></tr></thead>
+        <tbody>
+          <tr><td>Dòng điện</td><td>I, i</td><td>A</td><td>I = q/t</td></tr>
+          <tr><td>Điện thế</td><td>V<sub>A</sub></td><td>V</td><td>V<sub>A</sub> = W/q (so với gốc 0 V)</td></tr>
+          <tr><td>Điện áp</td><td>U, u</td><td>V</td><td>U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub></td></tr>
+          <tr><td>Sức điện động</td><td>E</td><td>V</td><td>U = E − I × r (nguồn thực)</td></tr>
+          <tr><td>Điện trở</td><td>R</td><td>Ω</td><td>U = I × R; R = ρl/S</td></tr>
+          <tr><td>Điện dung</td><td>C</td><td>F</td><td>C = q/U; i = C du/dt; W = ½CU²</td></tr>
+          <tr><td>Điện cảm</td><td>L</td><td>H</td><td>u = L di/dt; W = ½LI²</td></tr>
+          <tr><td>Công suất nguồn</td><td>P<sub>N</sub></td><td>W</td><td>P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub></td></tr>
+          <tr><td>Công suất tải</td><td>P<sub>tải</sub></td><td>W</td><td>P<sub>tải</sub> = R × I²</td></tr>
+          <tr><td>Cân bằng công suất</td><td colspan="2">Toàn mạch</td><td>P<sub>nguồn</sub> = P<sub>tải</sub></td></tr>
+          <tr><td>K1</td><td colspan="2">Tại nút</td><td>Σ I<sub>vào</sub> = Σ I<sub>ra</sub></td></tr>
+          <tr><td>K2</td><td colspan="2">Trên vòng</td><td>Σ U = 0 ⇔ Σ E = Σ RI</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Bảng tiền tố dùng chung cho mọi đơn vị</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Tiền tố</th><th>Ký hiệu</th><th>Giá trị</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>Mega</td><td>M</td><td>10⁶ = 1 000 000</td><td>MV, MΩ, MW</td></tr>
+          <tr><td>Kilô</td><td>k</td><td>10³ = 1 000</td><td>kV, kA, kΩ, kW</td></tr>
+          <tr class="base"><td>(đơn vị gốc)</td><td>–</td><td>1</td><td>V, A, Ω, F, H, W</td></tr>
+          <tr><td>Mili</td><td>m</td><td>10⁻³ = 0,001</td><td>mV, mA, mH, mW</td></tr>
+          <tr><td>Micro</td><td>µ</td><td>10⁻⁶ = 0,000 001</td><td>µV, µA, µF, µH</td></tr>
+          <tr><td>Nano</td><td>n</td><td>10⁻⁹</td><td>nF</td></tr>
+          <tr><td>Pico</td><td>p</td><td>10⁻¹²</td><td>pF</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Mỗi bậc cách nhau <strong>1 000 lần</strong>. Đổi sang đơn vị <strong>nhỏ hơn</strong> 1 bậc thì <strong>nhân 1 000</strong> (2,2 kΩ = 2 200 Ω); đổi sang đơn vị <strong>lớn hơn</strong> 1 bậc thì <strong>chia 1 000</strong> (250 mA = 0,25 A). Chú ý: <strong>m</strong> nhỏ là mili (10⁻³), <strong>M</strong> lớn là mega (10⁶).</p>
+    <div class="note"><strong>Mẹo nhớ ở chế độ DC xác lập:</strong> tụ điện = hở mạch, cuộn cảm = ngắn mạch. Điện trở mắc nối tiếp thì cộng, tụ điện mắc song song thì cộng.</div>
+
+    <!-- 13 -->
+    <h2 id="bai-tap"><span class="num">13</span>Bài tập</h2>
+    <p>Làm bài để luyện định luật K1, K2 và tính công suất:</p>
+    <div class="exlist">
+      <a class="card" href="/kirchhoff">
+        <h2>Bài tập Kirchhoff Law 1,2</h2>
+        <p>Các đề K1, K2 tự chấm điểm, kèm tab Bài nâng cao có lời giải chi tiết K1, K2 và công suất.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+    </div>
+
+    <a class="back" href="/lythuyetmach">← Về trang Lý Thuyết Mạch</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261103c"></script>
+<script src="/assets/site.js?v=20261103"></script>
+<script src="/assets/kirchhoff-svg.js?v=1"></script>
+<script>
+(function () {
+  var host = document.getElementById("kh-example");
+  if (!host || !window.KH_SVG) return;
+  host.appendChild(window.KH_SVG.draw({
+    id: "ví dụ Chương 1",
+    size: [530, 260],
+    draw: [
+      ["w", 40, 40, 420, 40], ["w", 40, 220, 420, 220], ["w", 40, 40, 40, 220], ["w", 230, 40, 230, 220], ["w", 420, 40, 420, 220],
+      ["v", 40, 130, "E₁ = 16 V"], ["v", 420, 130, "E₂ = 14 V"],
+      ["r", 135, 40, "h", "R₁ = 2 Ω"], ["r", 325, 40, "h", "R₂ = 2 Ω"], ["r", 230, 130, "v", "R₃ = 4 Ω"],
+      ["a", 82, 40, "r", "I₁"], ["a", 275, 40, "l", "I₂"], ["a", 230, 82, "d", "I₃"],
+      ["n", 230, 40, "A"], ["n", 230, 220, "B"],
+      ["k", 135, 175, "V₁"], ["k", 325, 175, "V₂"]
+    ]
+  }));
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
