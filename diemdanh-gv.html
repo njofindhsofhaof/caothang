@@ -32,7 +32,7 @@
   <form class="dd-card gv-login" id="loginForm" hidden>
     <label class="dd-label" for="pinInput">Mã PIN giáo viên</label>
     <div class="dd-row">
-      <input id="pinInput" type="password" inputmode="numeric" autocomplete="current-password" required>
+      <input id="pinInput" type="password" autocomplete="current-password" required>
       <button class="dd-btn" type="submit">Vào</button>
     </div>
     <p class="dd-hint" id="loginMsg" role="status"></p>
@@ -159,6 +159,20 @@
         <p class="dd-hint" id="rosterMsg" role="status"></p>
       </div>
       <div class="gv-table-wrap"><table class="gv-table" id="rosterTable"></table></div>
+
+      <form class="dd-card" id="pinForm" aria-labelledby="pinTitle">
+        <h3 class="dd-label" id="pinTitle">Đổi mã PIN giáo viên</h3>
+        <p class="dd-hint">PIN mới ít nhất 10 ký tự, có cả chữ và số. Đổi xong, các máy khác phải nhập PIN mới.</p>
+        <label class="dd-label" for="pinCurrent">PIN hiện tại</label>
+        <input id="pinCurrent" type="password" autocomplete="current-password" required>
+        <label class="dd-label" for="pinNew">PIN mới</label>
+        <input id="pinNew" type="password" autocomplete="new-password" minlength="10" maxlength="64" required>
+        <label class="dd-label" for="pinNew2">Nhập lại PIN mới</label>
+        <input id="pinNew2" type="password" autocomplete="new-password" minlength="10" maxlength="64" required>
+        <p><button class="dd-btn" type="submit">Đổi PIN</button></p>
+        <p class="dd-hint" id="pinMsg" role="status"></p>
+        <p class="dd-hint">Quên PIN: vào Vercel → Storage → Open in Upstash → Data Browser, xoá key <code>teacher:pin</code>. Trang sẽ dùng lại PIN đặt trong Vercel (<code>TEACHER_PIN</code>).</p>
+      </form>
     </section>
   </div>
 </main>
@@ -166,6 +180,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
 <script src="/assets/diemdanh-img.js?v=img"></script>
-<script src="/assets/diemdanh-gv.js?v=subjcol2"></script>
+<script src="/assets/diemdanh-gv.js?v=pin1"></script>
 </body>
 </html>

@@ -30,3 +30,7 @@ Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `par
 ## Thẻ xem trước khi chia sẻ link
 
 Mọi trang `.html` phải có `<meta name="description">` và các thẻ Open Graph (`og:title`, `og:description`, `og:url`, `og:image` = `/assets/og.png` 1200×630, `twitter:card`) để dán link vào Zalo/Facebook hiện tiêu đề và ảnh. Chép khối thẻ từ `lythuyetmach-chuong2.html` rồi sửa title/description/url. `npm test` (test/og-tags.test.js) báo lỗi nếu trang mới thiếu.
+
+## PIN giáo viên
+
+Đổi PIN ngay trong `/diemdanh-gv` (tab Danh sách lớp → Đổi mã PIN). PIN mới lưu trên Redis key `teacher:pin` dạng băm scrypt (`api/_lib/pin.js`), thay thế `TEACHER_PIN` trên Vercel. Quên PIN: xoá key `teacher:pin` (Vercel → Storage → Open in Upstash → Data Browser) để quay về `TEACHER_PIN`. Mọi API cần PIN đi qua `teacherGate` (store.js): sai 8 lần/IP bị khoá 15 phút.

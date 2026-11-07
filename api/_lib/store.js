@@ -1,6 +1,7 @@
 import { redis, keys } from './redis.js';
 import { lateUntil } from './periods.js';
 import { isTeacher, clientIp } from './http.js';
+import { verifyPinHash } from './pin.js';
 
 const PIN_MAX_FAILS = 8;
 const PIN_LOCK_S = 15 * 60;
@@ -11,7 +12,11 @@ export async function teacherGate(req, db = redis()) {
   const key = keys.rate(`pinfail:${clientIp(req)}`);
   const fails = Number(await db.get(key)) || 0;
   if (fails >= PIN_MAX_FAILS) return { status: 429, message: 'Nhập sai PIN quá nhiều lần. Đợi 15 phút rồi thử lại.' };
-  if (isTeacher(req)) return null;
+  // PIN doi tren trang (luu bam tren Redis) thay the TEACHER_PIN; chua doi thi dung TEACHER_PIN.
+  const stored = await db.get(keys.teacherPin);
+  const given = req.headers['x-teacher-pin'];
+  const ok = stored ? verifyPinHash(typeof given === 'string' ? given : '', String(stored)) : isTeacher(req);
+  if (ok) return null;
   const n = await db.incr(key);
   if (n === 1) await db.expire(key, PIN_LOCK_S);
   return { status: 401, message: 'Sai mã PIN giáo viên.' };

@@ -25,6 +25,7 @@ export const keys = {
   device: (deviceId) => `device:${deviceId}`,
   excuse: (date) => `excuse:${date}`,
   rate: (who) => `rl:${who}`,
+  teacherPin: 'teacher:pin', // PIN giáo viên đổi trên trang (băm scrypt); xoá key này để quay về TEACHER_PIN trên Vercel
   subscribers: 'subscribers', // set: email đã xác nhận nhận bài mới
   notifySent: 'notify:sent', // set: href bài đã gửi email báo
 };

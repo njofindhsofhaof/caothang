@@ -80,9 +80,29 @@
     await start();
   });
 
+  // Đổi PIN: gửi PIN hiện tại trong header (đi qua cùng cơ chế khoá khi sai), lưu PIN mới cho phiên này.
+  $('pinForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = $('pinMsg');
+    const current = $('pinCurrent').value;
+    const next = $('pinNew').value;
+    if (next !== $('pinNew2').value) { msg.textContent = 'Hai ô PIN mới không giống nhau.'; return; }
+    const res = await fetch('/api/teacher-pin', {
+      method: 'POST',
+      headers: { 'x-teacher-pin': current, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ newPin: next }),
+    });
+    let data;
+    try { data = await res.json(); } catch { data = { ok: false, message: 'Máy chủ không phản hồi.' }; }
+    msg.textContent = data.message || (data.ok ? 'Đã đổi PIN.' : 'Không đổi được PIN.');
+    if (!data.ok) return;
+    pin.set(next);
+    e.target.reset();
+  });
+
   async function start() {
     const r = await api('/api/roster');
-    if (!r.ok) return;
+    if (!r.ok) { showLogin(r.message); return; }
     roster = r.roster.sort(byStt);
     $('loginForm').hidden = true;
     $('app').hidden = false;
