@@ -54,6 +54,18 @@
 .sim .o.good b{color:var(--flow-on);}
 .k-on{color:var(--flow-on);font-weight:600;}
 .k-off{color:var(--flow-off);font-weight:600;}
+.post h3.sub{font-family:var(--serif);font-size:18px;font-weight:600;margin:26px 0 8px;}
+.sch{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:14px 0 10px;overflow-x:auto;}
+.sch svg{display:block;width:100%;min-width:720px;height:auto;}
+.sch figcaption{font-size:13.5px;color:var(--ink-soft);margin-top:8px;}
+.sch .w{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.sch .part{fill:var(--surface);stroke:var(--ink);stroke-width:1.4;}
+.sch .ic{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.6;}
+.sch .term{fill:var(--surface);stroke:var(--ink);stroke-width:1.6;}
+.sch .dot{fill:var(--ink);}
+.sch .t{font-family:var(--sans);font-size:13px;fill:var(--ink);}
+.sch .tb{font-family:var(--sans);font-size:14px;font-weight:600;fill:var(--ink);}
+.sch .tm{font-family:var(--mono);font-size:11.5px;fill:var(--ink-soft);}
 @media (max-width:600px){.post h2{font-size:21px;}}
 </style>
 </head>
@@ -183,9 +195,100 @@
     <h2>Tự làm</h2>
     <ul>
       <li><strong>Mức 1, mua module LM2596</strong> (khoảng 25–35 nghìn): có sẵn biến trở đa vòng để chỉnh áp ra. Cấp 24V vào, vặn biến trở trong lúc đo đầu ra bằng VOM cho tới khi được 12V rồi mới gắn tải. Biến trở ở đây chỉ "đặt mục tiêu" cho IC, dòng tải không đi qua nó.</li>
-      <li><strong>Mức 2, mạch nguồn trong danh sách thực hành Điện tử Cơ bản:</strong> cầu diode KBP307 + tụ 2200µF chỉnh lưu điện xoay chiều thành DC, rồi LM2596S-12 hạ xuống cố định 12V với cuộn cảm 47µH, diode HER307 và tụ 1000µF. Đúng sơ đồ trong bài này, chỉ thêm khâu chỉnh lưu phía trước.</li>
+      <li><strong>Mức 2, mạch nguồn trong danh sách thực hành Điện tử Cơ bản:</strong> cầu diode KBP307 + tụ 2200µF chỉnh lưu điện xoay chiều thành DC, rồi LM2596S-12 hạ xuống cố định 12V với cuộn cảm 47µH, diode HER307 và tụ 1000µF. Đúng sơ đồ trong bài này, chỉ thêm khâu chỉnh lưu phía trước. Sơ đồ đầy đủ để lắp ở <a href="#so-do">mục bên dưới</a>.</li>
     </ul>
     <p class="note"><strong>Lưu ý với LM2596:</strong> áp vào tối đa 40V, và phải cao hơn áp ra ít nhất khoảng 1,5V. Dòng ghi 3A nhưng trên 2A nên gắn thêm tản nhiệt. Diode phải là loại nhanh (Schottky như 1N5822, hoặc HER307 như trong danh sách), không dùng 1N4007 vì nó quá chậm so với tần số đóng ngắt.</p>
+
+    <h2 id="so-do">Sơ đồ hoàn chỉnh để lắp</h2>
+    <p>Dùng <strong>LM2596S-12</strong>, loại ra cố định 12V giống trong danh sách của lớp. Bên trong IC đã có sẵn công tắc, bộ tạo xung 150kHz và mạch hồi tiếp, nên bên ngoài chỉ cần gắn cuộn cảm, diode và tụ.</p>
+    <figure class="sch">
+      <svg viewBox="0 0 820 360" role="img" aria-labelledby="schTitle">
+        <title id="schTitle">Sơ đồ mạch hạ áp 24V xuống 12V dùng LM2596S-12</title>
+        <!-- ngõ vào -->
+        <rect class="term" x="22" y="68" width="18" height="24" rx="3"/><rect class="term" x="22" y="288" width="18" height="24" rx="3"/>
+        <text class="tb" x="18" y="40">J1 vào 15–35V</text>
+        <text class="tm" x="46" y="74">+</text><text class="tm" x="46" y="294">−</text>
+        <path class="w" d="M40 80 H80 M130 80 H260 V140 H280"/>
+        <rect class="part" x="80" y="72" width="50" height="16" rx="3"/><text class="t" x="82" y="64">F1 3A</text>
+        <!-- C1, C2 -->
+        <path class="w" d="M170 80 V176 M170 186 V300 M154 176 H186 M154 186 H186"/>
+        <text class="tm" x="152" y="172">+</text>
+        <text class="t" x="112" y="212">C1</text><text class="tm" x="108" y="226">2200µF</text><text class="tm" x="108" y="240">50V</text>
+        <path class="w" d="M230 80 V176 M230 186 V300 M216 176 H244 M216 186 H244"/>
+        <text class="t" x="238" y="212">C2</text><text class="tm" x="238" y="226">100nF</text>
+        <!-- mass -->
+        <path class="w" d="M40 300 H780"/>
+        <!-- IC -->
+        <rect class="ic" x="280" y="120" width="140" height="120" rx="6"/>
+        <text class="tb" x="350" y="176" text-anchor="middle">U1</text>
+        <text class="t" x="350" y="194" text-anchor="middle">LM2596S-12</text>
+        <text class="tm" x="286" y="144">1 VIN</text>
+        <text class="tm" x="414" y="154" text-anchor="end">2 OUT</text>
+        <text class="tm" x="400" y="136" text-anchor="middle">4 FB</text>
+        <text class="tm" x="320" y="234" text-anchor="middle">3 GND</text>
+        <text class="tm" x="390" y="234" text-anchor="middle">5 ON/OFF</text>
+        <path class="w" d="M320 240 V300 M390 240 V300"/>
+        <!-- hồi tiếp -->
+        <path class="w" d="M400 120 V100 H620 V150"/>
+        <text class="tm" x="430" y="94">hồi tiếp: IC đo áp ra để tự chỉnh D</text>
+        <!-- SW, L1, D1 -->
+        <path class="w" d="M420 150 H490 M586 150 H780"/>
+        <path class="w" d="M490 150 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0 a12 12 0 0 1 24 0"/>
+        <text class="t" x="506" y="132">L1 47µH</text>
+        <path class="w" d="M470 150 V208 M470 228 V300 M459 208 H481"/>
+        <polygon class="part" points="459,228 481,228 470,210"/>
+        <text class="t" x="486" y="216">D1</text><text class="tm" x="486" y="230">1N5822</text>
+        <!-- C3 -->
+        <path class="w" d="M650 150 V206 M650 216 V300 M634 206 H666 M634 216 H666"/>
+        <text class="tm" x="632" y="202">+</text>
+        <text class="t" x="622" y="246" text-anchor="end">C3</text><text class="tm" x="640" y="262" text-anchor="end">1000µF 35V</text>
+        <!-- LED báo -->
+        <path class="w" d="M730 150 V172 M730 204 V224 M730 240 V300 M720 240 H740"/>
+        <rect class="part" x="724" y="172" width="12" height="32" rx="2"/>
+        <polygon class="part" points="720,224 740,224 730,240"/>
+        <text class="tm" x="742" y="192">R1 1k</text><text class="tm" x="744" y="236">LED</text>
+        <!-- ngõ ra -->
+        <rect class="term" x="780" y="138" width="18" height="24" rx="3"/><rect class="term" x="780" y="288" width="18" height="24" rx="3"/>
+        <text class="tb" x="700" y="126">J2 ra 12V</text>
+        <text class="tm" x="804" y="144">+</text><text class="tm" x="804" y="294">−</text>
+        <circle class="dot" cx="170" cy="80" r="3"/><circle class="dot" cx="230" cy="80" r="3"/><circle class="dot" cx="470" cy="150" r="3"/><circle class="dot" cx="620" cy="150" r="3"/><circle class="dot" cx="650" cy="150" r="3"/><circle class="dot" cx="730" cy="150" r="3"/>
+        <circle class="dot" cx="170" cy="300" r="3"/><circle class="dot" cx="230" cy="300" r="3"/><circle class="dot" cx="320" cy="300" r="3"/><circle class="dot" cx="390" cy="300" r="3"/><circle class="dot" cx="470" cy="300" r="3"/><circle class="dot" cx="650" cy="300" r="3"/><circle class="dot" cx="730" cy="300" r="3"/>
+      </svg>
+      <figcaption>Chân 5 (ON/OFF) nối mass thì IC chạy. Chân 4 (FB) nối thẳng vào ngõ ra 12V. Vạch trên thân D1 quay về phía chân 2. Trên điện thoại, vuốt ngang để xem hết sơ đồ.</figcaption>
+    </figure>
+
+    <h3 class="sub">Thông số</h3>
+    <ul>
+      <li><strong>Áp vào:</strong> khoảng 15V tới 35V (LM2596 chịu tối đa 40V, chừa khoảng an toàn). Dưới khoảng 14V thì áp ra bắt đầu tụt khỏi 12V.</li>
+      <li><strong>Áp ra:</strong> 12V cố định. <strong>Dòng ra:</strong> tới khoảng 2A, giới hạn bởi cuộn cảm 47µH loại 2,44A trong danh sách.</li>
+      <li><strong>f:</strong> 150kHz do IC tự tạo. <strong>D:</strong> IC tự chỉnh, khoảng 0,5 khi vào 24V, lên cao hơn khi áp vào thấp.</li>
+    </ul>
+
+    <h3 class="sub">Danh sách linh kiện</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Ký hiệu</th><th>Linh kiện</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td>U1</td><td>LM2596S-12 (TO-263)</td><td>Mặt lưng là chân GND, hàn vào mảng đồng lớn để tản nhiệt</td></tr>
+        <tr><td>F1</td><td>Cầu chì 3A</td><td>Bảo vệ khi lỡ chập ngõ ra</td></tr>
+        <tr><td>C1</td><td>Tụ hoá 2200µF 50V</td><td>Đúng cực, chịu áp lớn hơn áp vào</td></tr>
+        <tr><td>C2</td><td>Tụ gốm 100nF (104)</td><td>Đặt sát chân 1 và 3 của IC</td></tr>
+        <tr><td>L1</td><td>Cuộn cảm 47µH, ≥ 2A</td><td>Như CDRH104 47µH 2,44A trong danh sách lớp</td></tr>
+        <tr><td>D1</td><td>Diode Schottky 1N5822 (3A 40V)</td><td>Hoặc HER307. Không dùng 1N4007</td></tr>
+        <tr><td>C3</td><td>Tụ hoá 1000µF 35V</td><td>Loại low ESR càng tốt</td></tr>
+        <tr><td>R1, LED</td><td>Điện trở 1k + LED</td><td>Đèn báo có điện, khoảng 10mA</td></tr>
+        <tr><td>J1, J2</td><td>Domino 2 chân</td><td>Đấu dây vào / ra</td></tr>
+      </tbody>
+    </table></div>
+    <p>Danh sách của lớp có thêm biến trở 10k và vài điện trở khác; cách nối chúng tuỳ sơ đồ thầy phát, nên lắp theo bản của thầy nếu khác chỗ nào. Nếu dùng bản <strong>LM2596-ADJ</strong> (chỉnh được) thì chân 4 nối vào cầu phân áp: R<sub>dưới</sub> 1k từ chân 4 xuống mass, R<sub>trên</sub> từ ngõ ra xuống chân 4 với R<sub>trên</sub> = 1k × (V<sub>ra</sub> / 1,23 − 1). Ra 12V thì R<sub>trên</sub> ≈ 8,8k, dùng biến trở 10k để vặn.</p>
+
+    <h3 class="sub">Thứ tự lắp và đo kiểm</h3>
+    <ol>
+      <li><strong>Kiểm tra trước khi cấp điện:</strong> đo thông mạch, chắc chắn +24V và mass không chạm nhau, +12V và mass không chạm nhau. Xem lại chiều C1, C3, D1, LED.</li>
+      <li><strong>Cấp 24V, chưa gắn tải:</strong> đo J2 được khoảng 12V, LED sáng, IC không nóng. Nếu đo ra gần 24V là IC hỏng hoặc chân 4 chưa nối.</li>
+      <li><strong>Gắn tải nhỏ rồi tăng dần:</strong> bóng 12V 5W trước, sau đó tải lớn hơn tới 2A. Áp ra vẫn phải quanh 12V. IC, cuộn cảm, diode ấm là bình thường, nóng không sờ được là quá tải.</li>
+      <li><strong>Đo hiệu suất:</strong> P<sub>vào</sub> = U<sub>vào</sub> × I<sub>vào</sub>, P<sub>ra</sub> = U<sub>ra</sub> × I<sub>ra</sub>, η = P<sub>ra</sub> / P<sub>vào</sub>. Làm tốt sẽ được khoảng 80–90%.</li>
+    </ol>
+    <p class="note"><strong>Đi dây:</strong> vòng C1 → chân 1, chân 2 → D1 → mass phải thật ngắn và to, vì đây là chỗ dòng đóng ngắt 150 nghìn lần mỗi giây. Dây dài sẽ gây nhiễu và gai áp. Dây hồi tiếp chân 4 lấy ngay tại chân tụ C3, đi xa cuộn cảm.</p>
 
     <a class="back" href="/duan">← Về Dự án</a>
   </article>
