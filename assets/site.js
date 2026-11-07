@@ -7,9 +7,9 @@
   var DAY_MS = 86400000;
 
   var SECTIONS = [
-    { key: "gioithieu", label: "Giới thiệu", href: "/gioithieu" },
     { key: "hoctap", label: "Học tập", href: "/hoctap" },
     { key: "ontap", label: "Ôn tập", href: "/ontap" },
+    { key: "duan", label: "Dự án", href: "/duan" },
     { key: "hoatdong", label: "Hoạt động", href: "/hoatdong" },
     { key: "event", label: "Bài viết", href: "/event" },
     { key: "diemdanh", label: "Điểm danh", href: "/diemdanh" }

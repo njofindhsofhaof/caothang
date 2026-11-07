@@ -1,6 +1,6 @@
 /* Nguon du lieu duy nhat cho bang "Bai moi" o trang chu va danh sach bai o cac trang con.
    Them bai moi: them 1 dong vao mang duoi day (date dang YYYY-MM-DD).
-   - section: gioithieu | ontap | hoctap | hoatdong | event
+   - section: hoctap | ontap | duan | hoatdong | event
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
    - order: (tuy chon) so thu tu co dinh trong danh sach trang muc (vd. 4 mon On tap); bai khong co order xep sau theo ngay.
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
@@ -9,6 +9,13 @@
    + nap /assets/posts.js va /assets/site.js (xem dientucoban.html).
    Trang cha co the long nhau (Hoc tap > Nam nhat > Thuc hanh); "Moi" lan len tu moi cap con chau. */
 window.CT_POSTS = [
+  {
+    section: "duan",
+    title: "Mạch tăng áp Boost 12V lên 24V",
+    desc: "Nguyên lý mạch Boost có hình minh hoạ động: cuộn cảm, công tắc MOSFET, diode, tụ. Công thức chu kỳ làm việc và cách tự ráp.",
+    date: "2026-11-07",
+    href: "/machboost"
+  },
   {
     section: "hoctap",
     title: "Năm nhất",

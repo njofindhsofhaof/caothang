@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/gioithieu", "destination": "/", "permanent": true }
+  ],
   "functions": {
     "api/notify.js": { "includeFiles": "assets/posts.js", "maxDuration": 60 }
   },

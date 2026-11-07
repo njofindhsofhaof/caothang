@@ -42,7 +42,7 @@ export function parsePosts(source) {
 }
 
 const SECTION_LABELS = {
-  gioithieu: 'Giới thiệu', ontap: 'Ôn tập', hoctap: 'Học tập',
+  ontap: 'Ôn tập', duan: 'Dự án', hoctap: 'Học tập',
   hoatdong: 'Hoạt động', event: 'Bài viết',
 };
 
