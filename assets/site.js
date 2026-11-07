@@ -72,6 +72,11 @@
       if (it.href === here) a.setAttribute("aria-current", "page");
       container.appendChild(a);
     });
+    // Tren dien thoai menu cuon ngang: dua muc dang mo vao tam nhin.
+    var current = container.querySelector('[aria-current="page"]');
+    if (current && container.scrollWidth > container.clientWidth) {
+      container.scrollLeft = Math.max(0, current.offsetLeft - container.offsetLeft - 16);
+    }
   }
 
   function postLink(p, extra) {

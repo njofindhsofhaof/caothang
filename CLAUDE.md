@@ -24,3 +24,7 @@ Mẫu chuẩn: `lythuyetmach-chuong1.html`. Bài mới theo đúng khung này:
 Quy ước ký hiệu: điện thế viết `V_A`, `V_B` (không dùng φ); điện áp `U_AB = V_A − V_B`; công suất nguồn `P_N = U_N × I_N`, công suất tải `P_tải = R × I²`, cân bằng `P_nguồn = P_tải`. Dấu K1, K2 theo trang `/kirchhoff`.
 
 Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `parent` là trang môn (vd. `/namnhat-lythuyetmach`) và `order` theo số chương.
+
+## Thẻ xem trước khi chia sẻ link
+
+Mọi trang `.html` phải có `<meta name="description">` và các thẻ Open Graph (`og:title`, `og:description`, `og:url`, `og:image` = `/assets/og.png` 1200×630, `twitter:card`) để dán link vào Zalo/Facebook hiện tiêu đề và ảnh. Chép khối thẻ từ `lythuyetmach-chuong2.html` rồi sửa title/description/url. `npm test` (test/og-tags.test.js) báo lỗi nếu trang mới thiếu.
