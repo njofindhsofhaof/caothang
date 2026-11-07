@@ -125,17 +125,25 @@
     container.appendChild(el("table", { "class": "news" }, [thead, tbody]));
   }
 
-  /** Ngay moi nhat cua bai va cac bai con (parent = href cua bai), de trang cha cung bao "Moi". */
+  /** Ngay moi nhat cua bai va moi bai con chau (parent long nhau), de trang cha cung bao "Moi". */
+  function latestDate(p, depth) {
+    if (depth > 5) return p.date;
+    return posts.reduce(function (d, c) {
+      if (c.parent !== p.href) return d;
+      var cd = latestDate(c, depth + 1);
+      return cd > d ? cd : d;
+    }, p.date);
+  }
+
   function withActivity(p) {
-    var latest = posts.reduce(function (d, c) { return c.parent === p.href && c.date > d ? c.date : d; }, p.date);
-    return Object.assign({}, p, { activity: latest });
+    return Object.assign({}, p, { activity: latestDate(p, 0) });
   }
 
   function byActivityDesc(a, b) {
     return a.activity < b.activity ? 1 : a.activity > b.activity ? -1 : 0;
   }
 
-  /** Bai co "order" (vd. 4 mon o trang On tap) dung yen theo thu tu do, dung truoc bai khong co. */
+  /** Bai co "order" (vd. 4 mon o trang On tap, 4 thu muc Nam nhat) dung yen theo thu tu do, dung truoc bai khong co. */
   function byOrderThenActivity(a, b) {
     var oa = a.order == null ? Infinity : a.order;
     var ob = b.order == null ? Infinity : b.order;
@@ -149,7 +157,7 @@
     var items = posts
       .filter(function (p) { return parent ? p.parent === parent : p.section === key && !p.parent; })
       .map(withActivity)
-      .sort(parent ? byDateDesc : byOrderThenActivity);
+      .sort(byOrderThenActivity);
     var empty = document.getElementById("emptyState");
     if (items.length === 0) return;
     if (empty) empty.hidden = true;

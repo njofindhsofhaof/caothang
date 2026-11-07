@@ -6,8 +6,58 @@
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
    Trang chua bai (trang cha): khi bai con co "Moi", the trang cha o trang muc cung tu hien "Moi" + ngay cap nhat.
    Trang cha tu liet ke bai con bang <div class="list" id="postList" data-parent="/href-trang-cha"></div>
-   + nap /assets/posts.js va /assets/site.js (xem dientucoban.html). */
+   + nap /assets/posts.js va /assets/site.js (xem dientucoban.html).
+   Trang cha co the long nhau (Hoc tap > Nam nhat > Thuc hanh); "Moi" lan len tu moi cap con chau. */
 window.CT_POSTS = [
+  {
+    section: "hoctap",
+    title: "Năm nhất",
+    desc: "Tài liệu học tập năm nhất.",
+    date: "2026-11-07",
+    href: "/namnhat",
+    hideFromNews: true,
+    order: 1
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat",
+    title: "Thực hành",
+    desc: "Video hướng dẫn thực hành.",
+    date: "2026-11-07",
+    href: "/namnhat-thuchanh",
+    hideFromNews: true,
+    order: 1
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat",
+    title: "Lý thuyết mạch",
+    desc: "Tài liệu môn Lý thuyết mạch.",
+    date: "2026-11-07",
+    href: "/namnhat-lythuyetmach",
+    hideFromNews: true,
+    order: 2
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat",
+    title: "Điện tử Cơ bản",
+    desc: "Tài liệu môn Điện tử Cơ bản.",
+    date: "2026-11-07",
+    href: "/namnhat-dientucoban",
+    hideFromNews: true,
+    order: 3
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat",
+    title: "Đo lường điện",
+    desc: "Tài liệu môn Đo lường điện.",
+    date: "2026-11-07",
+    href: "/namnhat-doluongdien",
+    hideFromNews: true,
+    order: 4
+  },
   {
     section: "event",
     title: "Ghi chú tham quan Vietnam Energy Week 2026",
@@ -108,6 +158,7 @@ window.CT_POSTS = [
   },
   {
     section: "hoctap",
+    parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
     date: "2026-09-19",
     href: "https://vt.tiktok.com/ZSqngEDSJ/"
@@ -137,24 +188,28 @@ window.CT_POSTS = [
   },
   {
     section: "hoctap",
+    parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ trực tiếp có đèn báo - môn Thực hành Điện cơ bản",
     date: "2026-09-23",
     href: "https://vt.tiktok.com/ZSbJtDv8f/"
   },
   {
     section: "hoctap",
+    parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ thuận nghịch và giới hạn hành trình",
     date: "2026-09-27",
     href: "https://www.tiktok.com/@ckcddt26c/video/7689804296971488564"
   },
   {
     section: "hoctap",
+    parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch và đo mạch điện trở nối tiếp và song song",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7696094907047480583"
   },
   {
     section: "hoctap",
+    parent: "/namnhat-thuchanh",
     title: "Quy trình làm một board mạch đơn giản",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7697250102666251527"
