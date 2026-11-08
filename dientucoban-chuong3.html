@@ -8,6 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong3.en.js?v=1">
 <meta property="og:title" content="Chương 3: Chất bán dẫn và diode · Điện tử Cơ bản">
 <meta property="og:description" content="Điện tử cơ bản Chương 3: chất bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, diode và các loại diode (chỉnh lưu, tín hiệu, Schottky, Zener, LED, quang, laser), chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong3">
@@ -1126,8 +1127,13 @@
   function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
   function fmt(x, d) {
     var p = Math.pow(10, d == null ? 2 : d), r = Math.round(x * p) / p;
-    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+    var t = String(Math.abs(r));
+    return (r < 0 ? "−" : "") + (isEn() ? t : t.replace(".", ","));
   }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function svgEl(tag, attrs, text) {
     var el = document.createElementNS(NS, tag);
     Object.keys(attrs || {}).forEach(function (k) { el.setAttribute(k, attrs[k]); });
@@ -1163,6 +1169,7 @@
     var input = $(id), out = $(id + "o");
     var api = { input: input, get: function () { return Number(input.value); }, show: function () { out.textContent = show(api.get()); } };
     input.addEventListener("input", function () { api.show(); onChange(); });
+    onLang(api.show);
     api.show();
     return api;
   }
@@ -1173,7 +1180,7 @@
   function initDope() {
     if (!$("simDope")) return;
     var type = "i", parts = [], raf = 0, last = 0;
-    var NAMES = { i: "Silicon tinh khiết", n: "Bán dẫn loại N (Si + Sb/P)", p: "Bán dẫn loại P (Si + B/Ga)" };
+    var NAMES = { i: ["Silicon tinh khiết", "Pure silicon"], n: ["Bán dẫn loại N (Si + Sb/P)", "N-type semiconductor (Si + Sb/P)"], p: ["Bán dẫn loại P (Si + B/Ga)", "P-type semiconductor (Si + B/Ga)"] };
     var sT = slider("dopeT", function (v) { return v + " °C"; }, render);
     buttons("simDope", "data-dope", function (k) { type = k; render(); });
     function render() {
@@ -1187,12 +1194,13 @@
         g.appendChild(el);
         parts.push({ el: el, x: x, v: isE ? 1 : -0.6 });
       }
-      $("dopeName").textContent = NAMES[type];
-      var maj = type === "n" ? "electron (" + ne + ")" : type === "p" ? "lỗ trống (" + nh + ")" : null;
-      var min = type === "n" ? "lỗ trống (" + nh + ")" : type === "p" ? "electron (" + ne + ")" : null;
-      $("dopeLive").innerHTML = (maj ? "Hạt dẫn đa số: <b>" + maj + "</b> · thiểu số: " + min + "." :
-        "Tinh khiết: số electron tự do <b>bằng</b> số lỗ trống (" + ne + " cặp), rất ít nên dẫn điện yếu.") +
-        " Tổng hạt dẫn: <b>" + (ne + nh) + "</b>" + (type === "i" ? "" : ", gấp khoảng " + Math.round((ne + nh) / (2 * pairs)) + " lần bán dẫn tinh khiết cùng nhiệt độ") + ".";
+      $("dopeName").textContent = tr(NAMES[type][0], NAMES[type][1]);
+      var HOLE = tr("lỗ trống", "holes"), ELEC = tr("electron", "electrons");
+      var maj = type === "n" ? ELEC + " (" + ne + ")" : type === "p" ? HOLE + " (" + nh + ")" : null;
+      var min = type === "n" ? HOLE + " (" + nh + ")" : type === "p" ? ELEC + " (" + ne + ")" : null;
+      $("dopeLive").innerHTML = (maj ? tr("Hạt dẫn đa số: <b>", "Majority carriers: <b>") + maj + tr("</b> · thiểu số: ", "</b> · minority: ") + min + "." :
+        tr("Tinh khiết: số electron tự do <b>bằng</b> số lỗ trống (" + ne + " cặp), rất ít nên dẫn điện yếu.", "Pure: free electrons <b>equal</b> holes (" + ne + " pairs), very few, so it conducts poorly.")) +
+        tr(" Tổng hạt dẫn: <b>", " Total carriers: <b>") + (ne + nh) + "</b>" + (type === "i" ? "" : tr(", gấp khoảng ", ", about ") + Math.round((ne + nh) / (2 * pairs)) + tr(" lần bán dẫn tinh khiết cùng nhiệt độ", " times pure silicon at the same temperature")) + ".";
       if (!raf && !reduceMotion) raf = requestAnimationFrame(step);
     }
     function step(t) {
@@ -1204,6 +1212,7 @@
       });
       raf = requestAnimationFrame(step);
     }
+    onLang(render);
     render();
   }
 
@@ -1258,6 +1267,7 @@
       $("pnBatA").setAttribute("x1", mode === "f" ? "135" : "165"); $("pnBatA").setAttribute("x2", mode === "f" ? "135" : "165");
       $("pnBatB").setAttribute("x1", mode === "f" ? "165" : "135"); $("pnBatB").setAttribute("x2", mode === "f" ? "165" : "135");
       $("pnUt").textContent = "U = " + fmt(v) + " V";
+      $("pnDepT").textContent = tr("vùng nghèo", "depletion region");
       $("pnCurve").setAttribute("d", curvePath());
       $("pnKnee").setAttribute("x1", px(mat.vk)); $("pnKnee").setAttribute("x2", px(mat.vk));
       $("pnKneeT").setAttribute("x", px(mat.vk) + 4); $("pnKneeT").textContent = fmt(mat.vk) + " V";
@@ -1269,23 +1279,24 @@
       $("pnIt").textContent = "I ≈ " + (Math.abs(i) > 200 ? (i > 0 ? "> 200 mA" : "< −200 mA") : iTxt);
       var msg;
       if (mode === "f") {
-        msg = v < mat.vk - 0.15 ? "Phân cực thuận nhưng U = " + fmt(v) + " V còn thấp hơn ngưỡng " + fmt(mat.vk) + " V (" + mat.name + "): rào điện thế chưa bị vượt, dòng <b>gần như bằng 0</b>." :
-          v < mat.vk + 0.08 ? "U gần ngưỡng " + fmt(mat.vk) + " V: vùng nghèo hẹp lại, diode <span class=\"ok\">bắt đầu dẫn</span>, I ≈ <b>" + iTxt + "</b>." :
-          "Đã vượt ngưỡng: chỉ cần tăng U thêm chút ít, dòng tăng <b>vọt</b> (" + (i > 200 ? "> 200 mA" : iTxt) + "). <span class=\"neg\">Thực tế phải có điện trở hạn dòng, nếu không diode cháy.</span>";
+        msg = v < mat.vk - 0.15 ? tr("Phân cực thuận nhưng U = " + fmt(v) + " V còn thấp hơn ngưỡng " + fmt(mat.vk) + " V (" + mat.name + "): rào điện thế chưa bị vượt, dòng <b>gần như bằng 0</b>.", "Forward biased, but U = " + fmt(v) + " V is still below the " + fmt(mat.vk) + " V threshold (" + mat.name + "): the potential barrier is not overcome, current is <b>almost 0</b>.") :
+          v < mat.vk + 0.08 ? tr("U gần ngưỡng " + fmt(mat.vk) + " V: vùng nghèo hẹp lại, diode <span class=\"ok\">bắt đầu dẫn</span>, I ≈ <b>", "U is near the " + fmt(mat.vk) + " V threshold: the depletion region narrows, the diode <span class=\"ok\">starts to conduct</span>, I ≈ <b>") + iTxt + "</b>." :
+          tr("Đã vượt ngưỡng: chỉ cần tăng U thêm chút ít, dòng tăng <b>vọt</b> (", "Past the threshold: a small increase in U makes the current <b>shoot up</b> (") + (i > 200 ? "> 200 mA" : iTxt) + "). <span class=\"neg\">" + tr("Thực tế phải có điện trở hạn dòng, nếu không diode cháy.", "In practice you need a current-limiting resistor, or the diode burns out.") + "</span>";
       } else {
-        msg = mag < VBR - 4 ? "Phân cực nghịch: vùng nghèo <b>rộng ra</b>, không có dòng do hạt dẫn đa số; chỉ có <b>dòng rỉ</b> ≈ " + fmt(mat.leak, 0) + " µA do hạt dẫn thiểu số" + (mat === MAT.ge ? " (Ge rỉ nhiều hơn Si)" : "") + "." :
-          mag < VBR ? "Sắp tới điện áp đánh thủng (" + VBR + " V): dòng ngược bắt đầu tăng." :
-          "<span class=\"neg\">Đã vượt điện áp đánh thủng " + VBR + " V</span>: dòng ngược tăng rất mạnh (I ≈ " + iTxt + "). Diode thường sẽ hỏng; diode Zener được thiết kế để làm việc ở vùng này.";
+        msg = mag < VBR - 4 ? tr("Phân cực nghịch: vùng nghèo <b>rộng ra</b>, không có dòng do hạt dẫn đa số; chỉ có <b>dòng rỉ</b> ≈ " + fmt(mat.leak, 0) + " µA do hạt dẫn thiểu số", "Reverse biased: the depletion region <b>widens</b>, no majority-carrier current; only a <b>leakage current</b> ≈ " + fmt(mat.leak, 0) + " µA from minority carriers") + (mat === MAT.ge ? tr(" (Ge rỉ nhiều hơn Si)", " (Ge leaks more than Si)") : "") + "." :
+          mag < VBR ? tr("Sắp tới điện áp đánh thủng (" + VBR + " V): dòng ngược bắt đầu tăng.", "Approaching the breakdown voltage (" + VBR + " V): reverse current starts to rise.") :
+          "<span class=\"neg\">" + tr("Đã vượt điện áp đánh thủng ", "Breakdown voltage exceeded: ") + VBR + " V</span>" + tr(": dòng ngược tăng rất mạnh (I ≈ " + iTxt + "). Diode thường sẽ hỏng; diode Zener được thiết kế để làm việc ở vùng này.", ": reverse current rises sharply (I ≈ " + iTxt + "). An ordinary diode will be destroyed; a Zener diode is designed to work in this region.");
       }
       $("pnLive").innerHTML = msg;
     }
+    onLang(render);
     render();
   }
 
   /* 3. Điện trở hạn dòng LED */
   function initLed() {
     if (!$("simLed")) return;
-    var COL = { red: { vf: 2.0, c: "#E0453A", n: "đỏ" }, yel: { vf: 2.1, c: "#E8B21E", n: "vàng" }, grn: { vf: 2.2, c: "#2FAE5A", n: "xanh lá" }, blu: { vf: 3.3, c: "#3B7BEA", n: "xanh dương" }, wht: { vf: 3.2, c: "#C9D3DD", n: "trắng" } };
+    var COL = { red: { vf: 2.0, c: "#E0453A", n: "đỏ", e: "red" }, yel: { vf: 2.1, c: "#E8B21E", n: "vàng", e: "yellow" }, grn: { vf: 2.2, c: "#2FAE5A", n: "xanh lá", e: "green" }, blu: { vf: 3.3, c: "#3B7BEA", n: "xanh dương", e: "blue" }, wht: { vf: 3.2, c: "#C9D3DD", n: "trắng", e: "white" } };
     var E12 = [1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2];
     var col = COL.red;
     var sU = slider("ledU", function (v) { return fmt(v, 1) + " V"; }, render);
@@ -1304,7 +1315,7 @@
       if (UR <= 0) {
         $("ledRt").textContent = "R = ?"; $("ledIt").textContent = "I = 0";
         $("ledGlow").setAttribute("opacity", "0"); setFlow($("ledFlow"), 0);
-        $("ledLive").innerHTML = "<span class=\"neg\">Nguồn " + fmt(U, 1) + " V không lớn hơn V<sub>F</sub> = " + fmt(col.vf, 1) + " V</span> của LED " + col.n + ": LED không sáng. Cần nguồn cao hơn.";
+        $("ledLive").innerHTML = tr("<span class=\"neg\">Nguồn " + fmt(U, 1) + " V không lớn hơn V<sub>F</sub> = " + fmt(col.vf, 1) + " V</span> của LED " + col.n + ": LED không sáng. Cần nguồn cao hơn.", "<span class=\"neg\">The " + fmt(U, 1) + " V supply is not above V<sub>F</sub> = " + fmt(col.vf, 1) + " V</span> of the " + col.e + " LED: the LED stays off. A higher supply is needed.");
         return;
       }
       var R = UR / I, Rs = e12Up(R), Ireal = UR / Rs, P = Ireal * Ireal * Rs;
@@ -1312,10 +1323,11 @@
       $("ledIt").textContent = "I = " + fmt(Ireal * 1000, 1) + " mA";
       $("ledGlow").setAttribute("opacity", String(clamp(Ireal / 0.025, 0.08, 0.9).toFixed(2)));
       setFlow($("ledFlow"), Ireal / 0.015);
-      $("ledLive").innerHTML = "R = (" + fmt(U, 1) + " − " + fmt(col.vf, 1) + ") / " + fmt(I, 3) + " = <b>" + ohmTxt(R) + "</b> → chọn giá trị chuẩn E12 lớn hơn gần nhất: <b>" + ohmTxt(Rs) + "</b>. Dòng thực I = " + fmt(UR, 2) + " / " + ohmTxt(Rs) + " ≈ <b>" + fmt(Ireal * 1000, 1) + " mA</b>, công suất trên R = I² × R ≈ <b>" + fmt(P, 3) + " W</b>" +
-        (P > 0.25 ? " <span class=\"neg\">(vượt 1/4 W, dùng điện trở 1/2 W trở lên)</span>." : " (điện trở 1/4 W là đủ).") +
-        (sI.get() > 20 ? " <span class=\"neg\">Dòng trên 20 mA làm LED thường 5 mm nóng và mau hỏng.</span>" : "");
+      $("ledLive").innerHTML = "R = (" + fmt(U, 1) + " − " + fmt(col.vf, 1) + ") / " + fmt(I, 3) + " = <b>" + ohmTxt(R) + tr("</b> → chọn giá trị chuẩn E12 lớn hơn gần nhất: <b>", "</b> → pick the next higher standard E12 value: <b>") + ohmTxt(Rs) + tr("</b>. Dòng thực I = ", "</b>. Actual current I = ") + fmt(UR, 2) + " / " + ohmTxt(Rs) + " ≈ <b>" + fmt(Ireal * 1000, 1) + tr(" mA</b>, công suất trên R = I² × R ≈ <b>", " mA</b>, power in R = I² × R ≈ <b>") + fmt(P, 3) + " W</b>" +
+        (P > 0.25 ? " <span class=\"neg\">" + tr("(vượt 1/4 W, dùng điện trở 1/2 W trở lên)", "(over 1/4 W, use a 1/2 W resistor or larger)") + "</span>." : tr(" (điện trở 1/4 W là đủ).", " (a 1/4 W resistor is enough).")) +
+        (sI.get() > 20 ? " <span class=\"neg\">" + tr("Dòng trên 20 mA làm LED thường 5 mm nóng và mau hỏng.", "Above 20 mA an ordinary 5 mm LED runs hot and fails early.") + "</span>" : "");
     }
+    onLang(render);
     render();
   }
 
@@ -1327,11 +1339,12 @@
     var sV = slider("rectV", function (v) { return fmt(v, 1) + " V"; }, draw);
     buttons("simRect", "data-rdir", function (k) { dir = k; draw(); });
     $("rectPause").setAttribute("aria-pressed", String(paused));
-    $("rectPause").textContent = paused ? "Chạy" : "Tạm dừng";
+    function pauseLabel() { $("rectPause").textContent = paused ? tr("Chạy", "Run") : tr("Tạm dừng", "Pause"); }
+    pauseLabel();
     $("rectPause").addEventListener("click", function () {
       paused = !paused;
       this.setAttribute("aria-pressed", String(paused));
-      this.textContent = paused ? "Chạy" : "Tạm dừng";
+      pauseLabel();
       if (!paused) { t0 = 0; raf = requestAnimationFrame(tick); }
     });
     function out(vin) {
@@ -1354,13 +1367,13 @@
       $("rectCur").setAttribute("x1", x.toFixed(1)); $("rectCur").setAttribute("x2", x.toFixed(1));
       $("rectD").setAttribute("transform", dir === "f" ? "" : "rotate(180 123 40)");
       $("rectDs").classList.toggle("on", on);
-      $("rectState").textContent = on ? "D dẫn" : "D khoá";
+      $("rectState").textContent = on ? tr("D dẫn", "D on") : tr("D khoá", "D off");
       setFlow($("rectFlow"), on ? Math.abs(vo) / 8 : 0);
       $("rectFlow").classList.toggle("rev", dir === "r");
       var peak = Math.max(0, Vp - VD);
-      $("rectLive").innerHTML = "Lúc này U vào = <b>" + fmt(vin, 1) + " V</b> → U ra = <b>" + fmt(vo, 1) + " V</b> (" + (on ? "<span class=\"ok\">diode dẫn</span>" : "diode khoá") + "). " +
-        "Đỉnh ra = " + fmt(Vp, 1) + " − 0,7 = <b>" + fmt(peak, 1) + " V</b>" + (dir === "f" ? " (bán kỳ dương)" : " (bán kỳ âm, vì diode đảo chiều)") +
-        ", trung bình ≈ 0,318 × " + fmt(peak, 1) + " ≈ <b>" + fmt(0.318 * peak, 2) + " V</b>.";
+      $("rectLive").innerHTML = tr("Lúc này U vào = <b>", "Right now U in = <b>") + fmt(vin, 1) + tr(" V</b> → U ra = <b>", " V</b> → U out = <b>") + fmt(vo, 1) + " V</b> (" + (on ? "<span class=\"ok\">" + tr("diode dẫn", "diode conducting") + "</span>" : tr("diode khoá", "diode blocking")) + "). " +
+        tr("Đỉnh ra = ", "Output peak = ") + fmt(Vp, 1) + " − " + fmt(0.7, 1) + " = <b>" + fmt(peak, 1) + " V</b>" + (dir === "f" ? tr(" (bán kỳ dương)", " (positive half-cycle)") : tr(" (bán kỳ âm, vì diode đảo chiều)", " (negative half-cycle, since the diode is reversed)")) +
+        tr(", trung bình ≈ ", ", average ≈ ") + fmt(0.318, 3) + " × " + fmt(peak, 1) + " ≈ <b>" + fmt(0.318 * peak, 2) + " V</b>.";
     }
     function tick(t) {
       if (paused) { raf = 0; return; }
@@ -1369,6 +1382,7 @@
       draw();
       raf = requestAnimationFrame(tick);
     }
+    onLang(function () { pauseLabel(); draw(); });
     draw();
     if (!paused) raf = requestAnimationFrame(tick);
   }
@@ -1379,7 +1393,7 @@
     var RS = [47, 56, 68, 82, 100, 120, 150, 180, 220, 270, 330, 390, 470, 560, 680, 820, 1000];
     var RL = [47, 68, 100, 120, 150, 220, 330, 470, 680, 1000, 1500, 2200, 3300, 4700, 6800, 10000, 22000, Infinity];
     var PZ = 0.5, vz = 5.1;
-    function ohmTxt(r) { return r === Infinity ? "hở mạch" : r >= 1000 ? fmt(r / 1000, 1) + " kΩ" : r + " Ω"; }
+    function ohmTxt(r) { return r === Infinity ? tr("hở mạch", "open circuit") : r >= 1000 ? fmt(r / 1000, 1) + " kΩ" : r + " Ω"; }
     var sVin = slider("zVin", function (v) { return fmt(v, 1) + " V"; }, render);
     var sRs = slider("zRs", function (k) { return ohmTxt(RS[k]); }, render);
     var sRl = slider("zRl", function (k) { return ohmTxt(RL[k]); }, render);
@@ -1402,11 +1416,12 @@
       setFlow($("zFlowS"), Is / 0.05); setFlow($("zFlowZ"), Iz / 0.05); setFlow($("zFlowL"), Il / 0.05);
       var rsmin = (Vin - vz) / Izmax;
       var msg = "I<sub>Zmax</sub> = " + fmt(PZ, 1) + " / " + fmt(vz, 1) + " ≈ <b>" + mA(Izmax) + "</b> · R<sub>Smin</sub> = (" + fmt(Vin, 1) + " − " + fmt(vz, 1) + ") / " + fmt(Izmax, 3) + " ≈ <b>" + (rsmin > 0 ? fmt(rsmin, 0) + " Ω" : "–") + "</b>. ";
-      if (!reg) msg += "<span class=\"neg\">Mất ổn áp:</span> V<sub>in</sub> quá thấp hoặc R<sub>S</sub> quá lớn so với tải, Zener không dẫn, V<sub>out</sub> chỉ còn " + fmt(vo, 2) + " V (nhỏ hơn V<sub>Z</sub>).";
-      else if (Pz > PZ) msg += "<span class=\"neg\">Zener quá công suất</span> (" + fmt(Pz, 2) + " W > " + fmt(PZ, 1) + " W): sẽ nóng và cháy. Tăng R<sub>S</sub> lên ≥ R<sub>Smin</sub>.";
-      else msg += "<span class=\"ok\">Ổn áp tốt:</span> V<sub>out</sub> = V<sub>Z</sub> = " + fmt(vz, 1) + " V; I<sub>S</sub> = I<sub>Z</sub> + I<sub>L</sub> = " + mA(Iz) + " + " + mA(Il) + ".";
+      if (!reg) msg += tr("<span class=\"neg\">Mất ổn áp:</span> V<sub>in</sub> quá thấp hoặc R<sub>S</sub> quá lớn so với tải, Zener không dẫn, V<sub>out</sub> chỉ còn " + fmt(vo, 2) + " V (nhỏ hơn V<sub>Z</sub>).", "<span class=\"neg\">Regulation lost:</span> V<sub>in</sub> is too low or R<sub>S</sub> too large for the load, the Zener does not conduct, V<sub>out</sub> drops to " + fmt(vo, 2) + " V (below V<sub>Z</sub>).");
+      else if (Pz > PZ) msg += tr("<span class=\"neg\">Zener quá công suất</span> (" + fmt(Pz, 2) + " W > " + fmt(PZ, 1) + " W): sẽ nóng và cháy. Tăng R<sub>S</sub> lên ≥ R<sub>Smin</sub>.", "<span class=\"neg\">Zener over its power rating</span> (" + fmt(Pz, 2) + " W > " + fmt(PZ, 1) + " W): it will overheat and burn. Raise R<sub>S</sub> to ≥ R<sub>Smin</sub>.");
+      else msg += tr("<span class=\"ok\">Ổn áp tốt:</span>", "<span class=\"ok\">Regulating well:</span>") + " V<sub>out</sub> = V<sub>Z</sub> = " + fmt(vz, 1) + " V; I<sub>S</sub> = I<sub>Z</sub> + I<sub>L</sub> = " + mA(Iz) + " + " + mA(Il) + ".";
       $("zLive").innerHTML = msg;
     }
+    onLang(render);
     render();
   }
 
@@ -1425,12 +1440,13 @@
         $("sg-" + s).classList.toggle("on", lit);
         g.appendChild(svgEl("text", { "class": "b", x: 262, y: y }, s));
         g.appendChild(svgEl("text", { "class": level ? "pin1" : "pin0", x: 320, y: y }, level + (level ? "  (+5 V)" : "  (0 V)")));
-        g.appendChild(svgEl("text", { "class": lit ? "b ac" : "s", x: 430, y: y }, lit ? "sáng" : "tắt"));
+        g.appendChild(svgEl("text", { "class": lit ? "b ac" : "s", x: 430, y: y }, lit ? tr("sáng", "on") : tr("tắt", "off")));
       });
-      $("segCom").textContent = type === "cc" ? "Chân chung: 0 V (cathode chung)" : "Chân chung: +5 V (anode chung)";
+      $("segCom").textContent = type === "cc" ? tr("Chân chung: 0 V (cathode chung)", "Common pin: 0 V (common cathode)") : tr("Chân chung: +5 V (anode chung)", "Common pin: +5 V (common anode)");
       var code = SEGS.slice().reverse().map(function (s) { var lit = on.indexOf(s) >= 0; return type === "cc" ? (lit ? "1" : "0") : (lit ? "0" : "1"); }).join("");
-      $("segLive").innerHTML = "Số <b>" + dig + "</b>: sáng " + on.length + " đoạn <b>" + on.split("").join(", ") + "</b>. Loại " + (type === "cc" ? "cathode chung: đưa mức <b>1</b>" : "anode chung: đưa mức <b>0</b>") + " vào các đoạn cần sáng. Mã gfedcba = <b>" + code + "</b>.";
+      $("segLive").innerHTML = tr("Số <b>", "Digit <b>") + dig + tr("</b>: sáng ", "</b>: ") + on.length + tr(" đoạn <b>", " segments lit <b>") + on.split("").join(", ") + "</b>. " + (type === "cc" ? tr("Loại cathode chung: đưa mức <b>1</b>", "Common cathode: drive <b>1</b>") : tr("Loại anode chung: đưa mức <b>0</b>", "Common anode: drive <b>0</b>")) + tr(" vào các đoạn cần sáng. Mã gfedcba = <b>", " to the segments that should light. Code gfedcba = <b>") + code + "</b>.";
     }
+    onLang(render);
     render();
   }
 
@@ -1476,7 +1492,8 @@ window.CT_QUIZ = [
     why: "I_Zmax = P_Z / V_Z = 0,5 / 5,1 ≈ 0,098 A = 98 mA. 2,55 là nhân P_Z × V_Z; 0,5 A là lấy nhầm công suất làm dòng. Từ I_Zmax tính tiếp R_Smin = (V_in − V_Z) / I_Zmax." }
 ];
 </script>
-<script src="/assets/quiz.js?v=2"></script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
