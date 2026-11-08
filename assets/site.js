@@ -157,6 +157,27 @@
     }, p.date);
   }
 
+  function rank(p) {
+    return p.order == null ? -1 : p.order;
+  }
+
+  /** Bai that (khong phai thu muc) moi nhat ben duoi p, kem duong dan tieu de tu duoi p xuong, vd. ["Lý thuyết mạch", "Chương 2: ..."].
+      Cung ngay: uu tien order lon hon (chuong sau), roi bai khai bao sau trong posts.js. */
+  function latestLeaf(p, depth) {
+    var best = null;
+    if (depth > 5) return best;
+    posts.forEach(function (c) {
+      if (c.parent !== p.href) return;
+      var sub = latestLeaf(c, depth + 1);
+      // Trang thu muc (hideFromNews) chua co bai con thi khong tinh la bai.
+      var cand = sub ? { post: sub.post, path: [c.title].concat(sub.path) } : c.hideFromNews ? null : { post: c, path: [c.title] };
+      if (!cand) return;
+      if (!best || cand.post.date > best.post.date ||
+          (cand.post.date === best.post.date && rank(cand.post) >= rank(best.post))) best = cand;
+    });
+    return best;
+  }
+
   function withActivity(p) {
     return Object.assign({}, p, { activity: latestDate(p, 0) });
   }
@@ -180,9 +201,15 @@
       .sort(byOrderThenActivity)
       .map(function (p) {
         var updated = p.activity > p.date ? " · Cập nhật: " + formatDate(p.activity) : "";
+        var recent = badges && isRecent(p.activity);
+        var leaf = latestLeaf(p, 0);
         return tag("a", postLink(p, { "class": "card" }), [
-          tag("h2", {}, [esc(p.title), badges && isRecent(p.activity) ? badge() : null]),
+          tag("h2", {}, [esc(p.title), recent ? badge() : null]),
           p.desc ? tag("p", { text: p.desc }) : null,
+          leaf ? tag("p", { "class": "latest" }, [
+            tag("b", { text: badges && isRecent(leaf.post.date) ? "Mới cập nhật: " : "Bài gần nhất: " }),
+            esc(leaf.path.join(" › "))
+          ]) : null,
           tag("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) + updated })
         ]);
       });
