@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập mạch ứng dụng diode · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Bài tập Chương 3 Điện tử cơ bản: mạch phân cực diode và LED nối tiếp, song song, diode phân cực nghịch, tính I_R, I_D, V_O và chọn điện trở hạn dòng; tự chấm, lời giải từng bước theo định luật Kirchhoff.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bài tập mạch ứng dụng diode">
+<meta property="og:description" content="Mạch phân cực diode và LED nối tiếp, song song, phân cực nghịch: tính dòng, điện áp và chọn điện trở hạn dòng; tự chấm, lời giải từng bước.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/baitapdiode">
+<link rel="canonical" href="https://caothang-gray.vercel.app/baitapdiode">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108c">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/phanap.css?v=2">
+<link rel="stylesheet" href="/assets/diode.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập mạch ứng dụng diode</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+  <div class="backbar">
+    <a class="backlink" href="/dientucoban">&larr; Điện Tử Cơ Bản</a>
+  </div>
+  <ul class="kh-intro dd-intro">
+    <li><strong>Dạng 1 – 4:</strong> diode và LED mắc nối tiếp (có diode phân cực nghịch).</li>
+    <li><strong>Dạng 5 – 7:</strong> diode mắc song song cùng loại, khác loại và hai cụm song song nối tiếp.</li>
+    <li>Đọc sơ đồ, tính rồi nhập kết quả để tự chấm; mở lời giải để xem cách làm từng bước.</li>
+  </ul>
+  <p class="pa-rule"><strong>Quy ước:</strong> diode Si dẫn khi đủ 0,7 V, LED dẫn khi đủ điện áp V<sub>D</sub> ghi trong đề; khi dẫn, điện áp trên diode giữ đúng bằng V<sub>D</sub>. Dòng điện tính bằng mA, điện trở bằng Ω, điện áp bằng V; làm tròn 2 chữ số sau dấu phẩy.</p>
+  <details class="pa-theory">
+    <summary>Nhắc lại cách giải</summary>
+    <ul>
+      <li><strong>Bước 1 · Xét diode dẫn hay không.</strong> Diode lắp ngược (cathode hướng lên V<sub>CC</sub>) là phân cực nghịch, không dẫn. Mạch nối tiếp: nếu <span class="f">V<sub>CC</sub> ≤ V<sub>D1</sub> + V<sub>D2</sub> + …</span> hoặc có 1 diode không dẫn thì cả mạch không dẫn, I = 0.</li>
+      <li><strong>Mạch không dẫn:</strong> R không có dòng nên không sụt áp, các điểm đo đều có điện áp = <span class="f">V<sub>CC</sub></span>.</li>
+      <li><strong>Diode song song:</strong> diode có điện áp ngưỡng nhỏ nhất dẫn trước và ghim điện áp cả cụm ở mức đó; diode có ngưỡng lớn hơn không đủ áp nên không dẫn (I = 0). Các diode dẫn cùng loại chia đều dòng (định luật Kirchhoff 1 tại nút): <span class="f">I<sub>D</sub> = I<sub>R</sub> / số diode dẫn</span>.</li>
+      <li><strong>Bước 2 · K2 cho vòng (1):</strong> <span class="f">−V<sub>CC</sub> + I<sub>R</sub>·R + V<sub>O</sub> = 0</span> ⇒ <span class="f">I<sub>R</sub> = (V<sub>CC</sub> − V<sub>O</sub>) / R</span>, với V<sub>O</sub> là tổng điện áp các diode từ nút trên cùng xuống Mass.</li>
+      <li><strong>Chọn R:</strong> <span class="f">R = (V<sub>CC</sub> − V<sub>O</sub>) / I<sub>R</sub></span>, đổi mA ra A trước khi chia, rồi chọn điện trở chuẩn E12 (10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 × 10ⁿ).</li>
+      <li>Đơn vị: volt <span class="say" title="Cách đọc">vôn</span> (V) · ampere <span class="say" title="Cách đọc">am-pe</span> (A), 1 mA (mili <span class="say" title="Cách đọc">mi-li</span>ampere) = 0,001 A · ohm <span class="say" title="Cách đọc">ôm</span> (Ω).</li>
+    </ul>
+  </details>
+  <main id="ddApp"></main>
+</div>
+<script src="/assets/posts.js?v=20261108a"></script>
+<script src="/assets/site.js?v=20261108c"></script>
+<script src="/assets/phanap-calc.js?v=2"></script>
+<script src="/assets/diode-calc.js"></script>
+<script src="/assets/diode-data.js"></script>
+<script src="/assets/diode-svg.js"></script>
+<script src="/assets/diode.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
