@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 3: Chất bán dẫn và diode · Điện tử Cơ bản · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Điện tử cơ bản Chương 3: chất bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, diode và các loại diode (chỉnh lưu, tín hiệu, Schottky, Zener, LED, quang, laser), chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Chương 3: Chất bán dẫn và diode · Điện tử Cơ bản">
+<meta property="og:description" content="Điện tử cơ bản Chương 3: chất bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, diode và các loại diode (chỉnh lưu, tín hiệu, Schottky, Zener, LED, quang, laser), chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong3">
+<link rel="canonical" href="https://caothang-gray.vercel.app/dientucoban-chuong3">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108a">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:block;width:fit-content;margin:30px 0 0 auto;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.post .back-top{display:flex;width:fit-content;align-items:center;gap:6px;margin:0 0 10px auto;padding:6px 12px;font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .15s;}
+.post .back-top:hover{border-color:var(--accent);}
+.post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+</style>
+<style>
+.il .nuc{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--accent-warm);stroke-width:2;}
+.il .orb{fill:none;stroke:var(--ink-faint);stroke-width:1.4;}
+.il .el{fill:var(--accent);}
+.il .el-t{fill:#fff;font-size:12px;font-weight:700;}
+.il .cell{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.il .cap{fill:var(--ink);}
+.sim .cell{fill:var(--surface);stroke:var(--ink);stroke-width:1.8;}
+.sim .cellfill{fill:var(--flow-g);opacity:.35;}
+.sim .warnt{fill:var(--accent-warm);font-weight:600;}
+.post ol.ans{margin-top:4px;}
+.post .gallery{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px 14px;margin:6px 0 16px;}
+.post .gallery-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 10px;}
+.post .ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.post figure.gcard{margin:0;padding:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;}
+.post figure.gcard img{width:100%;height:150px;object-fit:contain;background:#fff;border-radius:6px;}
+.post figure.gcard figcaption{font-family:var(--sans);font-size:13.5px;color:var(--ink);text-align:left;margin-top:8px;}
+.post figure.gcard figcaption strong:first-child{color:var(--accent);}
+.post figure.gcard .credit{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px;}
+.post figure.gcard a{color:var(--accent);}
+</style>
+<style>
+.il .pzone{fill:var(--accent-warm);fill-opacity:.14;stroke:var(--ink);stroke-width:2;}
+.il .nzone{fill:var(--accent);fill-opacity:.14;stroke:var(--ink);stroke-width:2;}
+.il .dep{fill:var(--surface-2);stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .atom{fill:var(--surface);stroke:var(--ink);stroke-width:1.8;}
+.il .atom-n{fill:var(--accent);fill-opacity:.25;stroke:var(--accent);stroke-width:2;}
+.il .atom-p{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--accent-warm);stroke-width:2;}
+.il .bond{stroke:var(--ink-faint);stroke-width:2;}
+.il .hole{fill:var(--surface-2);stroke:var(--accent-warm);stroke-width:2;}
+.il .dsym{fill:var(--ink);}
+.il .dsym-o{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;}
+.il .glow{fill:var(--accent-warm);opacity:.25;}
+.sim .pzone{fill:var(--accent-warm);fill-opacity:.16;stroke:var(--ink);stroke-width:2;}
+.sim .nzone{fill:var(--accent);fill-opacity:.16;stroke:var(--ink);stroke-width:2;}
+.sim .dep{fill:var(--surface);stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .el{fill:var(--accent);}
+.sim .hl{fill:var(--surface);stroke:var(--accent-warm);stroke-width:2;}
+.sim .dsym{fill:var(--ink);transition:fill .2s;}
+.sim .dsym.on{fill:var(--flow-g);}
+.sim .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.4;}
+.sim .grid{stroke:var(--line);stroke-width:1;}
+.sim .wave-in{fill:none;stroke:var(--ink-faint);stroke-width:2;stroke-dasharray:6 4;}
+.sim .wave-out{fill:none;stroke:var(--accent);stroke-width:2.8;stroke-linejoin:round;}
+.sim .curve{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;}
+.sim .cursor{stroke:var(--accent-warm);stroke-width:1.6;}
+.sim .opdot{fill:var(--accent-warm);stroke:var(--surface);stroke-width:2;}
+.sim .glow{fill:var(--accent-warm);transition:opacity .2s,fill .2s;}
+.sim .seg{fill:#3a4148;transition:fill .2s;}
+.sim .seg.on{fill:#FF4A3D;}
+.sim .segbox{fill:#1d2328;}
+.sim .pin1{fill:var(--accent-warm);font-weight:600;}
+.sim .pin0{fill:var(--ink-faint);}
+.sim .digits{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;}
+.sim .digits button{min-width:38px;font-size:15px;}
+</style>
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Điện tử cơ bản – Chương 3: Chất bán dẫn và diode</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+  <article class="post">
+    <a class="back-top" href="/namnhat-dientucoban">← Điện tử Cơ bản (Năm nhất)</a>
+    <p class="byline">08/11/2026 · Học tập · Năm nhất · Điện tử Cơ bản · Chương 3 · theo giáo trình ThS. Huỳnh Xuân Dũng</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 3, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Biết <a href="#ban-dan">chất bán dẫn</a> nằm giữa chất dẫn điện và chất cách điện; Si, Ge có 4 electron lớp ngoài cùng; hiểu electron tự do và lỗ trống.</li>
+        <li>Phân biệt <a href="#loai-n-p">bán dẫn loại N và loại P</a>: pha chất gì, hạt dẫn đa số và thiểu số là gì.</li>
+        <li>Giải thích được <a href="#moi-noi">mối nối P-N</a>, vùng nghèo (vùng hiếm) và rào điện thế.</li>
+        <li>Phân biệt <a href="#phan-cuc">phân cực thuận và phân cực nghịch</a>, biết dòng rỉ là gì.</li>
+        <li>Vẽ được <a href="#diode">ký hiệu diode</a>, chỉ ra anode, cathode; nhớ điện áp thông 0,7 V (Si), 0,3 V (Ge); đọc được đặc tuyến và điện áp đánh thủng.</li>
+        <li>Nhận ra <a href="#cac-loai-diode">các loại diode</a>: chỉnh lưu, tín hiệu, Schottky, Zener, LED, quang, laser.</li>
+        <li>Tính được <a href="#mach-led">điện trở hạn dòng cho LED</a>.</li>
+        <li>Hiểu <a href="#chinh-luu">mạch chỉnh lưu bán kỳ</a> và thiết kế được <a href="#on-ap-zener">mạch ổn áp dùng diode Zener</a> (chọn P<sub>Z</sub>, tính R<sub>S</sub>).</li>
+        <li>Phân biệt <a href="#led-7-doan">LED 7 đoạn</a> cathode chung và anode chung, biết đoạn nào sáng để hiện từng số.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#ban-dan">Chất bán dẫn</a></li>
+        <li><a href="#loai-n-p">Bán dẫn loại N và loại P</a></li>
+        <li><a href="#moi-noi">Mối nối P-N</a></li>
+        <li><a href="#phan-cuc">Phân cực thuận, nghịch</a></li>
+        <li><a href="#diode">Diode: ký hiệu, đặc tuyến</a></li>
+        <li><a href="#cac-loai-diode">Các loại diode</a></li>
+        <li><a href="#mach-led">Thiết kế mạch LED</a></li>
+        <li><a href="#chinh-luu">Chỉnh lưu bán kỳ</a></li>
+        <li><a href="#on-ap-zener">Ổn áp dùng diode Zener</a></li>
+        <li><a href="#led-7-doan">LED 7 đoạn</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1 -->
+    <h2 id="ban-dan"><span class="num">01</span>Chất bán dẫn</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Chất bán dẫn giống một <strong>bãi giữ xe chật kín</strong>: xe (electron) bị khoá chặt trong ô, không chạy được. Khi trời nóng hoặc có ánh sáng, vài chiếc thoát ra chạy tự do và để lại <strong>một ô trống</strong>. Xe bên cạnh lách vào ô trống, lại để trống ô khác, nên "ô trống" cũng như đang di chuyển. Đó là <strong>electron tự do</strong> và <strong>lỗ trống</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Mạng tinh thể silicon: mỗi nguyên tử Si liên kết với 4 nguyên tử bên cạnh bằng các cặp electron; một liên kết bị bứt ra tạo electron tự do và lỗ trống">
+  <g class="bond">
+    <line x1="30" y1="45" x2="270" y2="45"/><line x1="30" y1="120" x2="270" y2="120"/><line x1="30" y1="195" x2="270" y2="195"/>
+    <line x1="70" y1="12" x2="70" y2="228"/><line x1="150" y1="12" x2="150" y2="228"/><line x1="230" y1="12" x2="230" y2="228"/>
+  </g>
+  <g class="el">
+    <circle cx="110" cy="40" r="4"/><circle cx="110" cy="50" r="4"/><circle cx="190" cy="40" r="4"/><circle cx="190" cy="50" r="4"/>
+    <circle cx="110" cy="115" r="4"/><circle cx="110" cy="125" r="4"/><circle cx="190" cy="115" r="4"/>
+    <circle cx="110" cy="190" r="4"/><circle cx="110" cy="200" r="4"/><circle cx="190" cy="190" r="4"/><circle cx="190" cy="200" r="4"/>
+    <circle cx="65" cy="82" r="4"/><circle cx="75" cy="82" r="4"/><circle cx="145" cy="82" r="4"/><circle cx="155" cy="82" r="4"/><circle cx="225" cy="82" r="4"/><circle cx="235" cy="82" r="4"/>
+    <circle cx="65" cy="158" r="4"/><circle cx="75" cy="158" r="4"/><circle cx="145" cy="158" r="4"/><circle cx="155" cy="158" r="4"/><circle cx="225" cy="158" r="4"/><circle cx="235" cy="158" r="4"/>
+  </g>
+  <circle class="hole" cx="190" cy="125" r="5"/>
+  <g class="atom"><circle cx="70" cy="45" r="17"/><circle cx="150" cy="45" r="17"/><circle cx="230" cy="45" r="17"/><circle cx="70" cy="120" r="17"/><circle cx="150" cy="120" r="17"/><circle cx="230" cy="120" r="17"/><circle cx="70" cy="195" r="17"/><circle cx="150" cy="195" r="17"/><circle cx="230" cy="195" r="17"/></g>
+  <g class="b" text-anchor="middle"><text x="70" y="50">Si</text><text x="150" y="50">Si</text><text x="230" y="50">Si</text><text x="70" y="125">Si</text><text x="150" y="125">Si</text><text x="230" y="125">Si</text><text x="70" y="200">Si</text><text x="150" y="200">Si</text><text x="230" y="200">Si</text></g>
+  <circle class="el" cx="262" cy="88" r="5"/>
+  <path class="arr-ac" d="M196 116 L254 92 m-9 -1 l9 1 l-5 8"/>
+  <path class="heat" d="M196 150 q5 -6 0 -12 M206 150 q5 -6 0 -12"/>
+  <text class="b ac" x="300" y="70">electron tự do (−)</text>
+  <text class="s" x="300" y="90">bứt khỏi liên kết nhờ nhiệt, ánh sáng</text>
+  <text class="b warm" x="300" y="128">lỗ trống (+e)</text>
+  <text class="s" x="300" y="148">chỗ thiếu electron, xem như mang điện +</text>
+  <text class="s" x="300" y="190">mỗi Si có 4 electron lớp ngoài,</text>
+  <text class="s" x="300" y="208">góp chung thành 4 cặp liên kết</text>
+</svg>
+      <figcaption>Tinh thể silicon tinh khiết: các electron bị giữ trong liên kết; nhiệt độ, ánh sáng làm vài electron thoát ra, để lại lỗ trống</figcaption>
+    </figure>
+    <div class="def"><strong>Chất bán dẫn</strong> là chất nằm giữa chất dẫn điện và chất cách điện. Hai chất bán dẫn tiêu biểu là <strong>Silicon (Si)</strong> và <strong>Germanium (Ge)</strong>, có tầng ngoài cùng chứa <strong>4 electron</strong>.</div>
+    <ul>
+      <li>Các nguyên tử không đứng riêng mà <strong>liên kết thành tinh thể</strong>, giữ electron rất chặt nên khó thành electron tự do.</li>
+      <li>Nhờ kích thích bên ngoài (<strong>nhiệt độ, ánh sáng</strong>…), một số electron thoát ly thành <strong>electron tự do</strong>. Chỗ nó vừa rời đi gọi là <strong>lỗ trống</strong>; nguyên tử mất electron mang điện dương nên lỗ trống được xem như có điện tích dương (+e).</li>
+      <li>Bán dẫn <strong>tinh khiết</strong> dẫn điện rất yếu vì số electron tự do rất ít.</li>
+    </ul>
+    <div class="note"><strong>So sánh nhanh:</strong> kim loại (đồng) có rất nhiều electron tự do nên dẫn điện tốt; chất cách điện (nhựa, sứ) hầu như không có; bán dẫn ở giữa, và độ dẫn điện của nó <strong>điều khiển được</strong> bằng cách pha tạp chất. Đây là lý do mọi diode, transistor, IC đều làm từ bán dẫn.</div>
+
+    <!-- 2 -->
+    <h2 id="loai-n-p"><span class="num">02</span>Bán dẫn loại N và loại P</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Pha nguyên tử có <strong>5</strong> electron vào: <strong>dư 1 electron</strong> → loại <strong>N</strong> (Negative, âm). Pha nguyên tử có <strong>3</strong> electron vào: <strong>thiếu 1 electron</strong>, tức có lỗ trống → loại <strong>P</strong> (Positive, dương). Mẹo: <strong>N = Năm, P = thiếu (ba)</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Bên trái: bán dẫn loại N, nguyên tử Sb hoá trị 5 ở giữa có một electron thừa thành electron tự do. Bên phải: bán dẫn loại P, nguyên tử B hoá trị 3 thiếu một electron tạo lỗ trống">
+  <g class="bond"><line x1="60" y1="110" x2="220" y2="110"/><line x1="140" y1="30" x2="140" y2="190"/><line x1="340" y1="110" x2="500" y2="110"/><line x1="420" y1="30" x2="420" y2="190"/></g>
+  <g class="el">
+    <circle cx="100" cy="105" r="4"/><circle cx="100" cy="115" r="4"/><circle cx="180" cy="105" r="4"/><circle cx="180" cy="115" r="4"/><circle cx="135" cy="70" r="4"/><circle cx="145" cy="70" r="4"/><circle cx="135" cy="150" r="4"/><circle cx="145" cy="150" r="4"/>
+    <circle cx="380" cy="105" r="4"/><circle cx="380" cy="115" r="4"/><circle cx="460" cy="105" r="4"/><circle cx="460" cy="115" r="4"/><circle cx="415" cy="70" r="4"/><circle cx="425" cy="70" r="4"/><circle cx="415" cy="150" r="4"/>
+  </g>
+  <circle class="hole" cx="425" cy="150" r="5"/>
+  <g class="atom"><circle cx="60" cy="110" r="17"/><circle cx="220" cy="110" r="17"/><circle cx="140" cy="30" r="17"/><circle cx="140" cy="190" r="17"/><circle cx="340" cy="110" r="17"/><circle cx="500" cy="110" r="17"/><circle cx="420" cy="30" r="17"/><circle cx="420" cy="190" r="17"/></g>
+  <circle class="atom-n" cx="140" cy="110" r="19"/><circle class="atom-p" cx="420" cy="110" r="19"/>
+  <g class="b" text-anchor="middle"><text x="60" y="115">Si</text><text x="220" y="115">Si</text><text x="140" y="35">Si</text><text x="140" y="195">Si</text><text x="340" y="115">Si</text><text x="500" y="115">Si</text><text x="420" y="35">Si</text><text x="420" y="195">Si</text><text class="ac" x="140" y="115">Sb</text><text class="warm" x="420" y="115">B</text></g>
+  <circle class="el" cx="196" cy="62" r="5"/><path class="arr-ac" d="M156 98 L190 68"/>
+  <text class="s ac" x="204" y="54">electron thừa → tự do</text>
+  <path class="arr" d="M470 160 L432 152"/><text class="s warm" x="472" y="168">lỗ trống</text>
+  <text class="b ac" x="140" y="232" text-anchor="middle">Loại N: pha hoá trị 5 (Sb, P, As)</text>
+  <text class="b warm" x="420" y="232" text-anchor="middle">Loại P: pha hoá trị 3 (B, Ga, In)</text>
+</svg>
+      <figcaption>Hình 3.1 và 3.2 giáo trình (vẽ lại): cấu tạo chất bán dẫn loại N và loại P</figcaption>
+    </figure>
+    <div class="def"><strong>Bán dẫn tạp</strong>: pha thêm một tỉ lệ nhỏ chất khác (tạp chất) vào bán dẫn tinh khiết thì độ dẫn điện <strong>tăng vọt</strong>. Có hai loại: <strong>loại N</strong> (Negative: âm) và <strong>loại P</strong> (Positive: dương).</div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Loại</th><th>Pha chất gì</th><th>Điều xảy ra</th><th>Hạt dẫn đa số / thiểu số</th></tr></thead>
+        <tbody>
+          <tr><td>Loại N</td><td>Hoá trị 5: Antimony (Sb), Phosphor (P), Arsenic (As)</td><td>4 electron của chất pha liên kết với 4 nguyên tử Si, <strong>thừa 1 electron</strong> thành electron tự do</td><td>Đa số: <strong>electron</strong> · thiểu số: lỗ trống</td></tr>
+          <tr><td>Loại P</td><td>Hoá trị 3: Indium (In), Gallium (Ga), Boron (B)</td><td>3 electron chỉ liên kết với 3 nguyên tử Si, liên kết thứ 4 <strong>thiếu 1 electron</strong> = lỗ trống. Electron bên cạnh nhảy vào lấp, tạo lỗ trống mới…</td><td>Đa số: <strong>lỗ trống</strong> · thiểu số: electron</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Lưu ý:</strong> bán dẫn loại N hay P vẫn <strong>trung hoà điện</strong> (số proton bằng số electron). "Loại N" chỉ nói hạt dẫn điện chủ yếu là electron, không phải khối bán dẫn mang điện âm.</div>
+
+    <figure class="sim" id="simDope">
+      <p class="sim-h">Thử ngay · Pha tạp chất và hạt dẫn điện</p>
+      <div class="simbox">
+        <svg viewBox="0 0 600 210" role="img" aria-labelledby="dopeTitle">
+          <title id="dopeTitle">Một thanh bán dẫn nối với nguồn điện. Electron (chấm đặc) chạy về cực dương, lỗ trống (vòng rỗng) chạy về cực âm.</title>
+          <path class="w" d="M60 100 L30 100 L30 180 L270 180 M330 180 L570 180 L570 100 L540 100"/>
+          <line class="w" x1="270" y1="166" x2="270" y2="194"/><line class="w" x1="282" y1="172" x2="282" y2="188" style="stroke-width:5"/>
+          <line class="w" x1="318" y1="166" x2="318" y2="194"/><line class="w" x1="330" y1="172" x2="330" y2="188" style="stroke-width:5"/>
+          <text class="s" x="300" y="184" text-anchor="middle">…</text>
+          <text class="b" x="30" y="92" text-anchor="middle">−</text><text class="b warm" x="570" y="92" text-anchor="middle">+</text>
+          <rect class="part" id="dopeBar" x="60" y="40" width="480" height="120" rx="8"/>
+          <g id="dopeCarriers"></g>
+          <text class="b" id="dopeName" x="300" y="28" text-anchor="middle">Silicon tinh khiết</text>
+          <text class="s ac" x="80" y="204">● electron → về cực +</text>
+          <text class="s warm" x="520" y="204" text-anchor="end">○ lỗ trống → về cực −</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn loại bán dẫn">
+        <button type="button" data-dope="i" aria-pressed="true">Tinh khiết</button>
+        <button type="button" data-dope="n" aria-pressed="false">Pha Sb, P (loại N)</button>
+        <button type="button" data-dope="p" aria-pressed="false">Pha B, Ga (loại P)</button>
+      </div>
+      <div class="sl"><label for="dopeT">Nhiệt độ</label><input type="range" id="dopeT" min="0" max="100" step="1" value="30"><output id="dopeTo" for="dopeT">30 °C</output></div>
+      <p class="live" id="dopeLive" aria-live="polite"></p>
+      <figcaption>Đổi loại bán dẫn và kéo nhiệt độ: xem số hạt dẫn điện và loại hạt nào chiếm đa số. Nhiệt độ cao làm bứt thêm cặp electron – lỗ trống.</figcaption>
+    </figure>
+
+    <!-- 3 -->
+    <h2 id="moi-noi"><span class="num">03</span>Mối nối P-N</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Ghép miếng P (đông lỗ trống) với miếng N (đông electron): electron ở sát mặt nối chạy sang "lấp" lỗ trống, hai bên <strong>triệt tiêu nhau</strong>. Dọc mặt nối còn lại một <strong>dải trống trơn</strong> không có hạt dẫn, giống bức tường ngăn hai bên. Đó là <strong>vùng nghèo</strong>, và "độ cao" bức tường là <strong>rào điện thế</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Mối nối P-N cân bằng: miền P có lỗ trống, miền N có electron, giữa là vùng nghèo chứa ion âm phía P và ion dương phía N; đồ thị điện thế bậc thang qua mặt nối">
+  <rect class="pzone" x="40" y="40" width="240" height="100"/>
+  <rect class="nzone" x="280" y="40" width="240" height="100"/>
+  <rect class="dep" x="240" y="40" width="80" height="100"/>
+  <line class="dash" x1="280" y1="30" x2="280" y2="150"/>
+  <g class="hole"><circle cx="70" cy="62" r="6"/><circle cx="110" cy="92" r="6"/><circle cx="150" cy="60" r="6"/><circle cx="190" cy="112" r="6"/><circle cx="90" cy="122" r="6"/><circle cx="215" cy="70" r="6"/><circle cx="165" cy="96" r="6"/></g>
+  <g class="el"><circle cx="350" cy="64" r="5"/><circle cx="390" cy="98" r="5"/><circle cx="430" cy="60" r="5"/><circle cx="470" cy="114" r="5"/><circle cx="340" cy="118" r="5"/><circle cx="495" cy="72" r="5"/><circle cx="420" cy="124" r="5"/></g>
+  <g class="b"><text class="warm" x="252" y="70">−</text><text class="warm" x="252" y="100">−</text><text class="warm" x="252" y="130">−</text><text class="ac" x="298" y="70">+</text><text class="ac" x="298" y="100">+</text><text class="ac" x="298" y="130">+</text></g>
+  <text class="b warm" x="120" y="30" text-anchor="middle">Miền P</text>
+  <text class="b ac" x="440" y="30" text-anchor="middle">Miền N</text>
+  <text class="s" x="280" y="166" text-anchor="middle">vùng nghèo (vùng hiếm): ion âm | ion dương, không có hạt dẫn</text>
+  <path class="axis" d="M60 236 L520 236"/>
+  <path class="curve-ac" d="M60 226 L230 226 C270 226 290 196 330 196 L520 196"/>
+  <text class="s" x="64" y="218">điện thế</text>
+  <text class="b ac" x="340" y="190">rào điện thế ≈ 0,7 V (Si), 0,3 V (Ge)</text>
+</svg>
+      <figcaption>Hình 3.3 giáo trình (vẽ lại): mối nối P-N ở trạng thái cân bằng</figcaption>
+    </figure>
+    <div class="def"><strong>Mối nối P-N</strong> gồm hai miền bán dẫn loại P và loại N tiếp xúc nhau trong cùng một tinh thể. Khi tiếp xúc, xảy ra <strong>khuếch tán</strong>: electron từ N qua mặt nối tái hợp với lỗ trống, một số lỗ trống từ P qua mặt nối tái hợp với electron. Khuếch tán dừng lại khi các ion dương (phía N) đẩy không cho lỗ trống sang, ion âm (phía P) đẩy không cho electron sang.</div>
+    <ul>
+      <li>Sự phân bố điện tích hai bên mặt nối tạo một điện thế gọi là <strong>rào điện thế</strong>.</li>
+      <li>Vùng không có hạt dẫn điện gọi là <strong>vùng nghèo</strong>, <strong>vùng hiếm</strong>, hay <strong>vùng điện tích không gian</strong> (tiếng Anh: depletion layer).</li>
+    </ul>
+
+    <!-- 4 -->
+    <h2 id="phan-cuc"><span class="num">04</span>Phân cực thuận, phân cực nghịch</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span><strong>Cực + vào P, cực − vào N</strong> (cùng dấu, "thuận chiều"): nguồn đẩy hạt dẫn dồn vào mặt nối, bức tường hạ thấp → <strong>có dòng</strong>. Đảo ngược lại: nguồn kéo hạt dẫn ra xa, bức tường dày thêm → <strong>gần như không có dòng</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Bên trái phân cực thuận: cực dương nối P, cực âm nối N, vùng nghèo rất hẹp, có dòng điện. Bên phải phân cực nghịch: cực âm nối P, cực dương nối N, vùng nghèo rộng, không có dòng">
+  <rect class="pzone" x="30" y="40" width="110" height="70"/><rect class="nzone" x="140" y="40" width="110" height="70"/>
+  <rect class="dep" x="134" y="40" width="12" height="70"/>
+  <path class="wire" d="M30 75 L14 75 L14 170 L120 170 M160 170 L266 170 L266 75 L250 75"/>
+  <line class="wire" x1="120" y1="156" x2="120" y2="184"/><line class="wire" x1="132" y1="162" x2="132" y2="178" style="stroke-width:5"/>
+  <line class="wire" x1="132" y1="170" x2="160" y2="170"/>
+  <text class="b warm" x="112" y="152">+</text><text class="b" x="138" y="156">−</text>
+  <path class="arr-ac" d="M60 196 L220 196 m-8 -6 l8 6 l-8 6"/>
+  <text class="b ac" x="140" y="214" text-anchor="middle">có dòng (hạt dẫn đa số)</text>
+  <text class="b" x="140" y="28" text-anchor="middle">Phân cực thuận</text>
+  <text class="s" x="140" y="130" text-anchor="middle">vùng nghèo rất hẹp</text>
+  <rect class="pzone" x="310" y="40" width="110" height="70"/><rect class="nzone" x="420" y="40" width="110" height="70"/>
+  <rect class="dep" x="380" y="40" width="80" height="70"/>
+  <path class="wire" d="M310 75 L294 75 L294 170 L400 170 M440 170 L546 170 L546 75 L530 75"/>
+  <line class="wire" x1="412" y1="156" x2="412" y2="184"/><line class="wire" x1="400" y1="162" x2="400" y2="178" style="stroke-width:5"/>
+  <line class="wire" x1="412" y1="170" x2="440" y2="170"/>
+  <text class="b" x="392" y="156">−</text><text class="b warm" x="416" y="152">+</text>
+  <text class="b warm" x="420" y="214" text-anchor="middle">chỉ có dòng rỉ rất nhỏ</text>
+  <text class="b" x="420" y="28" text-anchor="middle">Phân cực nghịch</text>
+  <text class="s" x="420" y="130" text-anchor="middle">vùng nghèo rộng ra</text>
+  <text class="s warm" x="85" y="80" text-anchor="middle">P</text><text class="s ac" x="195" y="80" text-anchor="middle">N</text>
+  <text class="s warm" x="345" y="80" text-anchor="middle">P</text><text class="s ac" x="495" y="80" text-anchor="middle">N</text>
+</svg>
+      <figcaption>Hình 3.4 và 3.5 giáo trình (vẽ lại): phân cực thuận và phân cực nghịch nối P-N</figcaption>
+    </figure>
+    <div class="def"><strong>Phân cực</strong> (định thiên) là áp dụng điện thế một chiều để định chế độ hoạt động cho các linh kiện điện tử tích cực.</div>
+    <ul>
+      <li><strong>Phân cực thuận</strong>: cực dương nguồn E nối chất bán dẫn P, cực âm nối chất bán dẫn N. Lỗ trống và electron bị đẩy về phía mặt nối, <strong>vùng nghèo thu hẹp</strong>; electron tự do ở N vượt qua vùng nghèo sang P rồi về cực dương nguồn, electron từ cực âm nguồn bổ sung vào N. Mạch có dòng điện do <strong>hạt dẫn đa số</strong> tạo nên.</li>
+      <li><strong>Phân cực nghịch</strong>: P nối cực âm, N nối cực dương. Lỗ trống bị hút về cực âm, electron bị hút về cực dương, <strong>vùng nghèo rộng ra</strong>; không có dòng do hạt dẫn đa số.</li>
+      <li><strong>Dòng rỉ (dòng rò)</strong>: với hạt dẫn thiểu số (electron trong P, lỗ trống trong N) thì phân cực nghịch lại giống phân cực thuận, nên vẫn có một dòng <strong>rất nhỏ</strong> chạy qua.</li>
+    </ul>
+
+    <figure class="sim" id="simPN">
+      <p class="sim-h">Thử ngay · Phân cực mối nối P-N và đặc tuyến diode</p>
+      <div class="simbox">
+        <svg viewBox="0 0 620 270" role="img" aria-labelledby="pnTitle">
+          <title id="pnTitle">Bên trái: khối P-N nối với nguồn; vùng nghèo hẹp lại khi phân cực thuận, rộng ra khi phân cực nghịch. Bên phải: đặc tuyến volt-ampere của diode, chấm cam là điểm làm việc hiện tại.</title>
+          <path class="w" d="M30 85 L12 85 L12 205 L135 205 M165 205 L288 205 L288 85 L270 85"/>
+          <path class="ov" id="pnFlow" d="M30 85 L12 85 L12 205 L135 205 M165 205 L288 205 L288 85 L270 85"/>
+          <rect class="pzone" x="30" y="50" width="120" height="70"/>
+          <rect class="nzone" x="150" y="50" width="120" height="70"/>
+          <g id="pnCarriers"></g>
+          <rect class="dep" id="pnDep" x="143" y="50" width="14" height="70"/>
+          <line class="w" x1="135" y1="190" x2="135" y2="220" id="pnBatA"/><line class="w" x1="165" y1="196" x2="165" y2="214" style="stroke-width:5" id="pnBatB"/>
+          <text class="b" id="pnSignL" x="122" y="186" text-anchor="middle">+</text>
+          <text class="b" id="pnSignR" x="178" y="186" text-anchor="middle">−</text>
+          <text class="b warm" x="90" y="42" text-anchor="middle">P (anode)</text>
+          <text class="b ac" x="210" y="42" text-anchor="middle">N (cathode)</text>
+          <text class="s" id="pnDepT" x="150" y="140" text-anchor="middle">vùng nghèo</text>
+          <text class="b" id="pnUt" x="150" y="245" text-anchor="middle">U = 0,7 V</text>
+          <line class="grid" x1="470" y1="20" x2="470" y2="262"/><line class="grid" x1="330" y1="150" x2="612" y2="150"/>
+          <path class="curve" id="pnCurve" d=""/>
+          <line class="dash" id="pnKnee" x1="554" y1="30" x2="554" y2="150"/>
+          <circle class="opdot" id="pnDot" cx="470" cy="150" r="6"/>
+          <text class="s" x="604" y="166" text-anchor="end">U thuận</text>
+          <text class="s" x="336" y="142">U nghịch</text>
+          <text class="s" x="476" y="30">I (mA)</text>
+          <text class="s warm" id="pnKneeT" x="558" y="44">0,7 V</text>
+          <text class="s" x="402" y="262" text-anchor="middle">đánh thủng</text>
+          <text class="b ac" id="pnIt" x="470" y="14" text-anchor="middle">I ≈ 5 mA</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chiều phân cực">
+        <button type="button" data-pnmode="f" aria-pressed="true">Phân cực thuận</button>
+        <button type="button" data-pnmode="r" aria-pressed="false">Phân cực nghịch</button>
+      </div>
+      <div class="controls" role="group" aria-label="Vật liệu">
+        <button type="button" data-pnmat="si" aria-pressed="true">Silicon (Si)</button>
+        <button type="button" data-pnmat="ge" aria-pressed="false">Germanium (Ge)</button>
+      </div>
+      <div class="sl"><label for="pnV">Điện áp nguồn</label><input type="range" id="pnV" min="0" max="1" step="0.01" value="0.7"><output id="pnVo" for="pnV">0,7 V</output></div>
+      <p class="live" id="pnLive" aria-live="polite"></p>
+      <figcaption>Kéo điện áp: phân cực thuận dưới khoảng 0,7 V (Si) hầu như chưa có dòng, qua ngưỡng thì dòng tăng vọt. Phân cực nghịch chỉ có dòng rỉ, tới điện áp đánh thủng (ở đây cho là 50 V) thì dòng ngược tăng mạnh.</figcaption>
+    </figure>
+
+    <!-- 5 -->
+    <h2 id="diode"><span class="num">05</span>Diode: ký hiệu, đặc tuyến</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Diode là <strong>van một chiều</strong> cho dòng điện, giống van chống chảy ngược ở ống nước: nước chỉ đi theo <strong>chiều mũi tên</strong> (từ anode sang cathode), và phải đủ áp (~0,7 V) mới đẩy được van mở. Vạch trên thân diode là <strong>cathode</strong>, chính là vạch đứng ở đầu mũi tên trong ký hiệu.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Diode gồm khối P nối anode và khối N nối cathode; ký hiệu là tam giác chỉ về vạch đứng; thân diode thật có vạch màu ở phía cathode; dòng quy ước đi từ anode sang cathode">
+  <rect class="pzone" x="60" y="30" width="90" height="50"/><rect class="nzone" x="150" y="30" width="90" height="50"/>
+  <text class="b warm" x="105" y="61" text-anchor="middle">P</text><text class="b ac" x="195" y="61" text-anchor="middle">N</text>
+  <line class="wire" x1="20" y1="55" x2="60" y2="55"/><line class="wire" x1="240" y1="55" x2="280" y2="55"/>
+  <text class="s" x="20" y="44">Anode (A) +</text><text class="s" x="282" y="44" text-anchor="end">Cathode (K) −</text>
+  <line class="wire" x1="20" y1="140" x2="280" y2="140"/>
+  <path class="dsym" d="M125 118 L125 162 L163 140 Z"/><line class="wire" x1="165" y1="116" x2="165" y2="164" style="stroke-width:3"/>
+  <text class="b" x="40" y="128">A</text><text class="b" x="252" y="128">K</text>
+  <path class="arr-ac" d="M70 190 L230 190 m-9 -6 l9 6 l-9 6"/>
+  <text class="s ac" x="150" y="212" text-anchor="middle">dòng điện quy ước: A → K</text>
+  <line class="wire" x1="320" y1="70" x2="540" y2="70"/>
+  <rect class="base" x="380" y="52" width="100" height="36" rx="8"/>
+  <rect x="452" y="52" width="12" height="36" style="fill:var(--ink-faint)"/>
+  <text class="s" x="430" y="110" text-anchor="middle">vạch màu = cathode</text>
+  <text class="b" x="430" y="34" text-anchor="middle">Diode thật (vỏ DO-41)</text>
+  <line class="wire" x1="320" y1="160" x2="540" y2="160"/>
+  <path class="dsym" d="M410 138 L410 182 L448 160 Z"/><line class="wire" x1="450" y1="136" x2="450" y2="184" style="stroke-width:3"/>
+  <line class="dash" x1="458" y1="88" x2="450" y2="134"/>
+  <text class="s" x="336" y="150">A</text><text class="s" x="524" y="150">K</text>
+</svg>
+      <figcaption>Hình 3.6 giáo trình (vẽ lại): cấu tạo, ký hiệu diode và cách nhận cực trên linh kiện thật</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Diode_1N4007.jpg/960px-Diode_1N4007.jpg" width="960" height="540" alt="Diode chỉnh lưu 1N4007 thân đen có vạch trắng ở đầu cathode" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode 1N4007.</strong> Thân nhựa đen, vạch trắng ở đầu <strong>cathode</strong>. Khi cắm mạch, đặt vạch trùng với vạch đứng của ký hiệu trên sơ đồ.<span class="credit">Ảnh: Zxelt · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=163527307" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <div class="def"><strong>Diode</strong> là linh kiện điện tử có hai điện cực: cực dương (<strong>anode</strong>, A) và cực âm (<strong>cathode</strong>, K). Hầu hết diode làm từ bán dẫn silicon, germanium hoặc selen. Đặc tính cơ bản: diode <strong>chỉ cho dòng điện chạy theo một hướng</strong>, từ anode sang cathode.</div>
+    <ul>
+      <li>Khi anode dương hơn cathode một mức tối thiểu thì diode cho dòng chạy qua. Mức này gọi là <strong>điện áp thông dòng</strong> (breakover, cũng gọi điện áp ngưỡng): khoảng <strong>0,7 V</strong> với silicon, <strong>0,3 V</strong> với germanium, <strong>1 V</strong> với selen.</li>
+      <li>Nếu cathode có điện áp bằng hoặc dương hơn anode, hoặc điện áp đặt vào thấp hơn mức thông dòng, diode <strong>không dẫn</strong>.</li>
+      <li>Nhờ vậy diode làm được: chỉnh lưu, chuyển mạch, hạn chế tín hiệu, điều chỉnh điện áp, điều biến, trộn tín hiệu, giải điều chế, dao động.</li>
+    </ul>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Vật liệu</th><th>Điện áp thông dòng</th><th>Ghi nhớ</th></tr></thead>
+        <tbody>
+          <tr><td>Silicon (Si)</td><td>≈ 0,7 V</td><td>Phổ biến nhất (1N4007, 1N4148). Khi tính mạch, lấy U<sub>D</sub> = 0,7 V.</td></tr>
+          <tr><td>Germanium (Ge)</td><td>≈ 0,3 V</td><td>Dùng trong mạch tín hiệu nhỏ, radio đời cũ; dòng rỉ lớn hơn Si.</td></tr>
+          <tr><td>Selen</td><td>≈ 1 V</td><td>Loại chỉnh lưu đời cũ, nay ít gặp.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Đặc tuyến volt – ampere và điện áp đánh thủng</h3>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Đặc tuyến diode: bên phải là phân cực thuận, dòng tăng vọt sau điểm gối 0,3 V Ge hoặc 0,7 V Si; bên trái là phân cực nghịch, chỉ có dòng rỉ nhỏ cho tới điện áp đánh thủng thì dòng ngược tăng mạnh">
+  <path class="axis" d="M40 120 L530 120 M300 16 L300 240"/>
+  <text class="s" x="526" y="138" text-anchor="end">+U thuận</text><text class="s" x="44" y="112">−U nghịch</text>
+  <text class="s" x="306" y="26">+I (mA)</text><text class="s" x="306" y="238">−I (µA)</text>
+  <path class="curve-ac" d="M300 120 C340 119 360 118 372 112 C380 104 386 70 394 22"/>
+  <path class="curve-warm" d="M300 120 C330 119 338 117 346 108 C352 96 356 66 360 22"/>
+  <line class="dash" x1="346" y1="120" x2="346" y2="108"/><line class="dash" x1="372" y1="120" x2="372" y2="112"/>
+  <text class="s warm" x="346" y="146" text-anchor="middle">0,3 V</text><text class="s ac" x="380" y="146">0,7 V</text>
+  <text class="b warm" x="364" y="40" text-anchor="end">Ge</text><text class="b ac" x="400" y="40">Si</text>
+  <text class="s" x="420" y="90">"gối" (knee): bắt đầu dẫn mạnh</text>
+  <path class="curve-ac" d="M300 120 L120 126 C108 127 104 140 100 236"/>
+  <line class="dash" x1="104" y1="40" x2="104" y2="236"/>
+  <text class="s" x="110" y="56">điện áp đánh thủng</text>
+  <text class="s" x="110" y="72">(diode thường: −50 … −100 V)</text>
+  <text class="s" x="200" y="148" text-anchor="middle">dòng rỉ rất nhỏ (µA)</text>
+  <text class="s" x="96" y="200" text-anchor="end">vùng</text><text class="s" x="96" y="216" text-anchor="end">đánh thủng</text>
+</svg>
+      <figcaption>Đặc tuyến diode (Hình 3.6 giáo trình): trục dòng phía âm tính bằng µA nên nhìn "phóng to" so với phía thuận (mA)</figcaption>
+    </figure>
+    <div class="def"><strong>Điện áp đánh thủng</strong> (breakdown): nếu đặt một điện áp ngược (âm) đủ lớn, diode sẽ cho dòng đi theo hướng ngược lại. Diode thông thường có điện áp đánh thủng khoảng <strong>−50 V đến −100 V</strong> hoặc lớn hơn. Hầu hết diode thường không chịu được việc làm việc ở vùng này; riêng một số diode (như <a href="#zener">Zener</a>) được thiết kế để hoạt động trong vùng đánh thủng.</div>
+
+    <!-- 6 -->
+    <h2 id="cac-loai-diode"><span class="num">06</span>Các loại diode</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Mọi diode đều có <strong>tam giác + vạch</strong>. Khác nhau ở <strong>cái vạch</strong> (vạch thẳng: thường, vạch chữ Z: Zener, vạch chữ S: Schottky) và <strong>mũi tên ánh sáng</strong> (chỉ ra ngoài: phát sáng, chỉ vào trong: nhận ánh sáng).</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Ký hiệu các loại diode: chỉnh lưu và tín hiệu, Schottky, Zener, LED, diode quang, diode laser">
+  <g class="wire">
+    <line x1="40" y1="60" x2="140" y2="60"/><line x1="230" y1="60" x2="330" y2="60"/><line x1="420" y1="60" x2="520" y2="60"/>
+    <line x1="40" y1="170" x2="140" y2="170"/><line x1="230" y1="170" x2="330" y2="170"/><line x1="420" y1="170" x2="520" y2="170"/>
+  </g>
+  <g class="dsym">
+    <path d="M76 44 L76 76 L104 60 Z"/><path d="M266 44 L266 76 L294 60 Z"/><path d="M456 44 L456 76 L484 60 Z"/>
+    <path d="M76 154 L76 186 L104 170 Z"/><path d="M266 154 L266 186 L294 170 Z"/><path d="M456 154 L456 186 L484 170 Z"/>
+  </g>
+  <g class="dsym-o">
+    <line x1="105" y1="44" x2="105" y2="76" style="stroke-width:3"/>
+    <path d="M288 50 L288 44 L295 44 L295 76 L302 76 L302 70" style="stroke-width:3"/>
+    <path d="M478 40 L485 44 L485 76 L492 80" style="stroke-width:3"/>
+    <line x1="105" y1="154" x2="105" y2="186" style="stroke-width:3"/>
+    <line x1="295" y1="154" x2="295" y2="186" style="stroke-width:3"/>
+    <line x1="485" y1="154" x2="485" y2="186" style="stroke-width:3"/>
+  </g>
+  <g class="arr-ac">
+    <path d="M92 146 L106 126 m-8 2 l8 -2 l-1 8 M102 150 L116 130 m-8 2 l8 -2 l-1 8"/>
+    <path d="M300 124 L286 144 m1 -8 l-1 8 l8 -2 M310 128 L296 148 m1 -8 l-1 8 l8 -2"/>
+    <path d="M472 146 L486 126 m-8 2 l8 -2 l-1 8 M482 150 L496 130 m-8 2 l8 -2 l-1 8"/>
+  </g>
+  <text class="b" x="90" y="104" text-anchor="middle">Chỉnh lưu, tín hiệu</text>
+  <text class="b" x="280" y="104" text-anchor="middle">Schottky (vạch S)</text>
+  <text class="b" x="470" y="104" text-anchor="middle">Zener (vạch Z)</text>
+  <text class="b" x="90" y="214" text-anchor="middle">LED (phát sáng)</text>
+  <text class="b" x="280" y="214" text-anchor="middle">Diode quang (nhận sáng)</text>
+  <text class="b" x="470" y="214" text-anchor="middle">Diode laser</text>
+  <text class="s" x="470" y="232" text-anchor="middle">ký hiệu giống LED, ghi chú "laser"</text>
+  <text class="s" x="30" y="52">A</text><text class="s" x="140" y="52">K</text>
+</svg>
+      <figcaption>Ký hiệu các loại diode trong giáo trình (Hình 3.7, 3.9, 3.10, 3.11): anode luôn ở bên trái, cathode ở bên phải</figcaption>
+    </figure>
+
+    <h3>Diode chỉnh lưu</h3>
+    <div class="def"><strong>Diode chỉnh lưu</strong> (diode nguồn) dùng để chỉnh lưu nguồn xoay chiều đầu vào thành nguồn một chiều. Đây là diode tiêu chuẩn có <strong>dòng điện tối đa cao hơn nhiều</strong>, nên điện áp thuận để dẫn cũng lớn hơn. Ví dụ <strong>1N4001</strong>: dòng 1 A, điện áp thuận 1,1 V.</div>
+    <p>Dòng 1N4001 – 1N4007 đều chịu 1 A, khác nhau ở điện áp ngược tối đa (1N4001: 50 V … 1N4007: 1 000 V), nên 1N4007 dùng được cho hầu hết mạch nguồn nhỏ.</p>
+
+    <h3>Diode tín hiệu (signal diode)</h3>
+    <div class="def"><strong>Diode tín hiệu</strong> là diode nhỏ, dùng ở nơi <strong>tần số cao, dòng nhỏ</strong>: mạch vô tuyến truyền hình, máy phát thanh, mạch logic số. Kích thước nhỏ hơn diode nguồn, điện áp rơi tương đối cao và dòng cực đại thấp. Ví dụ phổ biến <strong>1N4148</strong>: điện áp thuận 0,72 V, dòng thuận cực đại 300 mA.</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Diode_1n4148.jpg" width="960" height="393" alt="Diode tín hiệu 1N4148 vỏ thuỷ tinh màu cam có vạch đen" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode 1N4148 (Hình 3.8).</strong> Vỏ thuỷ tinh nhỏ màu cam, vạch đen ở đầu cathode. Hay dùng bảo vệ chân vi điều khiển và mạch logic.<span class="credit">Ảnh: Vonvon · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=9086052" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <h3>Diode Schottky</h3>
+    <div class="def"><strong>Diode Schottky</strong> có <strong>điện áp rơi thấp</strong> hơn diode P-N thông thường: khoảng <strong>0,15 – 0,4 V</strong> ở dòng thấp, so với 0,6 V của diode silic. Để được như vậy, nó được chế tạo bằng <strong>tiếp xúc bán dẫn – kim loại</strong> thay vì mối nối P-N. Dùng trong ứng dụng RF (cao tần), chỉnh lưu và mạch ghim.</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Schottky.jpg/960px-Schottky.jpg" width="960" height="640" alt="Nhiều diode Schottky dạng hai chân và dạng vỏ TO-220 ba chân" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode Schottky.</strong> Loại nhỏ hai chân giống diode thường; loại dòng lớn đóng vỏ TO-220 (có lỗ bắt tản nhiệt), thường gặp trong bộ nguồn xung.<span class="credit">Ảnh: Steffen Maisch · Public domain · <a href="https://commons.wikimedia.org/w/index.php?curid=6425112" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <a class="practice" href="/machboost"><span class="practice-k">Dự án</span><span class="practice-t">Mạch tăng áp Boost 12V lên 24V</span><span class="practice-d">Diode (nên dùng Schottky vì sụt áp thấp, đóng cắt nhanh) dẫn năng lượng từ cuộn cảm ra tụ đầu ra.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+    <a class="practice" href="/machbuck"><span class="practice-k">Dự án</span><span class="practice-t">Mạch hạ áp Buck 24V xuống 12V</span><span class="practice-d">Mạch LM2596 dùng diode Schottky làm diode "xả" cho cuộn cảm khi công tắc ngắt.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+
+    <h3 id="zener">Diode Zener</h3>
+    <div class="def"><strong>Diode Zener</strong> khác diode thường: được thiết kế có <strong>điện áp đánh thủng rất chính xác</strong>, gọi là điện áp Zener (V<sub>Z</sub>), và làm việc ở <strong>phân cực nghịch</strong>. Khi dòng ngược đủ lớn chạy qua, điện áp trên Zener được <strong>ghim giữ</strong> ở mức V<sub>Z</sub> cố định. Vì vậy Zener dùng tạo <strong>điện áp tham chiếu</strong> chính xác, hoặc ổn áp cho tải nhỏ (nó tiêu hao khá nhiều dòng nên không hợp với tải lớn).</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Zener_Diode.JPG/960px-Zener_Diode.JPG" width="960" height="640" alt="Diode Zener vỏ thuỷ tinh màu đỏ cam có vạch đen" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode Zener.</strong> Hình dáng giống 1N4148 (vỏ thuỷ tinh), phân biệt bằng mã in trên thân, ví dụ <strong>5V1</strong> là Zener 5,1 V, 1N4733A cũng là Zener 5,1 V 1 W.<span class="credit">Ảnh: Teravolt · CC BY 3.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=15245249" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <h3>Diode phát sáng (LED)</h3>
+    <div class="def"><strong>LED</strong> (Light Emitting Diode) cũng chỉ cho dòng chạy theo một hướng. Điện áp cần để LED sáng gọi là <strong>điện áp thông dòng V<sub>F</sub></strong> (Voltage forward), lớn hơn diode thường (<strong>1,2 – 3 V</strong>) và phụ thuộc màu: LED xanh dương siêu sáng khoảng <strong>3,3 V</strong>, LED đỏ siêu sáng cùng cỡ chỉ <strong>2,2 V</strong>.</div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="LED 5 mm: chân dài là anode, chân ngắn và mặt vát phẳng ở vành là cathode">
+  <ellipse class="glow" cx="140" cy="62" rx="62" ry="54"/>
+  <path class="bulb" d="M110 120 L110 64 A30 30 0 0 1 170 64 L170 120 Z"/>
+  <rect class="base" x="102" y="116" width="76" height="10" rx="2"/>
+  <line class="wire" x1="126" y1="126" x2="126" y2="192"/><line class="wire" x1="154" y1="126" x2="154" y2="172"/>
+  <line class="dash" x1="178" y1="108" x2="178" y2="130"/>
+  <text class="s" x="118" y="196" text-anchor="end">chân dài = Anode (+)</text>
+  <text class="s" x="162" y="176">chân ngắn = Cathode (−)</text>
+  <text class="s" x="186" y="122">mặt vát phẳng phía cathode</text>
+  <line class="wire" x1="330" y1="80" x2="520" y2="80"/>
+  <path class="dsym" d="M406 60 L406 100 L440 80 Z"/><line class="wire" x1="442" y1="58" x2="442" y2="102" style="stroke-width:3"/>
+  <path class="arr-ac" d="M430 56 L446 34 m-8 2 l8 -2 l-1 8 M442 60 L458 38 m-8 2 l8 -2 l-1 8"/>
+  <text class="b warm" x="334" y="70">+ Anode</text><text class="b" x="516" y="70" text-anchor="end">Cathode</text>
+  <text class="b" x="424" y="136" text-anchor="middle">Ký hiệu LED</text>
+</svg>
+      <figcaption>Hình 3.11 giáo trình (vẽ lại): ký hiệu và cách nhận chân LED thật</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Verschiedene_LEDs.jpg/960px-Verschiedene_LEDs.jpg" width="960" height="338" alt="Nhiều LED chân cắm với các màu, kích thước và hình dạng khác nhau" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · LED chân cắm.</strong> Có nhiều cỡ (3 mm, 5 mm, 10 mm), dạng tròn, vuông, chữ nhật. LED mới: chân dài là anode.<span class="credit">Ảnh: Afrank99 · CC BY-SA 2.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=248198" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <h3>Diode quang (photodiode)</h3>
+    <div class="def"><strong>Diode quang</strong> làm ngược với LED: <strong>nhận ánh sáng</strong> để tạo dòng điện. Nó thường được <strong>phân cực nghịch</strong>; khi không có ánh sáng chỉ có dòng rỉ rất nhỏ, khi ánh sáng chiếu vào mối nối P-N sẽ bứt thêm cặp electron – lỗ trống (như mục 01) nên dòng ngược tăng theo cường độ sáng. Dùng làm cảm biến ánh sáng, mắt nhận tia hồng ngoại của remote, đo ánh sáng.</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Photodiode-closeup.jpg/960px-Photodiode-closeup.jpg" width="960" height="1003" alt="Diode quang có mặt cảm biến hình vuông màu xanh trong vỏ gốm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode quang.</strong> Mặt vuông màu xanh là vùng mối nối P-N hứng ánh sáng; diện tích càng lớn càng nhạy.<span class="credit">Ảnh: John Maushammer · CC BY-SA 2.5 · <a href="https://commons.wikimedia.org/w/index.php?curid=3352608" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <h3>Diode laser</h3>
+    <div class="def"><strong>Diode laser</strong> là một kiểu diode phát quang nhưng tạo ra <strong>chùm sáng kết hợp</strong> (laser): tia hẹp, cùng màu, đi thẳng rất xa. Ứng dụng: mắt đọc trong ổ đĩa CD, DVD, con trỏ laser, máy đo khoảng cách. Diode laser đắt hơn LED nhưng rẻ hơn nhiều so với các loại máy phát laser khác; tuổi thọ ngắn hơn LED.</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Diode_laser.jpg/960px-Diode_laser.jpg" width="960" height="639" alt="Diode laser vỏ kim loại tròn ba chân đặt cạnh đồng xu" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Diode laser.</strong> Vỏ kim loại tròn nhỏ hơn đồng xu, có cửa sổ kính phát tia; bên trong thường kèm một diode quang để đo và giữ công suất ổn định.<span class="credit">Ảnh: Wikimedia Commons · Public domain · <a href="https://commons.wikimedia.org/w/index.php?curid=2359148" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <h3>So sánh nhanh các loại diode</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Loại</th><th>Làm việc ở</th><th>Thông số đặc trưng</th><th>Dùng để</th></tr></thead>
+        <tbody>
+          <tr><td>Chỉnh lưu</td><td>Phân cực thuận</td><td>1N4001: 1 A, U<sub>F</sub> 1,1 V</td><td>Đổi AC thành DC trong bộ nguồn</td></tr>
+          <tr><td>Tín hiệu</td><td>Phân cực thuận</td><td>1N4148: 0,72 V, 300 mA</td><td>Mạch tần số cao, dòng nhỏ, logic</td></tr>
+          <tr><td>Schottky</td><td>Phân cực thuận</td><td>U<sub>F</sub> 0,15 – 0,4 V</td><td>RF, chỉnh lưu nguồn xung, ghim áp</td></tr>
+          <tr><td>Zener</td><td><strong>Phân cực nghịch</strong></td><td>V<sub>Z</sub>: 2,4 … 47 V; P<sub>Z</sub>: 0,25 – 5 W</td><td>Ổn áp, điện áp tham chiếu</td></tr>
+          <tr><td>LED</td><td>Phân cực thuận</td><td>V<sub>F</sub> 1,2 – 3,3 V, ~10 – 20 mA</td><td>Báo hiệu, chiếu sáng, hiển thị</td></tr>
+          <tr><td>Quang</td><td><strong>Phân cực nghịch</strong></td><td>Dòng ngược tăng theo ánh sáng</td><td>Cảm biến ánh sáng, nhận hồng ngoại</td></tr>
+          <tr><td>Laser</td><td>Phân cực thuận</td><td>Chùm sáng kết hợp</td><td>Đầu đọc CD/DVD, con trỏ laser</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7 -->
+    <h2 id="mach-led"><span class="num">07</span>Thiết kế mạch LED</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>LED như <strong>một người chỉ cần đúng 2 V</strong>: nguồn 9 V thì phần dư 7 V phải có người "gánh" giùm, đó là <strong>điện trở hạn dòng</strong>. Không có điện trở, dòng không bị giới hạn và LED cháy ngay.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 190" role="img" aria-label="Mạch LED đơn giản: pin 9 V, điện trở R và LED mắc nối tiếp; điện áp 9 V chia thành 7 V trên điện trở và 2 V trên LED">
+  <path class="wire" d="M90 60 L90 30 L240 30 M320 30 L400 30 L400 70 M400 120 L400 160 L90 160 L90 110"/>
+  <line class="plate" x1="70" y1="64" x2="110" y2="64"/><line class="wire" x1="78" y1="80" x2="102" y2="80" style="stroke-width:5"/>
+  <line class="plate" x1="70" y1="94" x2="110" y2="94"/><line class="wire" x1="78" y1="108" x2="102" y2="108" style="stroke-width:5"/>
+  <text class="b warm" x="56" y="70" text-anchor="end">+</text><text class="b" x="44" y="94" text-anchor="end">9 V</text>
+  <rect class="load" x="240" y="18" width="80" height="24" rx="3"/><text class="b" x="280" y="35" text-anchor="middle">R</text>
+  <path class="dsym" d="M384 74 L416 74 L400 102 Z"/><line class="wire" x1="382" y1="104" x2="418" y2="104" style="stroke-width:3"/>
+  <path class="arr-ac" d="M422 84 L444 70 m-8 0 l8 0 l-3 7 M424 96 L446 82 m-8 0 l8 0 l-3 7"/>
+  <text class="b ac" x="280" y="66" text-anchor="middle">U<tspan class="sub" dy="3">R</tspan><tspan dy="-3"> = 9 − 2 = 7 V</tspan></text>
+  <text class="b warm" x="456" y="104">V<tspan class="sub" dy="3">F</tspan><tspan dy="-3"> = 2 V</tspan></text>
+  <text class="s" x="245" y="148" text-anchor="middle">dòng chung I = 15 mA chạy qua cả R và LED</text>
+</svg>
+      <figcaption>Mạch LED đơn giản (Hình 3.13 giáo trình): pin, điện trở hạn dòng và LED mắc nối tiếp</figcaption>
+    </figure>
+    <div class="formula">R = <span class="frac"><span>U<sub>nguồn</sub> − V<sub>F</sub></span><span>I<sub>LED</sub></span></span><small>U, V<sub>F</sub>: volt <span class="say" title="Cách đọc">vôn</span> (V) · I: ampere <span class="say" title="Cách đọc">am-pe</span> (A), đổi mA ra A trước khi chia · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω). Đây chính là định luật Ohm R = U / I áp cho phần điện áp còn dư.</small></div>
+    <h3>Ví dụ giải mẫu (theo giáo trình)</h3>
+    <div class="steps">
+      <h4>Đề</h4>
+      <p>Nguồn là pin 9 V, LED đỏ có V<sub>F</sub> = 2,0 V, dòng LED 15 mA. Tính điện trở hạn dòng.</p>
+      <h4>Bước 1 · Đổi đơn vị</h4>
+      <p>I = 15 mA = 0,015 A</p>
+      <h4>Bước 2 · Áp dụng công thức</h4>
+      <p>R = (9 − 2,0) / 0,015 = 7 / 0,015 ≈ 466,7 Ω (giáo trình ghi 466 Ω)</p>
+      <h4>Bước 3 · Chọn giá trị chuẩn</h4>
+      <p>Không có điện trở 466 Ω, chọn giá trị chuẩn <strong>lớn hơn gần nhất</strong> để dòng không vượt mức: <span class="ans">R = 470 Ω</span></p>
+      <h4>Kiểm tra</h4>
+      <p>I = 7 / 470 ≈ 0,0149 A ≈ 14,9 mA ≤ 15 mA ✓ · Công suất điện trở P = I² × R = 0,0149² × 470 ≈ 0,1 W, dùng điện trở 1/4 W là đủ.</p>
+    </div>
+    <div class="note"><strong>Muốn LED bền hơn:</strong> chọn R lớn hơn một chút để giảm dòng (LED hơi tối hơn nhưng tuổi thọ tăng). Nếu không biết V<sub>F</sub> chính xác, lấy theo màu: đỏ ~2 V, vàng ~2,1 V, xanh lá ~2,2 V, xanh dương và trắng ~3,2 – 3,3 V.</div>
+
+    <figure class="sim" id="simLed">
+      <p class="sim-h">Thử ngay · Tính điện trở hạn dòng cho LED</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 200" role="img" aria-labelledby="ledTitle">
+          <title id="ledTitle">Mạch nguồn, điện trở và LED nối tiếp. LED sáng mạnh hay yếu theo dòng điện; dòng quá lớn thì LED cháy.</title>
+          <path class="w" d="M80 70 L80 40 L230 40 M310 40 L420 40 L420 80 M420 120 L420 165 L80 165 L80 120"/>
+          <path class="ov" id="ledFlow" d="M80 70 L80 40 L230 40 M310 40 L420 40 L420 80 M420 120 L420 165 L80 165 L80 120"/>
+          <circle class="src" cx="80" cy="95" r="24"/><text class="b" x="80" y="91" text-anchor="middle">+</text><text class="b" x="80" y="112" text-anchor="middle">−</text>
+          <rect class="part" x="230" y="28" width="80" height="24" rx="3"/>
+          <circle class="glow" id="ledGlow" cx="420" cy="100" r="40" opacity=".4"/>
+          <path class="dsym" d="M404 84 L436 84 L420 112 Z"/><line class="w" x1="402" y1="114" x2="438" y2="114" style="stroke-width:3"/>
+          <text class="b warm" id="ledUt" x="40" y="60" text-anchor="end">9 V</text>
+          <text class="b" id="ledRt" x="270" y="76" text-anchor="middle">R = 470 Ω</text>
+          <text class="b ac" id="ledIt" x="270" y="190" text-anchor="middle">I = 14,9 mA</text>
+          <text class="b" id="ledFt" x="462" y="104">V<tspan class="sub" dy="3">F</tspan><tspan dy="-3"> = 2 V</tspan></text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Màu LED">
+        <button type="button" data-led="red" aria-pressed="true">Đỏ 2,0 V</button>
+        <button type="button" data-led="yel" aria-pressed="false">Vàng 2,1 V</button>
+        <button type="button" data-led="grn" aria-pressed="false">Xanh lá 2,2 V</button>
+        <button type="button" data-led="blu" aria-pressed="false">Xanh dương 3,3 V</button>
+        <button type="button" data-led="wht" aria-pressed="false">Trắng 3,2 V</button>
+      </div>
+      <div class="sl"><label for="ledU">Điện áp nguồn</label><input type="range" id="ledU" min="3" max="24" step="0.5" value="9"><output id="ledUo" for="ledU">9 V</output></div>
+      <div class="sl"><label for="ledI">Dòng mong muốn</label><input type="range" id="ledI" min="2" max="30" step="1" value="15"><output id="ledIo" for="ledI">15 mA</output></div>
+      <p class="live" id="ledLive" aria-live="polite"></p>
+      <figcaption>Chọn màu LED, điện áp nguồn và dòng mong muốn: trang tự tính R, chọn giá trị chuẩn E12 gần nhất (lớn hơn), rồi tính lại dòng thực và công suất trên điện trở.</figcaption>
+    </figure>
+    <a class="practice" href="/ic555"><span class="practice-k">Dự án</span><span class="practice-t">IC 555 phát xung nháy LED</span><span class="practice-d">Mạch nháy LED có điện trở hạn dòng mắc nối tiếp với LED, tính đúng như mục này.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+
+    <!-- 8 -->
+    <h2 id="chinh-luu"><span class="num">08</span>Mạch chỉnh lưu một pha bán kỳ</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện xoay chiều như <strong>nước chảy tới rồi chảy lui</strong>. Đặt một van một chiều (diode) vào đường ống: nửa chu kỳ chảy tới thì qua được, nửa chảy lui thì bị chặn. Ra tải chỉ còn <strong>các "bướu" dương</strong>, dòng chỉ đi một chiều.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 210" role="img" aria-label="Mạch chỉnh lưu bán kỳ: nguồn xoay chiều, diode nối tiếp, điện trở tải RL. Sóng vào có cả bán kỳ dương và âm, sóng ra chỉ còn bán kỳ dương">
+  <path class="wire" d="M60 80 L60 30 L120 30 M160 30 L220 30 L220 70 M220 120 L220 170 L60 170 L60 120"/>
+  <circle class="pump" cx="60" cy="100" r="22"/><path class="curve-warm" d="M46 100 q7 -14 14 0 q7 14 14 0"/>
+  <path class="dsym" d="M122 16 L122 44 L150 30 Z"/><line class="wire" x1="152" y1="14" x2="152" y2="46" style="stroke-width:3"/>
+  <rect class="load" x="208" y="70" width="24" height="50" rx="3"/><text class="b" x="244" y="100">R<tspan class="sub" dy="3">L</tspan></text>
+  <text class="s" x="18" y="140">AC</text><text class="b" x="136" y="62" text-anchor="middle">D</text>
+  <path class="axis" d="M300 60 L540 60 M300 160 L540 160"/>
+  <path class="curve-warm" d="M300 60 C315 10 345 10 360 60 C375 110 405 110 420 60 C435 10 465 10 480 60 C495 110 525 110 540 60"/>
+  <path class="curve-ac" d="M300 160 C315 110 345 110 360 160 L420 160 C435 110 465 110 480 160 L540 160"/>
+  <text class="s" x="544" y="64">vào</text><text class="s" x="544" y="164">ra</text>
+  <text class="s" x="390" y="200" text-anchor="middle">bán kỳ âm bị diode chặn, không xuất hiện trên tải</text>
+</svg>
+      <figcaption>Hình 3.14 giáo trình (vẽ lại): mạch chỉnh lưu bán kỳ và dạng sóng vào, ra</figcaption>
+    </figure>
+    <div class="def"><strong>Mạch chỉnh lưu bán kỳ</strong> cho một trong hai nửa chu kỳ (dương hoặc âm) đi qua diode, nửa kia bị khoá, tuỳ theo chiều lắp diode. Vì chỉ chỉnh lưu một nửa chu kỳ nên <strong>hiệu suất truyền công suất rất thấp</strong>. Mạch chỉ cần <strong>một diode</strong> trong các mạch nguồn một pha.</div>
+    <div class="formula">U<sub>ra đỉnh</sub> = U<sub>vào đỉnh</sub> − 0,7 V &nbsp;&nbsp;·&nbsp;&nbsp; U<sub>ra trung bình</sub> ≈ <span class="frac"><span>U<sub>ra đỉnh</sub></span><span>π</span></span> ≈ 0,318 × U<sub>ra đỉnh</sub><small>0,7 V là điện áp rơi trên diode silicon khi dẫn. Công thức trung bình là kiến thức bổ sung, không có trong giáo trình.</small></div>
+
+    <figure class="sim" id="simRect">
+      <p class="sim-h">Thử ngay · Chỉnh lưu bán kỳ</p>
+      <div class="simbox">
+        <svg viewBox="0 0 620 250" role="img" aria-labelledby="rectTitle">
+          <title id="rectTitle">Bên trái: mạch nguồn xoay chiều, diode và tải. Bên phải: sóng vào (nét đứt) và sóng ra trên tải (nét liền). Vạch cam chạy theo thời gian; diode xanh là đang dẫn.</title>
+          <path class="w" d="M50 100 L50 40 L100 40 M150 40 L200 40 L200 95 M200 155 L200 210 L50 210 L50 150"/>
+          <path class="ov" id="rectFlow" d="M50 100 L50 40 L100 40 M150 40 L200 40 L200 95 M200 155 L200 210 L50 210 L50 150"/>
+          <circle class="src" cx="50" cy="125" r="24"/><path class="thin" d="M36 125 q7 -14 14 0 q7 14 14 0"/>
+          <g id="rectD"><path class="dsym" id="rectDs" d="M106 24 L106 56 L138 40 Z"/><line class="w" x1="140" y1="22" x2="140" y2="58" style="stroke-width:3"/></g>
+          <rect class="part" x="188" y="95" width="24" height="60" rx="3"/>
+          <text class="b" x="222" y="130">R<tspan class="sub" dy="3">L</tspan></text>
+          <text class="b" id="rectState" x="125" y="80" text-anchor="middle">D dẫn</text>
+          <line class="grid" x1="260" y1="70" x2="610" y2="70"/><line class="grid" x1="260" y1="180" x2="610" y2="180"/>
+          <path class="wave-in" id="rectIn" d=""/>
+          <path class="wave-out" id="rectOut" d=""/>
+          <line class="cursor" id="rectCur" x1="260" y1="16" x2="260" y2="236"/>
+          <text class="s" x="264" y="22">U vào</text><text class="s" x="264" y="132">U ra (trên R<tspan class="sub" dy="3">L</tspan><tspan dy="-3">)</tspan></text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chiều lắp diode">
+        <button type="button" data-rdir="f" aria-pressed="true">Diode chiều thuận</button>
+        <button type="button" data-rdir="r" aria-pressed="false">Đảo chiều diode</button>
+        <button type="button" id="rectPause" aria-pressed="false">Tạm dừng</button>
+      </div>
+      <div class="sl"><label for="rectV">U vào đỉnh</label><input type="range" id="rectV" min="2" max="20" step="0.5" value="12"><output id="rectVo" for="rectV">12 V</output></div>
+      <p class="live" id="rectLive" aria-live="polite"></p>
+      <figcaption>Đảo chiều diode thì mạch giữ bán kỳ âm. Hạ U vào xuống gần 0,7 V để thấy phần điện áp bị "mất" trên diode chiếm tỉ lệ lớn.</figcaption>
+    </figure>
+
+    <!-- 9 -->
+    <h2 id="on-ap-zener"><span class="num">09</span>Mạch ổn áp dùng diode Zener</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Zener như <strong>van xả tràn của bồn nước</strong>: nước (điện áp) dâng tới mức V<sub>Z</sub> thì van mở xả bớt, nên mực nước ra tải luôn đứng yên ở V<sub>Z</sub>. Điện trở R<sub>S</sub> là <strong>ống dẫn nước vào</strong>, giới hạn lượng nước để van xả không bị quá tải.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Mạch ổn áp Zener: nguồn Vin, điện trở hạn dòng Rs nối tiếp, diode Zener mắc ngược song song với tải RL; Vout bằng Vz">
+  <path class="wire" d="M60 40 L170 40 M250 40 L300 40 L460 40 L460 80 M460 140 L460 190 L60 190 M300 40 L300 92 M300 130 L300 190"/>
+  <circle class="node" cx="300" cy="40" r="4"/><circle class="node" cx="300" cy="190" r="4"/>
+  <circle class="node" cx="60" cy="40" r="5"/><circle class="node" cx="60" cy="190" r="5"/>
+  <rect class="load" x="170" y="28" width="80" height="24" rx="3"/><text class="b" x="210" y="22" text-anchor="middle">R<tspan class="sub" dy="3">S</tspan></text>
+  <path class="dsym" d="M284 128 L316 128 L300 100 Z"/><path class="dsym-o" d="M280 104 L286 98 L314 98 L320 92" style="stroke-width:3"/>
+  <rect class="load" x="448" y="80" width="24" height="60" rx="3"/><text class="b" x="482" y="114">R<tspan class="sub" dy="3">L</tspan></text>
+  <text class="b warm" x="40" y="44" text-anchor="end">+V</text><text class="b" x="40" y="194" text-anchor="end">0 V</text>
+  <text class="b" x="76" y="120">V<tspan class="sub" dy="3">in</tspan></text>
+  <text class="b ac" x="340" y="120">V<tspan class="sub" dy="3">out</tspan><tspan dy="-3"> = V</tspan><tspan class="sub" dy="3">Z</tspan></text>
+  <path class="arr-ac" d="M110 30 L150 30 m-7 -5 l7 5 l-7 5 M360 30 L420 30 m-7 -5 l7 5 l-7 5 M326 140 L326 176 m-5 -7 l5 7 l5 -7"/>
+  <text class="s ac" x="130" y="20" text-anchor="middle">I<tspan class="sub" dy="3">S</tspan></text><text class="s ac" x="390" y="20" text-anchor="middle">I<tspan class="sub" dy="3">L</tspan></text><text class="s ac" x="334" y="168">I<tspan class="sub" dy="3">Z</tspan></text>
+  <text class="s" x="300" y="212" text-anchor="middle">Zener mắc ngược: cathode lên cực +, I<tspan class="sub" dy="3">S</tspan><tspan dy="-3"> = I</tspan><tspan class="sub" dy="3">Z</tspan><tspan dy="-3"> + I</tspan><tspan class="sub" dy="3">L</tspan></text>
+</svg>
+      <figcaption>Hình 3.15 giáo trình (vẽ lại): mạch ổn áp dùng diode Zener</figcaption>
+    </figure>
+    <div class="def"><strong>Mạch ổn áp Zener</strong>: điện áp vào V<sub>in</sub>, điện trở hạn dòng R<sub>S</sub>, điện áp ra V<sub>out</sub> <strong>bằng điện áp ổn áp của Zener</strong> V<sub>Z</sub>. Cần 5 V thì dùng Zener ghi <strong>5V1</strong> (không có Zener 5 V; sai số 0,1 V chấp nhận được). Mỗi Zener có <strong>công suất danh định P<sub>Z</sub></strong>, tức chỉ cho một dòng tối đa chạy qua; thực tế thường gặp 0,25 W, 0,5 W, 1 W, 5 W.</div>
+    <div class="formula">I<sub>Zmax</sub> = <span class="frac"><span>P<sub>Z</sub></span><span>V<sub>Z</sub></span></span> &nbsp;&nbsp;·&nbsp;&nbsp; R<sub>Smin</sub> = <span class="frac"><span>V<sub>in</sub> − V<sub>Z</sub></span><span>I<sub>Zmax</sub></span></span><small>P<sub>Z</sub>: watt <span class="say" title="Cách đọc">oát</span> (W) · V: volt <span class="say" title="Cách đọc">vôn</span> (V) · I: ampere <span class="say" title="Cách đọc">am-pe</span> (A) · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω)</small></div>
+    <p><strong>Chú ý:</strong> mạch này chỉ cấp được cho tải có dòng tiêu thụ <strong>nhỏ hơn I<sub>Zmax</sub></strong>. Zener được sản xuất với các giá trị V<sub>Z</sub> cố định:</p>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th colspan="8">Các giá trị điện áp Zener thông dụng (V)</th></tr></thead>
+        <tbody>
+          <tr><td>2,4</td><td>2,7</td><td>3,0</td><td>3,3</td><td>3,6</td><td>3,9</td><td>4,3</td><td>4,7</td></tr>
+          <tr><td>5,1</td><td>5,6</td><td>6,2</td><td>6,8</td><td>7,5</td><td>8,2</td><td>9,1</td><td>10</td></tr>
+          <tr><td>11</td><td>12</td><td>13</td><td>15</td><td>16</td><td>18</td><td>20</td><td>22</td></tr>
+          <tr><td>24</td><td>27</td><td>30</td><td>33</td><td>36</td><td>39</td><td>43</td><td>47</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Ví dụ giải mẫu: thiết kế mạch ổn áp</h3>
+    <div class="steps">
+      <h4>Đề (theo giáo trình)</h4>
+      <p>Nguồn DC 15 V. Tải 5 V tiêu thụ dòng 40 mA. Dòng tải nhỏ nên dùng mạch ổn áp Zener.</p>
+      <h4>Bước 1 · Chọn Zener</h4>
+      <p>P<sub>Z</sub> ≥ I<sub>tải</sub> × V<sub>Z</sub> = 0,04 × 5 = 0,2 W → chọn Zener V<sub>Z</sub> = 5,1 V, P<sub>Z</sub> = 0,5 W</p>
+      <h4>Bước 2 · Dòng Zener tối đa</h4>
+      <p>I<sub>Zmax</sub> = P<sub>Z</sub> / V<sub>Z</sub> = 0,5 / 5,1 ≈ 0,098 A = 98 mA</p>
+      <h4>Bước 3 · Điện trở hạn dòng</h4>
+      <p>R<sub>S</sub> = (V<sub>in</sub> − V<sub>Z</sub>) / I<sub>Zmax</sub> = (15 − 5,1) / 0,098 ≈ 101 Ω → giáo trình chọn <span class="ans">R<sub>S</sub> = 100 Ω</span></p>
+      <h4>Kiểm tra</h4>
+      <p>I<sub>S</sub> = (15 − 5,1) / 100 = 99 mA = I<sub>Z</sub> + I<sub>L</sub> → khi có tải 40 mA: I<sub>Z</sub> = 59 mA, P<sub>Z</sub> = 59 mA × 5,1 V ≈ 0,3 W ✓</p>
+    </div>
+    <div class="note"><strong>Mở rộng (ngoài giáo trình):</strong> khi <strong>rút tải ra</strong>, toàn bộ 99 mA chạy qua Zener → P<sub>Z</sub> ≈ 0,505 W, hơi vượt 0,5 W. Vì R<sub>Smin</sub> là <strong>giá trị nhỏ nhất</strong>, nên chọn giá trị chuẩn <strong>lớn hơn</strong>, ví dụ <strong>120 Ω</strong>: I<sub>S</sub> = 9,9 / 120 = 82,5 mA, vẫn đủ cho tải 40 mA (I<sub>Z</sub> = 42,5 mA) và an toàn cả khi hở tải. Thử ngay trong mô phỏng bên dưới.</div>
+
+    <figure class="sim" id="simZener">
+      <p class="sim-h">Thử ngay · Mạch ổn áp Zener</p>
+      <div class="simbox">
+        <svg viewBox="0 0 600 230" role="img" aria-labelledby="zTitle">
+          <title id="zTitle">Mạch ổn áp Zener: nguồn Vin, điện trở Rs, Zener và tải RL. Các con số cho biết dòng qua từng nhánh và điện áp ra.</title>
+          <path class="w" d="M60 85 L60 40 L150 40 M250 40 L460 40 L460 85 M460 145 L460 195 L60 195 L60 145 M300 40 L300 96 M300 130 L300 195"/>
+          <path class="ov" id="zFlowS" d="M60 85 L60 40 L150 40 M250 40 L300 40"/>
+          <path class="ov" id="zFlowZ" d="M300 40 L300 96 M300 130 L300 195 L60 195 L60 145"/>
+          <path class="ov c-g" id="zFlowL" d="M300 40 L460 40 L460 85 M460 145 L460 195 L300 195"/>
+          <circle class="src" cx="60" cy="115" r="24"/><text class="b" x="60" y="111" text-anchor="middle">+</text><text class="b" x="60" y="132" text-anchor="middle">−</text>
+          <rect class="part" x="150" y="28" width="100" height="24" rx="3"/>
+          <path class="dsym" id="zSym" d="M284 130 L316 130 L300 102 Z"/><path class="w" d="M280 106 L286 100 L314 100 L320 94" style="stroke-width:3"/>
+          <rect class="part" x="448" y="85" width="24" height="60" rx="3"/>
+          <circle class="node" cx="300" cy="40" r="4"/><circle class="node" cx="300" cy="195" r="4"/>
+          <text class="b warm" id="zVint" x="22" y="170">15 V</text>
+          <text class="b" id="zRst" x="200" y="74" text-anchor="middle">R<tspan class="sub" dy="3">S</tspan><tspan dy="-3"> = 120 Ω</tspan></text>
+          <text class="b ac" id="zIst" x="200" y="20" text-anchor="middle">I<tspan class="sub" dy="3">S</tspan><tspan dy="-3"> = 82,5 mA</tspan></text>
+          <text class="b ac" id="zIzt" x="230" y="160" text-anchor="end">I<tspan class="sub" dy="3">Z</tspan><tspan dy="-3"> = 42,5 mA</tspan></text>
+          <text class="b grn" id="zIlt" x="380" y="20" text-anchor="middle">I<tspan class="sub" dy="3">L</tspan><tspan dy="-3"> = 40 mA</tspan></text>
+          <text class="b" id="zRlt" x="484" y="112">R<tspan class="sub" dy="3">L</tspan><tspan dy="-3"> = 120 Ω</tspan></text>
+          <text class="b warm" id="zVot" x="380" y="120" text-anchor="middle">V<tspan class="sub" dy="3">out</tspan><tspan dy="-3"> = 5,1 V</tspan></text>
+          <text class="b" id="zPzt" x="300" y="222" text-anchor="middle">P<tspan class="sub" dy="3">Z</tspan><tspan dy="-3"> = 0,22 W</tspan></text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn diode Zener 0,5 W">
+        <button type="button" data-vz="5.1" aria-pressed="true">Zener 5V1</button>
+        <button type="button" data-vz="9.1" aria-pressed="false">Zener 9V1</button>
+        <button type="button" data-vz="12" aria-pressed="false">Zener 12V</button>
+      </div>
+      <div class="sl"><label for="zVin">V<sub>in</sub></label><input type="range" id="zVin" min="3" max="24" step="0.5" value="15"><output id="zVino" for="zVin">15 V</output></div>
+      <div class="sl"><label for="zRs">R<sub>S</sub></label><input type="range" id="zRs" min="0" max="16" step="1" value="5"><output id="zRso" for="zRs">120 Ω</output></div>
+      <div class="sl"><label for="zRl">Tải R<sub>L</sub></label><input type="range" id="zRl" min="0" max="17" step="1" value="3"><output id="zRlo" for="zRl">120 Ω</output></div>
+      <p class="live" id="zLive" aria-live="polite"></p>
+      <figcaption>Zener 0,5 W. Thử: kéo V<sub>in</sub> từ 15 V lên 20 V, V<sub>out</sub> vẫn đứng yên; kéo tải R<sub>L</sub> về "hở mạch" với R<sub>S</sub> = 100 Ω để thấy Zener vượt công suất; hạ V<sub>in</sub> quá thấp thì mạch mất ổn áp.</figcaption>
+    </figure>
+
+    <!-- 10 -->
+    <h2 id="led-7-doan"><span class="num">10</span>LED 7 đoạn</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>LED 7 đoạn là <strong>7 thanh LED xếp thành số 8</strong>, đặt tên a → g <strong>theo chiều kim đồng hồ</strong> bắt đầu từ thanh trên cùng, g là thanh giữa. Bật đúng các thanh là hiện ra số. <strong>Cathode chung</strong>: chân chung nối 0 V, đưa mức <strong>1</strong> vào thanh để sáng. <strong>Anode chung</strong>: chân chung nối +V, đưa mức <strong>0</strong> vào thanh để sáng.</p>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/7_Segment_Display2.jpg/960px-7_Segment_Display2.jpg" width="960" height="703" alt="LED 7 đoạn hai chữ số loại chân cắm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · LED 7 đoạn 2 số (Hình 3.16).</strong> Mỗi số có 7 đoạn a – g và một chấm thập phân DP; các chân nằm ở cạnh trên, dưới. Mã linh kiện cho biết loại cathode chung hay anode chung.<span class="credit">Ảnh: Haragayato · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/w/index.php?curid=286464" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Bên trái: cathode chung, các cathode của 7 LED nối chung xuống 0 V, anode a đến g là chân điều khiển. Bên phải: anode chung, các anode nối chung lên +V, cathode a đến g là chân điều khiển">
+  <text class="b" x="140" y="20" text-anchor="middle">Cathode chung (CC)</text>
+  <text class="b" x="420" y="20" text-anchor="middle">Anode chung (CA)</text>
+  <g class="s"><text x="40" y="49">a</text><text x="40" y="73">b</text><text x="40" y="97">c</text><text x="40" y="121">d</text><text x="40" y="145">e</text><text x="40" y="169">f</text><text x="40" y="193">g</text>
+  <text x="320" y="49">a</text><text x="320" y="73">b</text><text x="320" y="97">c</text><text x="320" y="121">d</text><text x="320" y="145">e</text><text x="320" y="169">f</text><text x="320" y="193">g</text></g>
+  <g class="wire">
+    <path d="M54 45 L110 45 M134 45 L200 45 M54 69 L110 69 M134 69 L200 69 M54 93 L110 93 M134 93 L200 93 M54 117 L110 117 M134 117 L200 117 M54 141 L110 141 M134 141 L200 141 M54 165 L110 165 M134 165 L200 165 M54 189 L110 189 M134 189 L200 189 M200 40 L200 212"/>
+    <path d="M334 45 L390 45 M414 45 L480 45 M334 69 L390 69 M414 69 L480 69 M334 93 L390 93 M414 93 L480 93 M334 117 L390 117 M414 117 L480 117 M334 141 L390 141 M414 141 L480 141 M334 165 L390 165 M414 165 L480 165 M334 189 L390 189 M414 189 L480 189 M480 30 L480 196"/>
+  </g>
+  <g class="dsym">
+    <path d="M110 37 L110 53 L130 45 Z"/><path d="M110 61 L110 77 L130 69 Z"/><path d="M110 85 L110 101 L130 93 Z"/><path d="M110 109 L110 125 L130 117 Z"/><path d="M110 133 L110 149 L130 141 Z"/><path d="M110 157 L110 173 L130 165 Z"/><path d="M110 181 L110 197 L130 189 Z"/>
+    <path d="M414 37 L414 53 L394 45 Z"/><path d="M414 61 L414 77 L394 69 Z"/><path d="M414 85 L414 101 L394 93 Z"/><path d="M414 109 L414 125 L394 117 Z"/><path d="M414 133 L414 149 L394 141 Z"/><path d="M414 157 L414 173 L394 165 Z"/><path d="M414 181 L414 197 L394 189 Z"/>
+  </g>
+  <g class="wire" style="stroke-width:3"><path d="M132 37 L132 53 M132 61 L132 77 M132 85 L132 101 M132 109 L132 125 M132 133 L132 149 M132 157 L132 173 M132 181 L132 197"/>
+  <path d="M392 37 L392 53 M392 61 L392 77 M392 85 L392 101 M392 109 L392 125 M392 133 L392 149 M392 157 L392 173 M392 181 L392 197"/></g>
+  <path class="wire" d="M188 212 L212 212 M193 218 L207 218 M198 224 L202 224"/>
+  <text class="b" x="220" y="216">0 V (chung)</text>
+  <text class="b warm" x="486" y="34">+V (chung)</text>
+  <text class="s" x="60" y="222">đưa mức 1 vào a…g để sáng</text>
+  <text class="s" x="330" y="222">đưa mức 0 vào a…g để sáng</text>
+</svg>
+      <figcaption>Hình 3.17 và 3.18 giáo trình (vẽ lại): LED 7 đoạn loại cathode chung và anode chung</figcaption>
+    </figure>
+    <div class="def"><strong>LED 7 đoạn</strong> gồm 7 LED xếp thành hình chữ nhật. Mỗi LED là một đoạn, mỗi chân được gán một chữ cái từ <strong>a đến g</strong>; các chân còn lại nối chung thành <strong>một chân chung</strong>. Đôi khi có thêm LED thứ 8 (<strong>DP</strong>) làm dấu thập phân khi ghép nhiều LED 7 đoạn để hiển thị số lớn hơn 10. Phân cực thuận các đoạn theo một thứ tự cụ thể sẽ hiển thị các số thập phân 0 – 9 (hoặc thập lục phân).</div>
+    <ul>
+      <li><strong>Cathode chung (CC, common cathode)</strong>: tất cả cathode nối với nhau (xuống 0 V). Mỗi đoạn sáng khi đặt tín hiệu <strong>logic 1</strong> (mức cao) qua điện trở vào anode a … g.</li>
+      <li><strong>Anode chung (CA, common anode)</strong>: tất cả anode nối với nhau (lên +V). Mỗi đoạn sáng khi đặt tín hiệu <strong>logic 0</strong> (mức thấp) qua điện trở vào cathode a … g.</li>
+      <li>Mỗi đoạn là một LED nên vẫn cần <strong>điện trở hạn dòng</strong> cho từng đoạn, tính như <a href="#mach-led">mục 07</a>.</li>
+    </ul>
+
+    <figure class="sim" id="sim7">
+      <p class="sim-h">Thử ngay · Hiển thị số trên LED 7 đoạn</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 240" role="img" aria-labelledby="segTitle">
+          <title id="segTitle">LED 7 đoạn đang hiển thị một chữ số; bên phải là mức logic cần đưa vào từng chân a đến g.</title>
+          <rect class="segbox" x="40" y="14" width="170" height="214" rx="10"/>
+          <rect class="seg" id="sg-a" x="82" y="30" width="76" height="14" rx="5"/>
+          <rect class="seg" id="sg-b" x="160" y="44" width="14" height="76" rx="5"/>
+          <rect class="seg" id="sg-c" x="160" y="128" width="14" height="76" rx="5"/>
+          <rect class="seg" id="sg-d" x="82" y="204" width="76" height="14" rx="5"/>
+          <rect class="seg" id="sg-e" x="66" y="128" width="14" height="76" rx="5"/>
+          <rect class="seg" id="sg-f" x="66" y="44" width="14" height="76" rx="5"/>
+          <rect class="seg" id="sg-g" x="82" y="117" width="76" height="14" rx="5"/>
+          <circle class="seg" cx="190" cy="212" r="7"/>
+          <text class="b" x="250" y="30">Chân</text><text class="b" x="320" y="30">Mức logic</text><text class="b" x="430" y="30">Đoạn</text>
+          <g id="segPins"></g>
+          <text class="b warm" id="segCom" x="250" y="226">Chân chung: 0 V (GND)</text>
+        </svg>
+      </div>
+      <div class="digits" role="group" aria-label="Chọn chữ số">
+        <button type="button" data-dig="0" aria-pressed="false">0</button><button type="button" data-dig="1" aria-pressed="false">1</button><button type="button" data-dig="2" aria-pressed="false">2</button><button type="button" data-dig="3" aria-pressed="false">3</button><button type="button" data-dig="4" aria-pressed="false">4</button><button type="button" data-dig="5" aria-pressed="true">5</button><button type="button" data-dig="6" aria-pressed="false">6</button><button type="button" data-dig="7" aria-pressed="false">7</button><button type="button" data-dig="8" aria-pressed="false">8</button><button type="button" data-dig="9" aria-pressed="false">9</button>
+      </div>
+      <div class="controls" role="group" aria-label="Loại LED 7 đoạn">
+        <button type="button" data-segtype="cc" aria-pressed="true">Cathode chung (CC)</button>
+        <button type="button" data-segtype="ca" aria-pressed="false">Anode chung (CA)</button>
+      </div>
+      <p class="live" id="segLive" aria-live="polite"></p>
+      <figcaption>Bấm một chữ số để xem các đoạn sáng (Hình 3.19 giáo trình) và mức logic cần đưa vào chân a – g. Đổi CC ↔ CA: các mức 1 và 0 đảo ngược hoàn toàn.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Số</th><th>Đoạn sáng</th><th>Mã CC (gfedcba)</th><th>Số</th><th>Đoạn sáng</th><th>Mã CC (gfedcba)</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>a b c d e f</td><td>0111111</td><td>5</td><td>a c d f g</td><td>1101101</td></tr>
+          <tr><td>1</td><td>b c</td><td>0000110</td><td>6</td><td>a c d e f g</td><td>1111101</td></tr>
+          <tr><td>2</td><td>a b d e g</td><td>1011011</td><td>7</td><td>a b c</td><td>0000111</td></tr>
+          <tr><td>3</td><td>a b c d g</td><td>1001111</td><td>8</td><td>a b c d e f g</td><td>1111111</td></tr>
+          <tr><td>4</td><td>b c f g</td><td>1100110</td><td>9</td><td>a b c d f g</td><td>1101111</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>Ghi chú:</strong> với loại anode chung, mã là phần bù (đổi 1 ↔ 0) của mã cathode chung. Một số IC giải mã hiển thị số 9 không có đoạn d (a b c f g), giống Hình 3.19 trong giáo trình.</p>
+
+    <!-- 11 -->
+    <h2 id="tom-tat"><span class="num">11</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nội dung</th><th>Ghi nhớ, công thức</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>Chất bán dẫn</td><td>Si, Ge: 4 electron lớp ngoài; tinh khiết dẫn điện rất yếu</td><td>Nhiệt độ, ánh sáng tạo cặp electron – lỗ trống</td></tr>
+          <tr><td>Loại N</td><td>Pha hoá trị 5 (Sb, P, As) · đa số: electron</td><td>Si + Phosphor</td></tr>
+          <tr><td>Loại P</td><td>Pha hoá trị 3 (B, Ga, In) · đa số: lỗ trống</td><td>Si + Boron</td></tr>
+          <tr><td>Mối nối P-N</td><td>Khuếch tán → vùng nghèo + rào điện thế</td><td>Rào ≈ 0,7 V (Si), 0,3 V (Ge)</td></tr>
+          <tr><td>Phân cực thuận</td><td>+ vào P (anode), − vào N (cathode): vùng nghèo hẹp, có dòng</td><td>Diode Si dẫn khi U<sub>AK</sub> ≥ 0,7 V</td></tr>
+          <tr><td>Phân cực nghịch</td><td>− vào P, + vào N: vùng nghèo rộng, chỉ có dòng rỉ</td><td>Đánh thủng ở −50 … −100 V (diode thường)</td></tr>
+          <tr><td>Điện trở LED</td><td>R = (U<sub>nguồn</sub> − V<sub>F</sub>) / I<sub>LED</sub></td><td>(9 − 2) / 0,015 ≈ 466 Ω → chọn 470 Ω</td></tr>
+          <tr><td>Chỉnh lưu bán kỳ</td><td>1 diode, chỉ giữ 1 nửa chu kỳ; U<sub>ra đỉnh</sub> = U<sub>vào đỉnh</sub> − 0,7 V</td><td>Hiệu suất thấp</td></tr>
+          <tr><td>Ổn áp Zener</td><td>V<sub>out</sub> = V<sub>Z</sub> · I<sub>Zmax</sub> = P<sub>Z</sub> / V<sub>Z</sub> · R<sub>Smin</sub> = (V<sub>in</sub> − V<sub>Z</sub>) / I<sub>Zmax</sub></td><td>15 V, 5V1 0,5 W → I<sub>Zmax</sub> 98 mA, R<sub>S</sub> ≈ 101 Ω</td></tr>
+          <tr><td>LED 7 đoạn</td><td>CC: chung xuống 0 V, mức 1 sáng · CA: chung lên +V, mức 0 sáng</td><td>Số 1 = đoạn b, c</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Bảng tiền tố dùng trong chương</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Tiền tố</th><th>Ký hiệu</th><th>Giá trị</th><th>Ví dụ trong chương</th></tr></thead>
+        <tbody>
+          <tr><td>Kilo <span class="say" title="Cách đọc">ki-lô</span></td><td>k</td><td>10³</td><td>1 kΩ = 1 000 Ω</td></tr>
+          <tr class="base"><td>(đơn vị gốc)</td><td>–</td><td>1</td><td>V, A, Ω, W</td></tr>
+          <tr><td>Mili <span class="say" title="Cách đọc">mi-li</span></td><td>m</td><td>10⁻³</td><td>dòng LED 15 mA = 0,015 A</td></tr>
+          <tr><td>Micro <span class="say" title="Cách đọc">mi-crô</span></td><td>µ</td><td>10⁻⁶</td><td>dòng rỉ diode vài µA</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 12 -->
+    <h2 id="trac-nghiem"><span class="num">12</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <a class="back" href="/namnhat-dientucoban">← Về Điện tử Cơ bản (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261108a"></script>
+<script src="/assets/site.js?v=20261108a"></script>
+<script>
+/* Mô phỏng Chương 3 Điện tử cơ bản: pha tạp, phân cực P-N, LED, chỉnh lưu, Zener, LED 7 đoạn */
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function fmt(x, d) {
+    var p = Math.pow(10, d == null ? 2 : d), r = Math.round(x * p) / p;
+    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+  }
+  function svgEl(tag, attrs, text) {
+    var el = document.createElementNS(NS, tag);
+    Object.keys(attrs || {}).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+    if (text != null) el.textContent = text;
+    return el;
+  }
+  function clear(g) { while (g.firstChild) g.removeChild(g.firstChild); }
+  /* Đặt nội dung có chỉ số dưới: "I_S = 5 mA" → I<sub>S</sub> */
+  function setSub(id, s) {
+    var el = $(id), m = /^([A-Za-z]+)_(\w+)(.*)$/.exec(s);
+    clear(el);
+    if (!m) { el.textContent = s; return; }
+    el.appendChild(document.createTextNode(m[1]));
+    el.appendChild(svgEl("tspan", { "class": "sub", dy: "3" }, m[2]));
+    el.appendChild(svgEl("tspan", { dy: "-3" }, m[3]));
+  }
+  function setFlow(el, level) {
+    if (level <= 0.001) { el.classList.add("off"); return; }
+    el.classList.remove("off");
+    el.style.setProperty("--dur", clamp(1.6 / Math.sqrt(level), 0.25, 4).toFixed(2) + "s");
+    el.style.strokeWidth = String(clamp(2 + level * 2, 2, 6));
+  }
+  function buttons(figId, attr, onPick) {
+    var btns = $(figId).querySelectorAll("button[" + attr + "]");
+    Array.prototype.forEach.call(btns, function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(btns, function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        onPick(b.getAttribute(attr));
+      });
+    });
+  }
+  function slider(id, show, onChange) {
+    var input = $(id), out = $(id + "o");
+    var api = { input: input, get: function () { return Number(input.value); }, show: function () { out.textContent = show(api.get()); } };
+    input.addEventListener("input", function () { api.show(); onChange(); });
+    api.show();
+    return api;
+  }
+  /* Số giả ngẫu nhiên cố định để hạt dẫn không nhảy lung tung mỗi lần vẽ */
+  function rng(seed) { var s = seed; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+
+  /* 1. Pha tạp chất */
+  function initDope() {
+    if (!$("simDope")) return;
+    var type = "i", parts = [], raf = 0, last = 0;
+    var NAMES = { i: "Silicon tinh khiết", n: "Bán dẫn loại N (Si + Sb/P)", p: "Bán dẫn loại P (Si + B/Ga)" };
+    var sT = slider("dopeT", function (v) { return v + " °C"; }, render);
+    buttons("simDope", "data-dope", function (k) { type = k; render(); });
+    function render() {
+      var T = sT.get(), pairs = Math.round(1 + T / 14), DOP = 24;
+      var ne = pairs + (type === "n" ? DOP : 0), nh = pairs + (type === "p" ? DOP : 0);
+      var g = $("dopeCarriers"), r = rng(7);
+      clear(g); parts = [];
+      for (var i = 0; i < ne + nh; i++) {
+        var isE = i < ne, x = 72 + r() * 456, y = 52 + r() * 96;
+        var el = isE ? svgEl("circle", { "class": "el", cx: x, cy: y, r: 5 }) : svgEl("circle", { "class": "hl", cx: x, cy: y, r: 6 });
+        g.appendChild(el);
+        parts.push({ el: el, x: x, v: isE ? 1 : -0.6 });
+      }
+      $("dopeName").textContent = NAMES[type];
+      var maj = type === "n" ? "electron (" + ne + ")" : type === "p" ? "lỗ trống (" + nh + ")" : null;
+      var min = type === "n" ? "lỗ trống (" + nh + ")" : type === "p" ? "electron (" + ne + ")" : null;
+      $("dopeLive").innerHTML = (maj ? "Hạt dẫn đa số: <b>" + maj + "</b> · thiểu số: " + min + "." :
+        "Tinh khiết: số electron tự do <b>bằng</b> số lỗ trống (" + ne + " cặp), rất ít nên dẫn điện yếu.") +
+        " Tổng hạt dẫn: <b>" + (ne + nh) + "</b>" + (type === "i" ? "" : ", gấp khoảng " + Math.round((ne + nh) / (2 * pairs)) + " lần bán dẫn tinh khiết cùng nhiệt độ") + ".";
+      if (!raf && !reduceMotion) raf = requestAnimationFrame(step);
+    }
+    function step(t) {
+      var dt = last ? Math.min(50, t - last) : 16; last = t;
+      parts.forEach(function (p) {
+        p.x += p.v * dt * 0.05;
+        if (p.x > 532) p.x = 68; if (p.x < 68) p.x = 532;
+        p.el.setAttribute("cx", p.x.toFixed(1));
+      });
+      raf = requestAnimationFrame(step);
+    }
+    render();
+  }
+
+  /* 2. Phân cực P-N và đặc tuyến */
+  function initPN() {
+    if (!$("simPN")) return;
+    var MAT = { si: { vk: 0.7, leak: 1, name: "Si" }, ge: { vk: 0.3, leak: 10, name: "Ge" } };
+    var mode = "f", mat = MAT.si, VBR = 50, OX = 470, OY = 150;
+    var sV = slider("pnV", function (v) { return fmt(v) + " V"; }, render);
+    buttons("simPN", "data-pnmode", function (m) {
+      mode = m;
+      if (m === "f") { sV.input.max = "1"; sV.input.step = "0.01"; sV.input.value = String(mat.vk); }
+      else { sV.input.max = "60"; sV.input.step = "0.5"; sV.input.value = "10"; }
+      sV.show(); render();
+    });
+    buttons("simPN", "data-pnmat", function (k) { mat = MAT[k]; if (mode === "f") { sV.input.value = String(mat.vk); sV.show(); } render(); });
+    /* dòng (mA) theo điện áp có dấu: thuận > 0, nghịch < 0 */
+    function current(v) {
+      if (v >= 0) return 5 * (Math.exp((v - mat.vk) / 0.045) - Math.exp(-mat.vk / 0.045));
+      var leak = -mat.leak / 1000, a = -v;
+      return a > VBR - 6 ? leak - 2 * Math.exp((a - VBR) / 1.5) : leak;
+    }
+    function px(v) { return v >= 0 ? OX + v * 120 : OX + v * 1.6; }
+    function py(i) { return i >= 0 ? OY - Math.min(i, 105) * 1.15 : OY + Math.min(-i < 0.2 ? 6 : 6 + (-i) * 0.9, 105); }
+    function curvePath() {
+      var d = "", v;
+      for (v = -60; v <= 0; v += 0.5) d += (d ? " L" : "M") + px(v).toFixed(1) + " " + py(current(v)).toFixed(1);
+      for (v = 0; v <= 1; v += 0.01) { var i = current(v); d += " L" + px(v).toFixed(1) + " " + py(i).toFixed(1); if (i > 105) break; }
+      return d;
+    }
+    function drawCarriers(dep) {
+      var g = $("pnCarriers"), r = rng(3);
+      clear(g);
+      for (var k = 0; k < 16; k++) {
+        var x = 36 + r() * 108, y = 58 + r() * 54;
+        if (x < 150 - dep / 2 - 4) g.appendChild(svgEl("circle", { "class": "hl", cx: x, cy: y, r: 5 }));
+        var x2 = 156 + r() * 108, y2 = 58 + r() * 54;
+        if (x2 > 150 + dep / 2 + 4) g.appendChild(svgEl("circle", { "class": "el", cx: x2, cy: y2, r: 4.5 }));
+      }
+    }
+    function render() {
+      var mag = sV.get(), v = mode === "f" ? mag : -mag, i = current(v);
+      var dep = clamp(14 * Math.sqrt(Math.max(0.03, (mat.vk - v) / mat.vk)), 3, 220);
+      if (mode === "r") dep = clamp(14 * Math.sqrt(1 + mag / mat.vk) * 0.55, 14, 220);
+      $("pnDep").setAttribute("x", (150 - dep / 2).toFixed(1));
+      $("pnDep").setAttribute("width", dep.toFixed(1));
+      drawCarriers(dep);
+      $("pnSignL").textContent = mode === "f" ? "+" : "−";
+      $("pnSignR").textContent = mode === "f" ? "−" : "+";
+      $("pnSignL").setAttribute("class", mode === "f" ? "b warm" : "b");
+      $("pnSignR").setAttribute("class", mode === "f" ? "b" : "b warm");
+      $("pnBatA").setAttribute("x1", mode === "f" ? "135" : "165"); $("pnBatA").setAttribute("x2", mode === "f" ? "135" : "165");
+      $("pnBatB").setAttribute("x1", mode === "f" ? "165" : "135"); $("pnBatB").setAttribute("x2", mode === "f" ? "165" : "135");
+      $("pnUt").textContent = "U = " + fmt(v) + " V";
+      $("pnCurve").setAttribute("d", curvePath());
+      $("pnKnee").setAttribute("x1", px(mat.vk)); $("pnKnee").setAttribute("x2", px(mat.vk));
+      $("pnKneeT").setAttribute("x", px(mat.vk) + 4); $("pnKneeT").textContent = fmt(mat.vk) + " V";
+      $("pnDot").setAttribute("cx", px(v).toFixed(1)); $("pnDot").setAttribute("cy", py(i).toFixed(1));
+      var flowLevel = Math.abs(i) > 0.5 ? clamp(Math.abs(i) / 40, 0.2, 3) : 0;
+      setFlow($("pnFlow"), flowLevel);
+      $("pnFlow").classList.toggle("rev", mode === "r");
+      var iTxt = Math.abs(i) >= 1 ? fmt(i, 1) + " mA" : fmt(i * 1000, 1) + " µA";
+      $("pnIt").textContent = "I ≈ " + (Math.abs(i) > 200 ? (i > 0 ? "> 200 mA" : "< −200 mA") : iTxt);
+      var msg;
+      if (mode === "f") {
+        msg = v < mat.vk - 0.15 ? "Phân cực thuận nhưng U = " + fmt(v) + " V còn thấp hơn ngưỡng " + fmt(mat.vk) + " V (" + mat.name + "): rào điện thế chưa bị vượt, dòng <b>gần như bằng 0</b>." :
+          v < mat.vk + 0.08 ? "U gần ngưỡng " + fmt(mat.vk) + " V: vùng nghèo hẹp lại, diode <span class=\"ok\">bắt đầu dẫn</span>, I ≈ <b>" + iTxt + "</b>." :
+          "Đã vượt ngưỡng: chỉ cần tăng U thêm chút ít, dòng tăng <b>vọt</b> (" + (i > 200 ? "> 200 mA" : iTxt) + "). <span class=\"neg\">Thực tế phải có điện trở hạn dòng, nếu không diode cháy.</span>";
+      } else {
+        msg = mag < VBR - 4 ? "Phân cực nghịch: vùng nghèo <b>rộng ra</b>, không có dòng do hạt dẫn đa số; chỉ có <b>dòng rỉ</b> ≈ " + fmt(mat.leak, 0) + " µA do hạt dẫn thiểu số" + (mat === MAT.ge ? " (Ge rỉ nhiều hơn Si)" : "") + "." :
+          mag < VBR ? "Sắp tới điện áp đánh thủng (" + VBR + " V): dòng ngược bắt đầu tăng." :
+          "<span class=\"neg\">Đã vượt điện áp đánh thủng " + VBR + " V</span>: dòng ngược tăng rất mạnh (I ≈ " + iTxt + "). Diode thường sẽ hỏng; diode Zener được thiết kế để làm việc ở vùng này.";
+      }
+      $("pnLive").innerHTML = msg;
+    }
+    render();
+  }
+
+  /* 3. Điện trở hạn dòng LED */
+  function initLed() {
+    if (!$("simLed")) return;
+    var COL = { red: { vf: 2.0, c: "#E0453A", n: "đỏ" }, yel: { vf: 2.1, c: "#E8B21E", n: "vàng" }, grn: { vf: 2.2, c: "#2FAE5A", n: "xanh lá" }, blu: { vf: 3.3, c: "#3B7BEA", n: "xanh dương" }, wht: { vf: 3.2, c: "#C9D3DD", n: "trắng" } };
+    var E12 = [1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2];
+    var col = COL.red;
+    var sU = slider("ledU", function (v) { return fmt(v, 1) + " V"; }, render);
+    var sI = slider("ledI", function (v) { return v + " mA"; }, render);
+    buttons("simLed", "data-led", function (k) { col = COL[k]; render(); });
+    function e12Up(r) {
+      for (var dec = 1; dec <= 1e6; dec *= 10) for (var k = 0; k < E12.length; k++) { var v = Math.round(E12[k] * dec * 10) / 10; if (v >= r - 1e-9) return v; }
+      return r;
+    }
+    function ohmTxt(r) { return r >= 1000 ? fmt(r / 1000, 2) + " kΩ" : fmt(r, 1) + " Ω"; }
+    function render() {
+      var U = sU.get(), I = sI.get() / 1000, UR = U - col.vf;
+      $("ledUt").textContent = fmt(U, 1) + " V";
+      setSub("ledFt", "V_F = " + fmt(col.vf, 1) + " V");
+      $("ledGlow").style.fill = col.c;
+      if (UR <= 0) {
+        $("ledRt").textContent = "R = ?"; $("ledIt").textContent = "I = 0";
+        $("ledGlow").setAttribute("opacity", "0"); setFlow($("ledFlow"), 0);
+        $("ledLive").innerHTML = "<span class=\"neg\">Nguồn " + fmt(U, 1) + " V không lớn hơn V<sub>F</sub> = " + fmt(col.vf, 1) + " V</span> của LED " + col.n + ": LED không sáng. Cần nguồn cao hơn.";
+        return;
+      }
+      var R = UR / I, Rs = e12Up(R), Ireal = UR / Rs, P = Ireal * Ireal * Rs;
+      $("ledRt").textContent = "R = " + ohmTxt(Rs);
+      $("ledIt").textContent = "I = " + fmt(Ireal * 1000, 1) + " mA";
+      $("ledGlow").setAttribute("opacity", String(clamp(Ireal / 0.025, 0.08, 0.9).toFixed(2)));
+      setFlow($("ledFlow"), Ireal / 0.015);
+      $("ledLive").innerHTML = "R = (" + fmt(U, 1) + " − " + fmt(col.vf, 1) + ") / " + fmt(I, 3) + " = <b>" + ohmTxt(R) + "</b> → chọn giá trị chuẩn E12 lớn hơn gần nhất: <b>" + ohmTxt(Rs) + "</b>. Dòng thực I = " + fmt(UR, 2) + " / " + ohmTxt(Rs) + " ≈ <b>" + fmt(Ireal * 1000, 1) + " mA</b>, công suất trên R = I² × R ≈ <b>" + fmt(P, 3) + " W</b>" +
+        (P > 0.25 ? " <span class=\"neg\">(vượt 1/4 W, dùng điện trở 1/2 W trở lên)</span>." : " (điện trở 1/4 W là đủ).") +
+        (sI.get() > 20 ? " <span class=\"neg\">Dòng trên 20 mA làm LED thường 5 mm nóng và mau hỏng.</span>" : "");
+    }
+    render();
+  }
+
+  /* 4. Chỉnh lưu bán kỳ */
+  function initRect() {
+    if (!$("simRect")) return;
+    var dir = "f", paused = reduceMotion, t0 = 0, phase = 0.3, raf = 0;
+    var X0 = 260, W = 350, YI = 70, YO = 180, A = 46, VD = 0.7, VMAX = 20;
+    var sV = slider("rectV", function (v) { return fmt(v, 1) + " V"; }, draw);
+    buttons("simRect", "data-rdir", function (k) { dir = k; draw(); });
+    $("rectPause").setAttribute("aria-pressed", String(paused));
+    $("rectPause").textContent = paused ? "Chạy" : "Tạm dừng";
+    $("rectPause").addEventListener("click", function () {
+      paused = !paused;
+      this.setAttribute("aria-pressed", String(paused));
+      this.textContent = paused ? "Chạy" : "Tạm dừng";
+      if (!paused) { t0 = 0; raf = requestAnimationFrame(tick); }
+    });
+    function out(vin) {
+      if (dir === "f") return vin > VD ? vin - VD : 0;
+      return vin < -VD ? vin + VD : 0;
+    }
+    function waves() {
+      var Vp = sV.get(), k = A / VMAX, di = "", dout = "";
+      for (var s = 0; s <= 200; s++) {
+        var x = X0 + s / 200 * W, vin = Vp * Math.sin(s / 200 * 4 * Math.PI);
+        di += (s ? " L" : "M") + x.toFixed(1) + " " + (YI - vin * k).toFixed(1);
+        dout += (s ? " L" : "M") + x.toFixed(1) + " " + (YO - out(vin) * k).toFixed(1);
+      }
+      $("rectIn").setAttribute("d", di); $("rectOut").setAttribute("d", dout);
+    }
+    function draw() {
+      waves();
+      var Vp = sV.get(), vin = Vp * Math.sin(phase * 4 * Math.PI), vo = out(vin), on = vo !== 0;
+      var x = X0 + phase * W;
+      $("rectCur").setAttribute("x1", x.toFixed(1)); $("rectCur").setAttribute("x2", x.toFixed(1));
+      $("rectD").setAttribute("transform", dir === "f" ? "" : "rotate(180 123 40)");
+      $("rectDs").classList.toggle("on", on);
+      $("rectState").textContent = on ? "D dẫn" : "D khoá";
+      setFlow($("rectFlow"), on ? Math.abs(vo) / 8 : 0);
+      $("rectFlow").classList.toggle("rev", dir === "r");
+      var peak = Math.max(0, Vp - VD);
+      $("rectLive").innerHTML = "Lúc này U vào = <b>" + fmt(vin, 1) + " V</b> → U ra = <b>" + fmt(vo, 1) + " V</b> (" + (on ? "<span class=\"ok\">diode dẫn</span>" : "diode khoá") + "). " +
+        "Đỉnh ra = " + fmt(Vp, 1) + " − 0,7 = <b>" + fmt(peak, 1) + " V</b>" + (dir === "f" ? " (bán kỳ dương)" : " (bán kỳ âm, vì diode đảo chiều)") +
+        ", trung bình ≈ 0,318 × " + fmt(peak, 1) + " ≈ <b>" + fmt(0.318 * peak, 2) + " V</b>.";
+    }
+    function tick(t) {
+      if (paused) { raf = 0; return; }
+      if (!t0) t0 = t - phase * 4000;
+      phase = ((t - t0) % 4000) / 4000;
+      draw();
+      raf = requestAnimationFrame(tick);
+    }
+    draw();
+    if (!paused) raf = requestAnimationFrame(tick);
+  }
+
+  /* 5. Ổn áp Zener */
+  function initZener() {
+    if (!$("simZener")) return;
+    var RS = [47, 56, 68, 82, 100, 120, 150, 180, 220, 270, 330, 390, 470, 560, 680, 820, 1000];
+    var RL = [47, 68, 100, 120, 150, 220, 330, 470, 680, 1000, 1500, 2200, 3300, 4700, 6800, 10000, 22000, Infinity];
+    var PZ = 0.5, vz = 5.1;
+    function ohmTxt(r) { return r === Infinity ? "hở mạch" : r >= 1000 ? fmt(r / 1000, 1) + " kΩ" : r + " Ω"; }
+    var sVin = slider("zVin", function (v) { return fmt(v, 1) + " V"; }, render);
+    var sRs = slider("zRs", function (k) { return ohmTxt(RS[k]); }, render);
+    var sRl = slider("zRl", function (k) { return ohmTxt(RL[k]); }, render);
+    buttons("simZener", "data-vz", function (v) { vz = Number(v); render(); });
+    function mA(i) { return fmt(i * 1000, 1) + " mA"; }
+    function render() {
+      var Vin = sVin.get(), Rs = RS[sRs.get()], Rl = RL[sRl.get()];
+      var vth = Rl === Infinity ? Vin : Vin * Rl / (Rs + Rl), reg = vth >= vz;
+      var vo = reg ? vz : vth, Is = (Vin - vo) / Rs, Il = Rl === Infinity ? 0 : vo / Rl, Iz = reg ? Is - Il : 0, Pz = Iz * vz, Izmax = PZ / vz;
+      $("zVint").textContent = fmt(Vin, 1) + " V";
+      setSub("zRst", "R_S = " + ohmTxt(Rs));
+      setSub("zRlt", "R_L = " + ohmTxt(Rl));
+      setSub("zIst", "I_S = " + mA(Is));
+      setSub("zIzt", "I_Z = " + mA(Iz));
+      setSub("zIlt", "I_L = " + mA(Il));
+      setSub("zVot", "V_out = " + fmt(vo, 2) + " V");
+      setSub("zPzt", "P_Z = " + fmt(Pz, 2) + " W / " + fmt(PZ, 1) + " W");
+      $("zPzt").setAttribute("class", Pz > PZ ? "b warnt" : "b");
+      $("zSym").classList.toggle("on", reg && Iz > 0);
+      setFlow($("zFlowS"), Is / 0.05); setFlow($("zFlowZ"), Iz / 0.05); setFlow($("zFlowL"), Il / 0.05);
+      var rsmin = (Vin - vz) / Izmax;
+      var msg = "I<sub>Zmax</sub> = " + fmt(PZ, 1) + " / " + fmt(vz, 1) + " ≈ <b>" + mA(Izmax) + "</b> · R<sub>Smin</sub> = (" + fmt(Vin, 1) + " − " + fmt(vz, 1) + ") / " + fmt(Izmax, 3) + " ≈ <b>" + (rsmin > 0 ? fmt(rsmin, 0) + " Ω" : "–") + "</b>. ";
+      if (!reg) msg += "<span class=\"neg\">Mất ổn áp:</span> V<sub>in</sub> quá thấp hoặc R<sub>S</sub> quá lớn so với tải, Zener không dẫn, V<sub>out</sub> chỉ còn " + fmt(vo, 2) + " V (nhỏ hơn V<sub>Z</sub>).";
+      else if (Pz > PZ) msg += "<span class=\"neg\">Zener quá công suất</span> (" + fmt(Pz, 2) + " W > " + fmt(PZ, 1) + " W): sẽ nóng và cháy. Tăng R<sub>S</sub> lên ≥ R<sub>Smin</sub>.";
+      else msg += "<span class=\"ok\">Ổn áp tốt:</span> V<sub>out</sub> = V<sub>Z</sub> = " + fmt(vz, 1) + " V; I<sub>S</sub> = I<sub>Z</sub> + I<sub>L</sub> = " + mA(Iz) + " + " + mA(Il) + ".";
+      $("zLive").innerHTML = msg;
+    }
+    render();
+  }
+
+  /* 6. LED 7 đoạn */
+  function init7() {
+    if (!$("sim7")) return;
+    var MAP = ["abcdef", "bc", "abdeg", "abcdg", "bcfg", "acdfg", "acdefg", "abc", "abcdefg", "abcdfg"];
+    var SEGS = "abcdefg".split(""), dig = 5, type = "cc";
+    buttons("sim7", "data-dig", function (d) { dig = Number(d); render(); });
+    buttons("sim7", "data-segtype", function (t) { type = t; render(); });
+    function render() {
+      var on = MAP[dig], g = $("segPins");
+      clear(g);
+      SEGS.forEach(function (s, k) {
+        var lit = on.indexOf(s) >= 0, level = type === "cc" ? (lit ? 1 : 0) : (lit ? 0 : 1), y = 56 + k * 23;
+        $("sg-" + s).classList.toggle("on", lit);
+        g.appendChild(svgEl("text", { "class": "b", x: 262, y: y }, s));
+        g.appendChild(svgEl("text", { "class": level ? "pin1" : "pin0", x: 320, y: y }, level + (level ? "  (+5 V)" : "  (0 V)")));
+        g.appendChild(svgEl("text", { "class": lit ? "b ac" : "s", x: 430, y: y }, lit ? "sáng" : "tắt"));
+      });
+      $("segCom").textContent = type === "cc" ? "Chân chung: 0 V (cathode chung)" : "Chân chung: +5 V (anode chung)";
+      var code = SEGS.slice().reverse().map(function (s) { var lit = on.indexOf(s) >= 0; return type === "cc" ? (lit ? "1" : "0") : (lit ? "0" : "1"); }).join("");
+      $("segLive").innerHTML = "Số <b>" + dig + "</b>: sáng " + on.length + " đoạn <b>" + on.split("").join(", ") + "</b>. Loại " + (type === "cc" ? "cathode chung: đưa mức <b>1</b>" : "anode chung: đưa mức <b>0</b>") + " vào các đoạn cần sáng. Mã gfedcba = <b>" + code + "</b>.";
+    }
+    render();
+  }
+
+  initDope();
+  initPN();
+  initLed();
+  initRect();
+  initZener();
+  init7();
+})();
+</script>
+<script>
+window.CT_QUIZ = [
+  { q: "Silicon (Si) và Germanium (Ge) có bao nhiêu electron ở lớp ngoài cùng?",
+    opts: ["3 electron", "4 electron", "5 electron", "8 electron"], a: 1,
+    why: "Si và Ge đều có 4 electron lớp ngoài cùng, liên kết với 4 nguyên tử bên cạnh thành tinh thể. Hoá trị 3 (B, Ga, In) và hoá trị 5 (Sb, P, As) là các chất được pha vào để tạo bán dẫn loại P và loại N." },
+  { q: "Pha Phosphor (hoá trị 5) vào silicon tinh khiết ta được:",
+    opts: ["Bán dẫn loại P, hạt dẫn đa số là lỗ trống", "Bán dẫn loại N, hạt dẫn đa số là electron", "Chất cách điện", "Bán dẫn loại N, hạt dẫn đa số là lỗ trống"], a: 1,
+    why: "Nguyên tử hoá trị 5 dùng 4 electron liên kết với Si, thừa 1 electron thành electron tự do, nên ta có loại N với hạt dẫn đa số là electron (thiểu số là lỗ trống). Loại P là do pha chất hoá trị 3." },
+  { q: "Trong bán dẫn loại P, hạt dẫn điện thiểu số là:",
+    opts: ["Lỗ trống", "Electron", "Proton", "Ion dương"], a: 1,
+    why: "Loại P có rất nhiều lỗ trống (đa số); electron chỉ có một ít do nhiệt độ sinh ra, nên electron là hạt dẫn thiểu số. Proton và ion không di chuyển để dẫn điện trong tinh thể." },
+  { q: "Vùng nghèo (vùng hiếm) ở mối nối P-N là vùng:",
+    opts: ["Có nhiều electron tự do nhất", "Không có hạt dẫn điện, chỉ còn các ion", "Có nhiều lỗ trống nhất", "Chỉ xuất hiện khi phân cực thuận"], a: 1,
+    why: "Electron và lỗ trống ở sát mặt nối khuếch tán sang nhau và tái hợp, để lại dải chỉ còn ion âm (phía P) và ion dương (phía N), không có hạt dẫn. Dải này tồn tại ngay cả khi chưa phân cực; phân cực thuận làm nó hẹp lại." },
+  { q: "Phân cực thuận cho mối nối P-N là nối:",
+    opts: ["Cực dương nguồn vào N, cực âm vào P", "Cực dương nguồn vào P, cực âm vào N", "Cả hai cực vào P", "Cực dương vào giữa vùng nghèo"], a: 1,
+    why: "Phân cực thuận: + vào P (anode), − vào N (cathode). Nguồn đẩy lỗ trống và electron về phía mặt nối, vùng nghèo thu hẹp, có dòng do hạt dẫn đa số. Nối ngược lại là phân cực nghịch." },
+  { q: "Khi phân cực nghịch, dòng điện rất nhỏ vẫn chạy qua mối nối P-N gọi là gì và do hạt nào tạo ra?",
+    opts: ["Dòng thuận, do hạt dẫn đa số", "Dòng rỉ (dòng rò), do hạt dẫn thiểu số", "Dòng đánh thủng, do proton", "Dòng ổn áp, do ion"], a: 1,
+    why: "Với hạt dẫn thiểu số (electron trong P, lỗ trống trong N), phân cực nghịch lại giống phân cực thuận, nên có một dòng rất nhỏ gọi là dòng rỉ (dòng rò). Dòng đánh thủng chỉ xảy ra khi điện áp ngược vượt điện áp đánh thủng." },
+  { q: "Diode silicon bắt đầu dẫn mạnh khi điện áp thuận đạt khoảng:",
+    opts: ["0,3 V", "0,7 V", "1,1 V", "5 V"], a: 1,
+    why: "Điện áp thông dòng (breakover) của diode silicon khoảng 0,7 V; germanium khoảng 0,3 V; selen khoảng 1 V. 1,1 V là điện áp thuận của 1N4001 khi dẫn dòng lớn tới 1 A." },
+  { q: "Loại diode nào làm việc ở vùng phân cực nghịch để giữ điện áp cố định?",
+    opts: ["Diode Schottky", "Diode Zener", "LED", "Diode chỉnh lưu 1N4007"], a: 1,
+    why: "Diode Zener được thiết kế có điện áp đánh thủng chính xác (V_Z) và làm việc ở phân cực nghịch để ổn áp. Schottky, LED và diode chỉnh lưu làm việc ở phân cực thuận; diode thường bị hỏng nếu làm việc ở vùng đánh thủng." },
+  { q: "Nguồn 9 V nuôi LED đỏ V_F = 2 V với dòng 15 mA. Điện trở hạn dòng cần khoảng:",
+    opts: ["600 Ω", "133 Ω", "466 Ω", "4,66 Ω"], a: 2,
+    why: "R = (9 − 2) / 0,015 ≈ 466 Ω, chọn giá trị chuẩn 470 Ω. 600 Ω là quên trừ V_F (9 / 0,015); 133 Ω là lấy V_F chia dòng; 4,66 Ω là đổi sai đơn vị dòng điện (15 mA phải là 0,015 A)." },
+  { q: "Mạch ổn áp dùng Zener 5,1 V – 0,5 W. Dòng tối đa qua Zener I_Zmax là:",
+    opts: ["≈ 98 mA", "≈ 2,55 A", "≈ 10,2 mA", "≈ 0,5 A"], a: 0,
+    why: "I_Zmax = P_Z / V_Z = 0,5 / 5,1 ≈ 0,098 A = 98 mA. 2,55 là nhân P_Z × V_Z; 0,5 A là lấy nhầm công suất làm dòng. Từ I_Zmax tính tiếp R_Smin = (V_in − V_Z) / I_Zmax." }
+];
+</script>
+<script src="/assets/quiz.js?v=2"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

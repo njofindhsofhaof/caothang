@@ -188,6 +188,15 @@ window.CT_POSTS = [
   {
     section: "hoctap",
     parent: "/namnhat-dientucoban",
+    title: "Chương 3: Chất bán dẫn và diode",
+    desc: "Bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, các loại diode, thiết kế mạch LED, chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn; có mô phỏng và trắc nghiệm.",
+    date: "2026-11-08",
+    href: "/dientucoban-chuong3",
+    order: 3
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat-dientucoban",
     title: "Chương 2: Linh kiện thụ động",
     desc: "Điện trở, mã màu 4 và 5 vạch, điện trở dán SMD, ghép nối tiếp song song, hạn dòng LED, chia áp, pull-up, tụ điện, mã tụ và cuộn cảm; có mô phỏng và trắc nghiệm.",
     date: "2026-11-08",
