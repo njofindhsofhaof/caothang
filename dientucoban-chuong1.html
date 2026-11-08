@@ -229,6 +229,15 @@
 .sim .cellfill{fill:var(--flow-g);opacity:.35;}
 .sim .warnt{fill:var(--accent-warm);font-weight:600;}
 .post ol.ans{margin-top:4px;}
+.post .gallery{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px 14px;margin:6px 0 16px;}
+.post .gallery-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 10px;}
+.post .ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.post figure.gcard{margin:0;padding:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;}
+.post figure.gcard img{width:100%;height:150px;object-fit:contain;background:#fff;border-radius:6px;}
+.post figure.gcard figcaption{font-family:var(--sans);font-size:13.5px;color:var(--ink);text-align:left;margin-top:8px;}
+.post figure.gcard figcaption strong:first-child{color:var(--accent);}
+.post figure.gcard .credit{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px;}
+.post figure.gcard a{color:var(--accent);}
 </style>
   <script src="/assets/theme.js"></script>
 </head>
@@ -512,6 +521,18 @@
 </svg>
       <figcaption>Hình dạng và điện áp danh định của các loại pin hay dùng trong robot và dự án điện tử</figcaption>
     </figure>
+    <div class="gallery" role="group" aria-label="Ảnh thực tế các loại pin">
+      <p class="gallery-h">Thiết bị thực tế · Các loại pin</p>
+      <div class="ggrid">
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Three_AAA_Batteries_and_one_AA_Battery.JPG" width="640" height="726" alt="Pin AA và AAA 1,5 V" loading="lazy"><figcaption><strong>Pin AA và AAA 1,5 V.</strong> 3 pin AAA (nhỏ) và 1 pin AA (lớn hơn): cùng 1,5 V, pin to hơn chứa dung lượng lớn hơn.<span class="credit">Ảnh: Jonatan Svensson Glad · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Three_AAA_Batteries_and_one_AA_Battery.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Battery-lithium-cr2032.jpg" width="640" height="559" alt="Pin cúc áo CR2032 3 V" loading="lazy"><figcaption><strong>Pin cúc áo CR2032 3 V.</strong> Pin lithium dạng đồng tiền: 20 mm, dày 3,2 mm; nuôi đồng hồ, bo mạch giữ giờ.<span class="credit">Ảnh: Krzysztof Woźnica - KyloDee · Public domain · <a href="https://commons.wikimedia.org/wiki/File:Battery-lithium-cr2032.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/8F22_9V_Transistor_radio_battery_%282026%29.jpg/960px-8F22_9V_Transistor_radio_battery_%282026%29.jpg" width="640" height="482" alt="Pin 9 V" loading="lazy"><figcaption><strong>Pin 9 V.</strong> Hình chữ nhật, 2 cực dạng chụp nằm cùng một đầu.<span class="credit">Ảnh: Gpkp · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:8F22_9V_Transistor_radio_battery_(2026).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/NiMH_rechargeable_AA_battery_%28no_visible_branding%29.jpg/960px-NiMH_rechargeable_AA_battery_%28no_visible_branding%29.jpg" width="640" height="1280" alt="Pin sạc NiMH AA 1,2 V" loading="lazy"><figcaption><strong>Pin sạc NiMH AA 1,2 V.</strong> Cùng kích thước AA nhưng điện áp 1,2 V và sạc lại được nhiều lần.<span class="credit">Ảnh: Multicherry · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:NiMH_rechargeable_AA_battery_(no_visible_branding).jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/18650_and_21700_lithium_ion_battery_cell.jpg/960px-18650_and_21700_lithium_ion_battery_cell.jpg" width="640" height="480" alt="Cell Li-ion 18650 / 21700 3,7 V" loading="lazy"><figcaption><strong>Cell Li-ion 18650 / 21700 3,7 V.</strong> 18650 = đường kính 18 mm, dài 65 mm; ghép nhiều cell thành pin laptop, xe điện.<span class="credit">Ảnh: Sevenethics · CC0 · <a href="https://commons.wikimedia.org/wiki/File:18650_and_21700_lithium_ion_battery_cell.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/AGAC5200_60C_3S2P.jpg/960px-AGAC5200_60C_3S2P.jpg" width="640" height="427" alt="Pin LiPo 3S2P" loading="lazy"><figcaption><strong>Pin LiPo 3S2P.</strong> 3 cell nối tiếp × 2 dãy song song: 11,1 V, 5 200 mAh, xả 60C; dùng cho xe RC.<span class="credit">Ảnh: RC Lipo battery · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File:AGAC5200_60C_3S2P.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+        <figure class="gcard"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/12V_7.5_Ah_Lead_Acid_Battery.JPG/960px-12V_7.5_Ah_Lead_Acid_Battery.JPG" width="640" height="478" alt="Ắc quy axit chì 12 V 7,5 Ah" loading="lazy"><figcaption><strong>Ắc quy axit chì 12 V 7,5 Ah.</strong> 6 cell × 2 V bên trong; loại hay gặp trong UPS, đèn khẩn cấp.<span class="credit">Ảnh: BrittanyJ · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File:12V_7.5_Ah_Lead_Acid_Battery.JPG" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>
+      </div>
+    </div>
     <div class="tablewrap">
       <table>
         <thead><tr><th>Loại pin</th><th>Điện áp</th><th>Dung lượng</th><th>Sạc lại?</th><th>Đặc điểm, ứng dụng</th></tr></thead>
