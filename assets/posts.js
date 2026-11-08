@@ -188,6 +188,15 @@ window.CT_POSTS = [
   {
     section: "hoctap",
     parent: "/namnhat-dientucoban",
+    title: "Chương 2: Linh kiện thụ động",
+    desc: "Điện trở, mã màu 4 và 5 vạch, điện trở dán SMD, ghép nối tiếp song song, hạn dòng LED, chia áp, pull-up, tụ điện, mã tụ và cuộn cảm; có mô phỏng và trắc nghiệm.",
+    date: "2026-11-08",
+    href: "/dientucoban-chuong2",
+    order: 2
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat-dientucoban",
     title: "Chương 1: Các khái niệm cơ bản",
     desc: "Electron, điện áp, dòng điện, trở kháng, định luật Ohm, các loại pin, ghép pin nối tiếp/song song, dung lượng mAh – Wh và tỉ lệ C, có mô phỏng và trắc nghiệm.",
     date: "2026-11-08",
