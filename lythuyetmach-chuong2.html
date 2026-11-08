@@ -44,6 +44,7 @@
 .post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
 .post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
 .post .frac .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.post kbd{font-family:var(--mono);font-size:.85em;background:var(--surface);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;white-space:nowrap;}
 .post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
 .post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
 .post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
@@ -532,6 +533,22 @@
       <p class="live" id="cxLive" aria-live="polite"></p>
       <figcaption>Kéo a sang âm để thấy vì sao phải cộng 180° vào arctan(b/a) khi điểm nằm bên trái trục ảo.</figcaption>
     </figure>
+    <h3 id="casio">Bấm số phức trên máy Casio fx-580VN X</h3>
+    <p>Phần lớn bài thi chậm hoặc sai là do thao tác máy tính. Làm quen 4 bước dưới đây trước khi giải mạch:</p>
+    <div class="steps">
+      <h4>Bước 1 – Chọn đơn vị góc là độ</h4>
+      <p><kbd>SHIFT</kbd> <kbd>MENU</kbd> (SETUP) → <kbd>2</kbd> Angle Unit → <kbd>1</kbd> Degree. Màn hình hiện chữ <strong>D</strong> nhỏ ở trên. Đề cho góc bằng radian thì chọn <kbd>2</kbd> Radian (chữ <strong>R</strong>).</p>
+      <h4>Bước 2 – Vào chế độ số phức</h4>
+      <p><kbd>MENU</kbd> → <kbd>2</kbd> Complex. Ở chế độ này phím <kbd>ENG</kbd> cho ra đơn vị ảo <strong>i</strong> (máy ghi i, bài vở ghi j, là một), còn <kbd>SHIFT</kbd> <kbd>ENG</kbd> cho ra dấu góc <strong>∠</strong>.</p>
+      <h4>Bước 3 – Nhập số phức</h4>
+      <p>Dạng đại số 30 + j40: bấm <kbd>3</kbd><kbd>0</kbd> <kbd>+</kbd> <kbd>4</kbd><kbd>0</kbd> <kbd>ENG</kbd>. Dạng cực 100∠−30°: bấm <kbd>1</kbd><kbd>0</kbd><kbd>0</kbd> <kbd>SHIFT</kbd> <kbd>ENG</kbd> <kbd>(−)</kbd> <kbd>3</kbd><kbd>0</kbd>. Nhân, chia, cộng hai dạng với nhau thoải mái, nhớ đóng ngoặc cho mẫu số.</p>
+      <h4>Bước 4 – Đổi qua lại a + jb ⇔ r∠ψ</h4>
+      <p>Nhập biểu thức, bấm <kbd>OPTN</kbd>, cuộn <kbd>▼</kbd> chọn <strong>▶r∠θ</strong> (ra dạng cực) hoặc <strong>▶a+bi</strong> (ra dạng đại số), rồi bấm <kbd>=</kbd>.</p>
+      <h4>Thử với ví dụ của mục 11</h4>
+      <p>Trở kháng: 30 + 40<strong>i</strong> → <kbd>OPTN</kbd> ▶r∠θ <kbd>=</kbd> ⇒ <strong>50∠53,13</strong></p>
+      <p>Dòng điện: 100∠0 ÷ (30 + 40<strong>i</strong>) → ▶r∠θ <kbd>=</kbd> ⇒ <strong>2∠−53,13</strong> (I&#775;<sub>m</sub> = 2∠−53,13° A)</p>
+      <p class="ans">Lỗi hay gặp: máy để chế độ Radian mà nhập góc độ (ra số lạ), quên ngoặc ở mẫu số, hoặc quên bấm <kbd>SHIFT</kbd> trước <kbd>ENG</kbd> nên gõ ra i thay vì ∠.</p>
+    </div>
 
     <!-- 7 -->
     <h2 id="anh-phuc"><span class="num">07</span>Ảnh phức của đại lượng điều hoà</h2>
