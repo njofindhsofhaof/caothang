@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ct-i18n" content="/assets/i18n/common.en.js?v=2 /assets/i18n/machboost.en.js?v=2">
 <title>Mạch tăng áp Boost 12V lên 24V · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
 <meta name="description" content="Nguyên lý mạch tăng áp Boost 12V lên 24V có hình minh hoạ động: cuộn cảm, công tắc MOSFET, diode, tụ, công thức chu kỳ làm việc và cách tự ráp.">
 <meta property="og:type" content="website">
@@ -120,7 +121,7 @@
     <h2>Nguyên lý: hai bước lặp lại liên tục</h2>
     <p>Bấm từng bước để xem dòng điện chạy, hoặc để hình tự chạy.</p>
 
-    <figure class="sim">
+    <figure class="sim" data-i18n="auto">
       <svg viewBox="0 0 680 310" role="img" aria-labelledby="simTitle simDesc">
         <title id="simTitle">Sơ đồ mạch Boost</title>
         <desc id="simDesc">Nguồn 12V, cuộn cảm, công tắc xuống mass, diode, tụ C và tải. Đường đi của dòng điện đổi theo trạng thái công tắc.</desc>
@@ -206,7 +207,7 @@
 
     <h2>Tải quyết định công suất</h2>
     <p>Mạch giữ áp ra cố định 24V. Dòng ra <strong>do tải quyết định</strong>, theo định luật Ohm I = U / R: điện trở tải càng nhỏ thì tải kéo dòng càng lớn. Tải kéo bao nhiêu thì nguồn 12V phải cấp bấy nhiêu, cộng thêm phần hao hụt. Bấm đổi mức tải để xem:</p>
-    <figure class="sim">
+    <figure class="sim" data-i18n="auto">
       <div class="controls" id="loadSeg" role="group" aria-label="Chọn dòng tải"></div>
       <div class="pbar"><span>Công suất ra (tải dùng)</span><div class="track"><span id="barOut" style="background:var(--flow-cap)"></span></div><b id="valOut"></b></div>
       <div class="pbar"><span>Hao hụt thành nhiệt</span><div class="track"><span id="barLoss" style="background:var(--flow-boost)"></span></div><b id="valLoss"></b></div>
@@ -424,6 +425,7 @@
 </script>
 <script src="assets/posts.js?v=20261108d"></script>
 <script src="assets/site.js?v=20261108d"></script>
+<script src="/assets/i18n.js?v=2" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

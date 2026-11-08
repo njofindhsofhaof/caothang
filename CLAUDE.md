@@ -36,6 +36,16 @@ Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `par
 
 Mọi trang `.html` phải có `<meta name="description">` và các thẻ Open Graph (`og:title`, `og:description`, `og:url`, `og:image` = `/assets/og.png` 1200×630, `twitter:card`) để dán link vào Zalo/Facebook hiện tiêu đề và ảnh. Chép khối thẻ từ `lythuyetmach-chuong2.html` rồi sửa title/description/url. `npm test` (test/og-tags.test.js) báo lỗi nếu trang mới thiếu.
 
+## Nút VI/EN (song ngữ)
+
+Mọi trang (trừ `/diemdanh-gv` và file xác minh Google) có nút VI/EN do `assets/i18n.js` gắn. Trang bật bằng `<meta name="ct-i18n" content="/assets/i18n/common.en.js?v=… /assets/i18n/<trang>.en.js?v=…">` (common luôn đứng đầu, file riêng của trang nếu có) + `<script src="/assets/i18n.js?v=…" defer>`. `npm test` (test/i18n.test.js) báo lỗi nếu trang thiếu.
+
+- Từ điển `window.CT_EN = { khoá: "HTML tiếng Anh" }`. Khoá = `CTI18N.hash(câu tiếng Việt)`; câu có số dùng khoá `~` + hash của mẫu (số thay bằng `{0}`, `{1}`…), bản tiếng Anh giữ `{0}`, `{1}`… nên đề bài/điểm số JS sinh ra vẫn dịch được. `__phrases: [[vi, en], …]` là cụm từ để ghép câu JS sinh ra (lời giải từng bước, màu vòng điện trở…); chỉ dùng khi dịch hết chữ Việt trong câu.
+- `common.en.js`: chữ dùng ở nhiều trang (menu, tên bài trong danh sách, ngày tạo, bài tập Kirchhoff / xác lập điều hoà dùng chung với đề kiểm tra, thông báo đăng ký email…). Tên bài mới trong `posts.js` cũng thêm vào đây.
+- Sửa câu tiếng Việt thì câu đó tự hiện lại tiếng Việt ở chế độ EN đến khi cập nhật từ điển. Thêm/sửa bài: mở trang, gõ `CTI18N.collect()` trong console để lấy `{ k, vi }` các câu chưa dịch (bấm qua bài tập để JS vẽ hết), thêm vào file `.en.js`, `CTI18N.t("câu")` để thử; nhớ tăng `?v=` trong thẻ meta.
+- Mô phỏng tự vẽ lại theo ngôn ngữ (nghe sự kiện `ct:lang`, như bài lý thuyết) thì để nguyên `figure.sim`; mô phỏng không tự đổi ngôn ngữ thì gắn `data-i18n="auto"` để dịch như chữ thường (xem `/ic555`, `/machboost`, `/machbuck`). Phần tử không muốn dịch: `data-i18n="off"`.
+- Tên người, tên riêng tiếng Việt giữ nguyên; câu ghép tên người (họ tên sinh viên…) giữ tiếng Việt.
+
 ## PIN giáo viên
 
 Đổi PIN ngay trong `/diemdanh-gv` (tab Danh sách lớp → Đổi mã PIN). PIN mới lưu trên Redis key `teacher:pin` dạng băm scrypt (`api/_lib/pin.js`), thay thế `TEACHER_PIN` trên Vercel. Quên PIN: xoá key `teacher:pin` (Vercel → Storage → Open in Upstash → Data Browser) để quay về `TEACHER_PIN`. Mọi API cần PIN đi qua `teacherGate` (store.js): sai 8 lần/IP bị khoá 15 phút.

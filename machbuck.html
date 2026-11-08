@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ct-i18n" content="/assets/i18n/common.en.js?v=2 /assets/i18n/machbuck.en.js?v=2">
 <title>Mạch hạ áp Buck 24V xuống 12V · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
 <meta name="description" content="Nguyên lý mạch hạ áp Buck 24V xuống 12V có hình minh hoạ động: vì sao không dùng biến trở, công tắc, cuộn cảm, diode, tụ, công thức D và cách làm với LM2596.">
 <meta property="og:type" content="website">
@@ -111,7 +112,7 @@
     <h2>Sao không dùng biến trở cho nhanh?</h2>
     <p>Ý tưởng đầu tiên ai cũng nghĩ tới: mắc nối tiếp một biến trở cho nó "ăn bớt" 12V. Chạy được, nhưng có hai cái dở. Bấm đổi tải để xem:</p>
 
-    <figure class="sim" aria-label="So sánh biến trở với mạch hạ áp">
+    <figure class="sim" data-i18n="auto" aria-label="So sánh biến trở với mạch hạ áp">
       <div class="controls" role="group" aria-label="Chọn tải">
         <button type="button" data-r="6" aria-pressed="true">Tải 6Ω (2A)</button>
         <button type="button" data-r="12" aria-pressed="false">Tải 12Ω (1A)</button>
@@ -139,7 +140,7 @@
     </ul>
 
     <h2>Nguyên lý: hai bước lặp lại liên tục</h2>
-    <figure class="sim" aria-label="Mô phỏng mạch Buck">
+    <figure class="sim" data-i18n="auto" aria-label="Mô phỏng mạch Buck">
       <div class="scroll">
       <svg viewBox="0 0 680 270" role="img" aria-labelledby="bkTitle">
         <title id="bkTitle">Mạch Buck: nguồn 24V, công tắc, cuộn cảm, diode, tụ và tải</title>
@@ -381,6 +382,7 @@
 </script>
 <script src="assets/posts.js?v=20261108d"></script>
 <script src="assets/site.js?v=20261108d"></script>
+<script src="/assets/i18n.js?v=2" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
