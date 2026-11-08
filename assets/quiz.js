@@ -26,6 +26,23 @@
     }
   };
 
+  /* Song ngữ: trang có nút VI/EN (assets/i18n.js) khai báo thêm window.CT_QUIZ_EN cùng thứ tự câu,
+     cùng chỉ số đáp án. Không có thì luôn dùng tiếng Việt. */
+  var UI = {
+    vi: { again: "Làm lại", q: "Câu ", ok: "Đúng.", bad: "Chưa đúng, đáp án ",
+          none: function (n) { return "Đã làm 0/" + n + " câu"; },
+          some: function (a, n, c) { return "Đã làm " + a + "/" + n + " câu · đúng " + c; },
+          done: function (c, n) { return "Hoàn thành: đúng " + c + "/" + n + " câu"; } },
+    en: { again: "Reset", q: "Q", ok: "Correct.", bad: "Not quite, the answer is ",
+          none: function (n) { return "Answered 0/" + n; },
+          some: function (a, n, c) { return "Answered " + a + "/" + n + " · " + c + " correct"; },
+          done: function (c, n) { return "Done: " + c + "/" + n + " correct"; } }
+  };
+  function lang() {
+    return document.documentElement.lang === "en" && Array.isArray(window.CT_QUIZ_EN) ? "en" : "vi";
+  }
+  function quizItems() { return lang() === "en" ? window.CT_QUIZ_EN : window.CT_QUIZ; }
+
   function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -44,12 +61,14 @@
       answered += 1;
       if (p === items[k].a) correct += 1;
     });
-    if (answered === 0) return "Đã làm 0/" + items.length + " câu";
-    if (answered < items.length) return "Đã làm " + answered + "/" + items.length + " câu · đúng " + correct;
-    return "Hoàn thành: đúng " + correct + "/" + items.length + " câu";
+    var t = UI[lang()];
+    if (answered === 0) return t.none(items.length);
+    if (answered < items.length) return t.some(answered, items.length, correct);
+    return t.done(correct, items.length);
   }
 
   function render(host, items, saved) {
+    var t = UI[lang()];
     host.textContent = "";
     var picks = items.map(function (it, k) {
       var p = saved ? saved[k] : null;
@@ -57,15 +76,15 @@
     });
     var score = el("div", "quiz-score");
     var scoreText = el("span");
-    var again = el("button", null, "Làm lại");
+    var again = el("button", null, t.again);
     again.type = "button";
-    again.addEventListener("click", function () { store.clear(); render(host, items, null); });
+    again.addEventListener("click", function () { store.clear(); render(host, quizItems(), null); });
     score.appendChild(scoreText);
     score.appendChild(again);
 
     items.forEach(function (it, k) {
       var box = el("div", "quiz-item");
-      box.appendChild(el("p", "quiz-q", '<span class="qn">Câu ' + (k + 1) + "</span>" + it.q));
+      box.appendChild(el("p", "quiz-q", '<span class="qn">' + t.q + (k + 1) + "</span>" + it.q));
       var opts = el("div", "quiz-opts");
       var buttons = [];
 
@@ -75,7 +94,7 @@
         var right = i === it.a;
         if (!right) buttons[i].classList.add("bad");
         box.appendChild(el("p", "quiz-why" + (right ? "" : " wrong"),
-          "<strong>" + (right ? "Đúng." : "Chưa đúng, đáp án " + LETTERS[it.a] + ".") + "</strong> " + it.why));
+          "<strong>" + (right ? t.ok : t.bad + LETTERS[it.a] + ".") + "</strong> " + it.why));
       }
 
       it.opts.forEach(function (text, i) {
@@ -100,6 +119,9 @@
 
   var host = document.getElementById("quiz");
   if (host && Array.isArray(window.CT_QUIZ) && window.CT_QUIZ.length) {
-    render(host, window.CT_QUIZ, store.load(window.CT_QUIZ.length));
+    render(host, quizItems(), store.load(window.CT_QUIZ.length));
+    document.addEventListener("ct:lang", function () {
+      render(host, quizItems(), store.load(window.CT_QUIZ.length));
+    });
   }
 })();

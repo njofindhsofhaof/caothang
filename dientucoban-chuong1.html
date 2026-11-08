@@ -8,6 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong1.en.js?v=1">
 <meta property="og:title" content="Chương 1: Các khái niệm cơ bản · Điện tử Cơ bản">
 <meta property="og:description" content="Điện tử cơ bản Chương 1: electron, điện áp, dòng điện, trở kháng, định luật Ohm, nguồn pin, các loại pin, dung lượng mAh – Wh, tỉ lệ C (C-rate) và cách chọn pin.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong1">
@@ -722,10 +723,15 @@
   var SVGNS = "http://www.w3.org/2000/svg";
   function $(id) { return document.getElementById(id); }
   function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát sự kiện "ct:lang": các mô phỏng vẽ lại theo ngôn ngữ đó. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function L(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function fmt(x) {
     var r = Math.round(x * 100) / 100;
     if (Math.abs(r) < 0.005) r = 0;
-    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+    var s = String(Math.abs(r));
+    return (r < 0 ? "−" : "") + (isEn() ? s : s.replace(".", ","));
   }
   function setText(id, s) { $(id).textContent = s; }
   function setFlow(el, i) {
@@ -742,6 +748,7 @@
       show: function () { out.textContent = fmt(api.get()) + (unit ? " " + unit : ""); }
     };
     input.addEventListener("input", function () { api.show(); onChange(); });
+    onLang(api.show);
     return api;
   }
   function buttons(figId, attr, onPick) {
@@ -774,10 +781,10 @@
       return v;
     }
     function explain(v) {
-      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b> = " + fmt(v.I * 1000) + " mA. Tăng U thì I tăng; tăng R thì I giảm.";
-      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. Muốn đẩy dòng " + fmt(v.I) + " A qua " + fmt(v.R) + " Ω cần điện áp " + fmt(v.U) + " V.";
-      if (isNaN(v.R)) return "I = 0 thì không chia được: mạch hở, không tính được R.";
-      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.";
+      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b> = " + fmt(v.I * 1000) + " mA. " + L("Tăng U thì I tăng; tăng R thì I giảm.", "Raise U and I goes up; raise R and I goes down.");
+      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. " + L("Muốn đẩy dòng " + fmt(v.I) + " A qua " + fmt(v.R) + " Ω cần điện áp " + fmt(v.U) + " V.", "Pushing " + fmt(v.I) + " A through " + fmt(v.R) + " Ω takes " + fmt(v.U) + " V.");
+      if (isNaN(v.R)) return L("I = 0 thì không chia được: mạch hở, không tính được R.", "With I = 0 you cannot divide: the circuit is open, so R cannot be found.");
+      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. " + L("Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.", "This is how R is measured indirectly: a voltmeter reads U, an ammeter reads I.");
     }
     function render() {
       var v = compute(), s = sl[solve], over = false;
@@ -793,8 +800,9 @@
       setText("ohmUt", "U = " + fmt(v.U) + " V");
       setText("ohmRt", "R = " + (isNaN(v.R) ? "?" : fmt(v.R)) + " Ω");
       setText("ohmIt", "I = " + fmt(v.I) + " A");
-      $("ohmLive").innerHTML = explain(v) + (over ? " (Kết quả vượt thang kéo, thanh dừng ở mép.)" : "");
+      $("ohmLive").innerHTML = explain(v) + (over ? L(" (Kết quả vượt thang kéo, thanh dừng ở mép.)", " (The result is off the slider scale, so the slider stops at its end.)") : "");
     }
+    onLang(render);
     render();
   }
 
@@ -804,7 +812,7 @@
     var CELLS = {
       li: { name: "Li-ion", v: 3.7, mah: 2200 },
       ni: { name: "NiMH", v: 1.2, mah: 2500 },
-      pb: { name: "chì", v: 2, mah: 7000 }
+      pb: { name: "chì", en: "lead-acid", v: 2, mah: 7000 }
     };
     var cell = CELLS.li;
     var sS = slider("packS", "", render), sP = slider("packP", "", render);
@@ -833,10 +841,11 @@
       var S = sS.get(), P = sP.get(), U = S * cell.v, mah = P * cell.mah, wh = U * mah / 1000;
       drawCells(S, P);
       setText("packName", S + "S" + P + "P · " + fmt(U) + " V · " + mah + " mAh");
-      $("packLive").innerHTML = "Điện áp: " + S + " × " + fmt(cell.v) + " = <b>" + fmt(U) + " V</b> · Dung lượng: " + P + " × " + cell.mah + " = <b>" + mah + " mAh</b> · Năng lượng: " + fmt(U) + " V × " + fmt(mah / 1000) + " Ah ≈ <b>" + fmt(wh) + " Wh</b> · Tổng " + (S * P) + " cell " + cell.name + "." +
-        (cell === CELLS.li && S === 3 && P === 1 ? " Đây đúng là pin LiPo 3S 11,1 V 2 200 mAh 24,4 Wh trong Hình 1.3." : "") +
-        (cell === CELLS.pb && S === 6 ? " 6 cell chì 2 V = ắc quy 12 V." : "");
+      $("packLive").innerHTML = L("Điện áp: ", "Voltage: ") + S + " × " + fmt(cell.v) + " = <b>" + fmt(U) + " V</b> · " + L("Dung lượng: ", "Capacity: ") + P + " × " + cell.mah + " = <b>" + mah + " mAh</b> · " + L("Năng lượng: ", "Energy: ") + fmt(U) + " V × " + fmt(mah / 1000) + " Ah ≈ <b>" + fmt(wh) + " Wh</b> · " + L("Tổng " + (S * P) + " cell " + cell.name + ".", (S * P) + " " + (cell.en || cell.name) + " cells in total.") +
+        (cell === CELLS.li && S === 3 && P === 1 ? L(" Đây đúng là pin LiPo 3S 11,1 V 2 200 mAh 24,4 Wh trong Hình 1.3.", " This is exactly the 3S 11.1 V 2,200 mAh 24.4 Wh LiPo pack in Figure 1.3.") : "") +
+        (cell === CELLS.pb && S === 6 ? L(" 6 cell chì 2 V = ắc quy 12 V.", " Six 2 V lead-acid cells = a 12 V battery.") : "");
     }
+    onLang(render);
     render();
   }
 
@@ -848,20 +857,22 @@
     buttons("simC", "data-cm", function (m) { mode = m; render(); });
     function timeText(h) {
       var mins = Math.round(h * 60), hh = Math.floor(mins / 60), mm = mins % 60;
-      if (!hh) return mm + " phút";
-      return hh + " giờ" + (mm ? " " + mm + " phút" : "");
+      var M = L(" phút", " min"), H = L(" giờ", " h");
+      if (!hh) return mm + M;
+      return hh + H + (mm ? " " + mm + M : "");
     }
     function render() {
       var cap = sCap.get(), c = Math.round(sRate.get() * 10) / 10, I = c * cap, h = 1 / c;
       $("cIbar").setAttribute("width", String(clamp(I / 20000 * 440, 4, 440)));
       $("cTbar").setAttribute("width", String(clamp(h / 10 * 440, 4, 440)));
-      setText("cIt", (mode === "xả" ? "xả " : "sạc ") + fmt(I) + " mA = " + fmt(I / 1000) + " A");
-      setText("cTt", (mode === "xả" ? "xả hết trong " : "sạc đầy trong ") + timeText(h));
-      setText("cWarn", mode === "sạc" && c >= 1 ? "Sạc nhanh (≤ 1 giờ): phải theo dõi điện áp đầu cuối và nhiệt độ pin!" : (mode === "xả" && c > 2 ? "Xả trên 2C: dung lượng thực lấy ra thường thấp hơn danh định." : ""));
+      setText("cIt", (mode === "xả" ? L("xả ", "discharge ") : L("sạc ", "charge ")) + fmt(I) + " mA = " + fmt(I / 1000) + " A");
+      setText("cTt", (mode === "xả" ? L("xả hết trong ", "empty in ") : L("sạc đầy trong ", "full in ")) + timeText(h));
+      setText("cWarn", mode === "sạc" && c >= 1 ? L("Sạc nhanh (≤ 1 giờ): phải theo dõi điện áp đầu cuối và nhiệt độ pin!", "Fast charge (≤ 1 h): terminal voltage and battery temperature must be monitored!") : (mode === "xả" && c > 2 ? L("Xả trên 2C: dung lượng thực lấy ra thường thấp hơn danh định.", "Discharging above 2C: the usable capacity is usually below the rated value.") : ""));
       $("cLive").innerHTML = "I = " + fmt(c) + "C × " + cap + " mAh = <b>" + fmt(I) + " mA</b> · t = 1 / " + fmt(c) + " = <b>" + timeText(h) + "</b>." +
-        (c === 0.1 ? " Đây là bộ sạc C/10: sạc trong 10 giờ." : "") +
-        (c === 4 ? " Bộ sạc 4C: sạc trong 15 phút." : "");
+        (c === 0.1 ? L(" Đây là bộ sạc C/10: sạc trong 10 giờ.", " This is a C/10 charger: 10 hours to charge.") : "") +
+        (c === 4 ? L(" Bộ sạc 4C: sạc trong 15 phút.", " A 4C charger: charged in 15 minutes.") : "");
     }
+    onLang(render);
     render();
   }
 
@@ -904,7 +915,8 @@ window.CT_QUIZ = [
     why: "12 V / 2 V = 6 cell nối tiếp. Vì vậy ắc quy chì có các mức là bội số của 2: 2 V, 6 V, 12 V, 24 V." }
 ];
 </script>
-<script src="/assets/quiz.js?v=2"></script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
