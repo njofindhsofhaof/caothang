@@ -9,14 +9,20 @@
   function fmt(x, d) {
     var n = d == null ? 2 : d;
     var s = (Math.round(x * Math.pow(10, n)) / Math.pow(10, n)).toString();
-    return s.replace("-", "−").replace(".", ",");
+    s = s.replace("-", "−");
+    return isEn() ? s : s.replace(".", ",");
   }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi khối vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function setText(id, t) { var n = $(id); if (n) n.textContent = t; }
   function attr(id, a) { var n = $(id); if (!n) return; Object.keys(a).forEach(function (k) { n.setAttribute(k, a[k]); }); }
   function slider(id, unit, cb, digits) {
     var input = $(id), out = $(id + "o");
     function show() { out.textContent = fmt(+input.value, digits == null ? 2 : digits) + (unit ? " " + unit : ""); }
     input.addEventListener("input", function () { show(); cb(); });
+    onLang(show);
     show();
     return function () { return +input.value; };
   }
@@ -36,8 +42,8 @@
       " M" + l[0].toFixed(1) + " " + l[1].toFixed(1) + " L" + x1.toFixed(1) + " " + y1.toFixed(1) + " L" + r[0].toFixed(1) + " " + r[1].toFixed(1);
   }
   function phaseWord(phi) {
-    if (Math.abs(phi) < 0.5) return "điện áp <b>cùng pha</b> với dòng điện";
-    return phi > 0 ? "điện áp <b>sớm pha</b> hơn dòng điện " + fmt(phi, 1) + "°" : "điện áp <b>trễ pha</b> hơn dòng điện " + fmt(-phi, 1) + "°";
+    if (Math.abs(phi) < 0.5) return tr("điện áp <b>cùng pha</b> với dòng điện", "voltage is <b>in phase</b> with current");
+    return phi > 0 ? tr("điện áp <b>sớm pha</b> hơn dòng điện ", "voltage <b>leads</b> current by ") + fmt(phi, 1) + "°" : tr("điện áp <b>trễ pha</b> hơn dòng điện ", "voltage <b>lags</b> current by ") + fmt(-phi, 1) + "°";
   }
 
   /* 1. Song sin + vong quay pha */
@@ -69,7 +75,7 @@
       while (phi < -180) phi += 360;
       $("wvLive").innerHTML = "u = " + fmt(Um, 0) + " sin(" + fmt(w, 1) + "t " + (pu < 0 ? "− " : "+ ") + fmt(Math.abs(pu), 0) + "°) V · " +
         "T = 1/f = <b>" + fmt(T * 1000, 2) + " ms</b> · ω = 2πf = <b>" + fmt(w, 1) + " rad/s</b><br>" +
-        "Hiệu dụng U = U<sub>m</sub>/√2 = <b>" + fmt(Um / Math.SQRT2, 1) + " V</b> · I = <b>" + fmt(Im / Math.SQRT2, 2) + " A</b><br>" +
+        tr("Hiệu dụng", "RMS") + " U = U<sub>m</sub>/√2 = <b>" + fmt(Um / Math.SQRT2, 1) + " V</b> · I = <b>" + fmt(Im / Math.SQRT2, 2) + " A</b><br>" +
         "φ = φ<sub>u</sub> − φ<sub>i</sub> = " + fmt(pu, 0) + "° − (" + fmt(pi, 0) + "°) = <b>" + fmt(phi, 0) + "°</b>: " + phaseWord(phi);
     }
     function frame(ts) {
@@ -80,11 +86,15 @@
       requestAnimationFrame(frame);
     }
     var btn = $("wvPlay");
-    function setBtn() { btn.textContent = playing ? "⏸ Tạm dừng" : "▶ Cho quay"; btn.setAttribute("aria-pressed", playing ? "true" : "false"); }
+    function setBtn() {
+      $("wvReset").textContent = tr("↺ Về t = 0", "↺ Back to t = 0");
+      btn.textContent = playing ? tr("⏸ Tạm dừng", "⏸ Pause") : tr("▶ Cho quay", "▶ Rotate"); btn.setAttribute("aria-pressed", playing ? "true" : "false");
+    }
     btn.addEventListener("click", function () { playing = !playing; setBtn(); if (playing) requestAnimationFrame(frame); });
     $("wvReset").addEventListener("click", function () { t = 0; draw(); });
     setBtn();
     draw();
+    onLang(function () { setBtn(); draw(); });
     if (playing) requestAnimationFrame(frame);
   }
 
@@ -105,12 +115,13 @@
       attr("cxArc", { d: r > 0.05 ? "M" + (OX + rr) + " " + OY + " A" + rr + " " + rr + " 0 0 " + (psi >= 0 ? 0 : 1) + " " + ex.toFixed(1) + " " + ey.toFixed(1) : "" });
       attr("cxLbl", { x: px + (a >= 0 ? 8 : -8), y: py + (b >= 0 ? -8 : 18), "text-anchor": a >= 0 ? "start" : "end" });
       setText("cxLbl", fmt(a, 1) + (b < 0 ? " − j" : " + j") + fmt(Math.abs(b), 1));
-      var quad = a < 0 ? " (a &lt; 0 nên phải cộng/trừ 180° vào arctan(b/a) = " + fmt(Math.atan(b / a) / DEG, 2) + "°)" : "";
-      $("cxLive").innerHTML = "Dạng đại số: C = <b>" + fmt(a, 1) + (b < 0 ? " − j" : " + j") + fmt(Math.abs(b), 1) + "</b><br>" +
+      var quad = a < 0 ? tr(" (a &lt; 0 nên phải cộng/trừ 180° vào arctan(b/a) = ", " (a &lt; 0, so add/subtract 180° to arctan(b/a) = ") + fmt(Math.atan(b / a) / DEG, 2) + "°)" : "";
+      $("cxLive").innerHTML = tr("Dạng đại số", "Rectangular form") + ": C = <b>" + fmt(a, 1) + (b < 0 ? " − j" : " + j") + fmt(Math.abs(b), 1) + "</b><br>" +
         "r = √(" + fmt(a, 1) + "² + " + fmt(b, 1) + "²) = <b>" + fmt(r, 2) + "</b> · ψ = <b>" + fmt(r > 0.05 ? psi : 0, 2) + "°</b>" + (r > 0.05 ? quad : "") + "<br>" +
-        "Dạng cực: C = <b>" + fmt(r, 2) + "∠" + fmt(r > 0.05 ? psi : 0, 2) + "°</b>";
+        tr("Dạng cực", "Polar form") + ": C = <b>" + fmt(r, 2) + "∠" + fmt(r > 0.05 ? psi : 0, 2) + "°</b>";
     }
     draw();
+    onLang(draw);
   }
 
   /* 3. Tro khang RLC noi tiep theo tan so */
@@ -146,13 +157,14 @@
       setText("zBLt", "XL = " + fmt(XL, 1) + " Ω");
       setText("zBCt", "XC = " + fmt(XC, 1) + " Ω");
       var f0 = 1 / (2 * Math.PI * Math.sqrt(L * C));
-      var kind = Math.abs(X) < 0.5 ? "<span class=\"ok\">cộng hưởng: X = 0, mạch thuần trở, dòng lớn nhất</span>"
-        : X > 0 ? "mạch <b>tính cảm</b> (X &gt; 0): dòng trễ pha hơn áp" : "mạch <b>tính dung</b> (X &lt; 0): dòng sớm pha hơn áp";
+      var kind = Math.abs(X) < 0.5 ? "<span class=\"ok\">" + tr("cộng hưởng: X = 0, mạch thuần trở, dòng lớn nhất", "resonance: X = 0, purely resistive, maximum current") + "</span>"
+        : X > 0 ? tr("mạch <b>tính cảm</b> (X &gt; 0): dòng trễ pha hơn áp", "<b>inductive</b> circuit (X &gt; 0): current lags voltage") : tr("mạch <b>tính dung</b> (X &lt; 0): dòng sớm pha hơn áp", "<b>capacitive</b> circuit (X &lt; 0): current leads voltage");
       $("zLive").innerHTML = "ω = 2πf = " + fmt(w, 1) + " rad/s · X<sub>L</sub> = ωL = <b>" + fmt(XL, 1) + " Ω</b> · X<sub>C</sub> = 1/(ωC) = <b>" + fmt(XC, 1) + " Ω</b><br>" +
         "Z = R + j(X<sub>L</sub> − X<sub>C</sub>) = " + fmt(R, 0) + (X < 0 ? " − j" : " + j") + fmt(Math.abs(X), 1) + " = <b>" + fmt(z, 1) + "∠" + fmt(phi, 1) + "° Ω</b> → " + kind + "<br>" +
-        "Với U = " + U + " V (hiệu dụng): I = U / z = <b>" + fmt(z > 0 ? U / z : 0, 2) + " A</b> · tần số cộng hưởng f<sub>0</sub> = 1/(2π√(LC)) ≈ " + fmt(f0, 1) + " Hz";
+        tr("Với U = ", "With U = ") + U + tr(" V (hiệu dụng): I = U / z = <b>", " V (RMS): I = U / z = <b>") + fmt(z > 0 ? U / z : 0, 2) + " A</b> · " + tr("tần số cộng hưởng", "resonant frequency") + " f<sub>0</sub> = 1/(2π√(LC)) ≈ " + fmt(f0, 1) + " Hz";
     }
     draw();
+    onLang(draw);
   }
 
   /* 4. Tam giac cong suat */
@@ -178,9 +190,10 @@
       setText("pqCos", "cosφ = " + fmt(cos, 2));
       $("pqLive").innerHTML = "z = √(R² + X²) = " + fmt(z, 1) + " Ω · I = U / z = <b>" + fmt(I, 2) + " A</b> · φ = " + fmt(phi, 1) + "°<br>" +
         "P = R × I² = <b>" + fmt(P, 0) + " W</b> · Q = X × I² = <b>" + fmt(Q, 0) + " VAr</b> · S = U × I = <b>" + fmt(S, 0) + " VA</b><br>" +
-        "Kiểm tra: √(P² + Q²) = " + fmt(Math.hypot(P, Q), 0) + " VA = S <span class=\"ok\">✓</span> · hệ số công suất cosφ = P/S = <b>" + fmt(cos, 2) + "</b>";
+        tr("Kiểm tra", "Check") + ": √(P² + Q²) = " + fmt(Math.hypot(P, Q), 0) + " VA = S <span class=\"ok\">✓</span> · " + tr("hệ số công suất", "power factor") + " cosφ = P/S = <b>" + fmt(cos, 2) + "</b>";
     }
     draw();
+    onLang(draw);
   }
 
   initWave();
