@@ -702,7 +702,8 @@
     </figure>
 
     <h3>Diode quang (photodiode)</h3>
-    <div class="def"><strong>Diode quang</strong> làm ngược với LED: <strong>nhận ánh sáng</strong> để tạo dòng điện. Nó thường được <strong>phân cực nghịch</strong>; khi không có ánh sáng chỉ có dòng rỉ rất nhỏ, khi ánh sáng chiếu vào mối nối P-N sẽ bứt thêm cặp electron – lỗ trống (như mục 01) nên dòng ngược tăng theo cường độ sáng. Dùng làm cảm biến ánh sáng, mắt nhận tia hồng ngoại của remote, đo ánh sáng.</div>
+    <div class="def"><strong>Diode quang</strong> (photodiode, ký hiệu Hình 3.12: mũi tên ánh sáng <strong>chỉ vào</strong> diode) dùng để <strong>phát hiện ánh sáng</strong>. Nó hoạt động theo <strong>chiều ngược lại</strong> (phân cực nghịch) và có vỏ trong suốt. Ánh sáng chiếu vào làm một dòng điện nhỏ dịch chuyển, nên phát hiện được nguồn sáng một cách dễ dàng. Photodiode cũng dùng để <strong>tạo ra điện</strong> như tế bào <strong>pin năng lượng mặt trời</strong>, và dùng trong thiết bị <strong>đo ánh sáng</strong>.</div>
+    <p>Vì sao có dòng? Ánh sáng chiếu vào mối nối P-N bứt thêm cặp electron – lỗ trống (giống nhiệt độ ở mục 01), nên dòng ngược tăng theo cường độ sáng. Ứng dụng quen thuộc: mắt nhận tia hồng ngoại của remote TV, cảm biến bật đèn tự động.</p>
     <figure class="photo">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Photodiode-closeup.jpg/960px-Photodiode-closeup.jpg" width="960" height="1003" alt="Diode quang có mặt cảm biến hình vuông màu xanh trong vỏ gốm" loading="lazy">
       <figcaption><strong>Thiết bị thực tế · Diode quang.</strong> Mặt vuông màu xanh là vùng mối nối P-N hứng ánh sáng; diện tích càng lớn càng nhạy.<span class="credit">Ảnh: John Maushammer · CC BY-SA 2.5 · <a href="https://commons.wikimedia.org/w/index.php?curid=3352608" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
@@ -747,19 +748,24 @@
   <text class="b warm" x="456" y="104">V<tspan class="sub" dy="3">F</tspan><tspan dy="-3"> = 2 V</tspan></text>
   <text class="s" x="245" y="148" text-anchor="middle">dòng chung I = 15 mA chạy qua cả R và LED</text>
 </svg>
-      <figcaption>Mạch LED đơn giản (Hình 3.13 giáo trình): pin, điện trở hạn dòng và LED mắc nối tiếp</figcaption>
+      <figcaption>Mạch LED đơn giản (Hình 3.13 giáo trình): pin 9 V, điện trở 470 Ω (vàng – tím – nâu) và LED mắc nối tiếp</figcaption>
     </figure>
+    <ul>
+      <li>LED là diode nên nó phụ thuộc vào <strong>dòng điện</strong> chứ không phải điện áp. Được "nuôi" bằng dòng chiều thuận (từ anode đến cathode), LED bắt đầu phát sáng từ một giá trị dòng tối thiểu.</li>
+      <li>LED đỏ thông thường cần khoảng <strong>10 mA đến 20 mA</strong> để sáng tốt. Dòng lớn hơn không giúp sáng hơn bao nhiêu mà làm LED bị ảnh hưởng, vượt giới hạn có thể bị phá huỷ.</li>
+      <li>Vì vậy <strong>không nối LED trực tiếp vào pin hay nguồn</strong>: dòng quá lớn làm LED hỏng ngay. Cách đơn giản nhất là mắc một <strong>điện trở nối tiếp</strong> với LED để giảm dòng và giảm điện áp đặt lên LED xuống mức chấp nhận được.</li>
+    </ul>
     <div class="formula">R = <span class="frac"><span>U<sub>nguồn</sub> − V<sub>F</sub></span><span>I<sub>LED</sub></span></span><small>U, V<sub>F</sub>: volt <span class="say" title="Cách đọc">vôn</span> (V) · I: ampere <span class="say" title="Cách đọc">am-pe</span> (A), đổi mA ra A trước khi chia · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω). Đây chính là định luật Ohm R = U / I áp cho phần điện áp còn dư.</small></div>
     <h3>Ví dụ giải mẫu (theo giáo trình)</h3>
     <div class="steps">
       <h4>Đề</h4>
-      <p>Nguồn là pin 9 V, LED đỏ có V<sub>F</sub> = 2,0 V, dòng LED 15 mA. Tính điện trở hạn dòng.</p>
+      <p>Nguồn là pin 9 V, LED đỏ có V<sub>F</sub> = 2,0 V, dòng LED điển hình 20 mA (khi nhà sản xuất không cho thông số). Muốn LED bền hơn, ta giảm dòng xuống 15 mA (LED hơi mờ hơn). Tính điện trở hạn dòng.</p>
       <h4>Bước 1 · Đổi đơn vị</h4>
       <p>I = 15 mA = 0,015 A</p>
       <h4>Bước 2 · Áp dụng công thức</h4>
       <p>R = (9 − 2,0) / 0,015 = 7 / 0,015 ≈ 466,7 Ω (giáo trình ghi 466 Ω)</p>
       <h4>Bước 3 · Chọn giá trị chuẩn</h4>
-      <p>Không có điện trở 466 Ω, chọn giá trị chuẩn <strong>lớn hơn gần nhất</strong> để dòng không vượt mức: <span class="ans">R = 470 Ω</span></p>
+      <p>Không mua được điện trở 466 Ω, chọn giá trị tiêu chuẩn <strong>cao hơn tiếp theo</strong> có sẵn trên thị trường: <span class="ans">R = 470 Ω</span> (vòng màu vàng – tím – nâu)</p>
       <h4>Kiểm tra</h4>
       <p>I = 7 / 470 ≈ 0,0149 A ≈ 14,9 mA ≤ 15 mA ✓ · Công suất điện trở P = I² × R = 0,0149² × 470 ≈ 0,1 W, dùng điện trở 1/4 W là đủ.</p>
     </div>
