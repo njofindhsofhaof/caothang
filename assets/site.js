@@ -131,7 +131,8 @@
         tag("td", { "class": "c-sec" }, sectionCell(p)),
         tag("td", { "class": "c-title" }, [
           tag("a", postLink(p, { text: p.title })),
-          badges && isRecent(p.date) ? badge() : null
+          badges && isRecent(p.date) ? badge() : null,
+          p.desc ? tag("p", { "class": "c-desc", text: p.desc }) : null
         ])
       ]);
     });

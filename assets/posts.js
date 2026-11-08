@@ -181,6 +181,7 @@ window.CT_POSTS = [
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
+    desc: "Video lắp mạch đèn luân phiên dùng công tắc 3 cực (CS3): sơ đồ đi dây và các bước đấu nối thực tế.",
     date: "2026-09-19",
     href: "https://vt.tiktok.com/ZSqngEDSJ/"
   },
@@ -205,6 +206,7 @@ window.CT_POSTS = [
   {
     section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
+    desc: "Bài tập tự chấm định luật Kirchhoff K1, K2: chọn đề, nhập dòng nhánh rồi kiểm tra. Có bài nâng cao giải chi tiết kèm công suất.",
     date: "2026-09-19",
     href: "/kirchhoff",
     parent: "/lythuyetmach"
@@ -229,6 +231,7 @@ window.CT_POSTS = [
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ trực tiếp có đèn báo - môn Thực hành Điện cơ bản",
+    desc: "Video lắp mạch khởi động trực tiếp động cơ bằng contactor, nút nhấn và đèn báo trạng thái.",
     date: "2026-09-23",
     href: "https://vt.tiktok.com/ZSbJtDv8f/"
   },
@@ -236,6 +239,7 @@ window.CT_POSTS = [
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ thuận nghịch và giới hạn hành trình",
+    desc: "Video lắp mạch đảo chiều động cơ (thuận nghịch) có khoá chéo và công tắc hành trình giới hạn.",
     date: "2026-09-27",
     href: "https://www.tiktok.com/@ckcddt26c/video/7689804296971488564"
   },
@@ -243,6 +247,7 @@ window.CT_POSTS = [
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch và đo mạch điện trở nối tiếp và song song",
+    desc: "Video ráp điện trở nối tiếp, song song và dùng đồng hồ đo kiểm tra điện trở tương đương.",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7696094907047480583"
   },
@@ -250,6 +255,7 @@ window.CT_POSTS = [
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Quy trình làm một board mạch đơn giản",
+    desc: "Video các bước làm board mạch đơn giản: vẽ mạch, làm mạch in, khoan, hàn linh kiện và kiểm tra.",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7697250102666251527"
   }
