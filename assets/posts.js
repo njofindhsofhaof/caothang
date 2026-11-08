@@ -3,6 +3,7 @@
    - section: hoctap | ontap | duan | hoatdong | event
    - parent: (tuy chon) href trang cha; bai co parent van len bang "Bai moi" nhung khong lap trong danh sach cua trang.
    - order: (tuy chon) so thu tu co dinh trong danh sach trang muc (vd. 4 mon On tap); bai khong co order xep sau theo ngay.
+   - short: (tuy chon) tom tat 1 cau (<= ~70 ky tu) hien o bang "Bai moi"; khong co thi dung desc (bang cat con 2 dong).
    - hideFromNews: (tuy chon) true = chi hien trong danh sach cua trang, khong len bang "Bai moi" (vd. trang chua bai).
    Trang chua bai (trang cha): khi bai con co "Moi", the trang cha o trang muc cung tu hien "Moi" + ngay cap nhat.
    Trang cha tu liet ke bai con bang <div class="list" id="postList" data-parent="/href-trang-cha"></div>
@@ -13,6 +14,7 @@ window.CT_POSTS = [
     section: "duan",
     title: "Mạch hạ áp Buck 24V xuống 12V",
     desc: "Vì sao không hạ áp bằng biến trở, nguyên lý mạch Buck có hình minh hoạ động, công thức D, so sánh với Boost và cách làm với LM2596.",
+    short: "Hạ áp 24V xuống 12V bằng mạch Buck, có hình động và cách làm.",
     date: "2026-11-07",
     href: "/machbuck"
   },
@@ -20,6 +22,7 @@ window.CT_POSTS = [
     section: "duan",
     title: "IC 555 phát xung",
     desc: "IC 555 là gì, sơ đồ chân, mạch phát xung nháy LED, công thức tần số và D, kèm máy tính R1 R2 C. Dùng làm bộ tạo xung cho mạch Boost.",
+    short: "IC 555 phát xung nháy LED, kèm máy tính tần số R1 R2 C.",
     date: "2026-11-07",
     href: "/ic555"
   },
@@ -27,6 +30,7 @@ window.CT_POSTS = [
     section: "duan",
     title: "Mạch tăng áp Boost 12V lên 24V",
     desc: "Nguyên lý mạch Boost có hình minh hoạ động: cuộn cảm, công tắc MOSFET, diode, tụ. Công thức chu kỳ làm việc và cách tự ráp.",
+    short: "Tăng áp 12V lên 24V bằng mạch Boost, có hình động và cách ráp.",
     date: "2026-11-07",
     href: "/machboost"
   },
@@ -83,6 +87,7 @@ window.CT_POSTS = [
     section: "event",
     title: "Ghi chú tham quan Vietnam Energy Week 2026",
     desc: "17 gian hàng năng lượng, data center, HVAC kèm ảnh, và kiến thức kỹ thuật rút ra: biến tần, cảm biến, MCCB, cáp trung thế.",
+    short: "17 gian hàng năng lượng và kiến thức kỹ thuật rút ra.",
     date: "2026-11-06",
     href: "/energyweek2026"
   },
@@ -115,6 +120,7 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Đề ôn kiểm tra 1 tiết môn Đo lường điện",
     desc: "6 đề: Câu 1 mạch Shunt (riêng rẽ + vạn năng) và Câu 2 mạch điện trở phụ (riêng rẽ + vạn năng), có lời giải từng bước.",
+    short: "6 đề mạch Shunt và điện trở phụ, có lời giải từng bước.",
     date: "2026-11-05",
     href: "/dekiemtradoluong",
     parent: "/doluongdien"
@@ -165,6 +171,7 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Bài tập Định lý phân áp & phân dòng trong mạch",
     desc: "6 bài nâng cao có sơ đồ mạch — Rtđ, dòng nhánh, điện áp VO, vòng màu; tự chấm và lời giải chi tiết.",
+    short: "6 bài phân áp, phân dòng có sơ đồ, tự chấm.",
     date: "2026-10-20",
     href: "/phanapphandong",
     parent: "/dientucoban"
@@ -181,6 +188,7 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Bài tập mạch ứng dụng diode (Chương 3)",
     desc: "Diode, LED nối tiếp và song song, diode phân cực nghịch: tính IR, ID, VO và chọn điện trở — 13 bài (diode Si, Ge và LED), tự chấm và lời giải từng bước.",
+    short: "13 bài tính dòng, áp qua diode và LED, tự chấm có lời giải.",
     date: "2026-11-08",
     href: "/baitapdiode",
     parent: "/dientucoban"
@@ -190,6 +198,7 @@ window.CT_POSTS = [
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
     desc: "Video lắp mạch đèn luân phiên dùng công tắc 3 cực (CS3): sơ đồ đi dây và các bước đấu nối thực tế.",
+    short: "Video lắp mạch đèn luân phiên dùng công tắc 3 cực.",
     date: "2026-09-19",
     href: "https://vt.tiktok.com/ZSqngEDSJ/"
   },
@@ -198,6 +207,7 @@ window.CT_POSTS = [
     parent: "/namnhat-dientucoban",
     title: "Chương 3: Chất bán dẫn và diode",
     desc: "Bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, các loại diode, thiết kế mạch LED, chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn; có mô phỏng và trắc nghiệm.",
+    short: "Bán dẫn, mối nối P-N, các loại diode, chỉnh lưu và ổn áp Zener.",
     date: "2026-11-08",
     href: "/dientucoban-chuong3",
     order: 3
@@ -207,6 +217,7 @@ window.CT_POSTS = [
     parent: "/namnhat-dientucoban",
     title: "Chương 2: Linh kiện thụ động",
     desc: "Điện trở, mã màu 4 và 5 vạch, điện trở dán SMD, ghép nối tiếp song song, hạn dòng LED, chia áp, pull-up, tụ điện, mã tụ và cuộn cảm; có mô phỏng và trắc nghiệm.",
+    short: "Điện trở, tụ điện, cuộn cảm: cách đọc mã và cách ghép mạch.",
     date: "2026-11-08",
     href: "/dientucoban-chuong2",
     order: 2
@@ -216,6 +227,7 @@ window.CT_POSTS = [
     parent: "/namnhat-dientucoban",
     title: "Chương 1: Các khái niệm cơ bản",
     desc: "Electron, điện áp, dòng điện, trở kháng, định luật Ohm, các loại pin, ghép pin nối tiếp/song song, dung lượng mAh – Wh và tỉ lệ C, có mô phỏng và trắc nghiệm.",
+    short: "Điện áp, dòng điện, định luật Ohm và các loại pin.",
     date: "2026-11-08",
     href: "/dientucoban-chuong1",
     order: 1
@@ -225,6 +237,7 @@ window.CT_POSTS = [
     parent: "/namnhat-lythuyetmach",
     title: "Chương 1: Khái niệm cơ bản về mạch điện",
     desc: "Điện thế, điện áp, dòng điện, nguồn điện, điện trở, điện dung, tụ điện, cuộn cảm, công suất và định luật Kirchhoff K1, K2 — có hình minh hoạ, ví dụ giải mẫu và video.",
+    short: "Điện áp, dòng điện, công suất và định luật Kirchhoff K1, K2.",
     date: "2026-11-07",
     href: "/lythuyetmach-chuong1",
     order: 1
@@ -234,6 +247,7 @@ window.CT_POSTS = [
     parent: "/namnhat-lythuyetmach",
     title: "Chương 2: Mạch xác lập điều hoà",
     desc: "Đại lượng điều hoà, góc lệch pha, trị hiệu dụng, số phức và ảnh phức, trở kháng – dẫn nạp, Ohm và Kirchhoff dạng phức, công suất P, Q, S — có hình minh hoạ và ví dụ giải mẫu.",
+    short: "Mạch xác lập điều hoà: số phức, trở kháng, công suất P, Q, S.",
     date: "2026-11-07",
     href: "/lythuyetmach-chuong2",
     order: 2
@@ -250,6 +264,7 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Mạch xác lập điều hoà",
     desc: "4 bài giải bằng ảnh phức có lời giải từng bước — phức hoá mạch, tổng trở, dòng nhánh, phương trình tức thời, công suất P, Q, S.",
+    short: "4 bài mạch xác lập điều hoà giải bằng ảnh phức.",
     date: "2026-11-03",
     href: "/xaclapdieuhoa",
     parent: "/lythuyetmach"
@@ -258,6 +273,7 @@ window.CT_POSTS = [
     section: "ontap",
     title: "Đề ôn kiểm tra 1 tiết môn Lý thuyết Mạch",
     desc: "3 đề, mỗi đề 1 bài Kirchhoff nâng cao + 1 bài mạch xác lập điều hoà, có lời giải từng bước.",
+    short: "3 đề Kirchhoff và mạch xác lập điều hoà, có lời giải.",
     date: "2026-11-03",
     href: "/dekiemtra",
     parent: "/lythuyetmach"
@@ -267,6 +283,7 @@ window.CT_POSTS = [
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ trực tiếp có đèn báo - môn Thực hành Điện cơ bản",
     desc: "Video lắp mạch khởi động trực tiếp động cơ bằng contactor, nút nhấn và đèn báo trạng thái.",
+    short: "Video lắp mạch khởi động trực tiếp động cơ bằng contactor.",
     date: "2026-09-23",
     href: "https://vt.tiktok.com/ZSbJtDv8f/"
   },
@@ -275,6 +292,7 @@ window.CT_POSTS = [
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch khởi động động cơ thuận nghịch và giới hạn hành trình",
     desc: "Video lắp mạch đảo chiều động cơ (thuận nghịch) có khoá chéo và công tắc hành trình giới hạn.",
+    short: "Video lắp mạch đảo chiều động cơ có khoá chéo.",
     date: "2026-09-27",
     href: "https://www.tiktok.com/@ckcddt26c/video/7689804296971488564"
   },
@@ -283,6 +301,7 @@ window.CT_POSTS = [
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch và đo mạch điện trở nối tiếp và song song",
     desc: "Video ráp điện trở nối tiếp, song song và dùng đồng hồ đo kiểm tra điện trở tương đương.",
+    short: "Video ráp điện trở nối tiếp, song song và đo kiểm tra.",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7696094907047480583"
   },
@@ -291,6 +310,7 @@ window.CT_POSTS = [
     parent: "/namnhat-thuchanh",
     title: "Quy trình làm một board mạch đơn giản",
     desc: "Video các bước làm board mạch đơn giản: vẽ mạch, làm mạch in, khoan, hàn linh kiện và kiểm tra.",
+    short: "Video các bước làm board mạch đơn giản.",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7697250102666251527"
   }
