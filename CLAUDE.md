@@ -30,7 +30,7 @@ Tên riêng và đơn vị viết theo **tên gốc quốc tế**, không phiên
 
 Quy ước ký hiệu: điện thế viết `V_A`, `V_B` (không dùng φ); điện áp `U_AB = V_A − V_B`; công suất nguồn `P_N = U_N × I_N`, công suất tải `P_tải = R × I²`, cân bằng `P_nguồn = P_tải`. Dấu K1, K2 theo trang `/kirchhoff`.
 
-Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `parent` là trang môn (vd. `/namnhat-lythuyetmach`) và `order` theo số chương.
+Thêm bài: thêm 1 mục vào `assets/posts.js` với `section: "hoctap"`, `parent` là trang môn (vd. `/namnhat-lythuyetmach`) và `order` theo số chương. Mỗi bài có thêm `short`: tóm tắt 1 câu (khoảng 70 ký tự) cho bảng "Bài mới" ở trang chủ; `desc` đầy đủ dùng cho thẻ bài ở trang môn.
 
 ## Thẻ xem trước khi chia sẻ link
 
