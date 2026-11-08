@@ -8,6 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/lythuyetmach-chuong1.en.js?v=1">
 <meta property="og:title" content="Chương 1: Khái niệm cơ bản về mạch điện · Lý Thuyết Mạch">
 <meta property="og:description" content="Lý thuyết mạch Chương 1: điện thế, điện áp, dòng điện, nguồn điện, điện trở, điện dung, tụ điện, cuộn cảm, công suất và định luật Kirchhoff K1, K2.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/lythuyetmach-chuong1">
@@ -592,7 +593,7 @@
             <text class="b" id="spPR2" x="470" y="118">R₂ = 12 Ω</text>
             <text class="b grn" id="spPI2" x="470" y="140">I₂ = 1 A</text>
             <text class="b ac" id="spPI" x="175" y="38" text-anchor="middle">I = 4 A</text>
-            <text class="s" x="280" y="224" text-anchor="middle">cùng điện áp 12 V trên R₁ và R₂</text>
+            <text class="s" id="spPT" x="280" y="224" text-anchor="middle">cùng điện áp 12 V trên R₁ và R₂</text>
           </g>
           <circle class="src" cx="70" cy="125" r="22"/>
           <text class="b" x="70" y="120" text-anchor="middle">+</text>
@@ -1104,8 +1105,13 @@
   function fmt(x) {
     var r = Math.round(x * 100) / 100;
     if (Math.abs(r) < 0.005) r = 0;
-    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+    var t = String(Math.abs(r));
+    return (r < 0 ? "−" : "") + (isEn() ? t : t.replace(".", ","));
   }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function par(x) { return Math.round(x * 100) < 0 ? "(" + fmt(x) + ")" : fmt(x); }
   function setText(id, s) { $(id).textContent = s; }
   function setAttrs(id, attrs) {
@@ -1128,6 +1134,7 @@
       show: function () { out.textContent = fmt(api.get()) + " " + unit; }
     };
     input.addEventListener("input", function () { api.show(); onChange(); });
+    onLang(api.show);
     return api;
   }
   function buttons(figId, attr, onPick) {
@@ -1144,7 +1151,7 @@
   function initPotential() {
     if (!$("simPot")) return;
     var Y0 = 200, K = 10, ref = "gnd";
-    var REF_NAME = { gnd: "đất", a: "điểm A", b: "điểm B" };
+    var REF_NAME = { gnd: ["đất", "ground"], a: ["điểm A", "point A"], b: ["điểm B", "point B"] };
     var a = slider("potA", "V", render), b = slider("potB", "V", render);
     buttons("simPot", "data-ref", function (r) { ref = r; render(); });
     function render() {
@@ -1155,7 +1162,7 @@
       [0, 1, 2, 3].forEach(function (k) { setText("potK" + k, fmt(k * 5 - r) + " V"); });
       setAttrs("potRef", { y1: yR, y2: yR });
       setAttrs("potRefT", { y: yR + 4 });
-      setText("potRefT", "mốc 0 V = " + (ref === "gnd" ? "đất" : ref.toUpperCase()));
+      setText("potRefT", tr("mốc 0 V = ", "0 V reference = ") + (ref === "gnd" ? tr("đất", "ground") : ref.toUpperCase()));
       setText("potVA", " = " + fmt(va - r) + " V");
       setText("potVB", " = " + fmt(vb - r) + " V");
       setAttrs("potGA", { y1: yA, y2: yA });
@@ -1168,13 +1175,14 @@
       flow.classList.toggle("off", u === 0);
       flow.classList.toggle("rev", u < 0);
       flow.style.setProperty("--dur", clamp(4 / Math.abs(u || 1), 0.3, 4).toFixed(2) + "s");
-      var dir = u > 0 ? "A cao hơn B nên nước (dòng điện) chảy từ A sang B."
-        : u < 0 ? "U<sub>AB</sub> âm: B cao hơn A nên nước chảy từ B sang A."
-        : "Hai mực bằng nhau: không có chênh lệch nên nước đứng yên, không có dòng.";
-      $("potLive").innerHTML = "Mốc 0 V ở " + REF_NAME[ref] + ": V<sub>A</sub> = " + fmt(va - r) + " V, V<sub>B</sub> = " + fmt(vb - r) +
+      var dir = u > 0 ? tr("A cao hơn B nên nước (dòng điện) chảy từ A sang B.", "A is higher than B, so water (current) flows from A to B.")
+        : u < 0 ? tr("U<sub>AB</sub> âm: B cao hơn A nên nước chảy từ B sang A.", "U<sub>AB</sub> is negative: B is higher than A, so water flows from B to A.")
+        : tr("Hai mực bằng nhau: không có chênh lệch nên nước đứng yên, không có dòng.", "The two levels are equal: no difference, so the water stays still and there is no current.");
+      $("potLive").innerHTML = tr("Mốc 0 V ở ", "0 V reference at ") + tr(REF_NAME[ref][0], REF_NAME[ref][1]) + ": V<sub>A</sub> = " + fmt(va - r) + " V, V<sub>B</sub> = " + fmt(vb - r) +
         " V ⇒ U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = " + par(va - r) + " − " + par(vb - r) + " = <b>" + fmt(u) + " V</b>. " + dir;
     }
     a.show(); b.show(); render();
+    onLang(render);
   }
 
   /* 2. Dòng điện như nước chảy trong ống */
@@ -1186,15 +1194,16 @@
       [$("curWide"), $("curNar")].forEach(function (el) { el.classList.toggle("off", i === 0); });
       $("curWide").style.setProperty("--dur", d.toFixed(2) + "s");
       $("curNar").style.setProperty("--dur", (d / 2.5).toFixed(2) + "s");
-      setText("curL1", "chỗ rộng: I = " + fmt(i) + " A");
-      setText("curL2", "chỗ hẹp: I = " + fmt(i) + " A");
+      setText("curL1", tr("chỗ rộng: I = ", "wide part: I = ") + fmt(i) + " A");
+      setText("curL2", tr("chỗ hẹp: I = ", "narrow part: I = ") + fmt(i) + " A");
       $("curHeat").style.opacity = String(clamp(i * i / 9, 0, 1));
       $("curLive").innerHTML = i === 0
-        ? "I = 0: không có điện tích nào dịch chuyển, giống nước đứng yên trong ống."
-        : "Mỗi giây có <b>" + fmt(i) + " C</b> điện tích đi qua <b>mọi</b> mặt cắt ⇒ I = q / t = " + fmt(i) + " / 1 = <b>" + fmt(i) +
-          " A</b>, chỗ rộng hay chỗ hẹp đều vậy. Chỗ hẹp điện tích phải chạy nhanh hơn (khoảng 2,5 lần) nên nóng hơn.";
+        ? tr("I = 0: không có điện tích nào dịch chuyển, giống nước đứng yên trong ống.", "I = 0: no charge is moving, like still water in a pipe.")
+        : tr("Mỗi giây có <b>", "Every second <b>") + fmt(i) + tr(" C</b> điện tích đi qua <b>mọi</b> mặt cắt ⇒ I = q / t = ", " C</b> of charge passes through <b>every</b> cross-section ⇒ I = q / t = ") + fmt(i) + " / 1 = <b>" + fmt(i) +
+          tr(" A</b>, chỗ rộng hay chỗ hẹp đều vậy. Chỗ hẹp điện tích phải chạy nhanh hơn (khoảng 2,5 lần) nên nóng hơn.", " A</b>, in the wide and the narrow part alike. In the narrow part the charge must move faster (about 2.5 times), so it gets hotter.");
     }
     s.show(); render();
+    onLang(render);
   }
 
   /* 3. Định luật Ohm */
@@ -1211,10 +1220,10 @@
       return v;
     }
     function explain(v) {
-      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b>. Tăng U (bơm mạnh hơn) thì I tăng; tăng R (ống hẹp hơn) thì I giảm.";
-      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. Muốn đẩy dòng " + fmt(v.I) + " A qua ống hẹp " + fmt(v.R) + " Ω cần độ chênh " + fmt(v.U) + " V.";
-      if (isNaN(v.R)) return "I = 0 thì không chia được: mạch hở, không tính được R.";
-      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.";
+      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b>. " + tr("Tăng U (bơm mạnh hơn) thì I tăng; tăng R (ống hẹp hơn) thì I giảm.", "Raise U (stronger pump) and I goes up; raise R (narrower pipe) and I goes down.");
+      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. " + tr("Muốn đẩy dòng " + fmt(v.I) + " A qua ống hẹp " + fmt(v.R) + " Ω cần độ chênh " + fmt(v.U) + " V.", "Pushing " + fmt(v.I) + " A through a " + fmt(v.R) + " Ω narrow pipe takes a difference of " + fmt(v.U) + " V.");
+      if (isNaN(v.R)) return tr("I = 0 thì không chia được: mạch hở, không tính được R.", "With I = 0 you cannot divide: the circuit is open, so R cannot be found.");
+      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. " + tr("Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.", "This is how R is measured indirectly: a voltmeter reads U, an ammeter reads I.");
     }
     function render() {
       var v = compute(), s = sl[solve], over = false;
@@ -1230,8 +1239,9 @@
       setText("ohmUt", "U = " + fmt(v.U) + " V");
       setText("ohmRt", "R = " + (isNaN(v.R) ? "?" : fmt(v.R)) + " Ω");
       setText("ohmIt", "I = " + fmt(v.I) + " A");
-      $("ohmLive").innerHTML = explain(v) + (over ? " (Kết quả vượt thang kéo, thanh dừng ở mép.)" : "");
+      $("ohmLive").innerHTML = explain(v) + (over ? tr(" (Kết quả vượt thang kéo, thanh dừng ở mép.)", " (The result is off the slider scale, so the slider stops at its end.)") : "");
     }
+    onLang(render);
     render();
   }
 
@@ -1245,11 +1255,12 @@
       var R = R1 + R2, I = E / R, U1 = I * R1, U2 = I * R2;
       setText("spSR1", "R₁ = " + fmt(R1) + " Ω"); setText("spSR2", "R₂ = " + fmt(R2) + " Ω");
       setText("spSU1", "U₁ = " + fmt(U1) + " V"); setText("spSU2", "U₂ = " + fmt(U2) + " V");
-      setText("spSI", "I = " + fmt(I) + " A (cùng một dòng)");
+      setText("spSI", "I = " + fmt(I) + tr(" A (cùng một dòng)", " A (the same current)"));
       setFlow($("spSerF"), I);
-      return "R<sub>tđ</sub> = R₁ + R₂ = " + fmt(R1) + " + " + fmt(R2) + " = " + fmt(R) + " Ω ⇒ I = U / R<sub>tđ</sub> = 12 / " + fmt(R) +
-        " = <b>" + fmt(I) + " A</b> chạy qua <b>cả hai</b> điện trở.<br>U₁ = I × R₁ = " + fmt(U1) + " V, U₂ = I × R₂ = " + fmt(U2) +
-        " V ⇒ U₁ + U₂ = " + fmt(U1 + U2) + " V = U nguồn. R nào lớn hơn thì \"giành\" nhiều áp hơn.";
+      var EQ = tr("tđ", "eq");
+      return "R<sub>" + EQ + "</sub> = R₁ + R₂ = " + fmt(R1) + " + " + fmt(R2) + " = " + fmt(R) + " Ω ⇒ I = U / R<sub>" + EQ + "</sub> = 12 / " + fmt(R) +
+        " = <b>" + fmt(I) + tr(" A</b> chạy qua <b>cả hai</b> điện trở.<br>U₁ = I × R₁ = ", " A</b> flows through <b>both</b> resistors.<br>U₁ = I × R₁ = ") + fmt(U1) + " V, U₂ = I × R₂ = " + fmt(U2) +
+        " V ⇒ U₁ + U₂ = " + fmt(U1 + U2) + tr(" V = U nguồn. R nào lớn hơn thì \"giành\" nhiều áp hơn.", " V = source U. The larger R \"grabs\" more of the voltage.");
     }
     function parallel(R1, R2) {
       var R = R1 * R2 / (R1 + R2), I1 = E / R1, I2 = E / R2, I = I1 + I2;
@@ -1257,9 +1268,11 @@
       setText("spPI1", "I₁ = " + fmt(I1) + " A"); setText("spPI2", "I₂ = " + fmt(I2) + " A");
       setText("spPI", "I = " + fmt(I) + " A");
       setFlow($("spPF"), I); setFlow($("spP1"), I1); setFlow($("spP2"), I2);
-      return "R<sub>tđ</sub> = R₁R₂ / (R₁ + R₂) = " + fmt(R1 * R2) + " / " + fmt(R1 + R2) + " = " + fmt(R) + " Ω (nhỏ hơn cả R₁ lẫn R₂) ⇒ I = 12 / " +
-        fmt(R) + " = <b>" + fmt(I) + " A</b>.<br>Cùng áp 12 V: I₁ = 12 / " + fmt(R1) + " = " + fmt(I1) + " A, I₂ = 12 / " + fmt(R2) + " = " + fmt(I2) +
-        " A ⇒ I₁ + I₂ = " + fmt(I) + " A. Nhánh R nhỏ (ống rộng) nhận nhiều dòng hơn.";
+      var EQ = tr("tđ", "eq");
+      setText("spPT", tr("cùng điện áp 12 V trên R₁ và R₂", "the same 12 V across R₁ and R₂"));
+      return "R<sub>" + EQ + "</sub> = R₁R₂ / (R₁ + R₂) = " + fmt(R1 * R2) + " / " + fmt(R1 + R2) + " = " + fmt(R) + tr(" Ω (nhỏ hơn cả R₁ lẫn R₂) ⇒ I = 12 / ", " Ω (smaller than both R₁ and R₂) ⇒ I = 12 / ") +
+        fmt(R) + " = <b>" + fmt(I) + tr(" A</b>.<br>Cùng áp 12 V: I₁ = 12 / ", " A</b>.<br>Same 12 V across each: I₁ = 12 / ") + fmt(R1) + " = " + fmt(I1) + " A, I₂ = 12 / " + fmt(R2) + " = " + fmt(I2) +
+        " A ⇒ I₁ + I₂ = " + fmt(I) + tr(" A. Nhánh R nhỏ (ống rộng) nhận nhiều dòng hơn.", " A. The branch with the smaller R (wider pipe) takes more current.");
     }
     function render() {
       var ser = mode === "ser";
@@ -1268,6 +1281,7 @@
       $("spLive").innerHTML = ser ? series(r1.get(), r2.get()) : parallel(r1.get(), r2.get());
     }
     r1.show(); r2.show(); render();
+    onLang(render);
   }
 
   /* 5. Công suất P = U × I = R × I² */
@@ -1286,9 +1300,10 @@
       $("powRay").style.opacity = String(glow);
       $("powLive").innerHTML = "I = U / R = " + fmt(U) + " / " + fmt(R) + " = " + fmt(I) + " A<br>" +
         "P<sub>N</sub> = U<sub>N</sub> × I<sub>N</sub> = " + fmt(U) + " × " + fmt(I) + " = <b>" + fmt(P) + " W</b><br>" +
-        "P<sub>tải</sub> = R × I² = " + fmt(R) + " × " + fmt(I) + "² = <b>" + fmt(R * I * I) + " W</b> ⇒ P<sub>nguồn</sub> = P<sub>tải</sub> <span class=\"ok\">✓</span>";
+        "P<sub>" + tr("tải", "load") + "</sub> = R × I² = " + fmt(R) + " × " + fmt(I) + "² = <b>" + fmt(R * I * I) + " W</b> ⇒ P<sub>" + tr("nguồn", "source") + "</sub> = P<sub>" + tr("tải", "load") + "</sub> <span class=\"ok\">✓</span>";
     }
     u.show(); r.show(); render();
+    onLang(render);
   }
 
   /* 6. Kirchhoff K1, K2 trên mạch ví dụ (R₁ = 2, R₂ = 2, R₃ = 4) */
@@ -1305,32 +1320,32 @@
     var TEXT = {
       all: function (E1, E2, s) {
         var VA = R3 * s.I3;
-        return "Giải hệ: I₁ = <b>" + fmt(s.I1) + " A</b>, I₂ = <b>" + fmt(s.I2) + " A</b>, I₃ = <b>" + fmt(s.I3) + " A</b>.<br>" +
-          "Lấy V<sub>B</sub> = 0 V thì V<sub>A</sub> = R₃ × I₃ = 4 × " + par(s.I3) + " = " + fmt(VA) + " V ⇒ U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = " + fmt(VA) + " V.";
+        return tr("Giải hệ: I₁ = <b>", "Solving the system: I₁ = <b>") + fmt(s.I1) + " A</b>, I₂ = <b>" + fmt(s.I2) + " A</b>, I₃ = <b>" + fmt(s.I3) + " A</b>.<br>" +
+          tr("Lấy V<sub>B</sub> = 0 V thì", "Taking V<sub>B</sub> = 0 V,") + " V<sub>A</sub> = R₃ × I₃ = 4 × " + par(s.I3) + " = " + fmt(VA) + " V ⇒ U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> = " + fmt(VA) + " V.";
       },
       k1: function (E1, E2, s) {
-        return "K1 tại nút A: dòng vào I₁ + I₂ = " + par(s.I1) + " + " + par(s.I2) + " = " + fmt(s.I1 + s.I2) + " A; dòng ra I₃ = " + fmt(s.I3) + " A.<br>" +
+        return tr("K1 tại nút A: dòng vào I₁ + I₂ = ", "KCL at node A: currents in I₁ + I₂ = ") + par(s.I1) + " + " + par(s.I2) + " = " + fmt(s.I1 + s.I2) + tr(" A; dòng ra I₃ = ", " A; current out I₃ = ") + fmt(s.I3) + " A.<br>" +
           "I₁ + I₂ − I₃ = " + par(s.I1) + " + " + par(s.I2) + " − " + par(s.I3) + " = <b>" + fmt(s.I1 + s.I2 - s.I3) + "</b> <span class=\"ok\">✓</span>";
       },
       v1: function (E1, E2, s) {
-        return "Đi vòng V₁ theo chiều kim đồng hồ: qua E₁ từ − sang + ⇒ −E₁; qua R₁ cùng chiều I₁ ⇒ +I₁R₁; qua R₃ cùng chiều I₃ ⇒ +I₃R₃.<br>" +
+        return tr("Đi vòng V₁ theo chiều kim đồng hồ: qua E₁ từ − sang + ⇒ −E₁; qua R₁ cùng chiều I₁ ⇒ +I₁R₁; qua R₃ cùng chiều I₃ ⇒ +I₃R₃.<br>", "Going round loop V₁ clockwise: through E₁ from − to + ⇒ −E₁; through R₁ with I₁ ⇒ +I₁R₁; through R₃ with I₃ ⇒ +I₃R₃.<br>") +
           "−E₁ + I₁ × R₁ + I₃ × R₃ = −" + fmt(E1) + " + " + par(s.I1) + " × 2 + " + par(s.I3) + " × 4 = <b>" + fmt(-E1 + s.I1 * R1 + s.I3 * R3) + "</b> <span class=\"ok\">✓</span>";
       },
       v2: function (E1, E2, s) {
-        return "Đi vòng V₂ theo chiều kim đồng hồ: qua R₂ ngược chiều I₂ ⇒ −I₂R₂; qua E₂ từ + sang − ⇒ +E₂; qua R₃ ngược chiều I₃ ⇒ −I₃R₃.<br>" +
+        return tr("Đi vòng V₂ theo chiều kim đồng hồ: qua R₂ ngược chiều I₂ ⇒ −I₂R₂; qua E₂ từ + sang − ⇒ +E₂; qua R₃ ngược chiều I₃ ⇒ −I₃R₃.<br>", "Going round loop V₂ clockwise: through R₂ against I₂ ⇒ −I₂R₂; through E₂ from + to − ⇒ +E₂; through R₃ against I₃ ⇒ −I₃R₃.<br>") +
           "−I₂ × R₂ + E₂ − I₃ × R₃ = −" + par(s.I2) + " × 2 + " + fmt(E2) + " − " + par(s.I3) + " × 4 = <b>" + fmt(-s.I2 * R2 + E2 - s.I3 * R3) + "</b> <span class=\"ok\">✓</span>";
       },
       p: function (E1, E2, s) {
         var Pn = E1 * s.I1 + E2 * s.I2, Pt = R1 * s.I1 * s.I1 + R2 * s.I2 * s.I2 + R3 * s.I3 * s.I3;
-        return "P<sub>nguồn</sub> = E₁ × I₁ + E₂ × I₂ = " + fmt(E1) + " × " + par(s.I1) + " + " + fmt(E2) + " × " + par(s.I2) + " = <b>" + fmt(Pn) + " W</b><br>" +
-          "P<sub>tải</sub> = R₁I₁² + R₂I₂² + R₃I₃² = 2 × " + par(s.I1) + "² + 2 × " + par(s.I2) + "² + 4 × " + par(s.I3) + "² = <b>" + fmt(Pt) + " W</b>" +
-          " ⇒ P<sub>nguồn</sub> = P<sub>tải</sub> <span class=\"ok\">✓</span>";
+        return "P<sub>" + tr("nguồn", "source") + "</sub> = E₁ × I₁ + E₂ × I₂ = " + fmt(E1) + " × " + par(s.I1) + " + " + fmt(E2) + " × " + par(s.I2) + " = <b>" + fmt(Pn) + " W</b><br>" +
+          "P<sub>" + tr("tải", "load") + "</sub> = R₁I₁² + R₂I₂² + R₃I₃² = 2 × " + par(s.I1) + "² + 2 × " + par(s.I2) + "² + 4 × " + par(s.I3) + "² = <b>" + fmt(Pt) + " W</b>" +
+          " ⇒ P<sub>" + tr("nguồn", "source") + "</sub> = P<sub>" + tr("tải", "load") + "</sub> <span class=\"ok\">✓</span>";
       }
     };
     function negNote(s) {
       var neg = [["I₁", s.I1], ["I₂", s.I2], ["I₃", s.I3]].filter(function (p) { return Math.round(p[1] * 100) < 0; })
         .map(function (p) { return p[0]; });
-      return neg.length ? "<br><span class=\"neg\">" + neg.join(", ") + " âm</span>: dòng thực tế chạy ngược chiều giả định (mũi tên chạy ngược), trị số vẫn đúng." : "";
+      return neg.length ? "<br><span class=\"neg\">" + neg.join(", ") + tr(" âm</span>: dòng thực tế chạy ngược chiều giả định (mũi tên chạy ngược), trị số vẫn đúng.", " negative</span>: the real current flows opposite to the assumed direction (the arrow runs backwards); the magnitude is still correct.") : "";
     }
     function render() {
       var E1 = e1.get(), E2 = e2.get(), s = solve(E1, E2), show = SHOW[step];
@@ -1345,6 +1360,7 @@
       $("khLive").innerHTML = TEXT[step](E1, E2, s) + negNote(s);
     }
     e1.show(); e2.show(); render();
+    onLang(render);
   }
 
   /* 7–8. Tụ điện giữ áp, cuộn cảm giữ dòng (mạch RC, RL với khoá 2 vị trí, τ = 1 s) */
@@ -1380,13 +1396,25 @@
     var xs = 248 / (NS - 1);
     return hist.map(function (h, k) { return (300 + k * xs).toFixed(1) + "," + (130 - h[key] / max * 85).toFixed(1); }).join(" ");
   }
+  var STORE_EN = {
+    C: [
+      "The switch is at 2 and the capacitor is uncharged. Press <b>1 · Charge</b> and watch the two traces on the graph.",
+      "Switch at 1: the source charges the capacitor. The current <span class=\"k-i\">i</span> <b>jumps up at once</b> then decays; the voltage <span class=\"k-u\">u<sub>C</sub></span> <b>rises gradually</b> from its previous value, with no jump. Once full, i = 0 (DC does not pass through a capacitor).",
+      "Switch at 2: the source is removed and the capacitor discharges through R. The current <span class=\"k-i\">i</span> <b>reverses at once</b> (negative), while <span class=\"k-u\">u<sub>C</sub></span> <b>falls gradually</b>. The capacitor now acts as a small voltage source."
+    ],
+    L: [
+      "The switch is at 2 and there is no current. Press <b>1 · Connect</b> and watch the two traces on the graph.",
+      "Switch at 1: the source is connected to the inductor. The voltage <span class=\"k-u\">u<sub>L</sub></span> <b>jumps at once</b> to 12 V then decays; the current <span class=\"k-i\">i</span> <b>rises gradually</b>, like a flywheel being pushed. In steady state u<sub>L</sub> = 0.",
+      "Switch at 2: the source is removed. The current <span class=\"k-i\">i</span> <b>keeps flowing the same way</b> and decays gradually (the flywheel is still spinning), while <span class=\"k-u\">u<sub>L</sub></span> <b>flips sign at once</b> to keep the current going. If the circuit is cut completely, the current has nowhere to go, so u<sub>L</sub> shoots very high → a spark at the switch."
+    ]
+  };
   function initStorage(p, kind) {
     var fig = $(p + "Sim");
     if (!fig) return;
-    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false;
+    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false, shown = 0;
     buttons(p + "Sim", "data-pos", function (v) {
-      pos = Number(v); mark = true;
-      $(p + "Live").innerHTML = cfg.text[pos];
+      pos = Number(v); mark = true; shown = pos;
+      $(p + "Live").innerHTML = tr(cfg.text[pos], STORE_EN[kind][pos]);
       $(p + "Blade").setAttribute("y2", pos === 1 ? "40" : "64");
     });
     function paint() {
@@ -1415,7 +1443,7 @@
       $(p + "A2").setAttribute("transform", "translate(160 200) rotate(" + (neg ? 0 : 180) + ")");
       [$(p + "F1"), $(p + "F2")].forEach(function (el) { el.classList.toggle("c-w", neg); });
       dir.setAttribute("class", !has ? "s" : neg ? "b warm" : "b ac");
-      dir.textContent = !has ? "i = 0: không có dòng" : neg ? "i < 0: dòng chạy NGƯỢC lại" : "i > 0: dòng chạy theo chiều quy ước";
+      dir.textContent = !has ? tr("i = 0: không có dòng", "i = 0: no current") : neg ? tr("i < 0: dòng chạy NGƯỢC lại", "i < 0: current flows BACKWARDS") : tr("i > 0: dòng chạy theo chiều quy ước", "i > 0: current flows in the conventional direction");
     }
     function frame(ts) {
       if (!running) return;
@@ -1442,6 +1470,7 @@
       new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else running = false; }).observe(fig);
     } else { start(); }
     $(p + "Live").innerHTML = cfg.text[0];
+    onLang(function () { $(p + "Live").innerHTML = tr(cfg.text[shown], STORE_EN[kind][shown]); paint(); });
     paint();
   }
 
@@ -1483,7 +1512,8 @@ window.CT_QUIZ = [
     why: "Viết n − 1 = 1 phương trình K1 và m − (n − 1) = 3 − 1 = 2 phương trình K2, đủ 3 phương trình cho 3 ẩn dòng nhánh." }
 ];
 </script>
-<script src="/assets/quiz.js?v=2"></script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
