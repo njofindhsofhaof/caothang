@@ -593,16 +593,21 @@
   <path class="arr-ac" d="M192 46 L192 90 M186 52 L192 44 L198 52"/><text class="b ac" x="200" y="74">U1</text>
   <path class="arr-ac" d="M192 114 L192 158 M186 120 L192 112 L198 120"/><text class="b ac" x="200" y="142">U2</text>
   <text class="s" x="130" y="204" text-anchor="middle">phân áp: U = U1 + U2</text>
-  <path class="wire" d="M290 105 L340 105 M340 40 L340 170 M340 40 L400 40 M460 40 L510 40 L510 170 M340 170 L400 170 M460 170 L510 170"/>
+  <path class="wire" d="M290 105 L340 105 M340 40 L340 170 M340 40 L400 40 M460 40 L510 40 L510 170 M340 170 L400 170 M460 170 L510 170 M510 105 L550 105"/>
+  <circle class="node" cx="510" cy="105" r="4"/>
   <rect class="res" x="400" y="28" width="60" height="24" rx="2"/><rect class="res" x="400" y="158" width="60" height="24" rx="2"/>
   <circle class="node" cx="340" cy="105" r="4"/>
-  <path class="arr-ac" d="M300 95 L326 95 M320 89 L328 95 L320 101"/><text class="b ac" x="310" y="84" text-anchor="middle">I</text>
-  <text class="b" x="430" y="72" text-anchor="middle">R1 · I1</text><text class="b" x="430" y="148" text-anchor="middle">R2 · I2</text>
+  <path class="arr" d="M298 95 L326 95 M320 89 L328 95 L320 101"/><text class="b" x="310" y="84" text-anchor="middle">I</text>
+  <path class="arr" d="M520 95 L546 95 M540 89 L548 95 L540 101"/><text class="b" x="534" y="84" text-anchor="middle">I</text>
+  <path class="arr-ac" d="M352 32 L388 32 M382 26 L390 32 L382 38"/><text class="b ac" x="370" y="22" text-anchor="middle">I1</text>
+  <path class="arr" style="stroke:var(--accent-warm)" d="M352 162 L388 162 M382 156 L390 162 L382 168"/><text class="b warm" x="370" y="152" text-anchor="middle">I2</text>
+  <text class="b ac" x="430" y="72" text-anchor="middle">R1</text><text class="b warm" x="430" y="148" text-anchor="middle">R2</text>
   <text class="s" x="420" y="204" text-anchor="middle">phân dòng: I = I1 + I2</text>
 </svg>
-      <figcaption>Phân áp xảy ra ở các điện trở mắc nối tiếp, phân dòng xảy ra ở các nhánh mắc song song</figcaption>
+      <figcaption>Phân áp xảy ra ở các điện trở mắc nối tiếp. Phân dòng: dòng I vào nút chia thành I1 qua R1 và I2 qua R2, rồi gộp lại thành I đi ra</figcaption>
     </figure>
-    <div class="def"><strong>Định lý phân áp</strong>: với các điện trở mắc nối tiếp, điện áp trên mỗi điện trở tỉ lệ thuận với giá trị của nó. <strong>Định lý phân dòng</strong>: với hai nhánh mắc song song, dòng qua mỗi nhánh tỉ lệ nghịch với điện trở nhánh đó (tử số là điện trở của <strong>nhánh kia</strong>).</div>
+    <div class="def"><strong>Định lý phân áp</strong>: với các điện trở mắc nối tiếp, điện áp trên mỗi điện trở tỉ lệ thuận với giá trị của nó.</div>
+    <div class="def"><strong>Định lý phân dòng</strong>: với hai nhánh mắc song song, dòng qua mỗi nhánh tỉ lệ nghịch với điện trở nhánh đó (tử số là điện trở của <strong>nhánh kia</strong>).</div>
     <div class="formula">U1 = U × <span class="frac"><span>R1</span><span>R1 + R2</span></span> &nbsp;·&nbsp; U2 = U × <span class="frac"><span>R2</span><span>R1 + R2</span></span><small>Phân áp: 2 điện trở nối tiếp đặt dưới điện áp U</small></div>
     <div class="formula">I1 = I × <span class="frac"><span>R2</span><span>R1 + R2</span></span> &nbsp;·&nbsp; I2 = I × <span class="frac"><span>R1</span><span>R1 + R2</span></span><small>Phân dòng: dòng tổng I chia vào 2 nhánh song song R1, R2</small></div>
     <div class="steps">
@@ -631,12 +636,12 @@
           </g>
           <g id="pdPar" class="hide">
             <path class="w" d="M40 100 L120 100 M120 40 L120 160 M120 40 L200 40 M280 40 L400 40 L400 160 M120 160 L200 160 M280 160 L400 160 M400 100 L480 100"/>
-            <path class="ov" id="pdF0" d="M40 100 L120 100 M400 100 L480 100"/>
+            <path class="ov c-g" id="pdF0" d="M40 100 L120 100 M400 100 L480 100"/>
             <path class="ov" id="pdF1" d="M120 100 L120 40 L200 40 M280 40 L400 40 L400 100"/>
             <path class="ov c-w" id="pdF2" d="M120 100 L120 160 L200 160 M280 160 L400 160 L400 100"/>
             <rect class="rb" x="200" y="28" width="80" height="24" rx="3"/><rect class="rb" x="200" y="148" width="80" height="24" rx="3"/>
             <circle class="node" cx="120" cy="100" r="4"/><circle class="node" cx="400" cy="100" r="4"/>
-            <text class="b" id="pdIs" x="60" y="88">I</text>
+            <text class="b grn" id="pdIs" x="44" y="88">I</text><text class="b grn" id="pdIo" x="416" y="88">I</text>
             <text class="b ac" id="pdI1" x="240" y="78" text-anchor="middle">I1</text><text class="b warm" id="pdI2" x="240" y="136" text-anchor="middle">I2</text>
           </g>
         </svg>
@@ -649,7 +654,7 @@
       <div class="sl"><label for="pdR1">R1</label><input type="range" id="pdR1" min="1" max="20" step="1" value="2"><output id="pdR1o" for="pdR1">2 Ω</output></div>
       <div class="sl"><label for="pdR2">R2</label><input type="range" id="pdR2" min="1" max="20" step="1" value="4"><output id="pdR2o" for="pdR2">4 Ω</output></div>
       <p class="live" id="pdLive" aria-live="polite"></p>
-      <figcaption>Phân áp: cột bên phải chia theo tỉ lệ U1 : U2 = R1 : R2. Phân dòng: dòng chạy nhánh nào càng dày, nhanh thì càng lớn.</figcaption>
+      <figcaption>Phân áp: cột bên phải chia theo tỉ lệ U1 : U2 = R1 : R2. Phân dòng: dòng tổng <span style="color:var(--flow-g);font-weight:600">I</span> vào và ra màu lục, <span class="k-i">I1</span> qua R1 màu xanh, <span class="k-u">I2</span> qua R2 màu cam; nhánh nào chạy càng dày, nhanh thì dòng càng lớn.</figcaption>
     </figure>
 
     <!-- 7 -->
@@ -1547,7 +1552,7 @@
     } else {
       var i1 = s * r2 / sum, i2 = s * r1 / sum;
       setFlow($("pdF0"), s); setFlow($("pdF1"), i1); setFlow($("pdF2"), i2);
-      $("pdIs").textContent = "I = " + fmt(s) + " A";
+      $("pdIs").textContent = "I = " + fmt(s) + " A"; $("pdIo").textContent = "I = " + fmt(s) + " A";
       $("pdI1").textContent = "R1 = " + r1 + " Ω · I1 = " + fmt(i1) + " A";
       $("pdI2").textContent = "R2 = " + r2 + " Ω · I2 = " + fmt(i2) + " A";
       $("pdLive").innerHTML = "I1 = " + fmt(s) + " × " + r2 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(i1) + " A</b> · I2 = " + fmt(s) + " × " + r1 + " / " + sum + " = <b>" + fmt(i2) + " A</b>. Kiểm tra: I1 + I2 = " + fmt(i1 + i2) + " A; cùng áp " + fmt(i1 * r1) + " V ✓" +
