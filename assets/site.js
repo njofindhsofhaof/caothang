@@ -5,7 +5,7 @@
   "use strict";
 
   var NEWS_LIMIT = 8;
-  var NEW_BADGE_DAYS = 7;
+  var NEW_BADGE_DAYS = 3;
   var DAY_MS = 86400000;
 
   var SECTIONS = [
@@ -202,12 +202,14 @@
       .map(function (p) {
         var updated = p.activity > p.date ? " · Cập nhật: " + formatDate(p.activity) : "";
         var recent = badges && isRecent(p.activity);
-        var leaf = latestLeaf(p, 0);
+        // Dong "Moi cap nhat" chi hien khi bai do con moi (NEW_BADGE_DAYS); khong ghi san khi prerender.
+        var leaf = badges ? latestLeaf(p, 0) : null;
+        if (leaf && !isRecent(leaf.post.date)) leaf = null;
         return tag("a", postLink(p, { "class": "card" }), [
           tag("h2", {}, [esc(p.title), recent ? badge() : null]),
           p.desc ? tag("p", { text: p.desc }) : null,
           leaf ? tag("p", { "class": "latest" }, [
-            tag("b", { text: badges && isRecent(leaf.post.date) ? "Mới cập nhật: " : "Bài gần nhất: " }),
+            tag("b", { text: "Mới cập nhật: " }),
             esc(leaf.path.join(" › "))
           ]) : null,
           tag("span", { "class": "pub", text: "Ngày tạo: " + formatDate(p.date) + updated })
