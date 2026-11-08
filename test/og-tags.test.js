@@ -8,7 +8,7 @@ const pages = readdirSync(new URL('..', import.meta.url)).filter((f) => f.endsWi
 test('every page has description and Open Graph preview tags', () => {
   for (const f of pages) {
     const src = readFileSync(new URL('../' + f, import.meta.url), 'utf8');
-    for (const tag of ['name="description"', 'property="og:title"', 'property="og:description"', 'property="og:image"', 'property="og:url"']) {
+    for (const tag of ['name="description"', 'property="og:title"', 'property="og:description"', 'property="og:image"', 'property="og:url"', 'rel="canonical"', 'rel="icon"']) {
       assert.ok(src.includes(tag), `${f} thiếu ${tag}`);
     }
   }

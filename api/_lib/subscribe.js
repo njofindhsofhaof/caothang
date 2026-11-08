@@ -85,10 +85,10 @@ function shell(bodyHtml, footerHtml) {
   return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0;background:#EDF0F0;font-family:Arial,Helvetica,sans-serif;color:#14202B">
 <div style="max-width:560px;margin:0 auto;padding:24px 16px">
 <div style="background:#fff;border:1px solid #D2DADE;border-radius:10px;padding:22px 22px 8px">
-<p style="margin:0 0 14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8697A2">${SITE_NAME}</p>
+<p style="margin:0 0 14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5F6E79">${SITE_NAME}</p>
 ${bodyHtml}
 </div>
-<p style="font-size:12px;color:#8697A2;line-height:1.5;margin:14px 4px 0">${footerHtml}</p>
+<p style="font-size:12px;color:#5F6E79;line-height:1.5;margin:14px 4px 0">${footerHtml}</p>
 </div></body></html>`;
 }
 
@@ -105,7 +105,7 @@ export function buildPostsEmail(posts, { siteUrl, unsubUrl }) {
         : '';
       return `<div style="border-top:1px solid #D2DADE;padding:14px 0">${cat}
 <a href="${escapeHtml(url)}" style="font-size:17px;font-weight:bold;color:#2F6690;text-decoration:none">${escapeHtml(p.title)}</a>${desc}
-<p style="margin:6px 0 0;font-size:12px;color:#8697A2">${escapeHtml(formatDate(p.date))}</p></div>`;
+<p style="margin:6px 0 0;font-size:12px;color:#5F6E79">${escapeHtml(formatDate(p.date))}</p></div>`;
     })
     .join('');
   const html = shell(

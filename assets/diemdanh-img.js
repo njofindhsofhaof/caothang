@@ -7,8 +7,8 @@
   const COL_GAP = 32;
   // Ảnh luôn nền sáng, không theo giao diện tối của trang.
   const C = {
-    paper: '#FFFFFF', ink: '#14202B', soft: '#51626F', faint: '#8697A2', line: '#D2DADE',
-    ok: '#2E7D4F', okSoft: '#E3F1E8', late: '#C97A3D', lateSoft: '#F3EBDD',
+    paper: '#FFFFFF', ink: '#14202B', soft: '#51626F', faint: '#5F6E79', line: '#D2DADE',
+    ok: '#2E7D4F', okSoft: '#E3F1E8', late: '#9E5A25', lateSoft: '#F3EBDD',
     p: '#2F6690', pSoft: '#E2ECF3', k: '#B5412F', kSoft: '#F7E4E0',
   };
   const SERIF = '"Fraunces", Georgia, serif';
