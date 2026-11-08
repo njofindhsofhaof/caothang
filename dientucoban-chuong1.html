@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 1: Các khái niệm cơ bản · Điện tử Cơ bản · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Điện tử cơ bản Chương 1: electron, điện áp, dòng điện, trở kháng, định luật Ohm, nguồn pin, các loại pin, dung lượng mAh – Wh, tỉ lệ C (C-rate) và cách chọn pin.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Chương 1: Các khái niệm cơ bản · Điện tử Cơ bản">
+<meta property="og:description" content="Điện tử cơ bản Chương 1: electron, điện áp, dòng điện, trở kháng, định luật Ohm, nguồn pin, các loại pin, dung lượng mAh – Wh, tỉ lệ C (C-rate) và cách chọn pin.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong1">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108a">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.post .back-top{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:6px 12px;font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .15s;}
+.post .back-top:hover{border-color:var(--accent);}
+.post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+</style>
+<style>
+.il .nuc{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--accent-warm);stroke-width:2;}
+.il .orb{fill:none;stroke:var(--ink-faint);stroke-width:1.4;}
+.il .el{fill:var(--accent);}
+.il .el-t{fill:#fff;font-size:12px;font-weight:700;}
+.il .cell{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.il .cap{fill:var(--ink);}
+.sim .cell{fill:var(--surface);stroke:var(--ink);stroke-width:1.8;}
+.sim .cellfill{fill:var(--flow-g);opacity:.35;}
+.sim .warnt{fill:var(--accent-warm);font-weight:600;}
+.post ol.ans{margin-top:4px;}
+</style>
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Điện tử cơ bản – Chương 1: Các khái niệm cơ bản</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+  <article class="post">
+    <a class="back-top" href="/namnhat-dientucoban">← Điện tử Cơ bản (Năm nhất)</a>
+    <p class="byline">08/11/2026 · Học tập · Năm nhất · Điện tử Cơ bản · Chương 1 · theo giáo trình ThS. Huỳnh Xuân Dũng</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 1, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Biết vật chất gồm nguyên tử, <a href="#electron">electron mang điện âm, proton mang điện dương</a>; kim loại có nhiều electron tự do.</li>
+        <li>Phát biểu được <a href="#dien-ap">điện áp</a> (volt), <a href="#dong-dien">dòng điện</a> (ampere), <a href="#tro-khang">trở kháng</a> (ohm) và câu "điện áp là nguyên nhân, dòng điện là kết quả".</li>
+        <li>Dùng <a href="#dinh-luat-ohm">định luật Ohm</a> U = I × R để tính 1 đại lượng khi biết 2 đại lượng kia, ví dụ tính điện trở hạn dòng cho LED.</li>
+        <li>Phân biệt <a href="#nguon-pin">pin sơ cấp và pin thứ cấp</a>, nhận ra <a href="#cac-loai-pin">các loại pin</a> thường gặp và điện áp của chúng.</li>
+        <li>Tính điện áp, dung lượng của bộ pin <a href="#ghep-pin">mắc nối tiếp, song song</a> (đọc được ký hiệu 3S, 2P).</li>
+        <li>Đổi và tính <a href="#dung-luong">dung lượng pin</a> mAh, Ah, Wh; ước lượng thời gian dùng pin.</li>
+        <li>Hiểu <a href="#c-rate">tỉ lệ C (C-rate)</a>: 1C, 2C, 0,5C, C/10 ứng với dòng bao nhiêu và chạy bao lâu.</li>
+        <li>Biết <a href="#chon-pin">cách chọn pin</a> cho một thiết bị và trả lời được <a href="#cau-hoi">câu hỏi ôn tập</a> cuối chương của giáo trình.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#electron">Nguyên tử, electron, điện tích</a></li>
+        <li><a href="#dien-ap">Điện áp</a></li>
+        <li><a href="#dong-dien">Dòng điện</a></li>
+        <li><a href="#tro-khang">Trở kháng (điện trở)</a></li>
+        <li><a href="#dinh-luat-ohm">Định luật Ohm</a></li>
+        <li><a href="#nguon-pin">Nguồn cung cấp (pin)</a></li>
+        <li><a href="#cac-loai-pin">Các loại pin thường gặp</a></li>
+        <li><a href="#ghep-pin">Ghép pin nối tiếp, song song</a></li>
+        <li><a href="#dung-luong">Dung lượng pin</a></li>
+        <li><a href="#c-rate">Tỉ lệ C (C-rate)</a></li>
+        <li><a href="#chon-pin">Cách chọn pin</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#cau-hoi">Câu hỏi ôn tập (giáo trình)</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+        <li><a href="#bai-tap">Bài tập</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1 -->
+    <h2 id="electron"><span class="num">01</span>Nguyên tử, electron, điện tích</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nguyên tử giống một <strong>hệ Mặt Trời tí hon</strong>: hạt nhân ở giữa (proton +, neutron), các <strong>electron −</strong> quay xung quanh. Trong kim loại, electron lớp ngoài cùng "lỏng" nên bứt ra chạy lung tung, gọi là <strong>electron tự do</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 210" role="img" aria-label="Bên trái: nguyên tử với hạt nhân và electron. Bên phải: dây đồng có electron tự do chuyển động ngẫu nhiên">
+  <ellipse class="orb" cx="130" cy="105" rx="95" ry="38"/>
+  <ellipse class="orb" cx="130" cy="105" rx="95" ry="38" transform="rotate(60 130 105)"/>
+  <ellipse class="orb" cx="130" cy="105" rx="95" ry="38" transform="rotate(-60 130 105)"/>
+  <circle class="nuc" cx="130" cy="105" r="22"/>
+  <text class="b warm" x="130" y="110" text-anchor="middle">+ +</text>
+  <g><circle class="el" cx="225" cy="105" r="10"/><text class="el-t" x="225" y="109" text-anchor="middle">−</text></g>
+  <g><circle class="el" cx="83" cy="23" r="10"/><text class="el-t" x="83" y="27" text-anchor="middle">−</text></g>
+  <g><circle class="el" cx="83" cy="187" r="10"/><text class="el-t" x="83" y="191" text-anchor="middle">−</text></g>
+  <text class="s" x="130" y="150" text-anchor="middle">hạt nhân: proton (+), neutron</text>
+  <text class="s" x="245" y="84">electron (−)</text>
+  <rect class="tank" x="320" y="70" width="210" height="70" rx="10"/>
+  <g class="el">
+    <circle cx="345" cy="90" r="6"/><circle cx="380" cy="122" r="6"/><circle cx="410" cy="86" r="6"/><circle cx="440" cy="118" r="6"/><circle cx="470" cy="94" r="6"/><circle cx="505" cy="124" r="6"/>
+  </g>
+  <path class="arr" d="M345 90 l-12 10 M380 122 l14 -6 M410 86 l-6 14 M440 118 l12 6 M470 94 l-14 -4 M505 124 l6 -12"/>
+  <text class="b" x="425" y="58" text-anchor="middle">Dây đồng</text>
+  <text class="s" x="425" y="164" text-anchor="middle">electron tự do chạy lung tung, chưa thành dòng</text>
+</svg>
+      <figcaption>Nguyên tử có proton (+), neutron (không mang điện) và electron (−). Kim loại có rất nhiều electron tự do.</figcaption>
+    </figure>
+    <div class="def"><strong>Điện tích</strong> là tính chất của electron và proton: proton mang điện dương, electron mang điện âm. Điện tích của một electron gọi là <strong>đơn vị điện tích</strong> (e ≈ 1,6 × 10⁻¹⁹ coulomb <span class="say" title="Cách đọc">cu-lông</span>).</div>
+    <ul>
+      <li>Vật liệu <strong>dẫn điện</strong> (bạc, đồng, vàng, nhôm…) có rất nhiều electron tự do chuyển động ngẫu nhiên.</li>
+      <li>Khi đặt <strong>điện áp</strong> vào vật dẫn, electron bị "ép" chạy theo một hướng → có <strong>dòng điện</strong>.</li>
+      <li>Electron chạy trong dây va chạm với nguyên tử, sinh ra "lực ma sát" cản lại → gọi là <strong>trở kháng</strong>.</li>
+    </ul>
+    <p>Ba câu trên chính là 3 khái niệm của chương: <strong>điện áp → dòng điện → trở kháng</strong>.</p>
+
+    <!-- 2 -->
+    <h2 id="dien-ap"><span class="num">02</span>Điện áp</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện áp = <strong>áp lực của máy bơm</strong>. Bơm càng mạnh thì nước (electron) càng bị ép chạy mạnh theo một hướng. Pin chính là cái máy bơm đó.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 190" role="img" aria-label="Pin đẩy các electron trong dây chạy cùng một hướng">
+  <rect class="cell" x="40" y="70" width="90" height="50" rx="6"/><rect class="cap" x="130" y="85" width="8" height="20" rx="2"/>
+  <text class="b" x="85" y="100" text-anchor="middle">Pin</text>
+  <text class="b warm" x="150" y="80">+</text><text class="b warm" x="24" y="80">−</text>
+  <path class="wire" d="M40 95 L20 95 L20 160 L540 160 L540 30 L150 30 L150 95 L138 95"/>
+  <g class="el"><circle cx="90" cy="160" r="6"/><circle cx="170" cy="160" r="6"/><circle cx="250" cy="160" r="6"/><circle cx="330" cy="160" r="6"/><circle cx="410" cy="160" r="6"/><circle cx="490" cy="160" r="6"/>
+  <circle cx="490" cy="30" r="6"/><circle cx="410" cy="30" r="6"/><circle cx="330" cy="30" r="6"/><circle cx="250" cy="30" r="6"/></g>
+  <path class="arr-ac" d="M110 160 l20 0 m-6 -5 l6 5 l-6 5 M270 160 l20 0 m-6 -5 l6 5 l-6 5 M430 160 l20 0 m-6 -5 l6 5 l-6 5 M390 30 l-20 0 m6 -5 l-6 5 l6 5 M230 30 l-20 0 m6 -5 l-6 5 l6 5"/>
+  <text class="b ac" x="330" y="100" text-anchor="middle">Điện áp U ép electron chạy cùng một hướng</text>
+  <text class="s" x="330" y="122" text-anchor="middle">electron đi ra từ cực −, chạy vòng ngoài về cực +</text>
+</svg>
+      <figcaption>Pin là nguồn điện áp: đẩy electron tự do trong dây chạy theo một hướng xác định</figcaption>
+    </figure>
+    <div class="def"><strong>Điện áp</strong> là "lực ép" buộc các electron chạy theo một hướng cụ thể trong dây dẫn. Ký hiệu U (giáo trình viết V), đơn vị volt <span class="say" title="Cách đọc">vôn</span> (V). Pin là một nguồn điện áp.</div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện áp (volt)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kilovolt</td><td>kV</td><td>1 kV = 10³ V = 1 000 V</td></tr><tr class="base"><td>Volt <span class="say" title="Cách đọc">vôn</span></td><td>V</td><td>đơn vị gốc · 1 V = 1 000 mV</td></tr><tr><td>Milivolt</td><td>mV</td><td>1 mV = 10⁻³ V = 0,001 V</td></tr><tr><td>Microvolt</td><td>µV</td><td>1 µV = 10⁻⁶ V</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Mức điện áp phổ biến nhất trong mạch điện tử: <strong>3 V, 3,3 V, 3,7 V, 5 V</strong></li><li>220 mV = 0,22 V</li><li>Điện lưới 220 V = 0,22 kV</li></ul>
+    </div>
+    <ul>
+      <li>3,3 V và 5 V: điện áp nuôi vi điều khiển (Arduino 5 V, ESP32 3,3 V).</li>
+      <li>3,7 V: điện áp danh định của 1 cell pin Li-ion / LiPo. 3 V: pin cúc áo lithium.</li>
+      <li>Đo điện áp bằng <strong>vôn kế mắc song song</strong> với phần tử cần đo.</li>
+    </ul>
+
+    <!-- 3 -->
+    <h2 id="dong-dien"><span class="num">03</span>Dòng điện</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Dòng điện = <strong>lượng nước chảy qua ống mỗi giây</strong>. Có áp lực (điện áp) thì mới có dòng chảy: <strong>điện áp là nguyên nhân, dòng điện là kết quả</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 170" role="img" aria-label="Electron chạy qua một mặt cắt của dây dẫn; dòng điện quy ước ngược chiều electron">
+  <rect class="tank" x="40" y="55" width="480" height="50" rx="12"/>
+  <line class="cut" x1="280" y1="40" x2="280" y2="120"/>
+  <g class="el"><circle cx="80" cy="80" r="7"/><circle cx="140" cy="72" r="7"/><circle cx="200" cy="88" r="7"/><circle cx="260" cy="76" r="7"/><circle cx="320" cy="86" r="7"/><circle cx="380" cy="72" r="7"/><circle cx="440" cy="88" r="7"/><circle cx="490" cy="78" r="7"/></g>
+  <path class="arr-ac" d="M200 140 l120 0 m-8 -6 l8 6 l-8 6"/>
+  <text class="s ac" x="260" y="160" text-anchor="middle">electron (−) chạy →</text>
+  <path class="arr" d="M360 26 l-120 0 m8 -6 l-8 6 l8 6"/>
+  <text class="s" x="300" y="16" text-anchor="middle">← chiều dòng điện quy ước I</text>
+  <text class="s warm" x="292" y="132">đếm điện tích qua đây mỗi giây</text>
+</svg>
+      <figcaption>Dòng điện là lượng điện tích đi qua mặt cắt dây trong 1 giây. Chiều quy ước ngược chiều electron.</figcaption>
+    </figure>
+    <div class="def"><strong>Dòng điện</strong> là dòng dịch chuyển có hướng của các electron; chính xác hơn là tốc độ thay đổi (lưu lượng) của điện tích theo một hướng. Ký hiệu I, đơn vị ampere <span class="say" title="Cách đọc">am-pe</span> (A).</div>
+    <div class="formula">I = <span class="frac"><span>q</span><span>t</span></span><small>q: điện tích, coulomb <span class="say" title="Cách đọc">cu-lông</span> (C) · t: thời gian, giây (s) · 1 A = 1 C chạy qua trong 1 s</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị dòng điện (ampere)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Kiloampere</td><td>kA</td><td>1 kA = 1 000 A</td></tr><tr class="base"><td>Ampere <span class="say" title="Cách đọc">am-pe</span></td><td>A</td><td>đơn vị gốc · 1 A = 1 000 mA</td></tr><tr><td>Miliampere <span class="say" title="Cách đọc">mi-li am-pe</span></td><td>mA</td><td>1 mA = 10⁻³ A = 0,001 A · 1 mA = 1 000 µA</td></tr><tr><td>Microampere</td><td>µA</td><td>1 µA = 10⁻⁶ A</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Dòng điện đặc trưng của <strong>1 đèn LED: 20 mA = 0,02 A</strong></li><li>Mạch điện tử thường tính bằng mA; sạc điện thoại 2 A = 2 000 mA</li><li>Đồng hồ đeo tay chỉ tốn vài µA</li></ul>
+    </div>
+    <div class="note"><strong>Chiều dòng điện:</strong> giáo trình mô tả dòng điện là dòng electron (chạy từ cực − qua mạch về cực +). Khi vẽ sơ đồ và giải mạch, ta dùng <strong>chiều quy ước</strong>: từ cực + qua mạch ngoài về cực −, tức ngược chiều electron. Đo dòng bằng <strong>ampe kế mắc nối tiếp</strong>.</div>
+
+    <!-- 4 -->
+    <h2 id="tro-khang"><span class="num">04</span>Trở kháng (điện trở)</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Trở kháng = <strong>độ hẹp của ống</strong>. Ống càng hẹp (R lớn) thì nước càng khó chảy, với cùng một áp lực dòng chảy càng nhỏ.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 170" role="img" aria-label="Ống rộng cho dòng lớn, ống hẹp cho dòng nhỏ">
+  <rect class="water" x="30" y="40" width="230" height="44"/><path class="tank" d="M30 40 L260 40 M30 84 L260 84"/>
+  <g class="dot"><circle cx="70" cy="52" r="3"/><circle cx="110" cy="72" r="3"/><circle cx="150" cy="56" r="3"/><circle cx="190" cy="70" r="3"/><circle cx="230" cy="54" r="3"/><circle cx="90" cy="64" r="3"/><circle cx="170" cy="62" r="3"/><circle cx="210" cy="76" r="3"/></g>
+  <text class="b" x="145" y="112" text-anchor="middle">R nhỏ → I lớn</text>
+  <rect class="water" x="300" y="56" width="230" height="12"/><path class="tank" d="M300 56 L530 56 M300 68 L530 68"/>
+  <g class="dot"><circle cx="350" cy="62" r="3"/><circle cx="430" cy="62" r="3"/><circle cx="500" cy="62" r="3"/></g>
+  <path class="heat" d="M380 44 q4 -8 0 -16 M415 44 q4 -8 0 -16 M450 44 q4 -8 0 -16"/>
+  <text class="b" x="415" y="112" text-anchor="middle">R lớn → I nhỏ, nóng lên</text>
+  <text class="s" x="280" y="150" text-anchor="middle">cùng điện áp U, ống hẹp hơn thì ít nước chảy qua hơn</text>
+</svg>
+      <figcaption>Trở kháng giống chỗ ống hẹp: cản dòng chảy và biến một phần năng lượng thành nhiệt</figcaption>
+    </figure>
+    <a class="practice" href="/vongmaudientro"><span class="practice-k">Luyện tập</span><span class="practice-t">Bài tập tính vòng màu điện trở chân cắm công suất nhỏ</span><span class="practice-d">Trắc nghiệm mã màu điện trở: 7 đề, 360 câu, tự động chấm điểm.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
+    <a class="practice" href="/dientrodansmd"><span class="practice-k">Luyện tập</span><span class="practice-t">Bài tập đọc &amp; tính mã điện trở dán SMD</span><span class="practice-d">Mã 3 số, 4 số, chữ R, dải mΩ đến MΩ: 6 đề, 36 câu, tự chấm điểm.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
+    <div class="def"><strong>Trở kháng</strong> là sự cản trở dịch chuyển của dòng điện tích (electron). Khi electron chạy trong dây dẫn, chúng va chạm và sinh ra "lực ma sát": đó là trở kháng, nó làm giảm (cản trở) dòng điện. Ký hiệu R, đơn vị SI là ohm <span class="say" title="Cách đọc">ôm</span> (Ω).</div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện trở (ohm)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr><td>Megaohm <span class="say" title="Cách đọc">mê-ga ôm</span></td><td>MΩ</td><td>1 MΩ = 1 000 kΩ = 10⁶ Ω</td></tr><tr><td>Kiloohm <span class="say" title="Cách đọc">ki-lô ôm</span></td><td>kΩ</td><td>1 kΩ = 10³ Ω = 1 000 Ω</td></tr><tr class="base"><td>Ohm <span class="say" title="Cách đọc">ôm</span></td><td>Ω</td><td>đơn vị gốc</td></tr><tr><td>Miliohm</td><td>mΩ</td><td>1 mΩ = 10⁻³ Ω (điện trở dây, shunt đo dòng)</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>100 kΩ = 100 000 Ω = 10⁵ Ω</li><li>Điện trở hạn dòng LED thường 150 Ω – 1 kΩ</li><li>Đồng hồ đo ohm (ôm kế) dùng để đo điện trở</li></ul>
+    </div>
+
+    <!-- 5 -->
+    <h2 id="dinh-luat-ohm"><span class="num">05</span>Định luật Ohm</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Dùng <strong>tam giác U – I – R</strong>: che đại lượng cần tìm, hai đại lượng còn lại nằm ngang thì <strong>nhân</strong>, nằm trên dưới thì <strong>chia</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="Tam giác định luật Ohm: U ở trên, I và R ở dưới">
+  <path class="tank" d="M160 20 L260 180 L60 180 Z"/>
+  <line class="tank" x1="105" y1="108" x2="215" y2="108"/><line class="tank" x1="160" y1="108" x2="160" y2="180"/>
+  <text class="b big warm" x="160" y="88" text-anchor="middle">U</text>
+  <text class="b big ac" x="122" y="152" text-anchor="middle">I</text>
+  <text class="b big" x="198" y="152" text-anchor="middle">R</text>
+  <text class="b" x="320" y="58">Che U → U = I × R</text>
+  <text class="b" x="320" y="104">Che I → I = U / R</text>
+  <text class="b" x="320" y="150">Che R → R = U / I</text>
+  <text class="s" x="320" y="184">giáo trình viết V = I R (V = điện áp)</text>
+</svg>
+      <figcaption>Hình 1.1 giáo trình: mối liên hệ giữa dòng điện, điện áp và trở kháng</figcaption>
+    </figure>
+    <div class="def"><strong>Định luật Ohm</strong>: dòng điện qua một điện trở tỉ lệ thuận với điện áp đặt vào hai đầu và tỉ lệ nghịch với điện trở. Vôn kế, ampe kế và đồng hồ đo ohm lần lượt dùng để đo điện áp, dòng điện và điện trở.</div>
+    <div class="formula">U = I × R &nbsp;&nbsp;⇔&nbsp;&nbsp; I = <span class="frac"><span>U</span><span>R</span></span> &nbsp;&nbsp;⇔&nbsp;&nbsp; R = <span class="frac"><span>U</span><span>I</span></span><small>U: volt <span class="say" title="Cách đọc">vôn</span> (V) · I: ampere <span class="say" title="Cách đọc">am-pe</span> (A) · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω). Đổi mA ra A, kΩ ra Ω trước khi tính.</small></div>
+
+    <figure class="sim" id="simOhm">
+      <p class="sim-h">Thử ngay · Định luật Ohm U = I × R</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 228" role="img" aria-labelledby="ohmTitle">
+          <title id="ohmTitle">Mạch kín gồm nguồn U, ampe kế và điện trở R. Độ dày và tốc độ của dòng chảy cho thấy độ lớn dòng điện I.</title>
+          <path class="w" d="M80 98 L80 50 L440 50 L440 85 M440 155 L440 190 L80 190 L80 142"/>
+          <path class="ov" id="ohmFlow" d="M80 98 L80 50 L440 50 L440 85 M440 155 L440 190 L80 190 L80 142"/>
+          <circle class="src" cx="80" cy="120" r="22"/>
+          <text class="b" x="80" y="115" text-anchor="middle">+</text>
+          <text class="b" x="80" y="136" text-anchor="middle">−</text>
+          <rect class="part" x="427" y="85" width="26" height="70" rx="3"/>
+          <circle class="src" cx="260" cy="50" r="16"/>
+          <text class="b" x="260" y="55" text-anchor="middle">A</text>
+          <text class="b warm" id="ohmUt" x="114" y="125">U = 12 V</text>
+          <text class="b" id="ohmRt" x="466" y="125">R = 6 Ω</text>
+          <text class="b ac" id="ohmIt" x="260" y="24" text-anchor="middle">I = 2 A</text>
+          <text class="s" x="260" y="216" text-anchor="middle">Bơm (U) càng mạnh → dòng càng lớn · Ống (R) càng hẹp → dòng càng nhỏ</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn đại lượng cần tính">
+        <button type="button" data-solve="I" aria-pressed="true">Tìm I = U / R</button>
+        <button type="button" data-solve="U" aria-pressed="false">Tìm U = I × R</button>
+        <button type="button" data-solve="R" aria-pressed="false">Tìm R = U / I</button>
+      </div>
+      <div class="sl"><label for="ohmU">Điện áp U</label><input type="range" id="ohmU" min="0" max="24" step="0.5" value="12"><output id="ohmUo" for="ohmU">12 V</output></div>
+      <div class="sl"><label for="ohmR">Điện trở R</label><input type="range" id="ohmR" min="1" max="24" step="1" value="6"><output id="ohmRo" for="ohmR">6 Ω</output></div>
+      <div class="sl"><label for="ohmI">Dòng điện I</label><input type="range" id="ohmI" min="0" max="6" step="0.1" value="2"><output id="ohmIo" for="ohmI">2 A</output></div>
+      <p class="live" id="ohmLive" aria-live="polite"></p>
+      <figcaption>Chọn đại lượng cần tính rồi kéo 2 thanh còn lại; thanh của đại lượng cần tính bị khoá và tự nhảy theo.</figcaption>
+    </figure>
+
+    <h3>Ví dụ giải mẫu: chọn điện trở hạn dòng cho LED</h3>
+    <div class="steps">
+      <h4>Đề</h4>
+      <p>Nguồn 5 V nuôi 1 LED đỏ. LED cần dòng 20 mA và khi sáng giữ điện áp 2 V. Tính điện trở mắc nối tiếp với LED.</p>
+      <h4>Bước 1 · Đổi đơn vị</h4>
+      <p>I = 20 mA = 0,02 A</p>
+      <h4>Bước 2 · Điện áp rơi trên điện trở</h4>
+      <p>U<sub>R</sub> = 5 − 2 = 3 V (phần còn lại sau khi LED "lấy" 2 V)</p>
+      <h4>Bước 3 · Định luật Ohm</h4>
+      <p>R = U<sub>R</sub> / I = 3 / 0,02 = <span class="ans">150 Ω</span></p>
+      <h4>Kiểm tra</h4>
+      <p>I = U<sub>R</sub> / R = 3 / 150 = 0,02 A = 20 mA ✓ · Nếu bỏ điện trở, dòng không bị giới hạn và LED cháy.</p>
+    </div>
+
+    <!-- 6 -->
+    <h2 id="nguon-pin"><span class="num">06</span>Nguồn cung cấp (pin)</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Pin = <strong>bình chứa năng lượng hoá học</strong> có 2 cực. Pin dùng 1 lần như <strong>chai nước suối</strong> (uống xong bỏ), pin sạc như <strong>bình nước</strong> (hết thì đổ đầy lại).</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 190" role="img" aria-label="Ký hiệu pin với cực dương +V và cực âm GND, so sánh pin sơ cấp và thứ cấp">
+  <line class="wire" x1="40" y1="95" x2="100" y2="95"/><line class="plate" x1="100" y1="60" x2="100" y2="130"/>
+  <line class="wire" x1="118" y1="78" x2="118" y2="112" style="stroke-width:6"/><line class="wire" x1="118" y1="95" x2="180" y2="95"/>
+  <text class="b warm" x="70" y="80" text-anchor="middle">+V</text>
+  <text class="b" x="150" y="80" text-anchor="middle">−V / GND</text>
+  <text class="s" x="110" y="160" text-anchor="middle">ký hiệu pin: vạch dài là cực +</text>
+  <rect class="cell" x="250" y="40" width="120" height="50" rx="8"/><rect class="cap" x="370" y="55" width="8" height="20" rx="2"/>
+  <text class="b" x="310" y="70" text-anchor="middle">Pin sơ cấp</text>
+  <text class="s" x="420" y="62">dùng 1 lần rồi bỏ</text><text class="s" x="420" y="80">(pin kiềm Alkaline)</text>
+  <rect class="cell" x="250" y="110" width="120" height="50" rx="8"/><rect class="cap" x="370" y="125" width="8" height="20" rx="2"/>
+  <text class="b" x="310" y="140" text-anchor="middle">Pin thứ cấp</text>
+  <text class="s" x="420" y="132">sạc lại nhiều lần</text><text class="s" x="420" y="150">(Li-ion, NiMH, ắc quy chì)</text>
+</svg>
+      <figcaption>Pin có 2 cực: cực dương (+V) và cực âm (−V) hay đất (GND)</figcaption>
+    </figure>
+    <div class="def"><strong>Pin điện</strong> là một nguồn điện áp, chính xác hơn là nguồn năng lượng điện. Pin (ắc quy) tạo năng lượng điện bằng <strong>phản ứng hoá học</strong> bên trong. Pin có hai cực: cực dương (+V) và cực âm (−V) hay đất (GND).</div>
+    <ul>
+      <li><strong>Pin sơ cấp</strong>: dùng một lần rồi bỏ.</li>
+      <li><strong>Pin thứ cấp</strong>: dùng và <strong>sạc lại</strong> được nhiều lần.</li>
+      <li>Hai thông số đặc trưng của pin: <strong>điện áp</strong> (V) và <strong>dòng điện / dung lượng</strong> (mAh). Giáo trình ghi "dòng điện 500–3000 mAh": mAh thực ra là đơn vị <strong>dung lượng</strong> (xem mục 09).</li>
+    </ul>
+
+    <!-- 7 -->
+    <h2 id="cac-loai-pin"><span class="num">07</span>Các loại pin thường gặp</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nhớ <strong>điện áp 1 cell</strong> theo hoá chất: kiềm <strong>1,5 V</strong>, NiMH <strong>1,2 V</strong>, chì <strong>2 V</strong>, lithium cúc áo <strong>3 V</strong>, Li-ion/LiPo <strong>3,7 V</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="Hình dạng các loại pin: AA, AAA, cúc áo, 9 V, cell Li-ion, khối LiPo, ắc quy chì">
+  <rect class="cell" x="20" y="40" width="34" height="110" rx="5"/><rect class="cap" x="31" y="34" width="12" height="6" rx="2"/>
+  <text class="b" x="37" y="172" text-anchor="middle">AA</text><text class="s" x="37" y="190" text-anchor="middle">1,5 V</text>
+  <rect class="cell" x="72" y="60" width="26" height="90" rx="4"/><rect class="cap" x="80" y="55" width="10" height="5" rx="2"/>
+  <text class="b" x="85" y="172" text-anchor="middle">AAA</text><text class="s" x="85" y="190" text-anchor="middle">1,5 V</text>
+  <path class="cell" d="M116 120 L116 128 A24 8 0 0 0 164 128 L164 120"/><ellipse class="cell" cx="140" cy="120" rx="24" ry="8"/>
+  <text class="b" x="140" y="172" text-anchor="middle">Cúc áo</text><text class="s" x="140" y="190" text-anchor="middle">3 V</text>
+  <rect class="cell" x="188" y="70" width="44" height="80" rx="6"/><rect class="cap" x="194" y="62" width="10" height="8" rx="1"/><rect class="cap" x="216" y="62" width="10" height="8" rx="4"/>
+  <text class="b" x="210" y="172" text-anchor="middle">9 V</text><text class="s" x="210" y="190" text-anchor="middle">~600 mAh</text>
+  <rect class="cell" x="256" y="40" width="36" height="110" rx="6"/><rect class="cap" x="268" y="34" width="12" height="6" rx="2"/>
+  <text class="b" x="274" y="172" text-anchor="middle">18650</text><text class="s" x="274" y="190" text-anchor="middle">Li-ion 3,7 V</text>
+  <rect class="cell" x="318" y="96" width="100" height="54" rx="8"/><path class="wire" d="M328 96 L328 72 L344 72 M336 96 L336 80"/>
+  <text class="b" x="368" y="128" text-anchor="middle">3S LiPo</text>
+  <text class="b" x="368" y="172" text-anchor="middle">LiPo</text><text class="s" x="368" y="190" text-anchor="middle">11,1 V</text>
+  <rect class="cell" x="440" y="60" width="100" height="90" rx="6"/><rect class="cap" x="456" y="50" width="14" height="10"/><rect class="cap" x="510" y="50" width="14" height="10"/>
+  <text class="b warm" x="463" y="80" text-anchor="middle">+</text><text class="b" x="517" y="80" text-anchor="middle">−</text>
+  <text class="b" x="490" y="172" text-anchor="middle">Ắc quy chì</text><text class="s" x="490" y="190" text-anchor="middle">6 / 12 / 24 V</text>
+</svg>
+      <figcaption>Hình dạng và điện áp danh định của các loại pin hay dùng trong robot và dự án điện tử</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Loại pin</th><th>Điện áp</th><th>Dung lượng</th><th>Sạc lại?</th><th>Đặc điểm, ứng dụng</th></tr></thead>
+        <tbody>
+          <tr><td>Pin 1,5 V (AA, AAA)</td><td>1,5 V</td><td>500 – 3 000 mAh</td><td>Tuỳ loại</td><td>Kích thước phổ biến nhất là AA và AAA; remote, đồ chơi.</td></tr>
+          <tr><td>Lithium cúc áo (đồng tiền)</td><td>~3 V khi có tải, tối đa ~3,6 V</td><td>30 – 500 mAh</td><td>Không</td><td>Mỏng dẹt, dùng trong thiết bị nhỏ (đồng hồ, bo mạch giữ giờ RTC).</td></tr>
+          <tr><td>Alkaline (kiềm)</td><td>1,5 V</td><td>khá lớn</td><td>Không (dùng 1 lần)</td><td>Có thể dùng trong robot nhỏ.</td></tr>
+          <tr><td>NiMH (Nickel-Metal Hydride)</td><td>1,2 V</td><td>vd. 2 500 mAh (AA)</td><td>Có, sạc nhanh</td><td>Mật độ năng lượng cao, giá rẻ so với dung lượng; hay dùng cho robot (Hình 1.2).</td></tr>
+          <tr><td>Li-ion và Li-polymer (LiPo)</td><td>3,7 V / cell</td><td>vd. 2 200 mAh</td><td>Có</td><td>Dòng xả cao, mật độ năng lượng cao, nhỏ gọn; LiPo dùng rộng rãi trong robot, xe RC. Năng lượng riêng 100 – 265 Wh/kg.</td></tr>
+          <tr><td>Pin 9 V</td><td>9 V</td><td>~600 mAh</td><td>Tuỳ loại</td><td>Hình chữ nhật cạnh tròn, 2 cực dạng chụp ở cùng một đầu; 48,5 × 26,5 × 17,5 mm.</td></tr>
+          <tr><td>Axit chì (ắc quy)</td><td>2 V / cell → 2, 6, 12, 24 V</td><td>rất lớn (Ah)</td><td>Có</td><td>Rẻ, dễ mua; dùng cho máy móc, UPS (bộ lưu điện), robot lớn. Nặng, cồng kềnh, hợp chỗ không quan trọng kích thước.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Đọc nhãn pin LiPo (Hình 1.3 giáo trình):</strong> "11.1 Volt 2200mAh · 3S · 30C · Wh 24.4" nghĩa là 3 cell nối tiếp (3S × 3,7 V = 11,1 V), dung lượng 2 200 mAh, năng lượng 24,4 Wh, xả tối đa 30C. Các mục 08, 09, 10 giải thích từng con số.</div>
+
+    <!-- 8 -->
+    <h2 id="ghep-pin"><span class="num">08</span>Ghép pin nối tiếp, song song</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span><strong>Nối tiếp</strong> = xếp chồng bể nước lên cao: <strong>áp tăng</strong>. <strong>Song song</strong> = đặt nhiều bể cạnh nhau: <strong>nhiều nước hơn</strong> (dung lượng và dòng cấp được tăng), áp giữ nguyên.</p>
+    <div class="def"><strong>Mắc nối tiếp</strong> (S, series): cực + pin này nối cực − pin kia, điện áp cộng lại: U = S × U<sub>cell</sub>, dung lượng giữ nguyên. <strong>Mắc song song</strong> (P, parallel): nối + với +, − với −, điện áp giữ nguyên, dung lượng và dòng cấp được cộng lại: C = P × C<sub>cell</sub>.</div>
+    <div class="formula">U<sub>bộ</sub> = S × U<sub>cell</sub> &nbsp;·&nbsp; C<sub>bộ</sub> = P × C<sub>cell</sub><small>Ký hiệu "3S2P" = 3 cell nối tiếp, 2 dãy như vậy mắc song song (tổng 6 cell). Chỉ ghép các pin cùng loại, cùng dung lượng, cùng mức sạc.</small></div>
+    <figure class="sim" id="simPack">
+      <p class="sim-h">Thử ngay · Ghép bộ pin S nối tiếp × P song song</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 250" role="img" aria-labelledby="packTitle">
+          <title id="packTitle">Các cell pin xếp theo cột (nối tiếp) và các cột đặt cạnh nhau (song song); số liệu điện áp, dung lượng, năng lượng của bộ pin hiện bên dưới.</title>
+          <g id="packCells"></g>
+          <text class="b ac" id="packName" x="280" y="240" text-anchor="middle">3S1P</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn loại cell">
+        <button type="button" data-cell="li" aria-pressed="true">Li-ion 3,7 V · 2 200 mAh</button>
+        <button type="button" data-cell="ni" aria-pressed="false">NiMH 1,2 V · 2 500 mAh</button>
+        <button type="button" data-cell="pb" aria-pressed="false">Chì 2 V · 7 000 mAh</button>
+      </div>
+      <div class="sl"><label for="packS">Nối tiếp S</label><input type="range" id="packS" min="1" max="6" step="1" value="3"><output id="packSo" for="packS">3</output></div>
+      <div class="sl"><label for="packP">Song song P</label><input type="range" id="packP" min="1" max="4" step="1" value="1"><output id="packPo" for="packP">1</output></div>
+      <p class="live" id="packLive" aria-live="polite"></p>
+      <figcaption>Mỗi cột là 1 dãy nối tiếp (cộng điện áp); các cột đặt cạnh nhau là mắc song song (cộng dung lượng).</figcaption>
+    </figure>
+
+    <!-- 9 -->
+    <h2 id="dung-luong"><span class="num">09</span>Dung lượng pin</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Dung lượng = <strong>bể chứa được bao nhiêu nước</strong>. 1 000 mAh nghĩa là rút <strong>1 000 mA trong 1 giờ</strong>, hoặc 100 mA trong 10 giờ, rồi hết.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 180" role="img" aria-label="Cùng một bể 1000 mAh: rút 1000 mA hết trong 1 giờ, rút 100 mA dùng được 10 giờ">
+  <rect class="water" x="40" y="60" width="90" height="90"/><path class="tank" d="M40 30 L40 150 L130 150 L130 30"/>
+  <text class="b" x="85" y="22" text-anchor="middle">1 000 mAh</text>
+  <rect class="bar-warm" x="180" y="60" width="300" height="22" rx="4"/>
+  <text class="b" x="186" y="54">rút 1 000 mA</text><text class="b warm" x="490" y="77">1 giờ</text>
+  <rect class="bar-ac" x="180" y="112" width="30" height="22" rx="4"/>
+  <text class="b" x="186" y="106">rút 100 mA</text><text class="b ac" x="220" y="129">dùng 10 giờ (lý thuyết)</text>
+  <text class="s" x="300" y="170" text-anchor="middle">1 000 mA × 1 h = 100 mA × 10 h = 1 000 mAh</text>
+</svg>
+      <figcaption>Thanh cam: dòng 1 000 mA; thanh xanh: dòng 100 mA. Dòng rút càng nhỏ, pin dùng càng lâu.</figcaption>
+    </figure>
+    <div class="def"><strong>Dung lượng pin</strong> là lượng điện tích lưu trữ trong pin (thường tính bằng ampere-giờ), do khối vật liệu hoá học hoạt động bên trong quyết định. Nó cho biết năng lượng tối đa pin xuất ra được trong điều kiện quy định. Dung lượng thực tế có thể thay đổi đáng kể theo <strong>tuổi pin, cách sạc, chế độ xả và nhiệt độ</strong>.</div>
+    <div class="formula">Wh = U × A × giờ &nbsp;&nbsp;·&nbsp;&nbsp; t ≈ <span class="frac"><span>dung lượng (mAh)</span><span>dòng tải (mA)</span></span><small>Ah: ampere-giờ <span class="say" title="Cách đọc">am-pe giờ</span> · mAh: miliampere-giờ · Wh: watt-giờ <span class="say" title="Cách đọc">oát giờ</span> · kWh: kilowatt-giờ (số điện)</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị dung lượng và năng lượng</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>Ampere-giờ <span class="say" title="Cách đọc">am-pe giờ</span></td><td>Ah</td><td>1 Ah = 1 000 mAh = 3 600 C</td></tr><tr><td>Miliampere-giờ</td><td>mAh</td><td>1 mAh = 0,001 Ah</td></tr><tr><td>Kilowatt-giờ <span class="say" title="Cách đọc">ki-lô oát giờ</span></td><td>kWh</td><td>1 kWh = 1 000 Wh (1 "số điện")</td></tr><tr class="base"><td>Watt-giờ <span class="say" title="Cách đọc">oát giờ</span></td><td>Wh</td><td>1 Wh = U (V) × dung lượng (Ah)</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>Pin LiPo 11,1 V × 2,2 Ah = <strong>24,4 Wh</strong> (đúng số in trên nhãn Hình 1.3)</li><li>Ắc quy 12 V 7 Ah = 84 Wh</li><li>Pin dự phòng 10 000 mAh (cell 3,7 V) = 37 Wh</li></ul>
+    </div>
+    <ul>
+      <li>So sánh pin <strong>khác điện áp</strong> thì dùng <strong>Wh</strong>, vì mAh chỉ so được giữa pin cùng điện áp.</li>
+      <li>Xả rất nhanh thì dung lượng thực tế lấy ra được <strong>thấp hơn</strong> số danh định; xả chậm thì gần đủ hơn.</li>
+      <li>Nhiệt độ cao làm dung lượng tức thời tăng một chút nhưng <strong>làm giảm tuổi thọ</strong> pin. Không cố làm nóng pin để "được thêm dung lượng".</li>
+    </ul>
+    <h3>Ví dụ giải mẫu: pin dùng được bao lâu?</h3>
+    <div class="steps">
+      <h4>Đề</h4>
+      <p>Pin 2 000 mAh nuôi mạch gồm 1 LED (20 mA) và 1 cảm biến (30 mA). Pin dùng được khoảng bao lâu?</p>
+      <h4>Bước 1 · Tổng dòng tải</h4>
+      <p>I = 20 + 30 = 50 mA</p>
+      <h4>Bước 2 · Thời gian</h4>
+      <p>t ≈ 2 000 mAh / 50 mA = <span class="ans">40 giờ</span> (lý thuyết)</p>
+      <h4>Kiểm tra</h4>
+      <p>50 mA × 40 h = 2 000 mAh ✓ · Thực tế ngắn hơn một chút vì pin không xả được tới 0 % và dung lượng giảm theo tuổi.</p>
+    </div>
+
+    <!-- 10 -->
+    <h2 id="c-rate"><span class="num">10</span>Tỉ lệ C (C-rate)</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>C là "<strong>tốc độ xả/sạc so với dung lượng</strong>". <strong>1C</strong> = xả hết trong <strong>1 giờ</strong>. 2C nhanh gấp đôi (30 phút), 0,5C chậm một nửa (2 giờ).</p>
+    <div class="def"><strong>Tỉ lệ C (C-rate)</strong> biểu thị dòng sạc hoặc xả so với dung lượng pin trong một giờ. Hầu hết pin cầm tay (trừ ắc quy axit chì) được đánh giá ở 1C: xả 1C nghĩa là xuất ra dòng bằng dung lượng định mức.</div>
+    <div class="formula">I = C-rate × dung lượng &nbsp;&nbsp;·&nbsp;&nbsp; t = <span class="frac"><span>1</span><span>C-rate</span></span> giờ<small>Pin 1 000 mAh: 1C → 1 000 mA trong 1 giờ · 2C → 2 000 mA trong 30 phút · 0,5C → 500 mA trong 2 giờ · 0,1C → 100 mA trong 10 giờ</small></div>
+    <figure class="sim" id="simC">
+      <p class="sim-h">Thử ngay · Tỉ lệ C: dòng bao nhiêu, chạy bao lâu?</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 200" role="img" aria-labelledby="cTitle">
+          <title id="cTitle">Thanh trên là dòng điện sạc hoặc xả, thanh dưới là thời gian để sạc đầy hoặc xả hết pin.</title>
+          <text class="b" x="20" y="44">Dòng</text>
+          <rect class="track" x="90" y="28" width="440" height="24" rx="5"/>
+          <rect class="fillI" id="cIbar" x="90" y="28" width="100" height="24" rx="5"/>
+          <text class="b ac" id="cIt" x="530" y="80" text-anchor="end">1 000 mA</text>
+          <text class="b" x="20" y="124">Thời gian</text>
+          <rect class="track" x="90" y="108" width="440" height="24" rx="5"/>
+          <rect class="fillU" id="cTbar" x="90" y="108" width="44" height="24" rx="5"/>
+          <text class="b warm" id="cTt" x="530" y="160" text-anchor="end">1 giờ</text>
+          <text class="warnt" id="cWarn" x="20" y="190"></text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Sạc hay xả">
+        <button type="button" data-cm="xả" aria-pressed="true">Xả (dùng pin)</button>
+        <button type="button" data-cm="sạc" aria-pressed="false">Sạc pin</button>
+      </div>
+      <div class="sl"><label for="cCap">Dung lượng</label><input type="range" id="cCap" min="200" max="5000" step="100" value="1000"><output id="cCapo" for="cCap">1000 mAh</output></div>
+      <div class="sl"><label for="cRate">Tỉ lệ C</label><input type="range" id="cRate" min="0.1" max="4" step="0.1" value="1"><output id="cRateo" for="cRate">1 C</output></div>
+      <p class="live" id="cLive" aria-live="polite"></p>
+      <figcaption>Thanh thời gian dài tối đa 10 giờ (0,1C). Thử 0,1C (bộ sạc C/10) và 4C (sạc nhanh 15 phút).</figcaption>
+    </figure>
+    <ul>
+      <li><strong>Bộ sạc C/10</strong> (0,1C) sạc đầy pin trong khoảng 10 giờ; <strong>bộ sạc 4C</strong> sạc trong 15 phút.</li>
+      <li>Sạc quá nhanh (đầy trong ≤ 1 giờ) phải theo dõi cẩn thận <strong>điện áp đầu cuối và nhiệt độ</strong> để tránh quá mức, gây hại cho tế bào pin.</li>
+      <li>Nhãn <strong>30C</strong> trên pin LiPo 2 200 mAh: dòng xả tối đa = 30 × 2,2 A = <strong>66 A</strong> (cho động cơ xe RC, drone).</li>
+      <li>Chất lượng pin đo bằng <strong>máy phân tích pin</strong>, hiển thị theo % thông số danh định: pin 1 000 mAh xả được 1 000 mA trong đủ 1 giờ là 100 %; chỉ được 30 phút thì còn 50 %. Pin mới đôi khi đạt hơn 100 %.</li>
+    </ul>
+
+    <!-- 11 -->
+    <h2 id="chon-pin"><span class="num">11</span>Cách chọn pin</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Chọn pin như chọn bình xăng cho xe: <strong>đúng loại (điện áp)</strong>, <strong>đủ lớn (dung lượng)</strong>, <strong>bơm đủ nhanh (dòng xả C)</strong>, và <strong>vừa chỗ để (kích thước, khối lượng)</strong>.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Thông số</th><th>Hỏi gì</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>1. Điện áp</td><td>Mạch cần bao nhiêu volt? Ghép mấy cell nối tiếp?</td><td>Mạch 12 V → LiPo 3S (11,1 V) hoặc ắc quy 12 V</td></tr>
+          <tr><td>2. Dung lượng</td><td>Cần chạy bao lâu? t ≈ mAh / mA tải</td><td>Tải 500 mA, chạy 4 giờ → ≥ 2 000 mAh</td></tr>
+          <tr><td>3. Dòng xả (C)</td><td>Dòng lớn nhất của tải có vượt C × dung lượng không?</td><td>Động cơ 20 A, pin 2 200 mAh → cần ≥ 10C</td></tr>
+          <tr><td>4. Sạc lại?</td><td>Dùng 1 lần (sơ cấp) hay sạc lại (thứ cấp)?</td><td>Robot chạy nhiều → NiMH, Li-ion</td></tr>
+          <tr><td>5. Kích thước, khối lượng</td><td>Có quan trọng không?</td><td>Drone cần nhẹ → LiPo; UPS đặt cố định → ắc quy chì</td></tr>
+          <tr><td>6. Nhiệt độ, tuổi thọ, giá</td><td>Môi trường làm việc, số lần sạc, chi phí</td><td>Ắc quy chì rẻ; NiMH rẻ so với dung lượng</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 12 -->
+    <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Đại lượng</th><th>Ký hiệu</th><th>Đơn vị</th><th>Công thức, ghi nhớ</th></tr></thead>
+        <tbody>
+          <tr><td>Điện áp</td><td>U (V)</td><td>V</td><td>Nguyên nhân: "lực ép" electron</td></tr>
+          <tr><td>Dòng điện</td><td>I</td><td>A, mA</td><td>Kết quả: I = q/t; LED ≈ 20 mA</td></tr>
+          <tr><td>Trở kháng</td><td>R</td><td>Ω</td><td>Cản dòng điện</td></tr>
+          <tr><td>Định luật Ohm</td><td colspan="2">U, I, R</td><td>U = I × R; I = U/R; R = U/I</td></tr>
+          <tr><td>Bộ pin</td><td colspan="2">S nối tiếp, P song song</td><td>U = S × U<sub>cell</sub>; C = P × C<sub>cell</sub></td></tr>
+          <tr><td>Dung lượng</td><td>C</td><td>Ah, mAh</td><td>t ≈ mAh / mA</td></tr>
+          <tr><td>Năng lượng pin</td><td>W</td><td>Wh</td><td>Wh = V × A × h</td></tr>
+          <tr><td>Tỉ lệ C</td><td colspan="2">1C, 2C, 0,5C…</td><td>I = C × dung lượng; t = 1/C giờ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Bảng tiền tố dùng chung cho mọi đơn vị</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Tiền tố</th><th>Ký hiệu</th><th>Giá trị</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>Mega <span class="say" title="Cách đọc">mê-ga</span></td><td>M</td><td>10⁶ = 1 000 000</td><td>MΩ</td></tr>
+          <tr><td>Kilo <span class="say" title="Cách đọc">ki-lô</span></td><td>k</td><td>10³ = 1 000</td><td>kΩ, kV, kWh</td></tr>
+          <tr class="base"><td>(đơn vị gốc)</td><td>–</td><td>1</td><td>V, A, Ω, F, H</td></tr>
+          <tr><td>Mili <span class="say" title="Cách đọc">mi-li</span></td><td>m</td><td>10⁻³ = 0,001</td><td>mV, mA, mH, mAh</td></tr>
+          <tr><td>Micro <span class="say" title="Cách đọc">mi-crô</span></td><td>µ</td><td>10⁻⁶ = 0,000 001</td><td>µF, µA</td></tr>
+          <tr><td>Nano <span class="say" title="Cách đọc">na-nô</span></td><td>n</td><td>10⁻⁹</td><td>nF</td></tr>
+          <tr><td>Pico <span class="say" title="Cách đọc">pi-cô</span></td><td>p</td><td>10⁻¹²</td><td>pF</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Mỗi bậc cách nhau <strong>1 000 lần</strong>. Chú ý <strong>m</strong> nhỏ là mili (10⁻³), <strong>M</strong> lớn là mega (10⁶).</p>
+
+    <!-- 13 -->
+    <h2 id="cau-hoi"><span class="num">13</span>Câu hỏi ôn tập (giáo trình)</h2>
+    <h3>Câu 1. Trình bày các khái niệm về dòng điện, điện áp, điện trở</h3>
+    <ul>
+      <li><strong>Điện áp</strong>: lực ép buộc electron chạy theo một hướng cụ thể trong dây dẫn; đơn vị volt (V). Điện áp là nguyên nhân.</li>
+      <li><strong>Dòng điện</strong>: dòng dịch chuyển có hướng của electron (lưu lượng điện tích theo một hướng); đơn vị ampere (A). Dòng điện là kết quả.</li>
+      <li><strong>Điện trở (trở kháng)</strong>: sự cản trở dịch chuyển của electron do "ma sát" trong dây dẫn; đơn vị ohm (Ω).</li>
+      <li>Ba đại lượng liên hệ qua <strong>định luật Ohm</strong>: U = I × R.</li>
+    </ul>
+    <h3>Câu 2. Đổi các đơn vị sang đơn vị SI chuẩn</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Giá trị</th><th>Cách đổi</th><th>Kết quả SI</th></tr></thead>
+        <tbody>
+          <tr><td>100 kΩ</td><td>100 × 10³</td><td>100 000 Ω = 10⁵ Ω</td></tr>
+          <tr><td>10 µF</td><td>10 × 10⁻⁶</td><td>0,000 01 F = 10⁻⁵ F</td></tr>
+          <tr><td>220 mV</td><td>220 × 10⁻³</td><td>0,22 V</td></tr>
+          <tr><td>500 pF</td><td>500 × 10⁻¹²</td><td>5 × 10⁻¹⁰ F</td></tr>
+          <tr><td>20 mA</td><td>20 × 10⁻³</td><td>0,02 A</td></tr>
+          <tr><td>100 mH</td><td>100 × 10⁻³</td><td>0,1 H</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Đơn vị SI: ohm (Ω), farad <span class="say" title="Cách đọc">fa-ra</span> (F), volt (V), ampere (A), henry <span class="say" title="Cách đọc">hen-ri</span> (H).</p>
+    <h3>Câu 3. Cách chọn nguồn pin, cần chú ý những thông số nào?</h3>
+    <p>Xác định yêu cầu của mạch rồi chọn pin theo các thông số (xem <a href="#chon-pin">mục 11</a>):</p>
+    <ol class="ans">
+      <li><strong>Điện áp</strong> phù hợp mạch (ghép nối tiếp nếu cần điện áp cao hơn).</li>
+      <li><strong>Dung lượng</strong> (mAh, Ah, Wh) đủ cho thời gian hoạt động mong muốn (ghép song song để tăng).</li>
+      <li><strong>Tỉ lệ C</strong>: dòng xả tối đa đáp ứng dòng đỉnh của tải; tốc độ sạc phù hợp.</li>
+      <li>Loại pin: <strong>sơ cấp hay thứ cấp</strong> (sạc lại), hoá chất (kiềm, NiMH, lithium, chì).</li>
+      <li><strong>Kích thước, khối lượng</strong>, nhiệt độ làm việc, tuổi thọ và giá thành.</li>
+    </ol>
+
+    <!-- 14 -->
+    <h2 id="trac-nghiem"><span class="num">14</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <!-- 15 -->
+    <h2 id="bai-tap"><span class="num">15</span>Bài tập</h2>
+    <p>Luyện đọc giá trị điện trở, tụ điện và đổi đơn vị (Câu 2 của giáo trình):</p>
+    <div class="exlist">
+      <a class="card" href="/vongmaudientro">
+        <h2>Bài tập tính vòng màu điện trở chân cắm công suất nhỏ</h2>
+        <p>Trắc nghiệm mã màu điện trở chuẩn IEC 60062: 7 đề, 360 câu, tự động chấm điểm.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+      <a class="card" href="/dientrodansmd">
+        <h2>Bài tập đọc &amp; tính mã điện trở dán SMD</h2>
+        <p>Mã 3 số, 4 số, chữ R, dải mΩ đến MΩ: 6 đề, 36 câu, tự động chấm điểm.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+      <a class="card" href="/madientudien">
+        <h2>Bài tập đọc &amp; tính mã tụ điện</h2>
+        <p>Đổi pF – nF – µF, mã 3 số, sai số J/K: 6 đề, 144 câu, tự động chấm điểm.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+    </div>
+
+    <a class="back" href="/namnhat-dientucoban">← Về Điện tử Cơ bản (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261108a"></script>
+<script src="/assets/site.js?v=20261108a"></script>
+<script>
+/* Mô phỏng Chương 1 Điện tử cơ bản: định luật Ohm, ghép pin, tỉ lệ C */
+(function () {
+  "use strict";
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function fmt(x) {
+    var r = Math.round(x * 100) / 100;
+    if (Math.abs(r) < 0.005) r = 0;
+    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+  }
+  function setText(id, s) { $(id).textContent = s; }
+  function setFlow(el, i) {
+    var a = Math.abs(i);
+    el.classList.toggle("off", a < 0.005);
+    el.style.strokeWidth = String(clamp(2 + a * 1.1, 2, 9));
+    el.style.setProperty("--dur", clamp(3.2 / (a || 1), 0.6, 5).toFixed(2) + "s");
+  }
+  function slider(id, unit, onChange) {
+    var input = $(id), out = $(id + "o");
+    var api = {
+      input: input, out: out,
+      get: function () { return Number(input.value); },
+      show: function () { out.textContent = fmt(api.get()) + (unit ? " " + unit : ""); }
+    };
+    input.addEventListener("input", function () { api.show(); onChange(); });
+    return api;
+  }
+  function buttons(figId, attr, onPick) {
+    var btns = $(figId).querySelectorAll("button[" + attr + "]");
+    Array.prototype.forEach.call(btns, function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(btns, function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        onPick(b.getAttribute(attr));
+      });
+    });
+  }
+  function svgEl(tag, attrs, text) {
+    var n = document.createElementNS(SVGNS, tag);
+    Object.keys(attrs).forEach(function (k) { n.setAttribute(k, String(attrs[k])); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /* 1. Định luật Ohm */
+  function initOhm() {
+    if (!$("simOhm")) return;
+    var solve = "I", UNIT = { U: "V", I: "A", R: "Ω" };
+    var sl = { U: slider("ohmU", "V", render), I: slider("ohmI", "A", render), R: slider("ohmR", "Ω", render) };
+    buttons("simOhm", "data-solve", function (k) { solve = k; render(); });
+    function compute() {
+      var v = { U: sl.U.get(), I: sl.I.get(), R: sl.R.get() };
+      if (solve === "I") v.I = v.U / v.R;
+      else if (solve === "U") v.U = v.I * v.R;
+      else v.R = v.I > 0 ? v.U / v.I : NaN;
+      return v;
+    }
+    function explain(v) {
+      if (solve === "I") return "I = U / R = " + fmt(v.U) + " / " + fmt(v.R) + " = <b>" + fmt(v.I) + " A</b> = " + fmt(v.I * 1000) + " mA. Tăng U thì I tăng; tăng R thì I giảm.";
+      if (solve === "U") return "U = I × R = " + fmt(v.I) + " × " + fmt(v.R) + " = <b>" + fmt(v.U) + " V</b>. Muốn đẩy dòng " + fmt(v.I) + " A qua " + fmt(v.R) + " Ω cần điện áp " + fmt(v.U) + " V.";
+      if (isNaN(v.R)) return "I = 0 thì không chia được: mạch hở, không tính được R.";
+      return "R = U / I = " + fmt(v.U) + " / " + fmt(v.I) + " = <b>" + fmt(v.R) + " Ω</b>. Đây là cách đo R gián tiếp: vôn kế đo U, ampe kế đo I.";
+    }
+    function render() {
+      var v = compute(), s = sl[solve], over = false;
+      Object.keys(sl).forEach(function (k) {
+        sl[k].input.disabled = k === solve;
+        sl[k].out.textContent = isNaN(v[k]) ? "?" : fmt(v[k]) + " " + UNIT[k];
+      });
+      if (!isNaN(v[solve])) {
+        over = v[solve] > Number(s.input.max) || v[solve] < Number(s.input.min);
+        s.input.value = String(clamp(v[solve], Number(s.input.min), Number(s.input.max)));
+      }
+      setFlow($("ohmFlow"), isNaN(v.I) ? 0 : v.I);
+      setText("ohmUt", "U = " + fmt(v.U) + " V");
+      setText("ohmRt", "R = " + (isNaN(v.R) ? "?" : fmt(v.R)) + " Ω");
+      setText("ohmIt", "I = " + fmt(v.I) + " A");
+      $("ohmLive").innerHTML = explain(v) + (over ? " (Kết quả vượt thang kéo, thanh dừng ở mép.)" : "");
+    }
+    render();
+  }
+
+  /* 2. Ghép pin nối tiếp × song song */
+  function initPack() {
+    if (!$("simPack")) return;
+    var CELLS = {
+      li: { name: "Li-ion", v: 3.7, mah: 2200 },
+      ni: { name: "NiMH", v: 1.2, mah: 2500 },
+      pb: { name: "chì", v: 2, mah: 7000 }
+    };
+    var cell = CELLS.li;
+    var sS = slider("packS", "", render), sP = slider("packP", "", render);
+    buttons("simPack", "data-cell", function (k) { cell = CELLS[k]; render(); });
+    function drawCells(S, P) {
+      var g = $("packCells"), W = 60, H = 26, GX = 54, GY = 4;
+      while (g.firstChild) g.removeChild(g.firstChild);
+      var totalW = P * W + (P - 1) * GX, x0 = 280 - totalW / 2;
+      var totalH = S * H + (S - 1) * GY, y0 = 24 + (190 - totalH) / 2;
+      var xa = x0 + W / 2, xb = x0 + totalW - W / 2;
+      g.appendChild(svgEl("path", { "class": "w", d: "M" + (xa - 30) + " " + (y0 - 12) + " L" + xb + " " + (y0 - 12) + " M" + (xa - 30) + " " + (y0 + totalH + 12) + " L" + xb + " " + (y0 + totalH + 12) }));
+      g.appendChild(svgEl("text", { "class": "b warm", x: xa - 40, y: y0 - 7, "text-anchor": "end" }, "+"));
+      g.appendChild(svgEl("text", { "class": "b", x: xa - 40, y: y0 + totalH + 17, "text-anchor": "end" }, "−"));
+      for (var p = 0; p < P; p++) {
+        var x = x0 + p * (W + GX);
+        g.appendChild(svgEl("path", { "class": "w", d: "M" + (x + W / 2) + " " + (y0 - 12) + " L" + (x + W / 2) + " " + y0 + " M" + (x + W / 2) + " " + (y0 + totalH) + " L" + (x + W / 2) + " " + (y0 + totalH + 12) }));
+        for (var s = 0; s < S; s++) {
+          var y = y0 + s * (H + GY);
+          g.appendChild(svgEl("rect", { "class": "cell", x: x, y: y, width: W, height: H, rx: 4 }));
+          g.appendChild(svgEl("rect", { "class": "cellfill", x: x + 2, y: y + 2, width: W - 4, height: H - 4, rx: 3 }));
+          g.appendChild(svgEl("text", { "class": "s", x: x + W / 2, y: y + H / 2 + 4, "text-anchor": "middle" }, fmt(cell.v) + " V"));
+        }
+      }
+    }
+    function render() {
+      var S = sS.get(), P = sP.get(), U = S * cell.v, mah = P * cell.mah, wh = U * mah / 1000;
+      drawCells(S, P);
+      setText("packName", S + "S" + P + "P · " + fmt(U) + " V · " + mah + " mAh");
+      $("packLive").innerHTML = "Điện áp: " + S + " × " + fmt(cell.v) + " = <b>" + fmt(U) + " V</b> · Dung lượng: " + P + " × " + cell.mah + " = <b>" + mah + " mAh</b> · Năng lượng: " + fmt(U) + " V × " + fmt(mah / 1000) + " Ah ≈ <b>" + fmt(wh) + " Wh</b> · Tổng " + (S * P) + " cell " + cell.name + "." +
+        (cell === CELLS.li && S === 3 && P === 1 ? " Đây đúng là pin LiPo 3S 11,1 V 2 200 mAh 24,4 Wh trong Hình 1.3." : "") +
+        (cell === CELLS.pb && S === 6 ? " 6 cell chì 2 V = ắc quy 12 V." : "");
+    }
+    render();
+  }
+
+  /* 3. Tỉ lệ C */
+  function initCRate() {
+    if (!$("simC")) return;
+    var mode = "xả";
+    var sCap = slider("cCap", "mAh", render), sRate = slider("cRate", "C", render);
+    buttons("simC", "data-cm", function (m) { mode = m; render(); });
+    function timeText(h) {
+      var mins = Math.round(h * 60), hh = Math.floor(mins / 60), mm = mins % 60;
+      if (!hh) return mm + " phút";
+      return hh + " giờ" + (mm ? " " + mm + " phút" : "");
+    }
+    function render() {
+      var cap = sCap.get(), c = Math.round(sRate.get() * 10) / 10, I = c * cap, h = 1 / c;
+      $("cIbar").setAttribute("width", String(clamp(I / 20000 * 440, 4, 440)));
+      $("cTbar").setAttribute("width", String(clamp(h / 10 * 440, 4, 440)));
+      setText("cIt", (mode === "xả" ? "xả " : "sạc ") + fmt(I) + " mA = " + fmt(I / 1000) + " A");
+      setText("cTt", (mode === "xả" ? "xả hết trong " : "sạc đầy trong ") + timeText(h));
+      setText("cWarn", mode === "sạc" && c >= 1 ? "Sạc nhanh (≤ 1 giờ): phải theo dõi điện áp đầu cuối và nhiệt độ pin!" : (mode === "xả" && c > 2 ? "Xả trên 2C: dung lượng thực lấy ra thường thấp hơn danh định." : ""));
+      $("cLive").innerHTML = "I = " + fmt(c) + "C × " + cap + " mAh = <b>" + fmt(I) + " mA</b> · t = 1 / " + fmt(c) + " = <b>" + timeText(h) + "</b>." +
+        (c === 0.1 ? " Đây là bộ sạc C/10: sạc trong 10 giờ." : "") +
+        (c === 4 ? " Bộ sạc 4C: sạc trong 15 phút." : "");
+    }
+    render();
+  }
+
+  initOhm();
+  initPack();
+  initCRate();
+})();
+</script>
+<script>
+window.CT_QUIZ = [
+  { q: "Trong nguyên tử, hạt nào mang điện tích âm?",
+    opts: ["Proton", "Neutron", "Electron", "Hạt nhân"], a: 2,
+    why: "Electron mang điện âm và chuyển động quanh hạt nhân. Proton mang điện dương, neutron không mang điện, hạt nhân gồm proton và neutron nên mang điện dương." },
+  { q: "Theo giáo trình, câu nào đúng về điện áp và dòng điện?",
+    opts: ["Dòng điện là nguyên nhân, điện áp là kết quả", "Điện áp là nguyên nhân, dòng điện là kết quả", "Hai đại lượng không liên quan", "Điện áp và dòng điện luôn bằng nhau"], a: 1,
+    why: "Điện áp là lực ép electron chạy theo một hướng; có điện áp (và mạch kín) thì mới có dòng điện. Vì vậy điện áp là nguyên nhân, dòng điện là kết quả." },
+  { q: "Dòng điện đặc trưng của một đèn LED là 20 mA, bằng bao nhiêu ampere?",
+    opts: ["0,2 A", "0,02 A", "2 A", "20 000 A"], a: 1,
+    why: "1 A = 1 000 mA nên 20 mA = 20 / 1 000 = 0,02 A. Đổi sang đơn vị lớn hơn 1 bậc thì chia 1 000; 20 000 là nhân nhầm chiều." },
+  { q: "Đặt điện áp 12 V vào điện trở 600 Ω. Dòng điện qua điện trở là:",
+    opts: ["7 200 A", "50 A", "20 mA", "0,2 A"], a: 2,
+    why: "I = U / R = 12 / 600 = 0,02 A = 20 mA. 7 200 là U × R (nhầm công thức), 50 là R / U." },
+  { q: "Trở kháng (điện trở) có tác dụng gì đối với dòng điện?",
+    opts: ["Làm tăng dòng điện", "Cản trở (làm giảm) dòng điện", "Tạo ra điện áp", "Không ảnh hưởng"], a: 1,
+    why: "Electron chạy trong dây va chạm và sinh 'lực ma sát' gọi là trở kháng; nó chống lại sự di chuyển tự do của electron, làm giảm dòng điện. Nguồn (pin) mới tạo ra điện áp." },
+  { q: "Pin nào sau đây là pin sơ cấp (dùng một lần)?",
+    opts: ["Pin Li-ion", "Pin NiMH", "Pin Alkaline (kiềm)", "Ắc quy axit chì"], a: 2,
+    why: "Pin Alkaline không sạc lại được nên là pin sơ cấp. Li-ion, NiMH và ắc quy chì đều sạc lại được, là pin thứ cấp." },
+  { q: "Ghép 3 cell Li-ion 3,7 V – 2 200 mAh nối tiếp (3S). Bộ pin có:",
+    opts: ["3,7 V – 6 600 mAh", "11,1 V – 2 200 mAh", "11,1 V – 6 600 mAh", "3,7 V – 2 200 mAh"], a: 1,
+    why: "Nối tiếp thì điện áp cộng lại: 3 × 3,7 = 11,1 V, dung lượng giữ nguyên 2 200 mAh. Muốn tăng dung lượng phải mắc song song." },
+  { q: "Pin LiPo 11,1 V – 2 200 mAh có năng lượng khoảng:",
+    opts: ["24,4 Wh", "2 442 Wh", "5 Wh", "200 Wh"], a: 0,
+    why: "Wh = V × Ah = 11,1 × 2,2 ≈ 24,4 Wh (đúng số in trên nhãn pin). Phải đổi 2 200 mAh = 2,2 Ah trước khi nhân; quên đổi sẽ ra 2 442." },
+  { q: "Pin 2 000 mAh xả ở tỉ lệ 0,5C thì dòng xả và thời gian xả là:",
+    opts: ["4 000 mA trong 30 phút", "2 000 mA trong 1 giờ", "1 000 mA trong 2 giờ", "500 mA trong 4 giờ"], a: 2,
+    why: "I = 0,5 × 2 000 = 1 000 mA; t = 1 / 0,5 = 2 giờ. 4 000 mA trong 30 phút là 2C, 2 000 mA trong 1 giờ là 1C, 500 mA trong 4 giờ là 0,25C." },
+  { q: "Ắc quy axit chì có điện áp mỗi cell 2 V. Ắc quy 12 V gồm bao nhiêu cell nối tiếp?",
+    opts: ["2 cell", "4 cell", "6 cell", "12 cell"], a: 2,
+    why: "12 V / 2 V = 6 cell nối tiếp. Vì vậy ắc quy chì có các mức là bội số của 2: 2 V, 6 V, 12 V, 24 V." }
+];
+</script>
+<script src="/assets/quiz.js?v=2"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

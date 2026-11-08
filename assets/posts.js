@@ -187,6 +187,15 @@ window.CT_POSTS = [
   },
   {
     section: "hoctap",
+    parent: "/namnhat-dientucoban",
+    title: "Chương 1: Các khái niệm cơ bản",
+    desc: "Electron, điện áp, dòng điện, trở kháng, định luật Ohm, các loại pin, ghép pin nối tiếp/song song, dung lượng mAh – Wh và tỉ lệ C, có mô phỏng và trắc nghiệm.",
+    date: "2026-11-08",
+    href: "/dientucoban-chuong1",
+    order: 1
+  },
+  {
+    section: "hoctap",
     parent: "/namnhat-lythuyetmach",
     title: "Chương 1: Khái niệm cơ bản về mạch điện",
     desc: "Điện thế, điện áp, dòng điện, nguồn điện, điện trở, điện dung, tụ điện, cuộn cảm, công suất và định luật Kirchhoff K1, K2 — có hình minh hoạ, ví dụ giải mẫu và video.",
