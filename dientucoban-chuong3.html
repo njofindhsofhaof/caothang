@@ -277,6 +277,12 @@
 .sim .pin0{fill:var(--ink-faint);}
 .sim .digits{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;}
 .sim .digits button{min-width:38px;font-size:15px;}
+.il .curp{fill:none;stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:.35;}
+.il .off{opacity:.38;}
+.il .tap{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:5 4;}
+.il .term{fill:var(--surface);stroke:var(--accent);stroke-width:2;}
+.il .xmark{stroke:#d64545;stroke-width:3;stroke-linecap:round;}
+.il .red{fill:#d64545;}
 </style>
   <script src="/assets/theme.js"></script>
 </head>
@@ -611,6 +617,56 @@
       <figcaption>Đặc tuyến diode (Hình 3.6 giáo trình): trục dòng phía âm tính bằng µA nên nhìn "phóng to" so với phía thuận (mA)</figcaption>
     </figure>
     <div class="def"><strong>Điện áp đánh thủng</strong> (breakdown): nếu đặt một điện áp ngược (âm) đủ lớn, diode sẽ cho dòng đi theo hướng ngược lại. Diode thông thường có điện áp đánh thủng khoảng <strong>−50 V đến −100 V</strong> hoặc lớn hơn. Hầu hết diode thường không chịu được việc làm việc ở vùng này; riêng một số diode (như <a href="#zener">Zener</a>) được thiết kế để hoạt động trong vùng đánh thủng.</div>
+
+    <h3 id="ghep-diode">Diode mắc song song và nối tiếp</h3>
+    <p class="easy"><span class="tag">Dễ nhớ</span><strong>Song song</strong> giống nhiều lối thoát nước có ngưỡng cửa cao thấp khác nhau: nước tràn qua cửa thấp nhất trước, mực nước dừng ở đó nên không bao giờ dâng tới cửa cao hơn. <strong>Nối tiếp</strong> giống một ống nước có nhiều van: chỉ cần một van đóng là cả ống đứng yên, áp lực dồn hết về van đang đóng.</p>
+    <div class="def"><strong>Diode song song:</strong> diode có điện áp ngưỡng <strong>nhỏ nhất</strong> dẫn trước và <strong>ghim điện áp cả cụm</strong> ở mức đó; diode có ngưỡng lớn hơn không đủ áp nên <strong>không dẫn (I = 0)</strong>. Các diode cùng loại cùng dẫn thì chia đều dòng: <span class="f">I<sub>D</sub> = I<sub>R</sub> / số diode dẫn</span>.</div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 320" role="img" aria-label="Diode song song: nguồn 5 V qua điện trở R tới nút A; nhánh trái diode silicon 0,7 V dẫn, nhánh phải LED đỏ 2,0 V không dẫn; điện áp nút A bị ghim ở 0,7 V">
+  <path class="curp" d="M150 34 V140 H90 V270 H150 V282"/>
+  <text class="b" x="164" y="24">V<tspan dy="4" font-size="10">CC</tspan><tspan dy="-4"> = 5 V</tspan></text><path class="dsym" d="M144 30 L156 30 L150 18 Z"/><line class="wire" x1="150" y1="30" x2="150" y2="60"/><rect class="load" x="139" y="60" width="22" height="50" rx="2"/><text class="b" x="170" y="90">R</text><line class="wire" x1="150" y1="110" x2="150" y2="140"/>
+  <line class="wire" x1="90" y1="140" x2="210" y2="140"/>
+  <line class="wire" x1="90" y1="140" x2="90" y2="180"/><path class="dsym" d="M77 180 L103 180 L90 204 Z"/><line class="wire" x1="76" y1="204" x2="104" y2="204" style="stroke-width:3"/><line class="wire" x1="90" y1="204" x2="90" y2="270"/>
+  <g class="off"><line class="wire" x1="210" y1="140" x2="210" y2="180"/><path class="dsym-o" d="M197 180 L223 180 L210 204 Z"/><line class="wire" x1="196" y1="204" x2="224" y2="204" style="stroke-width:3"/><line class="wire" x1="210" y1="204" x2="210" y2="270"/>
+  <g class="ray"><line x1="226" y1="186" x2="238" y2="176"/><line x1="228" y1="196" x2="240" y2="186"/></g></g>
+  <line class="wire" x1="90" y1="270" x2="210" y2="270"/><line class="wire" x1="150" y1="270" x2="150" y2="282"/><line class="wire" x1="134" y1="282" x2="166" y2="282"/><line class="wire" x1="140" y1="288" x2="160" y2="288"/><line class="wire" x1="146" y1="294" x2="154" y2="294"/>
+  <circle class="node" cx="150" cy="140" r="5"/><text class="b" x="142" y="132" text-anchor="end">A</text>
+  <text class="b" x="52" y="190" text-anchor="end">D1</text><text class="s" x="52" y="206" text-anchor="end">Si 0,7 V</text>
+  <text class="b warm" x="52" y="236" text-anchor="end">DẪN</text><text class="s warm" x="52" y="252" text-anchor="end">I = I<tspan dy="3" font-size="9">R</tspan></text>
+  <text class="b" x="246" y="214">LED đỏ 2,0 V</text>
+  <text class="b red" x="246" y="236">KHÔNG DẪN · I = 0</text><text class="s" x="246" y="252">vì 0,7 V &lt; 2,0 V</text>
+  <line class="tap" x1="150" y1="140" x2="350" y2="140" style="stroke-dasharray:5 4"/><circle class="term" cx="350" cy="140" r="5"/>
+  <text class="b ac" x="362" y="136">V<tspan dy="4" font-size="10">A</tspan><tspan dy="-4"> = 0,7 V</tspan></text>
+  <text class="s" x="362" y="156">bị ghim ở ngưỡng nhỏ nhất</text>
+  <text class="s" x="362" y="76">U<tspan dy="3" font-size="9">R</tspan><tspan dy="-3"> = 5 − 0,7 = 4,3 V</tspan></text>
+  <text class="s" x="362" y="94">I<tspan dy="3" font-size="9">R</tspan><tspan dy="-3"> = 4,3 V / R, chạy hết qua D1</tspan></text>
+  <text class="s warm" x="362" y="290">— đường dòng điện</text>
+</svg>
+      <figcaption>Si (0,7 V) song song LED đỏ (2,0 V): diode Si dẫn trước, nút A dừng ở 0,7 V nên LED không bao giờ đủ 2,0 V để sáng. Toàn bộ dòng I<sub>R</sub> chạy qua D1.</figcaption>
+    </figure>
+    <div class="def"><strong>Diode nối tiếp:</strong> chỉ cần <strong>1 diode không dẫn</strong> (lắp ngược, hoặc V<sub>CC</sub> nhỏ hơn tổng điện áp ngưỡng các diode) thì <strong>cả mạch không dẫn</strong>, I = 0. Khi đó điện trở không sụt áp (U<sub>R</sub> = R × 0 = 0) nên <strong>điện áp ở các điểm đo đều bằng V<sub>CC</sub></strong>.</div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 330" role="img" aria-label="Diode nối tiếp: nguồn 5 V qua điện trở R, diode D1 phân cực thuận rồi diode D2 lắp ngược xuống mass; D2 không dẫn nên cả mạch không có dòng, các điểm đo V1 và V2 đều bằng V_CC = 5 V">
+  <text class="b" x="164" y="24">V<tspan dy="4" font-size="10">CC</tspan><tspan dy="-4"> = 5 V</tspan></text><path class="dsym" d="M144 30 L156 30 L150 18 Z"/><line class="wire" x1="150" y1="30" x2="150" y2="60"/><rect class="load" x="139" y="60" width="22" height="50" rx="2"/><text class="b" x="170" y="90">R</text><line class="wire" x1="150" y1="110" x2="150" y2="140"/>
+  <circle class="node" cx="150" cy="140" r="5"/>
+  <line class="wire" x1="150" y1="140" x2="150" y2="160"/><path class="dsym" d="M137 160 L163 160 L150 184 Z"/><line class="wire" x1="136" y1="184" x2="164" y2="184" style="stroke-width:3"/><line class="wire" x1="150" y1="184" x2="150" y2="210"/>
+  <circle class="node" cx="150" cy="210" r="5"/>
+  <line class="wire" x1="150" y1="210" x2="150" y2="232"/><path class="dsym" d="M137 256 L163 256 L150 232 Z"/><line class="wire" x1="136" y1="232" x2="164" y2="232" style="stroke-width:3"/><line class="wire" x1="150" y1="256" x2="150" y2="280"/><line class="wire" x1="150" y1="280" x2="150" y2="292"/><line class="wire" x1="134" y1="292" x2="166" y2="292"/><line class="wire" x1="140" y1="298" x2="160" y2="298"/><line class="wire" x1="146" y1="304" x2="154" y2="304"/>
+  <line class="xmark" x1="120" y1="232" x2="132" y2="256"/><line class="xmark" x1="132" y1="232" x2="120" y2="256"/>
+  <text class="b" x="112" y="178" text-anchor="end">D1 thuận</text>
+  <text class="b red" x="112" y="244" text-anchor="end">D2 ngược</text><text class="s red" x="176" y="249">không dẫn = hở mạch</text>
+  <line class="tap" x1="150" y1="140" x2="350" y2="140"/><circle class="term" cx="350" cy="140" r="5"/>
+  <text class="b ac" x="362" y="145">V<tspan dy="4" font-size="10">1</tspan><tspan dy="-4"> = V</tspan><tspan dy="4" font-size="10">CC</tspan><tspan dy="-4"> = 5 V</tspan></text>
+  <line class="tap" x1="150" y1="210" x2="350" y2="210"/><circle class="term" cx="350" cy="210" r="5"/>
+  <text class="b ac" x="362" y="215">V<tspan dy="4" font-size="10">2</tspan><tspan dy="-4"> = V</tspan><tspan dy="4" font-size="10">CC</tspan><tspan dy="-4"> = 5 V</tspan></text>
+  <text class="s" x="362" y="76">I = 0 trong cả vòng</text>
+  <text class="s" x="362" y="94">U<tspan dy="3" font-size="9">R</tspan><tspan dy="-3"> = R × 0 = 0 V</tspan></text>
+  <text class="s" x="362" y="112">→ điện áp đi qua R không bị sụt</text>
+  <text class="s" x="362" y="270">toàn bộ 5 V rơi trên D2</text>
+</svg>
+      <figcaption>D1 thuận nối tiếp D2 lắp ngược: D2 chặn dòng như một chỗ hở mạch, I = 0, nên cả hai điểm đo V<sub>1</sub>, V<sub>2</sub> đều bằng V<sub>CC</sub> = 5 V.</figcaption>
+    </figure>
+    <a class="practice" href="/baitapdiode"><span class="practice-k">Bài tập</span><span class="practice-t">Bài tập mạch ứng dụng diode</span><span class="practice-d">Dạng 1 – 4 diode, LED nối tiếp (có diode lắp ngược); dạng 5 – 7 diode song song cùng loại và khác loại.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
 
     <!-- 6 -->
     <h2 id="cac-loai-diode"><span class="num">06</span>Các loại diode</h2>
