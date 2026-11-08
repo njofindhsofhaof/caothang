@@ -18,6 +18,9 @@ Mẫu chuẩn: `lythuyetmach-chuong1.html`. Bài mới theo đúng khung này:
    - **bảng đổi đơn vị** đủ các bậc (vd. MV, kV, V, mV, µV) ghi giá trị quy đổi và ví dụ thực tế.
    - **Link bài tập liên quan** (vd. `/vongmaudientro`, `/madientudien`) đặt thành khối riêng `<a class="practice">` (CSS trong `site.css`) **ngay dưới hình**, không nhét trong chú thích ảnh: người đọc tưởng đó là link Wikimedia nên bỏ qua.
    - **Visual bắt buộc**: mỗi khái niệm chính có hình SVG; quan hệ có tham số (công thức, góc pha, tần số…) làm thành mô phỏng tương tác "Thử ngay" (`figure.sim`, thanh trượt + số liệu tự tính), xem `lythuyetmach-chuong1.html` và `assets/lt2-sim.js`.
+   - **Hình linh kiện thực tế** cho mọi linh kiện được nhắc tới (các loại vỏ, cỡ dán, cực tính); không có ảnh Wikimedia phù hợp thì vẽ SVG inline (xem `dientucoban-chuong2.html`).
+   - **Visual cách hoạt động** của linh kiện dạng mô phỏng động (vd. tụ nạp/xả `rcSim`, cuộn cảm `rlSim` + `initStorage` trong `lythuyetmach-chuong1.html`).
+   - **Phần ứng dụng**: nếu có mạch tương ứng ở mục Dự án (`section: "duan"` trong `posts.js`, vd. `/ic555`, `/machboost`, `/machbuck`) thì đặt khối `<a class="practice">` nhãn "Dự án" ngay dưới ứng dụng đó.
 4. Phần định luật / phương pháp giải, có ví dụ giải mẫu từng bước và kiểm tra lại kết quả.
 5. Bảng tóm tắt 1 trang (gồm bảng tiền tố đơn vị nếu cần).
 6. **Trắc nghiệm ôn tập: 10 câu hỏi lý thuyết**, mỗi câu 4 phương án kèm giải thích (nêu vì sao đúng và vì sao các phương án nhiễu sai), để tóm tắt kiến thức của chương. Dùng component chung: `<div class="quiz" id="quiz"></div>`, khai báo `window.CT_QUIZ = [{ q, opts: [4 phương án], a: chỉ số đáp án đúng, why }]`, nạp `/assets/quiz.css` và `/assets/quiz.js` (xem `lythuyetmach-chuong2.html`).

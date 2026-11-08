@@ -273,7 +273,7 @@
         <li>Nhận ra <a href="#dien-tro">ký hiệu điện trở</a>, đổi Ω – kΩ – MΩ và biết <a href="#phan-loai-r">các loại điện trở</a> thường gặp (biến trở, NTC, PTC, LDR…).</li>
         <li>Đọc được giá trị và sai số điện trở <a href="#ma-mau">theo vòng màu</a> 4 vạch, 5 vạch.</li>
         <li>Đọc được <a href="#smd">mã điện trở dán SMD</a>: 3 số, 4 số, chữ R, mã 0 / 000.</li>
-        <li>Tính được điện trở tương đương khi <a href="#ghep-noi">ghép nối tiếp và song song</a>.</li>
+        <li>Tính được điện trở tương đương khi <a href="#ghep-noi">ghép nối tiếp và song song</a>; dùng <a href="#phan-ap-phan-dong">định lý phân áp, phân dòng</a>.</li>
         <li>Tính <a href="#ung-dung-r">điện trở hạn dòng cho LED</a>, điện áp ra của <a href="#chia-ap">bộ chia áp</a> và hiểu <a href="#pull-up">điện trở kéo lên</a>.</li>
         <li>Hiểu cấu tạo, ký hiệu và <a href="#dien-dung">điện dung</a> của <a href="#tu-dien">tụ điện</a>; đổi pF – nF – µF; tính dung kháng Z<sub>C</sub>.</li>
         <li>Phân biệt <a href="#phan-loai-tu">tụ phân cực và không phân cực</a>, đọc <a href="#ma-tu">mã tụ gốm</a> (103, 104, J/K/M).</li>
@@ -288,7 +288,7 @@
         <li><a href="#gia-tri-chuan">Giá trị chuẩn, dung sai</a></li>
         <li><a href="#ma-mau">Mã màu điện trở</a></li>
         <li><a href="#smd">Điện trở dán SMD</a></li>
-        <li><a href="#ghep-noi">Ghép nối điện trở</a></li>
+        <li><a href="#ghep-noi">Ghép nối, phân áp, phân dòng</a></li>
         <li><a href="#ung-dung-r">Ứng dụng của điện trở</a></li>
         <li><a href="#tu-dien">Tụ điện</a></li>
         <li><a href="#dien-dung">Điện dung, dung kháng</a></li>
@@ -323,6 +323,33 @@
       <ul class="units-ex"><li>4 700 Ω = <strong>4,7 kΩ</strong></li><li>5 600 000 Ω = 5 600 kΩ = <strong>5,6 MΩ</strong> (cách viết thường dùng)</li><li>Trên sơ đồ, "4k7" nghĩa là 4,7 kΩ: chữ k đứng ở chỗ dấu phẩy</li></ul>
     </div>
 
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Các loại điện trở chân cắm: điện trở than 4 vạch, điện trở metal film 5 vạch, điện trở xi măng, chiết áp và biến trở tinh chỉnh">
+  <path class="wire" d="M20 40 L60 40 M180 40 L220 40 M300 40 L340 40 M460 40 L500 40"/>
+  <rect x="60" y="26" width="120" height="28" rx="12" fill="#E4CFA3" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="80" y="26" width="9" height="28" fill="#8B4513"/><rect x="96" y="26" width="9" height="28" fill="#111"/><rect x="112" y="26" width="9" height="28" fill="#D32F2F"/><rect x="150" y="26" width="9" height="28" fill="#C9A227"/>
+  <text class="b" x="120" y="80" text-anchor="middle">Điện trở than 1/4 W</text>
+  <text class="s" x="120" y="97" text-anchor="middle">4 vạch: 1 kΩ ± 5 %</text>
+  <rect x="340" y="26" width="120" height="28" rx="12" fill="#5B8DB8" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="354" y="26" width="8" height="28" fill="#8B4513"/><rect x="368" y="26" width="8" height="28" fill="#111"/><rect x="382" y="26" width="8" height="28" fill="#111"/><rect x="396" y="26" width="8" height="28" fill="#8B4513"/><rect x="432" y="26" width="8" height="28" fill="#8B4513"/>
+  <text class="b" x="400" y="80" text-anchor="middle">Metal film (chính xác)</text>
+  <text class="s" x="400" y="97" text-anchor="middle">5 vạch: 1 kΩ ± 1 %</text>
+  <path class="wire" d="M20 152 L40 152 M190 152 L210 152"/>
+  <rect x="40" y="130" width="150" height="44" rx="3" fill="#F2F2EE" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="115" y="158" text-anchor="middle" style="font-family:var(--mono);font-size:15px;font-weight:600;fill:#222">5W 10Ω J</text>
+  <text class="b" x="115" y="200" text-anchor="middle">Xi măng 5 W</text>
+  <text class="s" x="115" y="217" text-anchor="middle">chịu công suất lớn</text>
+  <circle cx="300" cy="150" r="30" fill="#3b4a57" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="294" y="108" width="12" height="16" fill="#9aa4ad"/><circle cx="300" cy="104" r="9" fill="#cfd5da" stroke="var(--ink)" stroke-width="1.2"/>
+  <path class="wire" d="M286 178 L286 196 M300 180 L300 196 M314 178 L314 196"/>
+  <text class="b" x="300" y="216" text-anchor="middle">Chiết áp</text>
+  <rect x="430" y="128" width="50" height="46" rx="4" fill="#2F6FB0" stroke="var(--ink)" stroke-width="1.5"/>
+  <circle cx="455" cy="151" r="13" fill="#eee" stroke="#555"/><path d="M447 151 L463 151 M455 143 L455 159" stroke="#555" stroke-width="2.5"/>
+  <path class="wire" d="M440 174 L440 194 M455 174 L455 194 M470 174 L470 194"/>
+  <text class="b" x="455" y="216" text-anchor="middle">Biến trở tinh chỉnh</text>
+</svg>
+      <figcaption>Điện trở chân cắm thường gặp: loại cố định đọc giá trị bằng vòng màu hoặc chữ in; chiết áp và biến trở tinh chỉnh có 3 chân, xoay để đổi giá trị</figcaption>
+    </figure>
     <!-- 2 -->
     <h2 id="phan-loai-r"><span class="num">02</span>Phân loại điện trở</h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Điện trở <strong>tuyến tính</strong> thì đồ thị U – I là <strong>đường thẳng</strong> (tuân theo định luật Ohm). Điện trở <strong>phi tuyến</strong> đổi giá trị theo <strong>nhiệt độ, ánh sáng hay điện áp</strong> nên dùng làm cảm biến.</p>
@@ -455,6 +482,14 @@
         </tbody>
       </table>
     </div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 196" role="img" aria-label="Điện trở dán các cỡ 1206, 0805, 0603, 0402 hàn trên bo mạch, vẽ cùng tỉ lệ">
+  <rect x="10" y="20" width="540" height="120" rx="8" fill="#1E5E3A"/>
+  <rect x="44" y="52" width="108" height="56" fill="#C8A25A"/><rect x="50" y="56" width="13.44" height="48" fill="#c9ced3"/><rect x="63.44" y="56" width="69.12" height="48" fill="#1d2328"/><rect x="132.56" y="56" width="13.44" height="48" fill="#c9ced3"/><text x="98" y="89.6" text-anchor="middle" style="font-family:var(--mono);font-size:26px;font-weight:600;fill:#fff">103</text><rect x="199" y="57.25" width="72" height="45.5" fill="#C8A25A"/><rect x="205" y="61.25" width="8.4" height="37.5" fill="#c9ced3"/><rect x="213.4" y="61.25" width="43.2" height="37.5" fill="#1d2328"/><rect x="256.6" y="61.25" width="8.4" height="37.5" fill="#c9ced3"/><text x="235" y="87.5" text-anchor="middle" style="font-family:var(--mono);font-size:20px;font-weight:600;fill:#fff">472</text><rect x="314" y="64" width="60" height="32" fill="#C8A25A"/><rect x="320" y="68" width="6.72" height="24" fill="#c9ced3"/><rect x="326.72" y="68" width="34.56" height="24" fill="#1d2328"/><rect x="361.28" y="68" width="6.72" height="24" fill="#c9ced3"/><text x="344" y="84.8" text-anchor="middle" style="font-family:var(--mono);font-size:13px;font-weight:600;fill:#fff">01C</text><rect x="424" y="68.5" width="42" height="23" fill="#C8A25A"/><rect x="430" y="72.5" width="4.2" height="15" fill="#c9ced3"/><rect x="434.2" y="72.5" width="21.6" height="15" fill="#1d2328"/><rect x="455.8" y="72.5" width="4.2" height="15" fill="#c9ced3"/>
+  <text class="b" x="98" y="168" text-anchor="middle">1206</text><text class="s" x="98" y="186" text-anchor="middle">3,2 × 1,6 mm</text><text class="b" x="235" y="168" text-anchor="middle">0805</text><text class="s" x="235" y="186" text-anchor="middle">2,0 × 1,25 mm</text><text class="b" x="344" y="168" text-anchor="middle">0603</text><text class="s" x="344" y="186" text-anchor="middle">1,6 × 0,8 mm</text><text class="b" x="445" y="168" text-anchor="middle">0402</text><text class="s" x="445" y="186" text-anchor="middle">1,0 × 0,5 mm</text>
+</svg>
+      <figcaption>Cỡ điện trở dán ghi theo kích thước (inch): 1206 = 3,2 × 1,6 mm. Cỡ 0603, 0402 quá nhỏ nên thường không in mã hoặc in mã rút gọn (01C là mã EIA-96)</figcaption>
+    </figure>
     <figure class="sim" id="simSmd">
       <p class="sim-h">Thử ngay · Gõ mã điện trở dán, xem giá trị</p>
       <div class="simbox">
@@ -530,6 +565,77 @@
       <figcaption>Mặc định là ví dụ giáo trình 12 kΩ + 330 Ω. Kéo R3 lên khỏi 0 để thêm điện trở thứ ba.</figcaption>
     </figure>
 
+    <h3 id="phan-ap-phan-dong">Định lý phân áp và phân dòng</h3>
+    <p class="easy"><span class="tag">Dễ nhớ</span><strong>Phân áp</strong> (nối tiếp, cùng dòng): điện áp chia <strong>thuận</strong> theo R, điện trở lớn "giữ" nhiều áp. <strong>Phân dòng</strong> (song song, cùng áp): dòng chia <strong>nghịch</strong> theo R, nước chọn ống rộng nên nhánh R nhỏ có dòng lớn.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 210" role="img" aria-label="Trái: nguồn U nối R1 nối tiếp R2, điện áp chia thành U1 và U2. Phải: dòng I vào nút chia thành I1 qua R1 và I2 qua R2">
+  <path class="wire" d="M60 82 L60 30 L160 30 L160 44 M160 92 L160 112 M160 160 L160 180 L60 180 L60 128"/>
+  <circle class="pump" cx="60" cy="105" r="22"/><text class="b" x="60" y="100" text-anchor="middle">+</text><text class="b" x="60" y="121" text-anchor="middle">−</text>
+  <text class="b warm" x="30" y="110" text-anchor="end">U</text>
+  <rect class="res" x="148" y="44" width="24" height="48" rx="2"/><rect class="res" x="148" y="112" width="24" height="48" rx="2"/>
+  <text class="b" x="136" y="72" text-anchor="end">R1</text><text class="b" x="136" y="140" text-anchor="end">R2</text>
+  <path class="arr-ac" d="M192 46 L192 90 M186 52 L192 44 L198 52"/><text class="b ac" x="200" y="74">U1</text>
+  <path class="arr-ac" d="M192 114 L192 158 M186 120 L192 112 L198 120"/><text class="b ac" x="200" y="142">U2</text>
+  <text class="s" x="130" y="204" text-anchor="middle">phân áp: U = U1 + U2</text>
+  <path class="wire" d="M290 105 L340 105 M340 40 L340 170 M340 40 L400 40 M460 40 L510 40 L510 170 M340 170 L400 170 M460 170 L510 170"/>
+  <rect class="res" x="400" y="28" width="60" height="24" rx="2"/><rect class="res" x="400" y="158" width="60" height="24" rx="2"/>
+  <circle class="node" cx="340" cy="105" r="4"/>
+  <path class="arr-ac" d="M300 95 L326 95 M320 89 L328 95 L320 101"/><text class="b ac" x="310" y="84" text-anchor="middle">I</text>
+  <text class="b" x="430" y="72" text-anchor="middle">R1 · I1</text><text class="b" x="430" y="148" text-anchor="middle">R2 · I2</text>
+  <text class="s" x="420" y="204" text-anchor="middle">phân dòng: I = I1 + I2</text>
+</svg>
+      <figcaption>Phân áp xảy ra ở các điện trở mắc nối tiếp, phân dòng xảy ra ở các nhánh mắc song song</figcaption>
+    </figure>
+    <div class="def"><strong>Định lý phân áp</strong>: với các điện trở mắc nối tiếp, điện áp trên mỗi điện trở tỉ lệ thuận với giá trị của nó. <strong>Định lý phân dòng</strong>: với hai nhánh mắc song song, dòng qua mỗi nhánh tỉ lệ nghịch với điện trở nhánh đó (tử số là điện trở của <strong>nhánh kia</strong>).</div>
+    <div class="formula">U1 = U × <span class="frac"><span>R1</span><span>R1 + R2</span></span> &nbsp;·&nbsp; U2 = U × <span class="frac"><span>R2</span><span>R1 + R2</span></span><small>Phân áp: 2 điện trở nối tiếp đặt dưới điện áp U</small></div>
+    <div class="formula">I1 = I × <span class="frac"><span>R2</span><span>R1 + R2</span></span> &nbsp;·&nbsp; I2 = I × <span class="frac"><span>R1</span><span>R1 + R2</span></span><small>Phân dòng: dòng tổng I chia vào 2 nhánh song song R1, R2</small></div>
+    <div class="steps">
+      <h4>Ví dụ phân áp: U = 12 V, R1 = 2 kΩ, R2 = 4 kΩ</h4>
+      <p>U1 = 12 × 2 / (2 + 4) = <span class="ans">4 V</span> · U2 = 12 × 4 / 6 = <span class="ans">8 V</span></p>
+      <p>Kiểm tra: 4 + 8 = 12 V ✓ · R2 gấp đôi R1 nên U2 gấp đôi U1</p>
+      <h4>Ví dụ phân dòng: I = 3 A, R1 = 2 Ω, R2 = 4 Ω</h4>
+      <p>I1 = 3 × 4 / (2 + 4) = <span class="ans">2 A</span> · I2 = 3 × 2 / 6 = <span class="ans">1 A</span></p>
+      <p>Kiểm tra: 2 + 1 = 3 A ✓ · cùng áp: 2 A × 2 Ω = 1 A × 4 Ω = 4 V ✓</p>
+    </div>
+    <figure class="sim" id="simPD">
+      <p class="sim-h">Thử ngay · Phân áp và phân dòng</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 200" role="img" aria-labelledby="pdTitle">
+          <title id="pdTitle">Mạch phân áp hoặc phân dòng đang chọn, kèm giá trị điện áp, dòng điện từng điện trở.</title>
+          <g id="pdSer">
+            <path class="w" d="M80 82 L80 30 L200 30 L200 40 M200 90 L200 110 M200 160 L200 175 L80 175 L80 122"/>
+            <circle class="src" cx="80" cy="102" r="20"/><text class="b" x="80" y="98" text-anchor="middle">+</text><text class="b" x="80" y="117" text-anchor="middle">−</text>
+            <text class="b warm" id="pdUs" x="52" y="107" text-anchor="end">U</text>
+            <rect class="rb" x="186" y="40" width="28" height="50" rx="3"/><rect class="rb" x="186" y="110" width="28" height="50" rx="3"/>
+            <text class="b" id="pdU1" x="226" y="70">U1</text><text class="b" id="pdU2" x="226" y="140">U2</text>
+            <rect class="track" x="440" y="30" width="44" height="145" rx="4"/>
+            <rect class="fillU" id="pdB1" x="440" y="30" width="44" height="50" rx="3"/>
+            <rect class="fillI" id="pdB2" x="440" y="80" width="44" height="95" rx="3"/>
+            <text class="s" x="462" y="192" text-anchor="middle">U1 | U2</text>
+          </g>
+          <g id="pdPar" class="hide">
+            <path class="w" d="M40 100 L120 100 M120 40 L120 160 M120 40 L200 40 M280 40 L400 40 L400 160 M120 160 L200 160 M280 160 L400 160 M400 100 L480 100"/>
+            <path class="ov" id="pdF0" d="M40 100 L120 100 M400 100 L480 100"/>
+            <path class="ov" id="pdF1" d="M120 100 L120 40 L200 40 M280 40 L400 40 L400 100"/>
+            <path class="ov c-w" id="pdF2" d="M120 100 L120 160 L200 160 M280 160 L400 160 L400 100"/>
+            <rect class="rb" x="200" y="28" width="80" height="24" rx="3"/><rect class="rb" x="200" y="148" width="80" height="24" rx="3"/>
+            <circle class="node" cx="120" cy="100" r="4"/><circle class="node" cx="400" cy="100" r="4"/>
+            <text class="b" id="pdIs" x="60" y="88">I</text>
+            <text class="b ac" id="pdI1" x="240" y="78" text-anchor="middle">I1</text><text class="b warm" id="pdI2" x="240" y="136" text-anchor="middle">I2</text>
+          </g>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Chọn định lý">
+        <button type="button" data-pd="ser" aria-pressed="true">Phân áp (nối tiếp)</button>
+        <button type="button" data-pd="par" aria-pressed="false">Phân dòng (song song)</button>
+      </div>
+      <div class="sl"><label for="pdS" id="pdSl">Điện áp U</label><input type="range" id="pdS" min="0" max="24" step="0.5" value="12"><output id="pdSo" for="pdS">12 V</output></div>
+      <div class="sl"><label for="pdR1">R1</label><input type="range" id="pdR1" min="1" max="20" step="1" value="2"><output id="pdR1o" for="pdR1">2 Ω</output></div>
+      <div class="sl"><label for="pdR2">R2</label><input type="range" id="pdR2" min="1" max="20" step="1" value="4"><output id="pdR2o" for="pdR2">4 Ω</output></div>
+      <p class="live" id="pdLive" aria-live="polite"></p>
+      <figcaption>Phân áp: cột bên phải chia theo tỉ lệ U1 : U2 = R1 : R2. Phân dòng: dòng chạy nhánh nào càng dày, nhanh thì càng lớn.</figcaption>
+    </figure>
+
     <!-- 7 -->
     <h2 id="ung-dung-r"><span class="num">07</span>Ứng dụng của điện trở</h2>
     <h3>a) Hạn dòng cho LED</h3>
@@ -555,6 +661,7 @@
       <p>Kiểm tra: I = 3,2 / 320 = 0,01 A = 10 mA ✓ · Ngoài thị trường chọn giá trị chuẩn gần nhất, lớn hơn: 330 Ω.</p>
     </div>
 
+    <a class="practice" href="/ic555"><span class="practice-k">Dự án</span><span class="practice-t">IC 555 phát xung</span><span class="practice-d">Mạch nháy LED thật: LED mắc nối tiếp điện trở hạn dòng, kèm máy tính R1 R2 C.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
     <h3 id="chia-ap">b) Bộ chia điện áp</h3>
     <p class="easy"><span class="tag">Dễ nhớ</span>Hai điện trở nối tiếp <strong>chia điện áp theo tỉ lệ</strong> giá trị của chúng: điện trở nào lớn hơn thì "giữ" phần điện áp lớn hơn.</p>
     <div class="formula">V<sub>out</sub> = V<sub>in</sub> × <span class="frac"><span>R2</span><span>R1 + R2</span></span><small>V<sub>out</sub> đo giữa điểm nối R1 – R2 và GND</small></div>
@@ -583,6 +690,7 @@
       <figcaption>Mặc định là ví dụ giáo trình: R1 = 1,7 kΩ, R2 = 3,3 kΩ biến 5 V thành 3,3 V (vd. nối Arduino 5 V với cảm biến 3,3 V).</figcaption>
     </figure>
     <a class="practice" href="/phanapphandong"><span class="practice-k">Luyện tập</span><span class="practice-t">Bài tập Định lý phân áp &amp; phân dòng trong mạch</span><span class="practice-d">6 bài có sơ đồ mạch: Rtđ, dòng nhánh, điện áp VO, vòng màu; tự chấm và lời giải chi tiết.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
+    <a class="practice" href="/machbuck"><span class="practice-k">Dự án</span><span class="practice-t">Mạch hạ áp Buck 24V xuống 12V</span><span class="practice-d">Vì sao không hạ áp cho tải lớn bằng bộ chia áp hay biến trở, và mạch Buck làm việc đó ra sao.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
     <p>Bộ chia áp rất tiện để đọc <strong>cảm biến điện trở</strong> (quang trở, cảm biến uốn flex…): một nửa là cảm biến, nửa kia là điện trở cố định. Điện áp ở điểm giữa đưa vào bộ chuyển đổi tương tự – số <strong>ADC</strong> của vi điều khiển (MCU) để đọc giá trị cảm biến.</p>
 
     <h3 id="pull-up">c) Điện trở kéo lên (pull-up)</h3>
@@ -643,6 +751,54 @@
     </div>
     <div class="formula">Z<sub>C</sub> = <span class="frac"><span>1</span><span>ω × C</span></span> = <span class="frac"><span>1</span><span>2π × f × C</span></span><small>Z<sub>C</sub>: dung kháng (Ω) · f: tần số, hertz <span class="say" title="Cách đọc">héc</span> (Hz) · C: farad (F). Tần số càng cao, Z<sub>C</sub> càng nhỏ: tụ cho AC qua dễ; với DC (f = 0) thì Z<sub>C</sub> vô cùng lớn: tụ <strong>chặn DC</strong>.</small></div>
 
+    <h3 id="tu-hoat-dong">Tụ điện hoạt động thế nào?</h3>
+    <p>Khi nối nguồn, electron bị hút khỏi bản cực nối cực + và dồn sang bản cực nối cực −: tụ <strong>nạp</strong>, điện áp hai bản cực tăng dần đến bằng nguồn thì dòng dừng. Bỏ nguồn và nối tụ qua tải, điện tích chạy ngược lại: tụ <strong>xả</strong>, làm nguồn tạm thời. Gạt khoá để xem:</p>
+    <figure class="sim" id="rcSim">
+      <p class="sim-h">Thử ngay · Tụ điện "giữ" điện áp (mạch nạp / xả RC)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 244" role="img" aria-labelledby="rcTitle">
+          <title id="rcTitle">Nguồn 12 V, khoá 2 vị trí, điện trở R và tụ C. Đồ thị bên phải vẽ điện áp tụ u_C và dòng i theo thời gian.</title>
+          <path class="w" d="M130 50 L230 50 L230 118 M230 132 L230 200 L40 200 L40 147 M40 103 L40 40 L90 40 M90 64 L90 200"/>
+          <path class="ov" id="rcF1" d="M40 103 L40 40 L90 40 L130 50 L230 50 L230 200 L40 200 L40 147"/>
+          <path class="ov" id="rcF2" d="M90 64 L130 50 L230 50 L230 200 L90 200 L90 64"/>
+          <rect class="gap" x="212" y="120" width="36" height="10"/>
+          <path class="plate" d="M208 118 L252 118 M208 132 L252 132"/>
+          <text class="b warm" id="rcQp" x="204" y="114" text-anchor="end">+ +</text>
+          <text class="b ac" id="rcQn" x="204" y="148" text-anchor="end">− −</text>
+          <text class="b" x="200" y="96" text-anchor="end">C</text>
+          <rect class="water" id="rcMeter" x="262" y="155" width="20" height="0"/>
+          <rect class="thin" x="262" y="95" width="20" height="60"/>
+          <text class="s" x="272" y="172" text-anchor="middle">mực u</text>
+          <circle class="src" cx="40" cy="125" r="22"/>
+          <text class="b" x="40" y="120" text-anchor="middle">+</text><text class="b" x="40" y="141" text-anchor="middle">−</text>
+          <text class="b" x="70" y="130">E</text>
+          <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
+          <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
+          <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <g class="iarr hide" id="rcArr"><path id="rcA1" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(230 180) rotate(90)"/><path id="rcA2" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(160 200) rotate(180)"/></g>
+          <text class="s" id="rcDir" x="112" y="232">i = 0: không có dòng</text>
+          <line class="w" id="rcBlade" x1="130" y1="50" x2="90" y2="64"/>
+          <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
+          <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
+          <path class="thin" d="M300 40 L300 220 M300 130 L548 130"/>
+          <path class="dash" id="rcEv" d="M0 0"/>
+          <polyline class="cu" id="rcU" points=""/>
+          <polyline class="ci" id="rcI" points=""/>
+          <text class="b warm" x="304" y="24">u<tspan class="sub" dy="4">C</tspan><tspan dy="-4" id="rcUt"> = 0 V</tspan></text>
+          <text class="b ac" x="440" y="24">i<tspan id="rcIt"> = 0 A</tspan></text>
+          <text class="s" x="306" y="52">+12 V · +3 A</text>
+          <text class="s" x="306" y="214">−12 V · −3 A</text>
+          <text class="s" x="548" y="238" text-anchor="end">thời gian →</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Vị trí khoá">
+        <button type="button" data-pos="1" aria-pressed="false">1 · Nạp (nối nguồn)</button>
+        <button type="button" data-pos="2" aria-pressed="true">2 · Xả (bỏ nguồn)</button>
+      </div>
+      <p class="live" id="rcLive" aria-live="polite"></p>
+      <figcaption><strong>Dễ nhớ:</strong> mỗi lần gạt khoá, đường <span class="k-i">i</span> được phép <strong>nhảy thẳng đứng</strong>, còn đường <span class="k-u">u<sub>C</sub></span> luôn <strong>liền nét</strong> ⇒ tụ điện <strong>giữ điện áp</strong>. Nạp đầy thì i = 0: tụ chặn dòng một chiều.</figcaption>
+    </figure>
+
     <!-- 10 -->
     <h2 id="phan-loai-tu"><span class="num">10</span>Phân loại tụ, đọc mã tụ</h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Tụ <strong>có dấu + / −</strong> (tụ hoá, tantalum) thì phải <strong>cắm đúng chiều</strong>, cắm ngược có thể hỏng vĩnh viễn, thậm chí phồng nổ. Tụ <strong>không cực tính</strong> (gốm, polyester) cắm chiều nào cũng được.</p>
@@ -657,6 +813,33 @@
         </tbody>
       </table>
     </div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 215" role="img" aria-label="Các loại tụ: tụ hoá có vạch âm và chân dài là cực dương, tụ gốm, tụ polyester, tụ tantalum dán, tụ dán MLCC">
+  <rect x="30" y="30" width="70" height="110" rx="10" fill="#1F3B73" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="82" y="30" width="16" height="110" fill="#9DB4D8"/>
+  <text x="90" y="62" text-anchor="middle" style="font-size:16px;font-weight:700;fill:#1F3B73">−</text><text x="90" y="92" text-anchor="middle" style="font-size:16px;font-weight:700;fill:#1F3B73">−</text><text x="90" y="122" text-anchor="middle" style="font-size:16px;font-weight:700;fill:#1F3B73">−</text>
+  <text x="55" y="80" text-anchor="middle" style="font-family:var(--mono);font-size:11px;fill:#fff">470µF</text><text x="55" y="96" text-anchor="middle" style="font-family:var(--mono);font-size:11px;fill:#fff">25V</text>
+  <path class="wire" d="M50 140 L50 172 M85 140 L85 160"/>
+  <text class="b warm" x="44" y="168" text-anchor="end">+</text>
+  <text class="b" x="65" y="190" text-anchor="middle">Tụ hoá</text><text class="s" x="65" y="207" text-anchor="middle">chân dài = +</text>
+  <path class="wire" d="M160 112 L152 165 M180 112 L188 165"/>
+  <circle cx="170" cy="85" r="32" fill="#D9A441" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="170" y="92" text-anchor="middle" style="font-family:var(--mono);font-size:18px;font-weight:600;fill:#2b1d05">104</text>
+  <text class="b" x="170" y="190" text-anchor="middle">Tụ gốm</text><text class="s" x="170" y="207" text-anchor="middle">không cực tính</text>
+  <path class="wire" d="M262 110 L262 165 M288 110 L288 165"/>
+  <rect x="240" y="50" width="70" height="62" rx="9" fill="#8E2430" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="275" y="78" text-anchor="middle" style="font-family:var(--mono);font-size:12px;fill:#fff">2A104J</text><text x="275" y="96" text-anchor="middle" style="font-family:var(--mono);font-size:11px;fill:#fff">100V</text>
+  <text class="b" x="275" y="190" text-anchor="middle">Polyester</text><text class="s" x="275" y="207" text-anchor="middle">tụ kẹo</text>
+  <rect x="352" y="86" width="12" height="30" fill="#C8A25A"/><rect x="426" y="86" width="12" height="30" fill="#C8A25A"/>
+  <rect x="360" y="72" width="70" height="58" rx="4" fill="#E0A800" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="360" y="72" width="14" height="58" fill="#7a5b00"/>
+  <text x="402" y="107" text-anchor="middle" style="font-family:var(--mono);font-size:16px;font-weight:600;fill:#2b1d05">107</text>
+  <text class="b" x="395" y="190" text-anchor="middle">Tantalum dán</text><text class="s" x="395" y="207" text-anchor="middle">vạch đậm = +</text>
+  <rect x="470" y="88" width="12" height="30" fill="#c9ced3"/><rect x="482" y="88" width="40" height="30" fill="#B9A07A"/><rect x="522" y="88" width="12" height="30" fill="#c9ced3"/>
+  <text class="b" x="502" y="190" text-anchor="middle">MLCC dán</text><text class="s" x="502" y="207" text-anchor="middle">không in mã</text>
+</svg>
+      <figcaption>Tụ hoá và tantalum có cực tính (Hình 2.13, 2.15): tụ hoá vạch "−" là cực âm, tantalum vạch đậm là cực dương. Tụ gốm, polyester, MLCC không cực tính (Hình 2.14, 2.16). Mã 107 = 10 × 10⁷ pF = 100 µF</figcaption>
+    </figure>
     <p>Trên vỏ tụ thường in: <strong>giá trị điện dung, điện áp tối đa, nhiệt độ tối đa, cực tính</strong>. Chọn tụ có điện áp tối đa <strong>lớn hơn</strong> điện áp trong mạch; điện dung càng lớn, tụ càng to.</p>
     <h3 id="ma-tu">Đọc mã 3 số của tụ gốm</h3>
     <figure class="ill">
@@ -687,6 +870,9 @@
       <li><strong>Hiệu chỉnh hệ số công suất</strong> trong mạng điện và nhiều ứng dụng khác.</li>
     </ul>
 
+    <a class="practice" href="/ic555"><span class="practice-k">Dự án</span><span class="practice-t">IC 555 phát xung (tụ định thời)</span><span class="practice-d">Tụ C nạp xả qua R1, R2 quyết định tần số nháy LED: f ≈ 1,44 / ((R1 + 2R2) × C).</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+    <a class="practice" href="/machboost"><span class="practice-k">Dự án</span><span class="practice-t">Mạch tăng áp Boost 12V lên 24V</span><span class="practice-d">Tụ lọc đầu ra giữ điện áp phẳng giữa các nhịp đóng cắt của MOSFET.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+
     <!-- 12 -->
     <h2 id="cuon-cam"><span class="num">12</span>Cuộn cảm</h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Cuộn cảm như <strong>bánh đà nặng</strong>: đang đứng yên thì khó quay, đang quay thì khó dừng. Nó <strong>chống lại sự thay đổi</strong> của dòng điện. Dòng một chiều ổn định đi qua thì nó <strong>như sợi dây dẫn</strong>.</p>
@@ -704,6 +890,25 @@
 </svg>
       <figcaption>Hình 2.17 giáo trình (vẽ lại): ký hiệu cuộn cảm; dòng điện qua cuộn dây tạo từ thông tỉ lệ với dòng</figcaption>
     </figure>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="Các loại cuộn cảm: lõi xuyến quấn dây đồng, lõi trụ, lõi không khí, cuộn cảm dán nguồn xung">
+  <circle cx="90" cy="95" r="44" fill="#3a3a3a"/><circle cx="90" cy="95" r="20" fill="var(--surface-2)" stroke="#3a3a3a" stroke-width="2"/>
+  <path d="M108.0 95.0 L140.0 95.0 M107.3 100.1 L138.0 109.1 M105.1 104.7 L132.1 122.0 M101.8 108.6 L122.7 132.8 M97.5 111.4 L110.8 140.5 M92.6 112.8 L97.1 144.5 M87.4 112.8 L82.9 144.5 M82.5 111.4 L69.2 140.5 M78.2 108.6 L57.3 132.8 M74.9 104.7 L47.9 122.0 M72.7 100.1 L42.0 109.1 M72.0 95.0 L40.0 95.0 M72.7 89.9 L42.0 80.9 M74.9 85.3 L47.9 68.0 M78.2 81.4 L57.3 57.2 M82.5 78.6 L69.2 49.5 M87.4 77.2 L82.9 45.5 M92.6 77.2 L97.1 45.5 M97.5 78.6 L110.8 49.5 M101.8 81.4 L122.7 57.2 M105.1 85.3 L132.1 68.0 M107.3 89.9 L138.0 80.9 " stroke="#C77B30" stroke-width="3"/>
+  <text class="b" x="90" y="168" text-anchor="middle">Lõi xuyến (toroid)</text><text class="s" x="90" y="186" text-anchor="middle">lõi ferrite</text>
+  <rect x="190" y="52" width="30" height="70" rx="3" fill="#444"/>
+  <path d="M182 58 L228 58 M182 63 L228 63 M182 68 L228 68 M182 73 L228 73 M182 78 L228 78 M182 83 L228 83 M182 88 L228 88 M182 93 L228 93 M182 98 L228 98 M182 103 L228 103 M182 108 L228 108 M182 113 L228 113 " stroke="#C77B30" stroke-width="3"/>
+  <path class="wire" d="M196 122 L196 150 M214 122 L214 150"/>
+  <text class="b" x="205" y="168" text-anchor="middle">Lõi trụ</text><text class="s" x="205" y="186" text-anchor="middle">chân cắm</text>
+  <path class="wire" d="M282 95 L293 95 M379 95 L392 95"/>
+  <ellipse cx="300" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/><ellipse cx="312" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/><ellipse cx="324" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/><ellipse cx="336" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/><ellipse cx="348" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/><ellipse cx="360" cy="95" rx="7" ry="30" fill="none" stroke="#C77B30" stroke-width="3"/>
+  <text class="b" x="336" y="168" text-anchor="middle">Lõi không khí</text><text class="s" x="336" y="186" text-anchor="middle">mạch cao tần</text>
+  <rect x="432" y="104" width="12" height="18" fill="#C8A25A"/><rect x="496" y="104" width="12" height="18" fill="#C8A25A"/>
+  <rect x="438" y="62" width="64" height="60" rx="6" fill="#2b2b2b"/>
+  <text x="470" y="99" text-anchor="middle" style="font-family:var(--mono);font-size:18px;font-weight:600;fill:#fff">100</text>
+  <text class="b" x="470" y="168" text-anchor="middle">Cuộn dán</text><text class="s" x="470" y="186" text-anchor="middle">100 = 10 µH</text>
+</svg>
+      <figcaption>Hình 2.17 giáo trình (vẽ lại): cuộn cảm phân loại theo lõi. Mã cuộn dán đọc như mã 3 số nhưng đơn vị µH: 100 = 10 × 10⁰ µH = 10 µH</figcaption>
+    </figure>
     <div class="def"><strong>Cuộn cảm</strong> (inductor, còn gọi là choke) là linh kiện thụ động lưu trữ năng lượng dưới dạng <strong>từ trường</strong>, gồm dây quấn quanh một lõi (không khí, sắt đặc hoặc ferrite mềm). Điện trở chống lại dòng điện, còn cuộn cảm <strong>chống lại sự thay đổi của dòng điện</strong>: cản dòng xoay chiều nhưng cho dòng một chiều ổn định đi qua dễ dàng.</div>
     <div class="formula">X<sub>L</sub> = ω × L = 2π × f × L<small>X<sub>L</sub>: cảm kháng (Ω) · L: điện cảm, henry <span class="say" title="Cách đọc">hen-ri</span> (H) · f: Hz. Tần số càng cao, X<sub>L</sub> càng lớn; với DC (f = 0) thì X<sub>L</sub> = 0.</small></div>
     <div class="units">
@@ -711,6 +916,50 @@
       <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>Henry <span class="say" title="Cách đọc">hen-ri</span></td><td>H</td><td>đơn vị gốc, khá lớn</td></tr><tr><td>Milihenry</td><td>mH</td><td>1 mH = 10⁻³ H</td></tr><tr><td>Microhenry <span class="say" title="Cách đọc">mi-crô hen-ri</span></td><td>µH</td><td>1 µH = 10⁻⁶ H</td></tr><tr><td>Nanohenry</td><td>nH</td><td>1 nH = 10⁻⁹ H</td></tr></tbody></table></div>
       <ul class="units-ex"><li>100 mH = 0,1 H</li><li>Cuộn cảm trong mạch nguồn xung thường 10 – 100 µH</li></ul>
     </div>
+    <h3 id="cuon-hoat-dong">Cuộn cảm hoạt động thế nào?</h3>
+    <p>Dòng điện qua cuộn dây tạo từ trường. Dòng muốn tăng thì từ trường phải tăng theo, cuộn cảm sinh điện áp chống lại nên dòng chỉ tăng <strong>từ từ</strong>; dòng muốn giảm thì từ trường trả năng lượng lại để giữ dòng chạy tiếp. Gạt khoá để xem bánh đà quay:</p>
+    <figure class="sim" id="rlSim">
+      <p class="sim-h">Thử ngay · Cuộn cảm "giữ" dòng điện (mạch RL)</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 244" role="img" aria-labelledby="rlTitle">
+          <title id="rlTitle">Nguồn 12 V, khoá 2 vị trí, điện trở R và cuộn cảm L. Đồ thị bên phải vẽ dòng i và điện áp cuộn cảm u_L theo thời gian.</title>
+          <path class="w" d="M130 50 L230 50 L230 95 M230 159 L230 200 L40 200 L40 147 M40 103 L40 40 L90 40 M90 64 L90 200"/>
+          <path class="ov" id="rlF1" d="M40 103 L40 40 L90 40 L130 50 L230 50 L230 200 L40 200 L40 147"/>
+          <path class="ov" id="rlF2" d="M90 64 L130 50 L230 50 L230 200 L90 200 L90 64"/>
+          <path class="w" d="M230 95 A8 8 0 0 1 230 111 A8 8 0 0 1 230 127 A8 8 0 0 1 230 143 A8 8 0 0 1 230 159"/>
+          <text class="b" x="212" y="132" text-anchor="end">L</text>
+          <g id="rlWheel"><circle class="part" cx="272" cy="127" r="15"/><path class="w" d="M257 127 L287 127 M272 112 L272 142"/></g>
+          <text class="s" x="272" y="160" text-anchor="middle">bánh đà</text>
+          <circle class="src" cx="40" cy="125" r="22"/>
+          <text class="b" x="40" y="120" text-anchor="middle">+</text><text class="b" x="40" y="141" text-anchor="middle">−</text>
+          <text class="b" x="70" y="130">E</text>
+          <text class="s" x="40" y="222" text-anchor="middle">E = 12 V</text>
+          <rect class="part" x="160" y="40" width="50" height="20" rx="3"/>
+          <text class="s" x="185" y="32" text-anchor="middle">R = 4 Ω</text>
+          <g class="iarr hide" id="rlArr"><path id="rlA1" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(230 180) rotate(90)"/><path id="rlA2" d="M-9 -8 L9 0 L-9 8 Z" transform="translate(160 200) rotate(180)"/></g>
+          <text class="s" id="rlDir" x="112" y="232">i = 0: không có dòng</text>
+          <line class="w" id="rlBlade" x1="130" y1="50" x2="90" y2="64"/>
+          <circle class="node" cx="90" cy="40" r="3.5"/><circle class="node" cx="90" cy="64" r="3.5"/><circle class="node" cx="130" cy="50" r="4"/>
+          <text class="s" x="98" y="34">1</text><text class="s" x="98" y="80">2</text>
+          <path class="thin" d="M300 40 L300 220 M300 130 L548 130"/>
+          <path class="dash" id="rlEv" d="M0 0"/>
+          <polyline class="cu" id="rlU" points=""/>
+          <polyline class="ci" id="rlI" points=""/>
+          <text class="b warm" x="304" y="24">u<tspan class="sub" dy="4">L</tspan><tspan dy="-4" id="rlUt"> = 0 V</tspan></text>
+          <text class="b ac" x="440" y="24">i<tspan id="rlIt"> = 0 A</tspan></text>
+          <text class="s" x="306" y="52">+12 V · +3 A</text>
+          <text class="s" x="306" y="214">−12 V · −3 A</text>
+          <text class="s" x="548" y="238" text-anchor="end">thời gian →</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Vị trí khoá">
+        <button type="button" data-pos="1" aria-pressed="false">1 · Đóng nguồn</button>
+        <button type="button" data-pos="2" aria-pressed="true">2 · Bỏ nguồn (xả)</button>
+      </div>
+      <p class="live" id="rlLive" aria-live="polite"></p>
+      <figcaption><strong>Dễ nhớ:</strong> mỗi lần gạt khoá, đường <span class="k-u">u<sub>L</sub></span> được phép <strong>nhảy thẳng đứng</strong>, còn đường <span class="k-i">i</span> luôn <strong>liền nét</strong> ⇒ cuộn cảm <strong>giữ dòng điện</strong>. Ổn định rồi thì u<sub>L</sub> = 0: cuộn cảm như một đoạn dây (ngắn mạch).</figcaption>
+    </figure>
+
     <figure class="sim" id="simX">
       <p class="sim-h">Thử ngay · Tụ và cuộn cảm "cản" bao nhiêu khi đổi tần số?</p>
       <div class="simbox">
@@ -766,6 +1015,9 @@
       <li><strong>Lưu trữ năng lượng</strong>: trong bộ nguồn xung (máy tính, mạch Boost/Buck); khác tụ, năng lượng mất nhanh khi ngắt nguồn. Ngoài ra dùng trong sạc không dây và rơ-le điện cơ.</li>
     </ul>
 
+    <a class="practice" href="/machboost"><span class="practice-k">Dự án</span><span class="practice-t">Mạch tăng áp Boost 12V lên 24V</span><span class="practice-d">Cuộn cảm nạp năng lượng khi MOSFET đóng, xả ra cộng thêm vào nguồn khi MOSFET mở.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+    <a class="practice" href="/machbuck"><span class="practice-k">Dự án</span><span class="practice-t">Mạch hạ áp Buck 24V xuống 12V</span><span class="practice-d">Cuộn cảm cùng tụ lọc giữ dòng, áp đầu ra ổn định; làm với IC LM2596.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+
     <!-- 14 -->
     <h2 id="tom-tat"><span class="num">14</span>Bảng tóm tắt</h2>
     <div class="tablewrap">
@@ -777,6 +1029,8 @@
           <tr><td>SMD 3 số / 4 số</td><td>các số đầu × 10<sup>số cuối</sup>; R = dấu phẩy</td><td>103 = 10 kΩ · 8202 = 82 kΩ · 4R7 = 4,7 Ω</td></tr>
           <tr><td>Nối tiếp</td><td>R = R1 + R2 + …</td><td>12 kΩ + 330 Ω = 12,33 kΩ</td></tr>
           <tr><td>Song song</td><td>1/R = 1/R1 + 1/R2 + …</td><td>10 kΩ // 10 kΩ = 5 kΩ</td></tr>
+          <tr><td>Phân áp (nối tiếp)</td><td>U1 = U × R1 / (R1 + R2)</td><td>12 V, 2 k, 4 k → U1 = 4 V, U2 = 8 V</td></tr>
+          <tr><td>Phân dòng (song song)</td><td>I1 = I × R2 / (R1 + R2)</td><td>3 A, 2 Ω, 4 Ω → I1 = 2 A, I2 = 1 A</td></tr>
           <tr><td>Hạn dòng LED</td><td>R = (V<sub>S</sub> − V<sub>F</sub>) / I<sub>F</sub></td><td>(5 − 1,8) / 0,01 = 320 Ω</td></tr>
           <tr><td>Chia áp</td><td>V<sub>out</sub> = V<sub>in</sub> × R2 / (R1 + R2)</td><td>5 V, 1,7 k, 3,3 k → 3,3 V</td></tr>
           <tr><td>Điện dung tụ phẳng</td><td>C = εS / (4πkd)</td><td>tăng S, giảm d, điện môi tốt → C tăng</td></tr>
@@ -1068,6 +1322,207 @@
 })();
 </script>
 <script>
+/* Mô phỏng tụ nạp/xả và cuộn cảm (chung với Lý thuyết mạch Chương 1) */
+(function () {
+  "use strict";
+  var each = Array.prototype.forEach;
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function fmt(x) {
+    var r = Math.round(x * 100) / 100;
+    if (Math.abs(r) < 0.005) r = 0;
+    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+  }
+  function par(x) { return Math.round(x * 100) < 0 ? "(" + fmt(x) + ")" : fmt(x); }
+  function setText(id, s) { $(id).textContent = s; }
+  function setAttrs(id, attrs) {
+    var el = $(id);
+    Object.keys(attrs).forEach(function (k) { el.setAttribute(k, String(attrs[k])); });
+  }
+  // Dòng chảy: độ dày + tốc độ theo |i|, chạy ngược khi i < 0, ẩn khi i = 0
+  function setFlow(el, i) {
+    var a = Math.abs(i);
+    el.classList.toggle("off", a < 0.005);
+    el.classList.toggle("rev", i < 0);
+    el.style.strokeWidth = String(clamp(2 + a * 1.1, 2, 9));
+    el.style.setProperty("--dur", clamp(3.2 / (a || 1), 0.6, 5).toFixed(2) + "s");
+  }
+  function slider(id, unit, onChange) {
+    var input = $(id), out = $(id + "o");
+    var api = {
+      input: input, out: out,
+      get: function () { return Number(input.value); },
+      show: function () { out.textContent = fmt(api.get()) + " " + unit; }
+    };
+    input.addEventListener("input", function () { api.show(); onChange(); });
+    return api;
+  }
+  function buttons(figId, attr, onPick) {
+    var btns = $(figId).querySelectorAll("button[" + attr + "]");
+    each.call(btns, function (b) {
+      b.addEventListener("click", function () {
+        each.call(btns, function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        onPick(b.getAttribute(attr));
+      });
+    });
+  }
+
+  /* 7–8. Tụ điện giữ áp, cuộn cảm giữ dòng (mạch RC, RL với khoá 2 vị trí, τ = 1 s) */
+  var SE = 12, SR = 4, SIMAX = SE / SR, TAU = 1, TS = 0.05, NS = 160;
+  var STORE = {
+    C: {
+      // Tụ: u_C biến thiên liên tục, i = (nguồn − u_C) / R được nhảy
+      step: function (s, dt, pos) {
+        var target = pos === 1 ? SE : 0, u = target + (s.u - target) * Math.exp(-dt / TAU);
+        return { u: u, i: (target - u) / SR };
+      },
+      text: [
+        "Khoá đang ở 2, tụ chưa tích điện. Bấm <b>1 · Nạp</b> rồi xem hai đường trên đồ thị.",
+        "Khoá ở 1: nguồn nạp cho tụ. Dòng <span class=\"k-i\">i</span> <b>nhảy ngay</b> lên rồi giảm dần; điện áp <span class=\"k-u\">u<sub>C</sub></span> <b>tăng từ từ</b> từ giá trị cũ, không nhảy. Đầy rồi thì i = 0 (DC không qua tụ).",
+        "Khoá ở 2: bỏ nguồn, tụ xả qua R. Dòng <span class=\"k-i\">i</span> <b>đổi chiều ngay</b> (âm), còn <span class=\"k-u\">u<sub>C</sub></span> <b>giảm từ từ</b>. Lúc này tụ đóng vai một nguồn áp nhỏ."
+      ]
+    },
+    L: {
+      // Cuộn cảm: i biến thiên liên tục, u_L = nguồn − R × i được nhảy
+      step: function (s, dt, pos) {
+        var src = pos === 1 ? SE : 0, target = src / SR, i = target + (s.i - target) * Math.exp(-dt / TAU);
+        return { u: src - SR * i, i: i };
+      },
+      text: [
+        "Khoá đang ở 2, chưa có dòng. Bấm <b>1 · Đóng nguồn</b> rồi xem hai đường trên đồ thị.",
+        "Khoá ở 1: đóng nguồn vào cuộn cảm. Điện áp <span class=\"k-u\">u<sub>L</sub></span> <b>nhảy ngay</b> lên 12 V rồi giảm dần; dòng <span class=\"k-i\">i</span> <b>tăng từ từ</b> như bánh đà được đẩy. Ổn định thì u<sub>L</sub> = 0.",
+        "Khoá ở 2: bỏ nguồn. Dòng <span class=\"k-i\">i</span> <b>vẫn chạy cùng chiều</b> rồi giảm từ từ (bánh đà còn quay), còn <span class=\"k-u\">u<sub>L</sub></span> <b>đảo dấu ngay</b> để đẩy dòng đi tiếp. Nếu cắt hẳn mạch, dòng không có đường đi nên u<sub>L</sub> vọt rất cao → tia lửa ở công tắc."
+      ]
+    }
+  };
+  function round1(x) { return fmt(Math.round(x * 10) / 10); }
+  function plotPoints(hist, key, max) {
+    var xs = 248 / (NS - 1);
+    return hist.map(function (h, k) { return (300 + k * xs).toFixed(1) + "," + (130 - h[key] / max * 85).toFixed(1); }).join(" ");
+  }
+  function initStorage(p, kind) {
+    var fig = $(p + "Sim");
+    if (!fig) return;
+    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false;
+    buttons(p + "Sim", "data-pos", function (v) {
+      pos = Number(v); mark = true;
+      $(p + "Live").innerHTML = cfg.text[pos];
+      $(p + "Blade").setAttribute("y2", pos === 1 ? "40" : "64");
+    });
+    function paint() {
+      var ev = "", xs = 248 / (NS - 1);
+      hist.forEach(function (h, k) { if (h.ev) ev += "M" + (300 + k * xs).toFixed(1) + " 40 L" + (300 + k * xs).toFixed(1) + " 220 "; });
+      $(p + "U").setAttribute("points", plotPoints(hist, "u", SE));
+      $(p + "I").setAttribute("points", plotPoints(hist, "i", SIMAX));
+      $(p + "Ev").setAttribute("d", ev || "M0 0");
+      setText(p + "Ut", " = " + round1(st.u) + " V");
+      setText(p + "It", " = " + round1(st.i) + " A");
+      setFlow($(p + "F1"), pos === 1 ? st.i : 0);
+      setFlow($(p + "F2"), pos === 2 ? st.i : 0);
+      paintDirection();
+      if (kind === "C") {
+        var h = 60 * clamp(st.u / SE, 0, 1);
+        setAttrs(p + "Meter", { y: 155 - h, height: h });
+        $(p + "Qp").style.opacity = $(p + "Qn").style.opacity = String(clamp(st.u / SE, 0, 1));
+      }
+    }
+    // Mũi tên chiều dòng: xanh = cùng chiều quy ước (i > 0), cam = chạy ngược lại (i < 0)
+    function paintDirection() {
+      var neg = st.i < 0, has = Math.abs(st.i) >= 0.02, dir = $(p + "Dir");
+      $(p + "Arr").classList.toggle("hide", !has);
+      $(p + "Arr").classList.toggle("neg", neg);
+      $(p + "A1").setAttribute("transform", "translate(230 180) rotate(" + (neg ? 270 : 90) + ")");
+      $(p + "A2").setAttribute("transform", "translate(160 200) rotate(" + (neg ? 0 : 180) + ")");
+      [$(p + "F1"), $(p + "F2")].forEach(function (el) { el.classList.toggle("c-w", neg); });
+      dir.setAttribute("class", !has ? "s" : neg ? "b warm" : "b ac");
+      dir.textContent = !has ? "i = 0: không có dòng" : neg ? "i < 0: dòng chạy NGƯỢC lại" : "i > 0: dòng chạy theo chiều quy ước";
+    }
+    function frame(ts) {
+      if (!running) return;
+      var dt = last ? Math.min((ts - last) / 1000, 0.1) : 0;
+      last = ts;
+      st = cfg.step(st, dt, pos);
+      acc += dt;
+      while (acc >= TS) {
+        acc -= TS;
+        hist.push({ u: st.u, i: st.i, ev: mark });
+        mark = false;
+        if (hist.length > NS) hist.shift();
+      }
+      if (kind === "L") {
+        angle = (angle + st.i * dt * 120) % 360;
+        $(p + "Wheel").setAttribute("transform", "rotate(" + angle.toFixed(1) + " 272 127)");
+      }
+      if (ts - lastPaint > 80) { lastPaint = ts; paint(); }
+      requestAnimationFrame(frame);
+    }
+    function start() { if (running) return; running = true; last = 0; requestAnimationFrame(frame); }
+    // Chỉ chạy khi mô phỏng đang hiện trên màn hình
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else running = false; }).observe(fig);
+    } else { start(); }
+    $(p + "Live").innerHTML = cfg.text[0];
+    paint();
+  }
+
+  initStorage("rc", "C"); initStorage("rl", "L");
+})();
+</script>
+<script>
+/* Mô phỏng phân áp, phân dòng */
+(function () {
+  "use strict";
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function fmt(x) { var r = Math.round(x * 100) / 100; return String(r).replace(".", ","); }
+  function setFlow(el, i) {
+    var a = Math.abs(i);
+    el.classList.toggle("off", a < 0.005);
+    el.style.strokeWidth = String(clamp(2 + a * 1.4, 2, 10));
+    el.style.setProperty("--dur", clamp(3.2 / (a || 1), 0.5, 5).toFixed(2) + "s");
+  }
+  var fig = $("simPD");
+  if (!fig) return;
+  var mode = "ser", S = $("pdS"), R1 = $("pdR1"), R2 = $("pdR2");
+  function setMode(m) {
+    mode = m;
+    if (m === "ser") { $("pdSl").textContent = "Điện áp U"; S.max = "24"; S.step = "0.5"; S.value = "12"; }
+    else { $("pdSl").textContent = "Dòng tổng I"; S.max = "6"; S.step = "0.1"; S.value = "3"; }
+    render();
+  }
+  Array.prototype.forEach.call(fig.querySelectorAll("button[data-pd]"), function (b, _, all) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(fig.querySelectorAll("button[data-pd]"), function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      setMode(b.getAttribute("data-pd"));
+    });
+  });
+  function render() {
+    var s = Number(S.value), r1 = Number(R1.value), r2 = Number(R2.value), sum = r1 + r2, ser = mode === "ser";
+    $("pdSo").textContent = fmt(s) + (ser ? " V" : " A");
+    $("pdR1o").textContent = r1 + " Ω"; $("pdR2o").textContent = r2 + " Ω";
+    $("pdSer").classList.toggle("hide", !ser); $("pdPar").classList.toggle("hide", ser);
+    if (ser) {
+      var u1 = s * r1 / sum, u2 = s * r2 / sum, h1 = 145 * r1 / sum;
+      $("pdB1").setAttribute("height", String(h1)); $("pdB2").setAttribute("y", String(30 + h1)); $("pdB2").setAttribute("height", String(145 - h1));
+      $("pdUs").textContent = "U = " + fmt(s) + " V";
+      $("pdU1").textContent = "R1 = " + r1 + " Ω · U1 = " + fmt(u1) + " V";
+      $("pdU2").textContent = "R2 = " + r2 + " Ω · U2 = " + fmt(u2) + " V";
+      $("pdLive").innerHTML = "U1 = " + fmt(s) + " × " + r1 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(u1) + " V</b> · U2 = " + fmt(s) + " × " + r2 + " / " + sum + " = <b>" + fmt(u2) + " V</b>. Kiểm tra: U1 + U2 = " + fmt(u1 + u2) + " V = U ✓";
+    } else {
+      var i1 = s * r2 / sum, i2 = s * r1 / sum;
+      setFlow($("pdF0"), s); setFlow($("pdF1"), i1); setFlow($("pdF2"), i2);
+      $("pdIs").textContent = "I = " + fmt(s) + " A";
+      $("pdI1").textContent = "R1 = " + r1 + " Ω · I1 = " + fmt(i1) + " A";
+      $("pdI2").textContent = "R2 = " + r2 + " Ω · I2 = " + fmt(i2) + " A";
+      $("pdLive").innerHTML = "I1 = " + fmt(s) + " × " + r2 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(i1) + " A</b> · I2 = " + fmt(s) + " × " + r1 + " / " + sum + " = <b>" + fmt(i2) + " A</b>. Kiểm tra: I1 + I2 = " + fmt(i1 + i2) + " A; cùng áp " + fmt(i1 * r1) + " V ✓" +
+        (r1 !== r2 ? " · Nhánh R nhỏ hơn có dòng lớn hơn." : "");
+    }
+  }
+  [S, R1, R2].forEach(function (el) { el.addEventListener("input", render); });
+  render();
+})();
+</script>
+<script>
 window.CT_QUIZ = [
   { q: "Điện trở có các vạch màu: Đỏ – Tím – Nâu – Bạc. Giá trị là:",
     opts: ["27 Ω ± 10 %", "270 Ω ± 10 %", "2,7 kΩ ± 5 %", "271 Ω ± 10 %"], a: 1,
@@ -1084,9 +1539,9 @@ window.CT_QUIZ = [
   { q: "Cần điện trở 12,33 kΩ nhưng không có sẵn. Cách ghép đúng là:",
     opts: ["12 kΩ song song 330 Ω", "12 kΩ nối tiếp 330 Ω", "12 kΩ nối tiếp 33 Ω", "1,2 kΩ nối tiếp 330 Ω"], a: 1,
     why: "Nối tiếp thì cộng: 12 000 + 330 = 12 330 Ω = 12,33 kΩ. Ghép song song cho kết quả nhỏ hơn 330 Ω." },
-  { q: "Hai điện trở 10 kΩ mắc song song. Điện trở tương đương là:",
-    opts: ["20 kΩ", "10 kΩ", "5 kΩ", "100 kΩ"], a: 2,
-    why: "Song song: R = R1 × R2 / (R1 + R2) = 100 / 20 = 5 kΩ, tức N điện trở giống nhau thì R/N. 20 kΩ là kết quả nối tiếp." },
+  { q: "Dòng tổng I = 3 A chia vào 2 nhánh song song R1 = 2 Ω và R2 = 4 Ω. Dòng qua R1 là:",
+    opts: ["1 A", "1,5 A", "2 A", "3 A"], a: 2,
+    why: "Phân dòng: I1 = I × R2 / (R1 + R2) = 3 × 4 / 6 = 2 A (tử số là điện trở nhánh kia). Nhánh R nhỏ có dòng lớn. 1 A là dòng qua R2; 1,5 A là chia đều, chỉ đúng khi R1 = R2." },
   { q: "Nguồn 5 V, LED có V<sub>F</sub> = 1,8 V, dòng I<sub>F</sub> = 10 mA. Điện trở hạn dòng là:",
     opts: ["0,32 Ω", "32 Ω", "320 Ω", "680 Ω"], a: 2,
     why: "R = (V<sub>S</sub> − V<sub>F</sub>) / I<sub>F</sub> = (5 − 1,8) / 0,01 = 320 Ω. Phải đổi 10 mA = 0,01 A; chia thẳng cho 10 sẽ ra 0,32 sai đơn vị. 680 Ω là cộng nhầm 5 + 1,8." },
