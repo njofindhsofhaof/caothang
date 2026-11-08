@@ -56,7 +56,7 @@
     diode(g, CX, y + 20, d);
     line(g, CX, y + 52, CX, y + SINGLE_H);
     label(g, CX + 26, y + 34, d.name.charAt(0), d.name.slice(1));
-    text(g, CX + 26, y + 50, (d.kind === "si" ? "Si " : "LED ") + vf(d) + (d.rev ? " · ngược" : ""), "start", "dd-val");
+    text(g, CX + 26, y + 50, ({ si: "Si ", ge: "Ge " }[d.kind] || "LED ") + vf(d) + (d.rev ? " · ngược" : ""), "start", "dd-val");
     return y + SINGLE_H;
   }
 

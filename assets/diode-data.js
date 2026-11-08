@@ -1,6 +1,6 @@
 /* Bai tap mach ung dung diode (Chuong 3). Moi bai la mach VCC -> R -> cac tang noi tiep xuong Mass:
    - levels: tung tang tu tren xuong; tang co 1 diode hoac nhieu diode song song.
-     Diode: name, vf (V), kind "si" (diode thuong) | "led", rev = true neu lap phan cuc nghich.
+     Diode: name, vf (V), kind "si" (0,7 V) | "ge" (0,3 V) | "led", rev = true neu lap phan cuc nghich.
    - taps: diem do V_O; node k = nut ngay tren tang k (dem tu 0). Luon co 1 diem do o node 0.
    - analysis: cho R, tinh dong va dien ap voi tung V_CC. design: chon R de dong qua moi diode dan = ma (mA).
    - from: bai goc trong vo (VD1 ... VD8) hoac bai phat trien.
@@ -8,6 +8,7 @@
 (function () {
   "use strict";
   function si(name, opts) { return { name: name, vf: 0.7, kind: "si", rev: !!(opts && opts.rev) }; }
+  function ge(name, opts) { return { name: name, vf: 0.3, kind: "ge", rev: !!(opts && opts.rev) }; }
   function led(name, vf, opts) { return { name: name, vf: vf, kind: "led", rev: !!(opts && opts.rev) }; }
 
   window.DIODE_PROBLEMS = [
@@ -82,6 +83,20 @@
     {
       id: 11, from: "Phát triển từ VD8", kind: "Dạng 7 · Cụm LED nối tiếp cụm diode Si",
       levels: [[led("D1", 3), led("D2", 2), led("D3", 2)], [si("D4"), si("D5"), led("D6", 2, { rev: true })]],
+      taps: [{ name: "O2", node: 0 }, { name: "O1", node: 1 }],
+      analysis: { r: 220, vccs: [9] },
+      design: { ma: 10, vccs: [9], askV: false }
+    },
+    {
+      id: 12, from: "Phát triển: diode Ge", kind: "Dạng 3 · Ba diode nối tiếp (Ge + Si + LED)",
+      levels: [[ge("D1")], [si("D2")], [led("D3", 2)]],
+      taps: [{ name: "O3", node: 0 }, { name: "O2", node: 1 }, { name: "O1", node: 2 }],
+      analysis: { r: 220, vccs: [2, 5, 9] },
+      design: { ma: 10, vccs: [5, 9, 12], askV: true }
+    },
+    {
+      id: 13, from: "Phát triển: diode Ge", kind: "Dạng 6 · Song song Ge // Si (khác loại) nối tiếp LED",
+      levels: [[ge("D1"), si("D2")], [led("D3", 2)]],
       taps: [{ name: "O2", node: 0 }, { name: "O1", node: 1 }],
       analysis: { r: 220, vccs: [9] },
       design: { ma: 10, vccs: [9], askV: false }

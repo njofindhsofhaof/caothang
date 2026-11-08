@@ -48,7 +48,7 @@
     if (lv.length === 1) return "V_" + lv[0].name;
     return "V_D" + st.on.map(function (nm) { return nm.slice(1); }).join("");
   }
-  function kindText(d) { return d.kind === "si" ? "Si" : "LED"; }
+  function kindText(d) { return d.kind === "si" ? "Si" : d.kind === "ge" ? "Ge" : "LED"; }
 
   /* ---------- nhan xet mach (chung cho moi truong hop) ---------- */
   function circuitNotes(p) {
@@ -119,14 +119,20 @@
       var st = sol.states[k];
       if (lv.length === 1) { singles.push(iSym(lv[0].name)); return; }
       var on = st.on.map(iSym);
-      if (on.length === 1) lines.push(on[0] + " = I_R = " + mA(sol.iR));
+      var zero = lv.filter(function (d) { return st.on.indexOf(d.name) < 0; }).map(function (d) { return iSym(d.name); });
+      if (on.length === 1) {
+        var l1 = eqLabel(ctx, "k1-" + k);
+        var one = eq(zero) + " = 0 (không dẫn) nên " + on[0] + " = I_R = " + mA(sol.iR);
+        if (l1.first) lines.push(k1Line(lv.map(function (d) { return iSym(d.name); }), l1, nodeOf(p, k)), cap(one));
+        else lines.push(fromRef([l1.n]) + one);
+        return;
+      }
       else {
         var lbl = eqLabel(ctx, "k1-" + k);
         var share = "các diode dẫn cùng loại nên " + eq(on) + " = I_R / " + on.length + " = " + n(sol.iR * 1000) + " / " + on.length + " = " + mA(sol.iR / on.length);
         if (lbl.first) lines.push(k1Line(on, lbl, nodeOf(p, k)), cap(share));
         else lines.push(fromRef([lbl.n]) + share);
       }
-      var zero = lv.filter(function (d) { return st.on.indexOf(d.name) < 0; }).map(function (d) { return iSym(d.name); });
       if (zero.length) lines.push(eq(zero) + " = 0 mA");
     });
     if (singles.length) lines.unshift("Mạch nối tiếp nên " + eq(singles) + " = I_R = " + mA(sol.iR));
@@ -168,7 +174,10 @@
     var ds = D.design(p.levels, vcc, ma / 1000);
     var top = "V_" + topTap(p).name;
     var lines = ["V_CC = " + V(vcc) + " > " + sumText(p, ds.states) + " ⇒ các diode phân cực thuận dẫn; " + top + " = " + V(ds.sumV)];
-    if (ds.n === 1) lines.push("Dòng qua mỗi diode dẫn I_D = " + ma + " mA; mạch nối tiếp nên I_R = I_D = " + ma + " mA");
+    var parOne = [];
+    p.levels.forEach(function (lv, k) { if (lv.length > 1) parOne = parOne.concat(ds.states[k].on); });
+    if (ds.n === 1 && parOne.length) lines.push("Cụm song song chỉ có " + parOne.map(sub).join(", ") + " dẫn nên dòng chỉ đi qua 1 nhánh: I_R = I_D = " + ma + " mA");
+    else if (ds.n === 1) lines.push("Dòng qua mỗi diode dẫn I_D = " + ma + " mA; mạch nối tiếp nên I_R = I_D = " + ma + " mA");
     else {
       var refs = [];
       p.levels.forEach(function (lv, k) {

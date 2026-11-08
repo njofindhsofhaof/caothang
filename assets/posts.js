@@ -180,7 +180,7 @@ window.CT_POSTS = [
   {
     section: "ontap",
     title: "Bài tập mạch ứng dụng diode (Chương 3)",
-    desc: "Diode, LED nối tiếp và song song, diode phân cực nghịch: tính IR, ID, VO và chọn điện trở — 11 bài theo vở, tự chấm và lời giải từng bước.",
+    desc: "Diode, LED nối tiếp và song song, diode phân cực nghịch: tính IR, ID, VO và chọn điện trở — 13 bài (diode Si, Ge và LED), tự chấm và lời giải từng bước.",
     date: "2026-11-08",
     href: "/baitapdiode",
     parent: "/dientucoban"

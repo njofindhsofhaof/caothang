@@ -98,3 +98,17 @@ test('every problem is well formed and every design case is solvable', () => {
     if (p.design) for (const v of p.design.vccs) assert.ok(design(p.levels, v, p.design.ma / 1000).ok, `bài ${p.id} VCC ${v}`);
   }
 });
+
+test('Ge diode: series Ge + Si + LED and Ge // Si cluster', () => {
+  const b12 = byId(12).levels;
+  assert.equal(solve(b12, 2, 220).mode, 'off');
+  const s = solve(b12, 9, 220);
+  assert.ok(Math.abs(s.iR * 1000 - 27.27) < 0.01);
+  assert.deepEqual(s.nodes.map((v) => Math.round(v * 100) / 100), [3, 2.7, 2]);
+  assert.deepEqual([5, 9, 12].map((v) => Math.round(design(b12, v, 0.01).r)), [200, 600, 900]);
+  const b13 = solve(byId(13).levels, 9, 220);
+  assert.ok(Math.abs(b13.iR * 1000 - 30.45) < 0.01);
+  assert.equal(b13.id.D2, 0);
+  assert.ok(Math.abs(b13.id.D1 - b13.iR) < 1e-12);
+  assert.ok(Math.abs(design(byId(13).levels, 9, 0.01).r - 670) < 1e-6);
+});
