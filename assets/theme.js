@@ -50,27 +50,26 @@
   var ICON_SUN = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></svg>';
 
   var STYLE =
-    ".theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;" +
-    "min-height:36px;padding:0 12px;border-radius:999px;cursor:pointer;" +
-    "font:500 12px/1 var(--mono,ui-monospace,monospace);" +
+    ".theme-toggle{position:absolute;top:8px;right:8px;z-index:50;" +
+    "display:inline-flex;align-items:center;justify-content:center;" +
+    "width:32px;height:32px;padding:0;border-radius:50%;cursor:pointer;" +
     "color:var(--ink-soft,#51626F);background:var(--surface,#fff);border:1px solid var(--line,#D2DADE);" +
     "transition:border-color .15s,color .15s,transform .15s;}" +
     ".theme-toggle:hover{border-color:var(--accent,#2F6690);color:var(--accent,#2F6690);}" +
-    ".theme-toggle:active{transform:scale(.96);}" +
+    ".theme-toggle:active{transform:scale(.92);}" +
     ".theme-toggle:focus-visible{outline:2px solid var(--accent,#2F6690);outline-offset:2px;}" +
-    "header>.theme-toggle{margin-left:auto;}" +
     "@media print{.theme-toggle{display:none;}}";
 
   function render(button) {
     var isDark = currentTheme() === "dark";
-    button.innerHTML = (isDark ? ICON_SUN : ICON_MOON) + "<span>" + (isDark ? "Nền sáng" : "Nền tối") + "</span>";
+    button.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+    button.title = isDark ? "Nền sáng" : "Nền tối";
     button.setAttribute("aria-label", isDark ? "Chuyển sang nền sáng" : "Chuyển sang nền tối");
     button.setAttribute("aria-pressed", isDark ? "true" : "false");
   }
 
   function mount() {
-    var header = document.querySelector("header");
-    if (!header || header.querySelector(".theme-toggle")) return;
+    if (!document.body || document.querySelector(".theme-toggle")) return;
 
     var style = document.createElement("style");
     style.textContent = STYLE;
@@ -95,8 +94,7 @@
       else if (media.addListener) media.addListener(onSystemChange);
     }
 
-    var slot = header.querySelector(".headright");
-    (slot || header).appendChild(button);
+    document.body.appendChild(button);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
