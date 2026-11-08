@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 
 // Moi trang can the og de khi dan link vao Zalo/Facebook hien tieu de + anh xem truoc.
-const pages = readdirSync(new URL('..', import.meta.url)).filter((f) => f.endsWith('.html'));
+const pages = readdirSync(new URL('..', import.meta.url)).filter((f) => f.endsWith('.html') && !/^google[0-9a-f]+\.html$/.test(f)); // bo file xac minh Google Search Console
 
 test('every page has description and Open Graph preview tags', () => {
   for (const f of pages) {
