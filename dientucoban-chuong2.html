@@ -8,6 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong2.en.js?v=1">
 <meta property="og:title" content="Chương 2: Linh kiện thụ động · Điện tử Cơ bản">
 <meta property="og:description" content="Điện tử cơ bản Chương 2: điện trở, mã màu điện trở 4 và 5 vạch, điện trở dán SMD, ghép nối tiếp và song song, hạn dòng LED, bộ chia áp, pull-up, tụ điện, dung kháng và cuộn cảm.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong2">
@@ -1148,8 +1149,12 @@
     if (Math.abs(r) < 1 / p) r = 0;
     var s = String(Math.abs(r));
     if (s.indexOf("e") >= 0) s = Math.abs(r).toFixed(dd);
-    return (r < 0 ? "−" : "") + s.replace(".", ",");
+    return (r < 0 ? "−" : "") + (isEn() ? s : s.replace(".", ","));
   }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function withPrefix(v, unit, list) {
     if (v === 0) return "0 " + unit;
     for (var i = 0; i < list.length; i++) {
@@ -1175,6 +1180,7 @@
     var input = $(id), out = $(id + "o");
     var api = { get: function () { return Number(input.value); }, show: function () { out.textContent = show(api.get()); } };
     input.addEventListener("input", function () { api.show(); onChange(); });
+    onLang(api.show);
     api.show();
     return api;
   }
@@ -1186,6 +1192,8 @@
     { n: "Xám", h: "#9E9E9E" }, { n: "Trắng", h: "#FAFAFA" }
   ];
   var GOLD = { n: "Vàng kim", h: "#C9A227" }, SILVER = { n: "Bạc", h: "#B8BCC2" };
+  var COLOR_EN = { "Đen": "Black", "Nâu": "Brown", "Đỏ": "Red", "Cam": "Orange", "Vàng": "Yellow", "Lục": "Green", "Lam": "Blue", "Tím": "Violet", "Xám": "Grey", "Trắng": "White", "Vàng kim": "Gold", "Bạc": "Silver" };
+  function colorName(o) { return tr(o.n, COLOR_EN[o.n] || o.n); }
   var DIGITS = COLORS.map(function (c, i) { return { n: c.n, h: c.h, v: i }; });
   var MULTS = COLORS.map(function (c, i) { return { n: c.n, h: c.h, v: Math.pow(10, i) }; })
     .concat([{ n: GOLD.n, h: GOLD.h, v: 0.1 }, { n: SILVER.n, h: SILVER.h, v: 0.01 }]);
@@ -1211,7 +1219,7 @@
       opts.forEach(function (o, i) {
         var op = document.createElement("option");
         op.value = String(i);
-        op.textContent = o.n + " · " + fmtOpt(o);
+        op.textContent = colorName(o) + " · " + fmtOpt(o);
         sel.appendChild(op);
       });
       sel.value = String(idx);
@@ -1220,13 +1228,13 @@
       host.appendChild(lab);
       return { sel: sel, opts: opts };
     }
-    function build() {
+    function build(keep) {
       host.textContent = "";
-      var p = PRESET[bands], nd = bands - 2;
+      var p = keep || PRESET[bands], nd = bands - 2;
       sels = [];
-      for (var i = 0; i < nd; i++) sels.push(makeSel("Vạch " + (i + 1) + " · chữ số", DIGITS, p[i], function (o) { return String(o.v); }));
-      sels.push(makeSel("Vạch " + (nd + 1) + " · hệ số", MULTS, p[nd], function (o) { return multLabel(o.v); }));
-      sels.push(makeSel("Vạch " + (nd + 2) + " · sai số", TOLS, p[nd + 1], function (o) { return "±" + fmt(o.v) + "%"; }));
+      for (var i = 0; i < nd; i++) sels.push(makeSel(tr("Vạch ", "Band ") + (i + 1) + tr(" · chữ số", " · digit"), DIGITS, p[i], function (o) { return String(o.v); }));
+      sels.push(makeSel(tr("Vạch ", "Band ") + (nd + 1) + tr(" · hệ số", " · multiplier"), MULTS, p[nd], function (o) { return multLabel(o.v); }));
+      sels.push(makeSel(tr("Vạch ", "Band ") + (nd + 2) + tr(" · sai số", " · tolerance"), TOLS, p[nd + 1], function (o) { return "±" + fmt(o.v) + "%"; }));
       render();
     }
     function render() {
@@ -1242,31 +1250,32 @@
       }
       var lo = R * (1 - tol / 100), hi = R * (1 + tol / 100);
       $("colorVal").textContent = ohm(R) + " ± " + fmt(tol) + " %";
-      $("colorLive").innerHTML = picks.map(function (p) { return p.n; }).join(" – ") + ": " + digits + " " + multLabel(mult) +
-        " = <b>" + ohm(R) + " ± " + fmt(tol) + " %</b>. Giá trị thật nằm trong khoảng " + ohm(lo) + " đến " + ohm(hi) + ".";
+      $("colorLive").innerHTML = picks.map(colorName).join(" – ") + ": " + digits + " " + multLabel(mult) +
+        " = <b>" + ohm(R) + " ± " + fmt(tol) + " %</b>. " + tr("Giá trị thật nằm trong khoảng ", "The real value lies between ") + ohm(lo) + tr(" đến ", " and ") + ohm(hi) + ".";
     }
     buttons("simColor", "data-bands", function (n) { bands = Number(n); build(); });
+    onLang(function () { build(sels.map(function (x) { return Number(x.sel.value); })); });
     build();
   }
 
   /* 2. Mã điện trở dán SMD */
   function decodeSmd(raw) {
     var code = String(raw || "").trim().toUpperCase();
-    if (!code) return { err: "Gõ mã in trên điện trở, vd. 103 hoặc 4R7." };
-    if (/^0+$/.test(code)) return { v: 0, how: "Toàn số 0: điện trở 0 Ω, dùng như dây nối (cầu nối)." };
+    if (!code) return { err: tr("Gõ mã in trên điện trở, vd. 103 hoặc 4R7.", "Type the code printed on the resistor, e.g. 103 or 4R7.") };
+    if (/^0+$/.test(code)) return { v: 0, how: tr("Toàn số 0: điện trở 0 Ω, dùng như dây nối (cầu nối).", "All zeros: a 0 Ω resistor, used as a wire link (jumper).") };
     if (/^\d*R\d+$/.test(code) || /^\d+R$/.test(code)) {
       var v = Number(code.replace("R", "."));
-      return { v: v, how: "Chữ R là dấu phẩy: " + code + " = " + fmt(v) + " Ω." };
+      return { v: v, how: tr("Chữ R là dấu phẩy: ", "The letter R is the decimal point: ") + code + " = " + fmt(v) + " Ω." };
     }
     if (/^\d{3}$/.test(code)) {
       var e3 = Number(code[2]), v3 = Number(code.slice(0, 2)) * Math.pow(10, e3);
-      return { v: v3, how: "Mã 3 số: " + code.slice(0, 2) + " × 10<sup>" + e3 + "</sup> = " + fmt(v3, 0) + " Ω." };
+      return { v: v3, how: tr("Mã 3 số: ", "3-digit code: ") + code.slice(0, 2) + " × 10<sup>" + e3 + "</sup> = " + fmt(v3, 0) + " Ω." };
     }
     if (/^\d{4}$/.test(code)) {
       var e4 = Number(code[3]), v4 = Number(code.slice(0, 3)) * Math.pow(10, e4);
-      return { v: v4, how: "Mã 4 số: " + code.slice(0, 3) + " × 10<sup>" + e4 + "</sup> = " + fmt(v4, 0) + " Ω." };
+      return { v: v4, how: tr("Mã 4 số: ", "4-digit code: ") + code.slice(0, 3) + " × 10<sup>" + e4 + "</sup> = " + fmt(v4, 0) + " Ω." };
     }
-    return { err: "Mã chưa đúng dạng: dùng 3 số (103), 4 số (8202), có chữ R (4R7, 0R22) hoặc 000." };
+    return { err: tr("Mã chưa đúng dạng: dùng 3 số (103), 4 số (8202), có chữ R (4R7, 0R22) hoặc 000.", "Invalid code: use 3 digits (103), 4 digits (8202), a code with R (4R7, 0R22) or 000.") };
   }
   function initSmd() {
     if (!$("simSmd")) return;
@@ -1276,10 +1285,11 @@
       $("smdChip").textContent = code || "?";
       if (res.err) { $("smdVal").textContent = "?"; $("smdLive").textContent = res.err; return; }
       $("smdVal").textContent = "= " + ohm(res.v);
-      $("smdLive").innerHTML = res.how + " Kết quả: <b>" + ohm(res.v) + "</b>.";
+      $("smdLive").innerHTML = res.how + tr(" Kết quả: <b>", " Result: <b>") + ohm(res.v) + "</b>.";
     }
     input.addEventListener("input", render);
     buttons("simSmd", "data-code", function (c) { input.value = c; render(); });
+    onLang(render);
     render();
   }
 
@@ -1289,7 +1299,7 @@
     var mode = "ser";
     function kshow(v) { return fmt(v, 2) + " kΩ"; }
     var r1 = range("cR1", kshow, render), r2 = range("cR2", kshow, render);
-    var r3 = range("cR3", function (v) { return v > 0 ? kshow(v) : "bỏ"; }, render);
+    var r3 = range("cR3", function (v) { return v > 0 ? kshow(v) : tr("bỏ", "none"); }, render);
     buttons("simComb", "data-cmode", function (m) { mode = m; render(); });
     function render() {
       var R = [r1.get(), r2.get(), r3.get()].filter(function (x) { return x > 0; }).map(function (x) { return x * 1000; });
@@ -1303,15 +1313,16 @@
       });
       if (ser) {
         Rt = R.reduce(function (a, b) { return a + b; }, 0);
-        how = "Nối tiếp: R<sub>tđ</sub> = " + R.map(ohm).join(" + ") + " = <b>" + ohm(Rt) + "</b>. Lớn hơn điện trở lớn nhất.";
+        how = tr("Nối tiếp", "Series") + ": R<sub>" + tr("tđ", "eq") + "</sub> = " + R.map(ohm).join(" + ") + " = <b>" + ohm(Rt) + "</b>. " + tr("Lớn hơn điện trở lớn nhất.", "Larger than the largest resistor.");
       } else {
         Rt = 1 / R.reduce(function (a, b) { return a + 1 / b; }, 0);
-        how = "Song song: 1/R<sub>tđ</sub> = " + R.map(function (x) { return "1/" + ohm(x); }).join(" + ") + " → R<sub>tđ</sub> = <b>" + ohm(Rt) +
-          "</b>. Nhỏ hơn điện trở nhỏ nhất (" + ohm(Math.min.apply(null, R)) + ").";
+        how = tr("Song song", "Parallel") + ": 1/R<sub>" + tr("tđ", "eq") + "</sub> = " + R.map(function (x) { return "1/" + ohm(x); }).join(" + ") + " → R<sub>" + tr("tđ", "eq") + "</sub> = <b>" + ohm(Rt) +
+          "</b>. " + tr("Nhỏ hơn điện trở nhỏ nhất (", "Smaller than the smallest resistor (") + ohm(Math.min.apply(null, R)) + ").";
       }
-      $("combRt").textContent = "Rtđ = " + ohm(Rt);
+      $("combRt").textContent = tr("Rtđ = ", "Req = ") + ohm(Rt);
       $("combLive").innerHTML = how;
     }
+    onLang(render);
     render();
   }
 
@@ -1333,9 +1344,10 @@
       $("divR2").textContent = "R2 = " + fmt(R2, 2) + " kΩ";
       $("divVout").textContent = "Vout = " + fmt(Vo, 2) + " V";
       $("divLive").innerHTML = "V<sub>out</sub> = " + fmt(Vi, 2) + " × " + fmt(R2, 2) + " / (" + fmt(R1, 2) + " + " + fmt(R2, 2) + ") = <b>" + fmt(Vo, 2) +
-        " V</b> · dòng qua bộ chia I = V<sub>in</sub> / (R1 + R2) = " + fmt(I, 3) + " mA. " +
-        (R2 > R1 ? "R2 lớn hơn R1 nên giữ phần lớn điện áp." : (R2 < R1 ? "R1 lớn hơn R2 nên V<sub>out</sub> nhỏ hơn nửa V<sub>in</sub>." : "R1 = R2 nên V<sub>out</sub> đúng bằng nửa V<sub>in</sub>."));
+        tr(" V</b> · dòng qua bộ chia I = V<sub>in</sub> / (R1 + R2) = ", " V</b> · divider current I = V<sub>in</sub> / (R1 + R2) = ") + fmt(I, 3) + " mA. " +
+        (R2 > R1 ? tr("R2 lớn hơn R1 nên giữ phần lớn điện áp.", "R2 is larger than R1, so it takes most of the voltage.") : (R2 < R1 ? tr("R1 lớn hơn R2 nên V<sub>out</sub> nhỏ hơn nửa V<sub>in</sub>.", "R1 is larger than R2, so V<sub>out</sub> is less than half of V<sub>in</sub>.") : tr("R1 = R2 nên V<sub>out</sub> đúng bằng nửa V<sub>in</sub>.", "R1 = R2, so V<sub>out</sub> is exactly half of V<sub>in</sub>.")));
     }
+    onLang(render);
     render();
   }
 
@@ -1354,8 +1366,9 @@
       $("xCt").textContent = "ZC = " + ohm(Zc);
       $("xLt").textContent = "XL = " + ohm(Xl);
       $("xLive").innerHTML = "Z<sub>C</sub> = 1 / (2π × " + hertz(F) + " × " + farad(C) + ") = <b>" + ohm(Zc) + "</b> · X<sub>L</sub> = 2π × " + hertz(F) + " × " + henry(L) + " = <b>" + ohm(Xl) + "</b>. " +
-        (F <= 2 ? "Gần DC: tụ gần như hở mạch (chặn), cuộn cảm gần như dây dẫn." : (F >= 1e5 ? "Tần số cao: tụ cho qua dễ, cuộn cảm cản mạnh." : "Tăng f thì Z<sub>C</sub> giảm, X<sub>L</sub> tăng."));
+        (F <= 2 ? tr("Gần DC: tụ gần như hở mạch (chặn), cuộn cảm gần như dây dẫn.", "Near DC: the capacitor is almost an open circuit (blocks), the inductor almost a plain wire.") : (F >= 1e5 ? tr("Tần số cao: tụ cho qua dễ, cuộn cảm cản mạnh.", "High frequency: the capacitor passes easily, the inductor opposes strongly.") : tr("Tăng f thì Z<sub>C</sub> giảm, X<sub>L</sub> tăng.", "Raise f and Z<sub>C</sub> falls while X<sub>L</sub> rises.")));
     }
+    onLang(render);
     render();
   }
 
@@ -1376,8 +1389,13 @@
   function fmt(x) {
     var r = Math.round(x * 100) / 100;
     if (Math.abs(r) < 0.005) r = 0;
-    return (r < 0 ? "−" : "") + String(Math.abs(r)).replace(".", ",");
+    var t = String(Math.abs(r));
+    return (r < 0 ? "−" : "") + (isEn() ? t : t.replace(".", ","));
   }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function par(x) { return Math.round(x * 100) < 0 ? "(" + fmt(x) + ")" : fmt(x); }
   function setText(id, s) { $(id).textContent = s; }
   function setAttrs(id, attrs) {
@@ -1445,13 +1463,25 @@
     var xs = 248 / (NS - 1);
     return hist.map(function (h, k) { return (300 + k * xs).toFixed(1) + "," + (130 - h[key] / max * 85).toFixed(1); }).join(" ");
   }
+  var STORE_EN = {
+    C: [
+      "The switch is at 2 and the capacitor is uncharged. Press <b>1 · Charge</b> and watch the two traces on the graph.",
+      "Switch at 1: the source charges the capacitor. The current <span class=\"k-i\">i</span> <b>jumps up at once</b> then decays; the voltage <span class=\"k-u\">u<sub>C</sub></span> <b>rises gradually</b> from its previous value, with no jump. Once full, i = 0 (DC does not pass through a capacitor).",
+      "Switch at 2: the source is removed and the capacitor discharges through R. The current <span class=\"k-i\">i</span> <b>reverses at once</b> (negative), while <span class=\"k-u\">u<sub>C</sub></span> <b>falls gradually</b>. The capacitor now acts as a small voltage source."
+    ],
+    L: [
+      "The switch is at 2 and there is no current. Press <b>1 · Connect</b> and watch the two traces on the graph.",
+      "Switch at 1: the source is connected to the inductor. The voltage <span class=\"k-u\">u<sub>L</sub></span> <b>jumps at once</b> to 12 V then decays; the current <span class=\"k-i\">i</span> <b>rises gradually</b>, like a flywheel being pushed. In steady state u<sub>L</sub> = 0.",
+      "Switch at 2: the source is removed. The current <span class=\"k-i\">i</span> <b>keeps flowing the same way</b> and decays gradually (the flywheel is still spinning), while <span class=\"k-u\">u<sub>L</sub></span> <b>flips sign at once</b> to keep the current going. If the circuit is cut completely, the current has nowhere to go, so u<sub>L</sub> shoots very high → a spark at the switch."
+    ]
+  };
   function initStorage(p, kind) {
     var fig = $(p + "Sim");
     if (!fig) return;
-    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false;
+    var cfg = STORE[kind], st = { u: 0, i: 0 }, pos = 2, hist = [], acc = 0, angle = 0, last = 0, lastPaint = 0, running = false, mark = false, shown = 0;
     buttons(p + "Sim", "data-pos", function (v) {
-      pos = Number(v); mark = true;
-      $(p + "Live").innerHTML = cfg.text[pos];
+      pos = Number(v); mark = true; shown = pos;
+      $(p + "Live").innerHTML = tr(cfg.text[pos], STORE_EN[kind][pos]);
       $(p + "Blade").setAttribute("y2", pos === 1 ? "40" : "64");
     });
     function paint() {
@@ -1480,7 +1510,7 @@
       $(p + "A2").setAttribute("transform", "translate(160 200) rotate(" + (neg ? 0 : 180) + ")");
       [$(p + "F1"), $(p + "F2")].forEach(function (el) { el.classList.toggle("c-w", neg); });
       dir.setAttribute("class", !has ? "s" : neg ? "b warm" : "b ac");
-      dir.textContent = !has ? "i = 0: không có dòng" : neg ? "i < 0: dòng chạy NGƯỢC lại" : "i > 0: dòng chạy theo chiều quy ước";
+      dir.textContent = !has ? tr("i = 0: không có dòng", "i = 0: no current") : neg ? tr("i < 0: dòng chạy NGƯỢC lại", "i < 0: current flows BACKWARDS") : tr("i > 0: dòng chạy theo chiều quy ước", "i > 0: current flows in the conventional direction");
     }
     function frame(ts) {
       if (!running) return;
@@ -1507,6 +1537,7 @@
       new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else running = false; }).observe(fig);
     } else { start(); }
     $(p + "Live").innerHTML = cfg.text[0];
+    onLang(function () { $(p + "Live").innerHTML = tr(cfg.text[shown], STORE_EN[kind][shown]); paint(); });
     paint();
   }
 
@@ -1519,7 +1550,11 @@
   "use strict";
   function $(id) { return document.getElementById(id); }
   function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
-  function fmt(x) { var r = Math.round(x * 100) / 100; return String(r).replace(".", ","); }
+  function fmt(x) { var r = String(Math.round(x * 100) / 100); return isEn() ? r : r.replace(".", ","); }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
   function setFlow(el, i) {
     var a = Math.abs(i);
     el.classList.toggle("off", a < 0.005);
@@ -1531,8 +1566,8 @@
   var mode = "ser", S = $("pdS"), R1 = $("pdR1"), R2 = $("pdR2");
   function setMode(m) {
     mode = m;
-    if (m === "ser") { $("pdSl").textContent = "Điện áp U"; S.max = "24"; S.step = "0.5"; S.value = "12"; }
-    else { $("pdSl").textContent = "Dòng tổng I"; S.max = "6"; S.step = "0.1"; S.value = "3"; }
+    if (m === "ser") { S.max = "24"; S.step = "0.5"; S.value = "12"; }
+    else { S.max = "6"; S.step = "0.1"; S.value = "3"; }
     render();
   }
   Array.prototype.forEach.call(fig.querySelectorAll("button[data-pd]"), function (b, _, all) {
@@ -1544,6 +1579,7 @@
   function render() {
     var s = Number(S.value), r1 = Number(R1.value), r2 = Number(R2.value), sum = r1 + r2, ser = mode === "ser";
     $("pdSo").textContent = fmt(s) + (ser ? " V" : " A");
+    $("pdSl").textContent = ser ? tr("Điện áp U", "Voltage U") : tr("Dòng tổng I", "Total current I");
     $("pdR1o").textContent = r1 + " Ω"; $("pdR2o").textContent = r2 + " Ω";
     $("pdSer").classList.toggle("hide", !ser); $("pdPar").classList.toggle("hide", ser);
     if (ser) {
@@ -1552,18 +1588,19 @@
       $("pdUs").textContent = "U = " + fmt(s) + " V";
       $("pdU1").textContent = "R1 = " + r1 + " Ω · U1 = " + fmt(u1) + " V";
       $("pdU2").textContent = "R2 = " + r2 + " Ω · U2 = " + fmt(u2) + " V";
-      $("pdLive").innerHTML = "U1 = " + fmt(s) + " × " + r1 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(u1) + " V</b> · U2 = " + fmt(s) + " × " + r2 + " / " + sum + " = <b>" + fmt(u2) + " V</b>. Kiểm tra: U1 + U2 = " + fmt(u1 + u2) + " V = U ✓";
+      $("pdLive").innerHTML = "U1 = " + fmt(s) + " × " + r1 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(u1) + " V</b> · U2 = " + fmt(s) + " × " + r2 + " / " + sum + " = <b>" + fmt(u2) + " V</b>. " + tr("Kiểm tra", "Check") + ": U1 + U2 = " + fmt(u1 + u2) + " V = U ✓";
     } else {
       var i1 = s * r2 / sum, i2 = s * r1 / sum;
       setFlow($("pdF0"), s); setFlow($("pdF1"), i1); setFlow($("pdF2"), i2);
       $("pdIs").textContent = "I = " + fmt(s) + " A"; $("pdIo").textContent = "I = " + fmt(s) + " A";
       $("pdI1").textContent = "R1 = " + r1 + " Ω · I1 = " + fmt(i1) + " A";
       $("pdI2").textContent = "R2 = " + r2 + " Ω · I2 = " + fmt(i2) + " A";
-      $("pdLive").innerHTML = "I1 = " + fmt(s) + " × " + r2 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(i1) + " A</b> · I2 = " + fmt(s) + " × " + r1 + " / " + sum + " = <b>" + fmt(i2) + " A</b>. Kiểm tra: I1 + I2 = " + fmt(i1 + i2) + " A; cùng áp " + fmt(i1 * r1) + " V ✓" +
-        (r1 !== r2 ? " · Nhánh R nhỏ hơn có dòng lớn hơn." : "");
+      $("pdLive").innerHTML = "I1 = " + fmt(s) + " × " + r2 + " / (" + r1 + " + " + r2 + ") = <b>" + fmt(i1) + " A</b> · I2 = " + fmt(s) + " × " + r1 + " / " + sum + " = <b>" + fmt(i2) + " A</b>. " + tr("Kiểm tra", "Check") + ": I1 + I2 = " + fmt(i1 + i2) + tr(" A; cùng áp ", " A; same voltage ") + fmt(i1 * r1) + " V ✓" +
+        (r1 !== r2 ? tr(" · Nhánh R nhỏ hơn có dòng lớn hơn.", " · The branch with the smaller R carries more current.") : "");
     }
   }
   [S, R1, R2].forEach(function (el) { el.addEventListener("input", render); });
+  onLang(render);
   render();
 })();
 </script>
@@ -1601,7 +1638,8 @@ window.CT_QUIZ = [
     why: "DC có f = 0: Z<sub>C</sub> = 1/(2πfC) rất lớn nên tụ chặn DC; X<sub>L</sub> = 2πfL = 0 nên cuộn cảm như một đoạn dây dẫn. Vì vậy tụ dùng để ghép tầng (chặn DC, cho AC qua)." }
 ];
 </script>
-<script src="/assets/quiz.js?v=2"></script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
