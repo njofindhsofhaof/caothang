@@ -43,6 +43,7 @@
 .post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
 .post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
 .post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .frac .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
 .post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
 .post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
 .post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
@@ -336,7 +337,7 @@
         </tbody>
       </table>
     </div>
-    <div class="formula">T = <span class="frac"><span>2π</span><span>ω</span></span> &nbsp;&nbsp;&nbsp; f = <span class="frac"><span>1</span><span>T</span></span> &nbsp;&nbsp;&nbsp; ω = 2πf<small>Đổi độ ↔ radian: 180° = π rad · 90° = π/2 · 60° = π/3 · 30° = π/6</small></div>
+    <div class="formula">T = <span class="frac"><span>2π</span><span><span class="vh">/</span>ω</span></span> &nbsp;&nbsp;&nbsp; f = <span class="frac"><span>1</span><span><span class="vh">/</span>T</span></span> &nbsp;&nbsp;&nbsp; ω = 2πf<small>Đổi độ ↔ radian: 180° = π rad · 90° = π/2 · 60° = π/3 · 30° = π/6</small></div>
     <p>Ví dụ: điện lưới Việt Nam có f = 50 Hz ⇒ T = 1/50 = 0,02 s = 20 ms; ω = 2π × 50 ≈ 314 rad/s. Vì vậy hay gặp đề cho dạng u = 220√2 sin(314t) V.</p>
     <div class="units">
       <p class="units-h">Đổi đơn vị tần số (hertz) và chu kỳ (giây)</p>
@@ -427,8 +428,8 @@
       <figcaption><strong>Thiết bị thực tế · Đồng hồ vạn năng ở thang V~ (AC).</strong> Đo ổ điện thấy khoảng 220 V: đó là trị <strong>hiệu dụng</strong>, còn đỉnh sóng thật là 220√2 ≈ 311 V. Số ghi trên thiết bị (220 V, 5 A…) cũng đều là trị hiệu dụng.<span class="credit">Ảnh: K.Venkataramana · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=163067537" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
     </figure>
     <div class="def"><strong>Trị số hiệu dụng</strong> của dòng điện i(t) là trị số của dòng điện không đổi I mà khi chạy qua cùng một điện trở R thì tạo ra cùng công suất (cùng nhiệt lượng trong một chu kỳ) như i(t).</div>
-    <div class="formula">W = ∫<sub>0</sub><sup>T</sup> R i² dt &nbsp;&nbsp;&nbsp; P = <span class="frac"><span>1</span><span>T</span></span>∫<sub>0</sub><sup>T</sup> R i² dt = R × I²<small>W: điện năng tiêu thụ trong 1 chu kỳ · P: công suất trung bình</small></div>
-    <div class="formula">I = √( <span class="frac"><span>1</span><span>T</span></span>∫<sub>0</sub><sup>T</sup> i² dt ) &nbsp;&nbsp;⇒&nbsp;&nbsp; I = <span class="frac"><span>I<sub>m</sub></span><span>√2</span></span> &nbsp;&nbsp; U = <span class="frac"><span>U<sub>m</sub></span><span>√2</span></span><small>Công thức I = I<sub>m</sub>/√2 chỉ đúng cho dạng sóng hình sin</small></div>
+    <div class="formula">W = ∫<sub>0</sub><sup>T</sup> R i² dt &nbsp;&nbsp;&nbsp; P = <span class="frac"><span>1</span><span><span class="vh">/</span>T</span></span>∫<sub>0</sub><sup>T</sup> R i² dt = R × I²<small>W: điện năng tiêu thụ trong 1 chu kỳ · P: công suất trung bình</small></div>
+    <div class="formula">I = √( <span class="frac"><span>1</span><span><span class="vh">/</span>T</span></span>∫<sub>0</sub><sup>T</sup> i² dt ) &nbsp;&nbsp;⇒&nbsp;&nbsp; I = <span class="frac"><span>I<sub>m</sub></span><span><span class="vh">/</span>√2</span></span> &nbsp;&nbsp; U = <span class="frac"><span>U<sub>m</sub></span><span><span class="vh">/</span>√2</span></span><small>Công thức I = I<sub>m</sub>/√2 chỉ đúng cho dạng sóng hình sin</small></div>
     <ul>
       <li>Ký hiệu: chữ <strong>có chỉ số m</strong> (U<sub>m</sub>, I<sub>m</sub>) là biên độ; chữ <strong>in hoa không chỉ số</strong> (U, I) là hiệu dụng; chữ <strong>thường</strong> (u, i) là tức thời.</li>
       <li>Công suất luôn tính bằng trị <strong>hiệu dụng</strong>. Nếu đề cho biên độ thì phải chia √2 trước khi tính P, Q, S.</li>
@@ -493,7 +494,7 @@
     <h3>b. Dạng mũ (dạng cực)</h3>
     <div class="formula">C = |C| e<sup>jψ</sup> = |C|∠ψ<small>|C| = r: môđun (độ dài) · ψ: argument (góc), −180° &lt; ψ ≤ 180°</small></div>
     <h3>Đổi qua lại giữa hai dạng</h3>
-    <div class="formula">r = √(a² + b²) &nbsp;&nbsp; ψ = arctan<span class="frac"><span>b</span><span>a</span></span><br>a = r cosψ &nbsp;&nbsp; b = r sinψ<small>Khi a &lt; 0 phải cộng hoặc trừ 180° vào ψ (điểm nằm bên trái trục ảo)</small></div>
+    <div class="formula">r = √(a² + b²) &nbsp;&nbsp; ψ = arctan<span class="frac"><span>b</span><span><span class="vh">/</span>a</span></span><br>a = r cosψ &nbsp;&nbsp; b = r sinψ<small>Khi a &lt; 0 phải cộng hoặc trừ 180° vào ψ (điểm nằm bên trái trục ảo)</small></div>
     <h3>Phép tính</h3>
     <div class="tablewrap">
       <table class="small">
@@ -562,15 +563,15 @@
       <figcaption>Cảm kháng tăng, dung kháng giảm khi tần số tăng; ở f = 0 ta gặp lại kết luận của Chương 1</figcaption>
     </figure>
     <div class="def"><strong>Trở kháng</strong> Z của một phần tử (hay một đoạn mạch hai cực không nguồn) là tỉ số giữa ảnh phức điện áp và ảnh phức dòng điện chạy qua nó. <strong>Dẫn nạp</strong> Y là nghịch đảo của trở kháng.</div>
-    <div class="formula">Z = <span class="frac"><span>U&#775;</span><span>I&#775;</span></span> &nbsp;&nbsp;&nbsp; Y = <span class="frac"><span>1</span><span>Z</span></span> = <span class="frac"><span>I&#775;</span><span>U&#775;</span></span><small>Z: ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · Y: siemens <span class="say" title="Cách đọc">si-men</span> (S)</small></div>
+    <div class="formula">Z = <span class="frac"><span>U&#775;</span><span><span class="vh">/</span>I&#775;</span></span> &nbsp;&nbsp;&nbsp; Y = <span class="frac"><span>1</span><span><span class="vh">/</span>Z</span></span> = <span class="frac"><span>I&#775;</span><span><span class="vh">/</span>U&#775;</span></span><small>Z: ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · Y: siemens <span class="say" title="Cách đọc">si-men</span> (S)</small></div>
     <h3>Trở kháng của từng phần tử R, L, C</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>Phần tử</th><th>Trở kháng</th><th>Độ lớn</th><th>Quan hệ pha u – i</th></tr></thead>
         <tbody>
-          <tr><td>Điện trở R</td><td>Z<sub>R</sub> = <span class="frac"><span>U&#775;<sub>R</sub></span><span>I&#775;<sub>R</sub></span></span> = R</td><td>R</td><td>Cùng pha (φ = 0)</td></tr>
-          <tr><td>Cuộn cảm L</td><td>Z<sub>L</sub> = <span class="frac"><span>U&#775;<sub>L</sub></span><span>I&#775;<sub>L</sub></span></span> = jωL = jX<sub>L</sub></td><td>X<sub>L</sub> = ωL (cảm kháng)</td><td>u sớm pha hơn i 90°</td></tr>
-          <tr><td>Tụ điện C</td><td>Z<sub>C</sub> = <span class="frac"><span>U&#775;<sub>C</sub></span><span>I&#775;<sub>C</sub></span></span> = <span class="frac"><span>1</span><span>jωC</span></span> = −j<span class="frac"><span>1</span><span>ωC</span></span> = −jX<sub>C</sub></td><td>X<sub>C</sub> = 1/(ωC) (dung kháng)</td><td>u trễ pha hơn i 90°</td></tr>
+          <tr><td>Điện trở R</td><td>Z<sub>R</sub> = <span class="frac"><span>U&#775;<sub>R</sub></span><span><span class="vh">/</span>I&#775;<sub>R</sub></span></span> = R</td><td>R</td><td>Cùng pha (φ = 0)</td></tr>
+          <tr><td>Cuộn cảm L</td><td>Z<sub>L</sub> = <span class="frac"><span>U&#775;<sub>L</sub></span><span><span class="vh">/</span>I&#775;<sub>L</sub></span></span> = jωL = jX<sub>L</sub></td><td>X<sub>L</sub> = ωL (cảm kháng)</td><td>u sớm pha hơn i 90°</td></tr>
+          <tr><td>Tụ điện C</td><td>Z<sub>C</sub> = <span class="frac"><span>U&#775;<sub>C</sub></span><span><span class="vh">/</span>I&#775;<sub>C</sub></span></span> = <span class="frac"><span>1</span><span><span class="vh">/</span>jωC</span></span> = −j<span class="frac"><span>1</span><span><span class="vh">/</span>ωC</span></span> = −jX<sub>C</sub></td><td>X<sub>C</sub> = 1/(ωC) (dung kháng)</td><td>u trễ pha hơn i 90°</td></tr>
         </tbody>
       </table>
     </div>
@@ -693,7 +694,7 @@
 
     <!-- 10 -->
     <h2 id="cong-suat"><span class="num">10</span>Công suất P, Q, S</h2>
-    <p class="easy"><span class="tag">Dễ nhớ</span>Công suất xoay chiều = <strong>cốc bia</strong>. Phần bia uống được là <strong>P</strong> (công suất tác dụng, sinh ra nhiệt, ánh sáng, cơ năng). Phần bọt là <strong>Q</strong> (công suất phản kháng, chỉ qua lại giữa nguồn với L, C). Cả cốc là <strong>S</strong> (công suất biểu kiến, nguồn phải gánh).</p>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Công suất xoay chiều = <strong>cốc bia</strong>. Phần bia uống được là <strong>P</strong> (công suất tác dụng, sinh ra nhiệt, ánh sáng, cơ năng). Phần bọt là <strong>Q</strong> (công suất phản kháng, chỉ qua lại giữa nguồn với L, C). Cả cốc là <strong>S</strong> (công suất biểu kiến, nguồn phải gánh). Bọt không hẳn vô ích: động cơ, máy biến áp cần Q để tạo từ trường. Nhưng Q càng nhiều thì dây và máy biến áp càng phải gánh nặng mà không sinh thêm công, nên người ta bù bớt Q bằng tụ.</p>
     <figure class="ill">
       <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Tam giác công suất: cạnh đáy P, cạnh đứng Q, cạnh huyền S, góc phi">
   <path class="arr" d="M150 190 L390 46"/>
@@ -801,6 +802,7 @@
       <p class="ans">⇒ P = 60 W, Q = 80 VAr, S = 100 VA, cosφ = 0,6 (mạch tính cảm, dòng trễ pha áp 53,13°)</p>
       <h4>Kiểm tra lại</h4>
       <p>K2: U&#775;<sub>R</sub> + U&#775;<sub>L</sub> + U&#775;<sub>C</sub> = (36 − j48) + (128 + j96) + (−64 − j48) = 100 + j0 = U&#775; ✓</p>
+      <p>Dùng dòng <strong>hiệu dụng</strong> I = I<sub>m</sub>/√2 = 2/√2 = √2 A (không dùng biên độ I<sub>m</sub> = 2 A), nên I² = 2:</p>
       <p>P = R × I² = 30 × (√2)² = 60 W ✓ &nbsp;&nbsp; Q = (X<sub>L</sub> − X<sub>C</sub>) × I² = (80 − 40) × 2 = 80 VAr ✓</p>
       <p>Để ý: U<sub>L</sub> = 160 V còn lớn hơn điện áp nguồn 100 V. Không sai, vì U&#775;<sub>L</sub> và U&#775;<sub>C</sub> ngược pha nhau và triệt tiêu một phần.</p>
     </div>
