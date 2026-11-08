@@ -38,6 +38,8 @@ a.card{display:block;background:var(--surface);border:1px solid var(--line);bord
 a.card:hover{border-color:var(--accent);}
 a.card h2{font-family:var(--serif);font-size:18px;margin:0 0 6px;font-weight:600;}
 a.card p{font-size:13.5px;color:var(--ink-soft);margin:0;}
+a.card p.latest{margin-top:8px;color:var(--ink);}
+a.card p.latest b{color:var(--accent);font-weight:600;}
 a.card .pub{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;display:block;}
 .badge-new{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle;}
 
