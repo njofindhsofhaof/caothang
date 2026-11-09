@@ -153,12 +153,52 @@
       : 'Tháng này: chưa trễ, chưa vắng buổi nào.';
     if (t.K) line.dataset.warn = '1';
     $('statusMsg').append(line);
-    if (t.streak > 0) {
-      const fire = document.createElement('span');
-      fire.className = 'dd-streak';
-      fire.textContent = `🔥 Chuỗi đúng giờ: ${t.streak} buổi liên tiếp`;
-      $('statusMsg').append(fire);
+    if (t.streak > 0) $('statusMsg').append(streakCard(t.streak));
+  }
+
+  // Mốc chuỗi: 5, 10, 20, 30, 50, 100, rồi cứ thêm 50.
+  function streakGoal(n) {
+    const marks = [5, 10, 20, 30, 50, 100];
+    let prev = 0;
+    for (const m of marks) { if (n < m) return { prev, next: m }; prev = m; }
+    const next = Math.floor(n / 50) * 50 + 50;
+    return { prev: next - 50, next };
+  }
+
+  // Thẻ chuỗi đúng giờ: số buổi + thanh vạch tới mốc kế tiếp (span vì nằm trong <p>).
+  function streakCard(n) {
+    const el = (cls, text) => {
+      const e = document.createElement('span');
+      e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    };
+    const { prev, next } = streakGoal(n);
+    const card = el('dd-streak');
+    card.setAttribute('role', 'img');
+    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp, còn ${next - n} buổi tới mốc ${next}`);
+    const num = el('dd-streak-num', String(n));
+    const body = el('dd-streak-body');
+    body.append(el('dd-streak-label', 'buổi đúng giờ liên tiếp'));
+    const track = el('dd-streak-track');
+    const span = next - prev, done = n - prev;
+    if (span <= 10) {
+      for (let i = 0; i < span; i++) {
+        const seg = el('dd-streak-seg');
+        if (i < done) { seg.dataset.on = '1'; seg.style.animationDelay = `${120 + i * 70}ms`; }
+        if (i === done - 1) seg.dataset.last = '1';
+        track.append(seg);
+      }
+    } else {
+      track.dataset.bar = '1';
+      const fill = el('dd-streak-fill');
+      fill.style.setProperty('--p', (done / span).toFixed(3));
+      track.append(fill);
     }
+    body.append(track);
+    body.append(el('dd-streak-next', `Còn ${next - n} buổi tới mốc ${next}`));
+    card.append(num, body);
+    return card;
   }
 
   // Tên ẩn danh của chính bạn trên bảng Leo rank (bảng công khai không hiện tên thật).
