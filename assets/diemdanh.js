@@ -156,18 +156,16 @@
     if (t.streak > 0) $('statusMsg').append(streakCard(t.streak));
   }
 
-  // Danh hiệu theo chuỗi đúng giờ. Icon: Fluent Emoji 3D (Microsoft, MIT) trong /assets/streak/.
-  const STREAK_TIERS = [
-    { min: 1, img: 'au-thu', name: 'Ấu thú' },
-    { min: 5, img: 'tieu-thu', name: 'Tiểu thú' },
-    { min: 10, img: 'manh-thu', name: 'Mãnh thú' },
-    { min: 20, img: 'hung-thu', name: 'Hung thú' },
-    { min: 30, img: 'linh-thu', name: 'Linh thú' },
-    { min: 50, img: 'sieu-thu', name: 'Siêu thú', rank: 'super' },
-    { min: 100, img: 'than-thu', name: 'Thần thú', rank: 'god' },
-  ];
+  // Mốc chuỗi: 5, 10, 20, 30, 50, 100, rồi cứ thêm 50.
+  function streakGoal(n) {
+    const marks = [5, 10, 20, 30, 50, 100];
+    let prev = 0;
+    for (const m of marks) { if (n < m) return { prev, next: m }; prev = m; }
+    const next = Math.floor(n / 50) * 50 + 50;
+    return { prev: next - 50, next };
+  }
 
-  // Thẻ chuỗi: icon danh hiệu + thanh tiến độ từ cấp hiện tại tới cấp kế tiếp (span vì nằm trong <p>).
+  // Thẻ chuỗi đúng giờ: số buổi + thanh vạch tới mốc kế tiếp (span vì nằm trong <p>).
   function streakCard(n) {
     const el = (cls, text) => {
       const e = document.createElement('span');
@@ -175,38 +173,20 @@
       if (text != null) e.textContent = text;
       return e;
     };
-    const icon = (t, cls) => {
-      const img = document.createElement('img');
-      img.className = cls;
-      img.src = `/assets/streak/${t.img}.webp`;
-      img.alt = '';
-      img.decoding = 'async';
-      return img;
-    };
-    const i = STREAK_TIERS.findLastIndex((t) => n >= t.min);
-    const tier = STREAK_TIERS[i], up = STREAK_TIERS[i + 1];
-    const prev = i === 0 ? 0 : tier.min;
+    const { prev, next } = streakGoal(n);
     const card = el('dd-streak');
-    if (tier.rank) card.dataset.rank = tier.rank;
     card.setAttribute('role', 'img');
-    card.setAttribute('aria-label', `Danh hiệu ${tier.name}, chuỗi đúng giờ ${n} buổi liên tiếp. `
-      + (up ? `Còn ${up.min - n} buổi lên ${up.name}.` : 'Đã đạt cấp cao nhất.'));
-
+    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp, còn ${next - n} buổi tới mốc ${next}`);
+    const num = el('dd-streak-num', String(n));
     const body = el('dd-streak-body');
-    const head = el('dd-streak-head');
-    head.append(el('dd-streak-name', tier.name));
-    const count = el('dd-streak-count');
-    count.append(el('dd-streak-num', String(n)), ' buổi đúng giờ liên tiếp');
-    head.append(count);
-    body.append(head);
-
+    body.append(el('dd-streak-label', 'buổi đúng giờ liên tiếp'));
     const track = el('dd-streak-track');
-    const span = up ? up.min - prev : 1, done = up ? n - prev : 1;
+    const span = next - prev, done = n - prev;
     if (span <= 10) {
-      for (let k = 0; k < span; k++) {
+      for (let i = 0; i < span; i++) {
         const seg = el('dd-streak-seg');
-        if (k < done) { seg.dataset.on = '1'; seg.style.animationDelay = `${160 + k * 70}ms`; }
-        if (k === done - 1 && up) seg.dataset.last = '1';
+        if (i < done) { seg.dataset.on = '1'; seg.style.animationDelay = `${120 + i * 70}ms`; }
+        if (i === done - 1) seg.dataset.last = '1';
         track.append(seg);
       }
     } else {
@@ -216,13 +196,8 @@
       track.append(fill);
     }
     body.append(track);
-
-    const next = el('dd-streak-next');
-    if (up) next.append(`Còn ${up.min - n} buổi lên `, icon(up, 'dd-streak-mini'), el('dd-streak-up', up.name));
-    else next.append('Cấp cao nhất rồi, giữ vững nhé!');
-    body.append(next);
-
-    card.append(icon(tier, 'dd-streak-icon'), body);
+    body.append(el('dd-streak-next', `Còn ${next - n} buổi tới mốc ${next}`));
+    card.append(num, body);
     return card;
   }
 
