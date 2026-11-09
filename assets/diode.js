@@ -147,7 +147,10 @@
     if (sol.mode === "blocked") {
       var bad = p.levels[sol.blockedAt].map(function (d) { return sub(d.name); }).join(", ");
       var lines = [bad + " phân cực nghịch nên không dẫn; mạch nối tiếp bị hở, không có dòng chạy qua.", eq(all) + " = 0 mA"];
-      lines.push(eq(p.taps.map(function (t) { return "V_" + t.name; })) + " = V_CC = " + V(vcc) + " (mạch nối tiếp: 1 diode không dẫn thì cả mạch không dẫn, không có dòng nên R không sụt áp)");
+      var up = p.taps.filter(function (t) { return t.node <= sol.blockedAt; }).map(function (t) { return "V_" + t.name; });
+      var down = p.taps.filter(function (t) { return t.node > sol.blockedAt; }).map(function (t) { return "V_" + t.name; });
+      lines.push(eq(up) + " = V_CC = " + V(vcc) + " (từ diode ngược trở lên: không có dòng nên R" + (up.length > 1 ? " và các diode phía trên" : "") + " không sụt áp)");
+      if (down.length) lines.push(eq(down) + " = 0 V (từ diode ngược trở xuống: mạch bị ngắt, các điểm này nối Mass, không nhận được điện áp từ V_CC)");
       return lines;
     }
     if (sol.mode === "off") {

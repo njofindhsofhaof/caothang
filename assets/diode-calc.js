@@ -54,7 +54,8 @@
     var mode = a.blockedAt >= 0 ? "blocked" : (vcc <= a.sumV ? "off" : "on");
     var iR = mode === "on" ? (vcc - a.sumV) / r : 0;
     var nodes = levels.map(function (_, k) {
-      if (mode !== "on") return vcc;
+      if (mode === "blocked") return k <= a.blockedAt ? vcc : 0;
+      if (mode === "off") return vcc;
       return nodeOn(a.states, k);
     });
     return { mode: mode, sumV: a.sumV, blockedAt: a.blockedAt, states: a.states, iR: iR, id: diodeCurrents(levels, a.states, iR), nodes: nodes };

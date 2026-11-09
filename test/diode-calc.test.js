@@ -44,8 +44,8 @@ test('VD5: a reverse-biased diode opens the series circuit', () => {
   const s = solve(byId(5).levels, 9, 220);
   assert.equal(s.mode, 'blocked');
   assert.equal(s.iR, 0);
-  assert.deepEqual(s.nodes, [9, 9]);
-  assert.deepEqual(solve(byId(6).levels, 12, 220).nodes, [12, 12, 12]);
+  assert.deepEqual(s.nodes, [9, 0]);
+  assert.deepEqual(solve(byId(6).levels, 12, 220).nodes, [12, 12, 0]);
 });
 
 test('VD6, VD7, VD8: parallel diodes clamp at the lowest threshold and share current', () => {

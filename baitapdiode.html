@@ -59,7 +59,8 @@
     <summary>Nhắc lại cách giải</summary>
     <ul>
       <li><strong>Bước 1 · Xét diode dẫn hay không.</strong> Diode lắp ngược (cathode hướng lên V<sub>CC</sub>) là phân cực nghịch, không dẫn. Mạch nối tiếp: nếu <span class="f">V<sub>CC</sub> ≤ V<sub>D1</sub> + V<sub>D2</sub> + …</span> hoặc có 1 diode không dẫn thì cả mạch không dẫn, I = 0.</li>
-      <li><strong>Mạch không dẫn:</strong> R không có dòng nên không sụt áp, các điểm đo đều có điện áp = <span class="f">V<sub>CC</sub></span>.</li>
+      <li><strong>Mạch không dẫn vì thiếu áp:</strong> R không có dòng nên không sụt áp, các điểm đo đều có điện áp = <span class="f">V<sub>CC</sub></span>.</li>
+      <li><strong>Mạch có diode phân cực ngược:</strong> mạch bị ngắt tại diode ngược. Các điểm đo từ diode ngược trở lên có điện áp = <span class="f">V<sub>CC</sub></span>; các điểm từ diode ngược trở xuống (nối Mass) có điện áp = 0 V.</li>
       <li><strong>Diode song song:</strong> diode có điện áp ngưỡng nhỏ nhất dẫn trước và ghim điện áp cả cụm ở mức đó; diode có ngưỡng lớn hơn không đủ áp nên không dẫn (I = 0). Các diode dẫn cùng loại chia đều dòng (định luật Kirchhoff 1 tại nút): <span class="f">I<sub>D</sub> = I<sub>R</sub> / số diode dẫn</span>.</li>
       <li><strong>Bước 2 · K2 cho vòng (1):</strong> <span class="f">−V<sub>CC</sub> + I<sub>R</sub>·R + V<sub>O</sub> = 0</span> ⇒ <span class="f">I<sub>R</sub> = (V<sub>CC</sub> − V<sub>O</sub>) / R</span>, với V<sub>O</sub> là tổng điện áp các diode từ nút trên cùng xuống Mass.</li>
       <li><strong>Chọn R:</strong> <span class="f">R = (V<sub>CC</sub> − V<sub>O</sub>) / I<sub>R</sub></span>, đổi mA ra A trước khi chia, rồi chọn điện trở chuẩn E12 (10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 × 10ⁿ).</li>
