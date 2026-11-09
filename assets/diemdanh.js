@@ -167,11 +167,11 @@
 
   // Biệt danh theo chuỗi: lên bậc đúng tại các mốc 5, 10, 20, 30, 50, 100.
   const STREAK_TIERS = [
-    { min: 1, icon: '🐣', name: 'Gà con' },
-    { min: 5, icon: '🐈', name: 'Mèo rừng' },
-    { min: 10, icon: '🐺', name: 'Sói' },
-    { min: 20, icon: '🐯', name: 'Hổ' },
-    { min: 30, icon: '🦅', name: 'Đại bàng' },
+    { min: 1, icon: '🐣', name: 'Ấu thú' },
+    { min: 5, icon: '🐈', name: 'Tiểu thú' },
+    { min: 10, icon: '🐺', name: 'Mãnh thú' },
+    { min: 20, icon: '🐯', name: 'Hung thú' },
+    { min: 30, icon: '🦅', name: 'Linh thú' },
     { min: 50, icon: '🦄', name: 'Siêu thú', rank: 'super' },
     { min: 100, icon: '🐉', name: 'Thần thú', rank: 'god' },
   ];
