@@ -46,7 +46,8 @@
 .dd-tally[data-warn]{color:var(--bad);}
 .dd-alias{display:block;margin-top:8px;font:400 13px var(--sans);color:var(--ink-soft);}
 .dd-alias b{color:var(--ink);font-weight:600;}
-.dd-streak{display:flex;align-items:center;gap:14px;margin-top:10px;padding:12px 14px;border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--line);color:var(--ink);--tier:var(--accent-warm);--tier-soft:var(--wait-soft);}
+.dd-status:has(.dd-streak){align-items:start;}
+.dd-streak{display:flex;align-items:center;gap:14px;margin:12px 0 0 -80px;padding:12px 14px;border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--line);color:var(--ink);--tier:var(--accent-warm);--tier-soft:var(--wait-soft);}
 .dd-streak-icon{flex:none;width:56px;height:56px;padding:4px;box-sizing:border-box;border-radius:50%;background:radial-gradient(circle at 50% 60%,var(--tier-soft) 0 62%,transparent 63%);animation:dd-badge 520ms var(--ease) both 60ms;}
 .dd-streak-body{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
 .dd-streak-head{display:flex;flex-direction:column;gap:1px;}
