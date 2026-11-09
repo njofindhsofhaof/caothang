@@ -156,48 +156,25 @@
     if (t.streak > 0) $('statusMsg').append(streakCard(t.streak));
   }
 
-  // Mốc chuỗi: 5, 10, 20, 30, 50, 100, rồi cứ thêm 50.
-  function streakGoal(n) {
-    const marks = [5, 10, 20, 30, 50, 100];
-    let prev = 0;
-    for (const m of marks) { if (n < m) return { prev, next: m }; prev = m; }
-    const next = Math.floor(n / 50) * 50 + 50;
-    return { prev: next - 50, next };
-  }
-
-  // Thẻ chuỗi đúng giờ: số buổi + thanh vạch tới mốc kế tiếp (span vì nằm trong <p>).
+  // Thẻ chuỗi đúng giờ: ngọn lửa + số buổi (span vì nằm trong <p>).
   function streakCard(n) {
-    const el = (cls, text) => {
-      const e = document.createElement('span');
-      e.className = cls;
-      if (text != null) e.textContent = text;
-      return e;
-    };
-    const { prev, next } = streakGoal(n);
-    const card = el('dd-streak');
+    const card = document.createElement('span');
+    card.className = 'dd-streak';
     card.setAttribute('role', 'img');
-    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp, còn ${next - n} buổi tới mốc ${next}`);
-    const num = el('dd-streak-num', String(n));
-    const body = el('dd-streak-body');
-    body.append(el('dd-streak-label', 'buổi đúng giờ liên tiếp'));
-    const track = el('dd-streak-track');
-    const span = next - prev, done = n - prev;
-    if (span <= 10) {
-      for (let i = 0; i < span; i++) {
-        const seg = el('dd-streak-seg');
-        if (i < done) { seg.dataset.on = '1'; seg.style.animationDelay = `${120 + i * 70}ms`; }
-        if (i === done - 1) seg.dataset.last = '1';
-        track.append(seg);
-      }
-    } else {
-      track.dataset.bar = '1';
-      const fill = el('dd-streak-fill');
-      fill.style.setProperty('--p', (done / span).toFixed(3));
-      track.append(fill);
-    }
-    body.append(track);
-    body.append(el('dd-streak-next', `Còn ${next - n} buổi tới mốc ${next}`));
-    card.append(num, body);
+    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp`);
+    card.innerHTML = '<svg class="dd-flame" viewBox="0 0 32 40" aria-hidden="true">'
+      + '<defs><linearGradient id="ddFlameOut" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E8481C"/><stop offset="1" stop-color="#FF9A3C"/></linearGradient>'
+      + '<linearGradient id="ddFlameIn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB627"/><stop offset="1" stop-color="#FFE38A"/></linearGradient></defs>'
+      + '<path class="dd-flame-out" fill="url(#ddFlameOut)" d="M16 2c1 6 8 10 10 17 3 9-3 19-10 19S3 32 5 22c1-5 4-7 5-11 2 3 2 6 4 7 1-6 0-11 2-16z"/>'
+      + '<path class="dd-flame-in" fill="url(#ddFlameIn)" d="M16 18c1 4 6 6 6 12 0 4-3 7-6 7s-6-3-6-7c0-3 2-5 3-7 1 2 1 3 2 4 1-3 0-6 1-9z"/>'
+      + '</svg>';
+    const num = document.createElement('span');
+    num.className = 'dd-streak-num';
+    num.textContent = String(n);
+    const label = document.createElement('span');
+    label.className = 'dd-streak-label';
+    label.textContent = 'buổi đúng giờ liên tiếp';
+    card.append(num, label);
     return card;
   }
 
