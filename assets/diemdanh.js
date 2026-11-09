@@ -165,6 +165,18 @@
     return { prev: next - 50, next };
   }
 
+  // Biệt danh theo chuỗi: lên bậc đúng tại các mốc 5, 10, 20, 30, 50, 100.
+  const STREAK_TIERS = [
+    { min: 1, icon: '🐣', name: 'Gà con' },
+    { min: 5, icon: '🐈', name: 'Mèo rừng' },
+    { min: 10, icon: '🐺', name: 'Sói' },
+    { min: 20, icon: '🐯', name: 'Hổ' },
+    { min: 30, icon: '🦅', name: 'Đại bàng' },
+    { min: 50, icon: '🦄', name: 'Siêu thú', rank: 'super' },
+    { min: 100, icon: '🐉', name: 'Thần thú', rank: 'god' },
+  ];
+  const streakTier = (n) => STREAK_TIERS.filter((t) => n >= t.min).pop();
+
   // Thẻ chuỗi đúng giờ: số buổi + thanh vạch tới mốc kế tiếp (span vì nằm trong <p>).
   function streakCard(n) {
     const el = (cls, text) => {
@@ -174,12 +186,19 @@
       return e;
     };
     const { prev, next } = streakGoal(n);
+    const tier = streakTier(n), up = streakTier(next);
+    const nextText = up !== tier ? `Còn ${next - n} buổi lên ${up.icon} ${up.name}` : `Còn ${next - n} buổi tới mốc ${next}`;
     const card = el('dd-streak');
+    if (tier.rank) card.dataset.rank = tier.rank;
     card.setAttribute('role', 'img');
-    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp, còn ${next - n} buổi tới mốc ${next}`);
+    card.setAttribute('aria-label', `Danh hiệu ${tier.name}: chuỗi đúng giờ ${n} buổi liên tiếp. ${nextText}`);
     const num = el('dd-streak-num', String(n));
     const body = el('dd-streak-body');
-    body.append(el('dd-streak-label', 'buổi đúng giờ liên tiếp'));
+    const head = el('dd-streak-head');
+    const badge = el('dd-streak-badge');
+    badge.append(el('dd-streak-icon', tier.icon), el('dd-streak-name', tier.name));
+    head.append(badge, el('dd-streak-label', 'buổi đúng giờ liên tiếp'));
+    body.append(head);
     const track = el('dd-streak-track');
     const span = next - prev, done = n - prev;
     if (span <= 10) {
@@ -196,7 +215,7 @@
       track.append(fill);
     }
     body.append(track);
-    body.append(el('dd-streak-next', `Còn ${next - n} buổi tới mốc ${next}`));
+    body.append(el('dd-streak-next', nextText));
     card.append(num, body);
     return card;
   }
