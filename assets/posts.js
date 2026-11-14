@@ -313,5 +313,14 @@ window.CT_POSTS = [
     short: "Video các bước làm board mạch đơn giản.",
     date: "2026-10-20",
     href: "https://www.tiktok.com/@ckcddt26c/video/7697250102666251527"
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat-thuchanh",
+    title: "Hướng dẫn lắp mạch đa hài NPN - PNP - IC555",
+    desc: "Video lắp mạch đa hài (dao động tạo xung nháy LED) bằng transistor NPN, transistor PNP và bằng IC 555.",
+    short: "Video lắp mạch đa hài dùng transistor NPN, PNP và IC 555.",
+    date: "2026-11-10",
+    href: "https://www.tiktok.com/@ckcddt26c/video/7706551191714401537"
   }
 ];
