@@ -2,8 +2,9 @@ import { redis, keys } from './redis.js';
 import { getSession } from './store.js';
 import { lateUntil } from './periods.js';
 
-const subjectOf = (s) => s.label?.trim() || 'Buổi học';
+export const subjectOf = (s) => s.label?.trim() || 'Buổi học';
 const STREAK_MAX_MONTHS = 12; // đếm chuỗi ngược tối đa 12 tháng
+const RECENT_MARKS = 7; // số buổi gần nhất hiện thành tia sét
 
 // Gom các buổi đã bắt đầu thành "môn trong ngày", mới nhất trước.
 function subjectGroups(sessions, now) {
@@ -42,18 +43,36 @@ export function monthTally({ sessions, records, excuses, now }) {
 }
 
 /**
- * Chuỗi môn đúng giờ liên tiếp tính từ môn gần nhất; trễ hoặc vắng (kể cả có phép) làm đứt chuỗi.
+ * Chuỗi buổi đúng giờ liên tiếp của một môn, tính từ buổi gần nhất; trễ hoặc vắng (kể cả có phép) làm đứt chuỗi.
+ * Mỗi môn có chuỗi riêng: nghỉ môn khác trong ngày không làm đứt chuỗi môn này.
+ * Không truyền `subject` thì tính chung mọi môn.
  * `broken: false` nghĩa là chưa gặp chỗ đứt, cần đếm tiếp sang tháng trước.
+ * @param {{ sessions: object[], records: Record<string, {late?: boolean}>, now: number, subject?: string }} input
  * @returns {{ count: number, broken: boolean }}
  */
-export function subjectStreak({ sessions, records, now }) {
+export function subjectStreak({ sessions, records, now, subject }) {
+  const picked = subject ? sessions.filter((s) => subjectOf(s) === subject) : sessions;
   let count = 0;
-  for (const list of subjectGroups(sessions, now)) {
+  for (const list of subjectGroups(picked, now)) {
     const st = groupState(list, records, now);
     if (st === 'ok') count += 1;
     else if (st !== 'open') return { count, broken: true };
   }
   return { count, broken: false };
+}
+
+/**
+ * Các buổi đã khép của một môn, mới nhất trước: true = đúng giờ, false = trễ hoặc vắng.
+ * Buổi còn mở mà chưa có bản ghi thì bỏ qua.
+ * @param {{ sessions: object[], records: Record<string, {late?: boolean}>, now: number, subject: string }} input
+ * @returns {boolean[]}
+ */
+export function subjectMarks({ sessions, records, now, subject }) {
+  const picked = sessions.filter((s) => subjectOf(s) === subject);
+  return subjectGroups(picked, now)
+    .map((list) => groupState(list, records, now))
+    .filter((st) => st !== 'open')
+    .map((st) => st === 'ok');
 }
 
 /**
@@ -86,21 +105,27 @@ export const prevMonth = (ym) => {
   return m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`;
 };
 
-// Thống kê tháng `ym` của một MSSV + chuỗi đúng giờ (đếm ngược qua các tháng trước nếu chưa đứt).
-export async function loadCheckinStats(ym, mssv, now) {
+// Thống kê tháng `ym` của một MSSV + chuỗi đúng giờ của môn `subject` (đếm ngược qua các tháng trước nếu chưa đứt).
+export async function loadCheckinStats(ym, mssv, now, subject) {
   const month = await loadMonth(ym, mssv);
   const dates = [...new Set(month.sessions.map((s) => s.date))];
   const ex = await Promise.all(dates.map((d) => redis().hget(keys.excuse(d), mssv)));
   const excuses = Object.fromEntries(dates.map((d, i) => [d, ex[i]]).filter(([, v]) => v));
   const tally = monthTally({ ...month, excuses, now });
 
-  let streak = subjectStreak({ ...month, now });
+  let streak = subjectStreak({ ...month, now, subject });
   let total = streak.count;
+  let recent = subjectMarks({ ...month, now, subject });
   let cursor = ym;
-  for (let i = 1; i < STREAK_MAX_MONTHS && !streak.broken; i++) {
+  for (let i = 1; i < STREAK_MAX_MONTHS && (!streak.broken || recent.length < RECENT_MARKS); i++) {
     cursor = prevMonth(cursor);
-    streak = subjectStreak({ ...(await loadMonth(cursor, mssv)), now });
-    total += streak.count;
+    const prev = await loadMonth(cursor, mssv);
+    if (!streak.broken) {
+      streak = subjectStreak({ ...prev, now, subject });
+      total += streak.count;
+    }
+    recent = [...recent, ...subjectMarks({ ...prev, now, subject })];
   }
-  return { ...tally, streak: total };
+  // Cũ → mới để hiện từ trái sang phải.
+  return { ...tally, streak: total, subject, recent: recent.slice(0, RECENT_MARKS).reverse() };
 }

@@ -3,14 +3,14 @@ import { send, handler, clientIp, requireSecret, vnDate } from './_lib/http.js';
 import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isOpen } from './_lib/store.js';
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
 import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
-import { loadCheckinStats } from './_lib/tally.js';
+import { loadCheckinStats, subjectOf } from './_lib/tally.js';
 import { aliasMap } from './_lib/alias.js';
 
 const DEVICE_BIND_TTL_S = 400 * 86_400;
 
 // Số lần trễ/vắng trong tháng để báo cho sinh viên; lỗi thì bỏ qua, không chặn điểm danh.
 async function safeTally(session, mssv, now) {
-  try { return await loadCheckinStats(session.date.slice(0, 7), mssv, now); } catch { return null; }
+  try { return await loadCheckinStats(session.date.slice(0, 7), mssv, now, subjectOf(session)); } catch { return null; }
 }
 
 async function issueTicket(req, res) {

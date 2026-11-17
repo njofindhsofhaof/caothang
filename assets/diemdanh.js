@@ -31,6 +31,8 @@
     $('stampIcon').textContent = ICONS[state];
     $('statusTitle').textContent = title;
     $('statusMsg').textContent = msg;
+    $('statusExtra').replaceChildren();
+    $('statusExtra').hidden = true;
   }
 
   async function api(path, body) {
@@ -143,22 +145,62 @@
     }
   }
 
-  // Dòng "Tháng này: trễ x · vắng P y · vắng K z" dưới thông báo thành công.
+  const BOLT_MIN = 3; // chuỗi từ 3 buổi liên tiếp mới hiện tia sét
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function boltIcon() {
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'dd-bolt');
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('d', 'M13 2 4 14h7l-1 8 9-12h-7l1-8z');
+    svg.append(path);
+    return svg;
+  }
+
+  // Hàng buổi gần nhất (cũ → mới): buổi thuộc chuỗi ≥ 3 hiện tia sét, còn lại là chấm.
+  function streakMarks(recent, streak) {
+    const row = el('span', 'dd-marks');
+    const bolts = streak >= BOLT_MIN ? Math.min(streak, recent.length) : 0;
+    recent.forEach((onTime, i) => {
+      if (i >= recent.length - bolts) return row.append(boltIcon());
+      row.append(el('span', `dd-dot${onTime ? ' is-on' : ''}`));
+    });
+    return row;
+  }
+
+  function streakBox(t) {
+    const lit = t.streak >= BOLT_MIN;
+    const box = el('div', `dd-streak${lit ? ' is-lit' : ''}`);
+    box.setAttribute('aria-label', `Chuỗi đúng giờ môn ${t.subject}: ${t.streak} buổi liên tiếp`);
+    const body = el('div', 'dd-streak-body');
+    body.append(el('span', 'dd-streak-label', `Buổi liên tiếp · ${t.subject}`), streakMarks(t.recent, t.streak));
+    box.append(el('span', 'dd-streak-num', String(t.streak)), body);
+    if (!lit) {
+      const left = BOLT_MIN - t.streak;
+      box.append(el('span', 'dd-streak-hint', `Thêm ${left} buổi đúng giờ nữa là có sét`));
+    }
+    return box;
+  }
+
+  // Khung chuỗi theo môn + dòng "Tháng này: trễ x · vắng P y · vắng K z" dưới thông báo thành công.
   function showTally(t) {
     if (!t) return;
-    const line = document.createElement('span');
-    line.className = 'dd-tally';
-    line.textContent = (t.late || t.P || t.K)
+    const extra = $('statusExtra');
+    if (t.subject && Array.isArray(t.recent) && t.recent.length) extra.append(streakBox(t));
+    const line = el('span', 'dd-tally', (t.late || t.P || t.K)
       ? `Tháng này: trễ ${t.late} · vắng có phép ${t.P} · vắng không phép ${t.K}`
-      : 'Tháng này: chưa trễ, chưa vắng buổi nào.';
-    if (t.K) line.dataset.warn = '1';
-    $('statusMsg').append(line);
-    if (t.streak > 0) {
-      const fire = document.createElement('span');
-      fire.className = 'dd-streak';
-      fire.textContent = `🔥 Chuỗi đúng giờ: ${t.streak} buổi liên tiếp`;
-      $('statusMsg').append(fire);
-    }
+      : 'Tháng này: chưa trễ, chưa vắng buổi nào.');
+    if (t.late || t.K) line.dataset.warn = '1';
+    extra.append(line);
+    extra.hidden = false;
   }
 
   // Tên ẩn danh của chính bạn trên bảng Leo rank (bảng công khai không hiện tên thật).
@@ -170,7 +212,8 @@
     const b = document.createElement('b');
     b.textContent = alias;
     line.append(b);
-    $('statusMsg').append(line);
+    $('statusExtra').append(line);
+    $('statusExtra').hidden = false;
   }
 
   const fmt = (ms) => new Date(ms).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
