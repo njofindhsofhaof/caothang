@@ -231,7 +231,17 @@
     return { lat: c.latitude, lng: c.longitude };
   }
 
+  // Tên môn chọn sẵn để các buổi cùng môn luôn ghi giống nhau (bảng tháng, ảnh tổng kết gộp theo tên).
+  const subjectLabel = () => ($('subjectSelect').value === 'other' ? $('labelInput').value.trim() : $('subjectSelect').value);
+  $('subjectSelect').addEventListener('change', () => {
+    const other = $('subjectSelect').value === 'other';
+    $('labelWrap').hidden = !other;
+    $('labelInput').required = other;
+    if (other) $('labelInput').focus();
+  });
+
   async function createSessions(times, repeatWeeks) {
+    if (!subjectLabel()) { $('openMsg').textContent = 'Hãy chọn môn (hoặc nhập tên buổi).'; ($('subjectSelect').value === 'other' ? $('labelInput') : $('subjectSelect')).focus(); return; }
     if (!roster.length) { $('openMsg').textContent = 'Hãy tải danh sách lớp trước (tab Danh sách lớp).'; return; }
     $('planBtn').disabled = true; $('nowBtn').disabled = true;
     try {
@@ -239,7 +249,7 @@
         method: 'POST',
         body: {
           ...(await placeBody()), ...times, repeatWeeks,
-          label: $('labelInput').value, radius: Number($('radiusInput').value), requireQr: $('qrInput').checked,
+          label: subjectLabel(), radius: Number($('radiusInput').value), requireQr: $('qrInput').checked,
         },
       });
       if (!r.ok) throw new Error(r.message);
@@ -551,7 +561,21 @@
   }
 
   /* ---------- Ảnh tổng kết theo môn ---------- */
-  const subjectName = (s) => s.label?.trim() || 'Buổi học';
+  // Gộp tên cũ gõ tay không đồng nhất (vd. "LT mạch", "mạch điện") về đúng tên môn.
+  const SUBJECT_ALIASES = [
+    [/sinh hoat|chu nhiem|\bshcn\b/, 'Sinh hoạt chủ nhiệm'],
+    [/ly thuyet mach|\blt ?mach|mach dien/, 'Lý thuyết mạch'],
+    [/dien tu (co ban|cb)|\bdtcb\b/, 'Điện tử cơ bản'],
+    [/do luong/, 'Đo lường điện'],
+    [/nhap mon/, 'Nhập môn ĐĐT'],
+  ];
+  const plain = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase();
+  const subjectName = (s) => {
+    const label = s.label?.trim() || '';
+    const key = plain(label);
+    const hit = SUBJECT_ALIASES.find(([re]) => re.test(key));
+    return hit ? hit[1] : label || 'Buổi học';
+  };
 
   // Các môn trong ngày (theo tên buổi), giữ thứ tự giờ học.
   function subjectsOf(sessions) {

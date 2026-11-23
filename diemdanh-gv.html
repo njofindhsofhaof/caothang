@@ -83,7 +83,16 @@
           <h2 class="sec">Đặt khung giờ điểm danh</h2>
           <p class="gv-note">Trong khung giờ này sinh viên tự mở trang điểm danh và tự điểm danh. Máy chủ kiểm tra GPS (phải ở trong phòng) và mỗi máy chỉ điểm danh cho một MSSV.</p>
           <div class="gv-fields">
-            <label class="span2">Tên buổi <input id="labelInput" maxlength="60" placeholder="VD: Mạch điện – sáng thứ Hai"></label>
+            <label class="span2">Môn <select id="subjectSelect" required>
+              <option value="" disabled selected>Chọn môn…</option>
+              <option>Sinh hoạt chủ nhiệm</option>
+              <option>Lý thuyết mạch</option>
+              <option>Điện tử cơ bản</option>
+              <option>Đo lường điện</option>
+              <option>Nhập môn ĐĐT</option>
+              <option value="other">Khác (tự nhập)…</option>
+            </select></label>
+            <label class="span2" id="labelWrap" hidden>Tên buổi <input id="labelInput" maxlength="60" placeholder="VD: Kiểm tra cuối kỳ"></label>
             <label class="span2">Phòng <select id="placeSelect"></select></label>
             <label>Ngày <input id="dateInput" type="date" required></label>
             <label>Từ <input id="fromInput" type="time" required></label>
