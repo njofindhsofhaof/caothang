@@ -85,3 +85,26 @@ test('classLeaderboard ranks by on-time subjects; late or absent days do not res
   ]);
   assert.deepEqual(classLeaderboard({ sessions, attendance: {}, roster, now: NOW }), []);
 });
+
+test('differently spelled labels of one subject on a day are one subject', () => {
+  const sessions = [
+    sess('a', '2026-11-02', 'Lý thuyết mạch'),
+    sess('b', '2026-11-03', 'LT Mạch'),
+    sess('c', '2026-11-03', 'Mạch điện – sáng thứ Ba', '20:00'),
+    sess('d', '2026-11-04', 'lý thuyết mạch'),
+  ];
+  const records = { a: { late: false }, b: { late: false }, d: { late: false } };
+  assert.deepEqual(subjectStreak({ sessions, records, now: NOW }), { count: 3, broken: false });
+  assert.deepEqual(monthTally({ sessions, records, excuses: {}, now: NOW }), { late: 0, P: 0, K: 0 });
+});
+
+test('subject names map to the fixed list, unknown labels stay as typed', () => {
+  const { subjectName } = globalThis.DDSubjects;
+  const cases = {
+    'SHCN': 'Sinh hoạt chủ nhiệm', 'Sinh hoạt lớp': 'Sinh hoạt chủ nhiệm',
+    'ĐTCB': 'Điện tử cơ bản', 'Điện tử CB': 'Điện tử cơ bản',
+    'đo lường': 'Đo lường điện', 'Nhập môn Điện-Điện tử': 'Nhập môn ĐĐT',
+    'Kiểm tra cuối kỳ': 'Kiểm tra cuối kỳ', '': 'Buổi học',
+  };
+  for (const [label, want] of Object.entries(cases)) assert.equal(subjectName({ label }), want, label);
+});

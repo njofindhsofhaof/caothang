@@ -561,21 +561,7 @@
   }
 
   /* ---------- Ảnh tổng kết theo môn ---------- */
-  // Gộp tên cũ gõ tay không đồng nhất (vd. "LT mạch", "mạch điện") về đúng tên môn.
-  const SUBJECT_ALIASES = [
-    [/sinh hoat|chu nhiem|\bshcn\b/, 'Sinh hoạt chủ nhiệm'],
-    [/ly thuyet mach|\blt ?mach|mach dien/, 'Lý thuyết mạch'],
-    [/dien tu (co ban|cb)|\bdtcb\b/, 'Điện tử cơ bản'],
-    [/do luong/, 'Đo lường điện'],
-    [/nhap mon/, 'Nhập môn ĐĐT'],
-  ];
-  const plain = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase();
-  const subjectName = (s) => {
-    const label = s.label?.trim() || '';
-    const key = plain(label);
-    const hit = SUBJECT_ALIASES.find(([re]) => re.test(key));
-    return hit ? hit[1] : label || 'Buổi học';
-  };
+  const { subjectName } = window.DDSubjects; // /assets/subjects.js
 
   // Các môn trong ngày (theo tên buổi), giữ thứ tự giờ học.
   function subjectsOf(sessions) {

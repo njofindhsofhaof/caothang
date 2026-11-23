@@ -1,8 +1,9 @@
 import { redis, keys } from './redis.js';
 import { getSession } from './store.js';
 import { lateUntil } from './periods.js';
+import '../../assets/subjects.js'; // đặt globalThis.DDSubjects, dùng chung với trang giáo viên
 
-const subjectOf = (s) => s.label?.trim() || 'Buổi học';
+const subjectOf = globalThis.DDSubjects.subjectName;
 const STREAK_MAX_MONTHS = 12; // đếm chuỗi ngược tối đa 12 tháng
 
 // Gom các buổi đã bắt đầu thành "môn trong ngày", mới nhất trước.
