@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { monthTally, subjectStreak, classLeaderboard } from '../api/_lib/tally.js';
+import { monthTally, subjectStreak, subjectMarks, classLeaderboard } from '../api/_lib/tally.js';
 
 // Buổi ngoài giờ học (19:00) nên không có khung trễ: lateUntil = expiresAt.
 const at = (date, hm) => new Date(`${date}T${hm}:00+07:00`).getTime();
@@ -62,6 +62,30 @@ test('a perfect month is not broken so earlier months keep counting', () => {
 test('a subject still open without a record neither counts nor breaks', () => {
   const sessions = [sess('a', '2026-11-19', 'Mạch'), sess('b', '2026-11-20', 'Mạch', '22:50')];
   assert.deepEqual(subjectStreak({ sessions, records: { a: { late: false } }, now: NOW }), { count: 1, broken: false });
+});
+
+test('streak is per subject: skipping another subject the same day does not break it', () => {
+  const sessions = [
+    sess('a', '2026-11-03', 'Mạch'),
+    sess('b', '2026-11-03', 'Thực hành', '20:00'),
+    sess('c', '2026-11-04', 'Mạch'),
+    sess('d', '2026-11-04', 'Thực hành', '20:00'),
+  ];
+  const records = { a: { late: false }, c: { late: false }, d: { late: false } };
+  assert.deepEqual(subjectStreak({ sessions, records, now: NOW, subject: 'Mạch' }), { count: 2, broken: false });
+  assert.deepEqual(subjectStreak({ sessions, records, now: NOW, subject: 'Thực hành' }), { count: 1, broken: true });
+});
+
+test('subjectMarks lists closed sessions of one subject, newest first, true when on time', () => {
+  const sessions = [
+    sess('a', '2026-11-02', 'Mạch'),
+    sess('b', '2026-11-03', 'Mạch'),
+    sess('x', '2026-11-03', 'Thực hành', '20:00'),
+    sess('c', '2026-11-04', 'Mạch'),
+    sess('d', '2026-11-20', 'Mạch', '22:50'),
+  ];
+  const records = { a: { late: false }, b: { late: true }, c: { late: false } };
+  assert.deepEqual(subjectMarks({ sessions, records, now: NOW, subject: 'Mạch' }), [true, false, true]);
 });
 
 test('classLeaderboard ranks by on-time subjects; late or absent days do not reset the count', () => {

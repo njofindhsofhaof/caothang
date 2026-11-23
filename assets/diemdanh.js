@@ -31,6 +31,8 @@
     $('stampIcon').textContent = ICONS[state];
     $('statusTitle').textContent = title;
     $('statusMsg').textContent = msg;
+    $('statusExtra').replaceChildren();
+    $('statusExtra').hidden = true;
   }
 
   async function api(path, body) {
@@ -143,39 +145,62 @@
     }
   }
 
-  // Dòng "Tháng này: trễ x · vắng P y · vắng K z" dưới thông báo thành công.
-  function showTally(t) {
-    if (!t) return;
-    const line = document.createElement('span');
-    line.className = 'dd-tally';
-    line.textContent = (t.late || t.P || t.K)
-      ? `Tháng này: trễ ${t.late} · vắng có phép ${t.P} · vắng không phép ${t.K}`
-      : 'Tháng này: chưa trễ, chưa vắng buổi nào.';
-    if (t.K) line.dataset.warn = '1';
-    $('statusMsg').append(line);
-    if (t.streak > 0) $('statusMsg').append(streakCard(t.streak));
+  const BOLT_MIN = 3; // chuỗi từ 3 buổi liên tiếp mới hiện tia sét
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
   }
 
-  // Thẻ chuỗi đúng giờ: ngọn lửa + số buổi (span vì nằm trong <p>).
-  function streakCard(n) {
-    const card = document.createElement('span');
-    card.className = 'dd-streak';
-    card.setAttribute('role', 'img');
-    card.setAttribute('aria-label', `Chuỗi đúng giờ ${n} buổi liên tiếp`);
-    card.innerHTML = '<svg class="dd-flame" viewBox="0 0 32 40" aria-hidden="true">'
-      + '<defs><linearGradient id="ddFlameOut" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E8481C"/><stop offset="1" stop-color="#FF9A3C"/></linearGradient>'
-      + '<linearGradient id="ddFlameIn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB627"/><stop offset="1" stop-color="#FFE38A"/></linearGradient></defs>'
-      + '<path class="dd-flame-out" fill="url(#ddFlameOut)" d="M16 2c1 6 8 10 10 17 3 9-3 19-10 19S3 32 5 22c1-5 4-7 5-11 2 3 2 6 4 7 1-6 0-11 2-16z"/>'
-      + '<path class="dd-flame-in" fill="url(#ddFlameIn)" d="M16 18c1 4 6 6 6 12 0 4-3 7-6 7s-6-3-6-7c0-3 2-5 3-7 1 2 1 3 2 4 1-3 0-6 1-9z"/>'
-      + '</svg>';
-    const num = document.createElement('span');
-    num.className = 'dd-streak-num';
-    num.textContent = String(n);
-    const label = document.createElement('span');
-    label.className = 'dd-streak-label';
-    label.textContent = 'buổi đúng giờ liên tiếp';
-    card.append(num, label);
-    return card;
+  function boltIcon() {
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'dd-bolt');
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('d', 'M13 2 4 14h7l-1 8 9-12h-7l1-8z');
+    svg.append(path);
+    return svg;
+  }
+
+  // Hàng buổi gần nhất (cũ → mới): buổi thuộc chuỗi ≥ 3 hiện tia sét, còn lại là chấm.
+  function streakMarks(recent, streak) {
+    const row = el('span', 'dd-marks');
+    const bolts = streak >= BOLT_MIN ? Math.min(streak, recent.length) : 0;
+    recent.forEach((onTime, i) => {
+      if (i >= recent.length - bolts) return row.append(boltIcon());
+      row.append(el('span', `dd-dot${onTime ? ' is-on' : ''}`));
+    });
+    return row;
+  }
+
+  function streakBox(t) {
+    const lit = t.streak >= BOLT_MIN;
+    const box = el('div', `dd-streak${lit ? ' is-lit' : ''}`);
+    box.setAttribute('aria-label', `Chuỗi đúng giờ môn ${t.subject}: ${t.streak} buổi liên tiếp`);
+    const body = el('div', 'dd-streak-body');
+    body.append(el('span', 'dd-streak-label', `Buổi liên tiếp · ${t.subject}`), streakMarks(t.recent, t.streak));
+    box.append(el('span', 'dd-streak-num', String(t.streak)), body);
+    if (!lit) {
+      const left = BOLT_MIN - t.streak;
+      box.append(el('span', 'dd-streak-hint', `Thêm ${left} buổi đúng giờ nữa là có sét`));
+    }
+    return box;
+  }
+
+  // Khung chuỗi theo môn + dòng "Tháng này: trễ x · vắng P y · vắng K z" dưới thông báo thành công.
+  function showTally(t) {
+    if (!t) return;
+    const extra = $('statusExtra');
+    if (t.subject && Array.isArray(t.recent) && t.recent.length) extra.append(streakBox(t));
+    const line = el('span', 'dd-tally', (t.late || t.P || t.K)
+      ? `Tháng này: trễ ${t.late} · vắng có phép ${t.P} · vắng không phép ${t.K}`
+      : 'Tháng này: chưa trễ, chưa vắng buổi nào.');
+    if (t.late || t.K) line.dataset.warn = '1';
+    extra.append(line);
+    extra.hidden = false;
   }
 
   // Tên ẩn danh của chính bạn trên bảng Leo rank (bảng công khai không hiện tên thật).
@@ -187,7 +212,8 @@
     const b = document.createElement('b');
     b.textContent = alias;
     line.append(b);
-    $('statusMsg').append(line);
+    $('statusExtra').append(line);
+    $('statusExtra').hidden = false;
   }
 
   const fmt = (ms) => new Date(ms).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
