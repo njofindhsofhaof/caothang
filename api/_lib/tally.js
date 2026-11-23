@@ -133,3 +133,97 @@ export async function loadCheckinStats(ym, mssv, now, subject) {
   // Cũ → mới để hiện từ trái sang phải.
   return { ...tally, streak: total, subject, recent: recent.slice(0, RECENT_MARKS).reverse() };
 }
+
+/* ---------- Trang cá nhân sinh viên (/sinhvien) ---------- */
+
+/**
+ * Từng "môn trong ngày" của một sinh viên, mới nhất trước.
+ * state: 'ok' đúng giờ · 'late' trễ · 'P' / 'K' vắng có / không phép · 'open' còn nhận điểm danh.
+ * @returns {{ date: string, subject: string, state: string, time: number|null, manual: boolean }[]}
+ */
+export function studentEntries({ sessions, records, excuses = {}, now }) {
+  return subjectGroups(sessions, now).map((list) => {
+    const st = groupState(list, records, now);
+    const recs = list.map((s) => records[s.id]).filter(Boolean);
+    const counted = st === 'ok' ? recs.filter((r) => !r.late) : recs;
+    const times = counted.map((r) => r.time).filter(Number.isFinite);
+    const date = list[0].date;
+    return {
+      date,
+      subject: subjectOf(list[0]),
+      state: st === 'absent' ? (excuses[date] === 'P' ? 'P' : 'K') : st,
+      time: times.length ? Math.min(...times) : null,
+      manual: counted.length > 0 && counted.every((r) => r.manual),
+    };
+  });
+}
+
+/**
+ * Chuỗi đúng giờ hiện tại của từng môn, từ các entries đã xếp mới nhất trước (có thể nối nhiều tháng).
+ * Trả { streaks, done }: done = các môn đã gặp chỗ đứt (không cần xét tháng cũ hơn).
+ */
+export function subjectStreaks(entries, streaks = new Map(), done = new Set()) {
+  for (const e of entries) {
+    if (e.state === 'open' || done.has(e.subject)) continue;
+    if (e.state === 'ok') streaks.set(e.subject, (streaks.get(e.subject) ?? 0) + 1);
+    else { done.add(e.subject); if (!streaks.has(e.subject)) streaks.set(e.subject, 0); }
+  }
+  return { streaks, done };
+}
+
+/**
+ * Gom entries của một tháng theo môn: số buổi đúng giờ / trễ / P / K và danh sách buổi.
+ * Môn trong danh sách chuẩn (assets/subjects.js) đứng trước theo đúng thứ tự đó.
+ */
+export function groupBySubject(entries, streaks = new Map()) {
+  const order = globalThis.DDSubjects.SUBJECTS;
+  const map = new Map();
+  for (const e of entries) {
+    const g = map.get(e.subject) ?? { name: e.subject, ok: 0, late: 0, P: 0, K: 0, entries: [] };
+    if (e.state in g) g[e.state] += 1;
+    g.entries.push(e);
+    map.set(e.subject, g);
+  }
+  const rank = (n) => (order.includes(n) ? order.indexOf(n) : order.length);
+  return [...map.values()]
+    .map((g) => ({ ...g, streak: streaks.get(g.name) ?? 0 }))
+    .sort((a, b) => rank(a.name) - rank(b.name) || a.name.localeCompare(b.name, 'vi'));
+}
+
+async function loadMonthWithExcuses(ym, mssv) {
+  const month = await loadMonth(ym, mssv);
+  const dates = [...new Set(month.sessions.map((s) => s.date))];
+  const ex = await Promise.all(dates.map((d) => redis().hget(keys.excuse(d), mssv)));
+  return { ...month, excuses: Object.fromEntries(dates.map((d, i) => [d, ex[i]]).filter(([, v]) => v)) };
+}
+
+// Báo cáo tháng `ym` của một MSSV + chuỗi hiện tại từng môn (tính từ tháng `nowYm` ngược về trước).
+export async function loadStudentReport(ym, mssv, now, nowYm) {
+  const cache = new Map();
+  const get = (m) => {
+    if (!cache.has(m)) cache.set(m, loadMonthWithExcuses(m, mssv));
+    return cache.get(m);
+  };
+
+  const month = await get(ym);
+  const entries = studentEntries({ ...month, now });
+
+  // Chuỗi: lùi từng tháng tới khi mọi môn đã gặp chỗ đứt, hoặc gặp 2 tháng liền không có buổi nào.
+  const state = { streaks: new Map(), done: new Set() };
+  const wanted = new Set(entries.map((e) => e.subject));
+  let cursor = nowYm;
+  let empty = 0;
+  for (let i = 0; i < STREAK_MAX_MONTHS; i++) {
+    const m = await get(cursor);
+    const list = studentEntries({ ...m, now });
+    subjectStreaks(list, state.streaks, state.done);
+    list.forEach((e) => wanted.add(e.subject));
+    empty = list.length ? 0 : empty + 1;
+    if (empty >= 2 || (wanted.size && [...wanted].every((s) => state.done.has(s)))) break;
+    cursor = prevMonth(cursor);
+  }
+
+  const subjects = groupBySubject(entries, state.streaks);
+  const total = subjects.reduce((t, g) => ({ ok: t.ok + g.ok, late: t.late + g.late, P: t.P + g.P, K: t.K + g.K }), { ok: 0, late: 0, P: 0, K: 0 });
+  return { total, subjects };
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Cổng sinh viên · DDT26C</title>
+<meta name="description" content="Cổng sinh viên lớp CĐ ĐĐT 26C: nhập MSSV để xem tình hình điểm danh từng môn, số buổi đúng giờ, trễ, vắng và chuỗi đúng giờ của bạn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Cổng sinh viên · DDT26C">
+<meta property="og:description" content="Cổng sinh viên lớp CĐ ĐĐT 26C: nhập MSSV để xem tình hình điểm danh từng môn, số buổi đúng giờ, trễ, vắng và chuỗi đúng giờ của bạn.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/sinhvien">
+<link rel="canonical" href="https://caothang-gray.vercel.app/sinhvien">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=portal">
+<link rel="stylesheet" href="/assets/sinhvien.css?v=1">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<main class="wrap dd sv">
+  <header>
+    <h1>Cổng sinh viên</h1>
+    <span class="feedbacklink">CĐ Đ, ĐT 26C · Cao Thắng</span>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+  <form class="dd-card dd-form" id="mssvForm" hidden>
+    <h2 class="dd-label">Xem điểm danh của bạn</h2>
+    <label for="mssvInput">Nhập MSSV</label>
+    <div class="dd-row">
+      <input id="mssvInput" inputmode="numeric" autocomplete="off" pattern="\d{6,12}" maxlength="12" placeholder="MSSV 9 chữ số" required>
+      <button type="submit" class="dd-btn">Xem</button>
+    </div>
+    <p class="dd-hint" id="mssvMsg" role="status"></p>
+  </form>
+
+  <section id="report" hidden>
+    <div class="dd-card sv-who">
+      <div>
+        <p class="dd-label">Sinh viên</p>
+        <p class="dd-name" id="whoName"></p>
+        <p class="dd-mssv"><span id="whoMssv"></span><button type="button" id="changeBtn">Đổi MSSV</button></p>
+      </div>
+      <div class="sv-month" role="group" aria-label="Chọn tháng">
+        <button type="button" class="sv-nav" id="prevBtn" aria-label="Tháng trước">‹</button>
+        <span id="monthLabel"></span>
+        <button type="button" class="sv-nav" id="nextBtn" aria-label="Tháng sau">›</button>
+      </div>
+    </div>
+
+    <div class="sv-total" id="totalBox"></div>
+    <p class="sv-msg" id="reportMsg" role="status"></p>
+    <div class="sv-subjects" id="subjectList"></div>
+
+    <p class="sv-note">Tên hiển thị là biệt danh của bạn trên bảng Leo rank, không hiện họ tên thật. Thấy sai (vd. có mặt mà bị ghi vắng) thì báo thầy để sửa.</p>
+  </section>
+</main>
+<script src="/assets/site.js"></script>
+<script src="/assets/sinhvien.js?v=1"></script>
+</body>
+</html>

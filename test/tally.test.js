@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { monthTally, subjectStreak, subjectMarks, classLeaderboard } from '../api/_lib/tally.js';
+import { monthTally, subjectStreak, subjectMarks, classLeaderboard, studentEntries, subjectStreaks, groupBySubject } from '../api/_lib/tally.js';
 
 // Buổi ngoài giờ học (19:00) nên không có khung trễ: lateUntil = expiresAt.
 const at = (date, hm) => new Date(`${date}T${hm}:00+07:00`).getTime();
@@ -131,4 +131,44 @@ test('subject names map to the fixed list, unknown labels stay as typed', () => 
     'Kiểm tra cuối kỳ': 'Kiểm tra cuối kỳ', '': 'Buổi học',
   };
   for (const [label, want] of Object.entries(cases)) assert.equal(subjectName({ label }), want, label);
+});
+
+test('studentEntries: one entry per subject per day with state and first on-time check-in', () => {
+  const sessions = [
+    sess('a', '2026-11-02', 'Lý thuyết mạch'),
+    sess('b', '2026-11-03', 'LT Mạch'),
+    sess('c', '2026-11-03', 'Đo lường điện', '20:00'),
+    sess('d', '2026-11-04', 'SHCN'),
+    sess('e', '2026-11-20', 'Lý thuyết mạch', '22:50'),
+  ];
+  const t = at('2026-11-02', '19:02');
+  const records = { a: { late: false, time: t }, b: { late: true, time: t + 1 } };
+  const got = studentEntries({ sessions, records, excuses: { '2026-11-04': 'P' }, now: NOW });
+  assert.deepEqual(got.map((e) => [e.date, e.subject, e.state]), [
+    ['2026-11-20', 'Lý thuyết mạch', 'open'],
+    ['2026-11-04', 'Sinh hoạt chủ nhiệm', 'P'],
+    ['2026-11-03', 'Đo lường điện', 'K'],
+    ['2026-11-03', 'Lý thuyết mạch', 'late'],
+    ['2026-11-02', 'Lý thuyết mạch', 'ok'],
+  ]);
+  assert.equal(got.at(-1).time, t);
+});
+
+test('subjectStreaks: per subject, open sessions skipped, carries across calls (months)', () => {
+  const e = (subject, state) => ({ subject, state });
+  const { streaks, done } = subjectStreaks([e('A', 'open'), e('A', 'ok'), e('B', 'late'), e('A', 'ok'), e('B', 'ok')]);
+  assert.deepEqual([...streaks], [['A', 2], ['B', 0]]);
+  assert.deepEqual([...done], ['B']);
+  subjectStreaks([e('A', 'ok'), e('A', 'K'), e('A', 'ok')], streaks, done);
+  assert.equal(streaks.get('A'), 3);
+});
+
+test('groupBySubject counts per subject and orders by the fixed subject list', () => {
+  const e = (subject, state) => ({ subject, state, date: '2026-11-02' });
+  const got = groupBySubject([e('Kiểm tra', 'ok'), e('Đo lường điện', 'late'), e('Sinh hoạt chủ nhiệm', 'ok'), e('Đo lường điện', 'K')], new Map([['Đo lường điện', 0]]));
+  assert.deepEqual(got.map((g) => [g.name, g.ok, g.late, g.P, g.K, g.entries.length]), [
+    ['Sinh hoạt chủ nhiệm', 1, 0, 0, 0, 1],
+    ['Đo lường điện', 0, 1, 0, 1, 2],
+    ['Kiểm tra', 1, 0, 0, 0, 1],
+  ]);
 });

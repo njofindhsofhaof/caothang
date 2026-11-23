@@ -1,0 +1,49 @@
+/* Cổng sinh viên (/sinhvien): dùng chung biến và khối .dd-* của diemdanh.css. */
+.sv{max-width:640px;}
+.sv-who{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;}
+.sv-who .dd-label{margin-bottom:4px;}
+.sv-who .dd-mssv button{font:inherit;color:var(--accent);background:none;border:0;padding:0 0 0 10px;cursor:pointer;text-decoration:underline;}
+.sv-month{display:flex;align-items:center;gap:6px;font:600 15px var(--sans);color:var(--ink);}
+.sv-month span{min-width:7.5em;text-align:center;}
+.sv-nav{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:600 20px/1 var(--sans);cursor:pointer;}
+.sv-nav:disabled{opacity:.35;cursor:default;}
+.sv-nav:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+.sv-total{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+.sv-tile{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;}
+.sv-tile b{display:block;font:700 26px/1.1 var(--serif);color:var(--c);font-variant-numeric:tabular-nums;}
+.sv-tile span{display:block;font:500 12px/1.3 var(--sans);color:var(--ink-soft);white-space:nowrap;}
+.sv-msg{font-size:14px;color:var(--ink-soft);margin:0 0 14px;}
+.sv-msg:empty{display:none;}
+
+.sv-subjects{display:flex;flex-direction:column;gap:12px;}
+.sv-subject{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:14px 16px;}
+.sv-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.sv-head h3{font:600 18px/1.25 var(--serif);margin:0;}
+.sv-streak{font:600 13px var(--sans);color:var(--accent-warm);white-space:nowrap;}
+.sv-streak[data-zero]{color:var(--ink-faint);font-weight:500;}
+.sv-counts{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px;}
+.sv-chip{font:500 12.5px var(--sans);padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line);}
+.sv-chip b{color:var(--c);font-weight:700;}
+.sv-dots{display:flex;flex-wrap:wrap;gap:5px;}
+.sv-dot{width:14px;height:14px;border-radius:4px;background:var(--c);}
+.sv-dot[data-s="open"]{background:transparent;border:1.5px dashed var(--line);}
+details.sv-more{margin-top:10px;}
+details.sv-more summary{cursor:pointer;font:500 13px var(--sans);color:var(--accent);}
+.sv-rows{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;}
+.sv-rows li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:7px 0;border-top:1px dashed var(--line);font-size:14px;}
+.sv-rows .sv-dot{width:10px;height:10px;border-radius:3px;}
+.sv-rows time{color:var(--ink);}
+.sv-rows small{font:500 12.5px var(--mono);color:var(--ink-soft);}
+.sv-note{font-size:13px;color:var(--ink-faint);margin:18px 0 0;}
+
+/* Màu từng trạng thái */
+[data-s="ok"]{--c:var(--ok);}
+[data-s="late"]{--c:var(--accent-warm);}
+[data-s="P"]{--c:var(--accent);}
+[data-s="K"]{--c:var(--bad);}
+[data-s="open"]{--c:var(--ink-faint);}
+
+@media (max-width:420px){
+  .sv-tile b{font-size:22px;}
+}
