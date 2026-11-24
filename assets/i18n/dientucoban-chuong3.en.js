@@ -95,8 +95,7 @@ window.CT_EN = {
   "19lzacn": "N-type: doped with valence 5 (Sb, P, As)",
   // Loại P: pha hoá trị 3 (B, Ga, In)
   "1nozbd5": "P-type: doped with valence 3 (B, Ga, In)",
-  // Hình 3.1 và 3.2 giáo trình (vẽ lại): cấu tạo chất bán dẫn loại N và loại P
-  "ixjgsf": "Textbook Figures 3.1 and 3.2 (redrawn): structure of N-type and P-type semiconductors",
+  "14vxcae": "Structure of N-type and P-type semiconductors",
   // Bán dẫn tạp: pha thêm một tỉ lệ nhỏ chất khác (tạp chất) vào bán dẫn tinh khiết thì độ dẫn
   "u1k7se": "<strong>Doped (extrinsic) semiconductor</strong>: adding a small proportion of another substance (an impurity) to a pure semiconductor makes its conductivity <strong>shoot up</strong>. There are two kinds: <strong>N-type</strong> (Negative) and <strong>P-type</strong> (Positive).",
   // Loại
@@ -157,8 +156,7 @@ window.CT_EN = {
   "lic9r": "potential",
   // rào điện thế ≈ 0,7 V (Si), 0,3 V (Ge)
   "1xuommm": "potential barrier ≈ 0.7 V (Si), 0.3 V (Ge)",
-  // Hình 3.3 giáo trình (vẽ lại): mối nối P-N ở trạng thái cân bằng
-  "4ywrwp": "Textbook Figure 3.3 (redrawn): a P-N junction in equilibrium",
+  "e6sgp5": "A P-N junction in equilibrium",
   // Mối nối P-N gồm hai miền bán dẫn loại P và loại N tiếp xúc nhau trong cùng một tinh thể. K
   "1q26r9e": "A <strong>P-N junction</strong> consists of a P region and an N region in contact within the same crystal. On contact, <strong>diffusion</strong> takes place: electrons from N cross the junction and recombine with holes, and some holes from P cross and recombine with electrons. Diffusion stops when the positive ions (N side) repel holes from crossing and the negative ions (P side) repel electrons from crossing.",
   // Sự phân bố điện tích hai bên mặt nối tạo một điện thế gọi là rào điện thế.
@@ -181,8 +179,7 @@ window.CT_EN = {
   "osun1t": "Reverse bias",
   // vùng nghèo rộng ra
   "621nl4": "depletion region widens",
-  // Hình 3.4 và 3.5 giáo trình (vẽ lại): phân cực thuận và phân cực nghịch nối P-N
-  "1hqs042": "Textbook Figures 3.4 and 3.5 (redrawn): forward and reverse biasing a P-N junction",
+  "h6y17r": "Forward and reverse biasing a P-N junction",
   // Phân cực (định thiên) là áp dụng điện thế một chiều để định chế độ hoạt động cho các linh 
   "m56vqf": "<strong>Biasing</strong> means applying a DC voltage to set the operating mode of an active electronic component.",
   // Phân cực thuận: cực dương nguồn E nối chất bán dẫn P, cực âm nối chất bán dẫn N. Lỗ trống 
@@ -215,8 +212,7 @@ window.CT_EN = {
   "a9dbn6": "coloured band = cathode",
   // Diode thật (vỏ DO-41)
   "w4rueo": "Real diode (DO-41 package)",
-  // Hình 3.6 giáo trình (vẽ lại): cấu tạo, ký hiệu diode và cách nhận cực trên linh kiện thật
-  "a4ia1r": "Textbook Figure 3.6 (redrawn): structure, symbol and how to identify the terminals on a real diode",
+  "x2k6aa": "Structure, symbol and how to identify the terminals on a real diode",
   // Thiết bị thực tế · Diode 1N4007. Thân nhựa đen, vạch trắng ở đầu cathode. Khi cắm mạch, đặ
   "1eam2hf": "<strong>Real device · 1N4007 diode.</strong> Black plastic body, white band at the <strong>cathode</strong> end. When building a circuit, line the band up with the bar of the symbol on the schematic.<span class=\"credit\">Photo: Zxelt · CC0 · <a href=\"https://commons.wikimedia.org/w/index.php?curid=163527307\" target=\"_blank\" rel=\"noopener\">Wikimedia Commons</a></span>",
   // Diode là linh kiện điện tử có hai điện cực: cực dương (anode, A) và cực âm (cathode, K). H
@@ -263,8 +259,7 @@ window.CT_EN = {
   "1rna3te": "tiny leakage current (µA)",
   // vùng
   "k5rurr": "region",
-  // Đặc tuyến diode (Hình 3.6 giáo trình): trục dòng phía âm tính bằng µA nên nhìn "phóng to" 
-  "5sulok": "Diode characteristic (textbook Figure 3.6): the negative current axis is in µA, so it looks \"magnified\" compared with the forward side (mA)",
+  "1p8jwtg": "Diode characteristic: the negative current axis is in µA, so it looks \"magnified\" compared with the forward side (mA)",
   // Điện áp đánh thủng (breakdown): nếu đặt một điện áp ngược (âm) đủ lớn, diode sẽ cho dòng đ
   "1o9uz1u": "<strong>Breakdown voltage</strong>: if a large enough reverse (negative) voltage is applied, the diode lets current flow the other way. An ordinary diode has a breakdown voltage of about <strong>−50 V to −100 V</strong> or more. Most ordinary diodes cannot survive working in this region; only some diodes (such as the <a href=\"#zener\">Zener</a>) are designed to operate in breakdown.",
   // Diode mắc song song và nối tiếp
@@ -335,8 +330,7 @@ window.CT_EN = {
   "19xo4u1": "Photodiode (receives light)",
   // ký hiệu giống LED, ghi chú "laser"
   "romt7j": "same symbol as an LED, labelled \"laser\"",
-  // Ký hiệu các loại diode trong giáo trình (Hình 3.7, 3.9, 3.10, 3.11): anode luôn ở bên trái
-  "1l5h3ul": "Diode symbols in the textbook (Figures 3.7, 3.9, 3.10, 3.11): the anode is always on the left, the cathode on the right",
+  "16iu5rd": "Diode symbols: the anode is always on the left, the cathode on the right",
   // Diode chỉnh lưu
   "9d1837": "Rectifier diode",
   // Diode chỉnh lưu (diode nguồn) dùng để chỉnh lưu nguồn xoay chiều đầu vào thành nguồn một c
@@ -379,8 +373,7 @@ window.CT_EN = {
   "wirjt6": "flat edge on the cathode side",
   // Ký hiệu LED
   "66w6o1": "LED symbol",
-  // Hình 3.11 giáo trình (vẽ lại): ký hiệu và cách nhận chân LED thật
-  "1ozw4om": "Textbook Figure 3.11 (redrawn): the LED symbol and how to identify the leads of a real LED",
+  "1hraxq9": "The LED symbol and how to identify the leads of a real LED",
   // Thiết bị thực tế · LED chân cắm. Có nhiều cỡ (3 mm, 5 mm, 10 mm), dạng tròn, vuông, chữ nh
   "d1v1d4": "<strong>Real device · Through-hole LEDs.</strong> Many sizes (3 mm, 5 mm, 10 mm), round, square and rectangular. On a new LED the long lead is the anode.<span class=\"credit\">Photo: Afrank99 · CC BY-SA 2.0 · <a href=\"https://commons.wikimedia.org/w/index.php?curid=248198\" target=\"_blank\" rel=\"noopener\">Wikimedia Commons</a></span>",
   // Diode quang (photodiode, ký hiệu Hình 3.12: mũi tên ánh sáng chỉ vào diode) dùng để phát h
@@ -441,8 +434,7 @@ window.CT_EN = {
   "sl5lg2": "<span class=\"tag\">Remember</span>An LED is like <strong>someone who needs exactly 2 V</strong>: with a 9 V supply, someone has to \"carry\" the extra 7 V, and that is the <strong>current-limiting resistor</strong>. Without it the current is not limited and the LED burns out at once.",
   // dòng chung I = 15 mA chạy qua cả R và LED
   "v4acsk": "the same current I = 15 mA flows through both R and the LED",
-  // Mạch LED đơn giản (Hình 3.13 giáo trình): pin 9 V, điện trở 470 Ω (vàng – tím – nâu) và LE
-  "1npk2hz": "Simple LED circuit (textbook Figure 3.13): 9 V battery, 470 Ω resistor (yellow – violet – brown) and LED in series",
+  "1fxqc2v": "Simple LED circuit: 9 V battery, 470 Ω resistor (yellow – violet – brown) and LED in series",
   // LED là diode nên nó phụ thuộc vào dòng điện chứ không phải điện áp. Được "nuôi" bằng dòng 
   "1voknai": "An LED is a diode, so it depends on <strong>current</strong>, not voltage. \"Fed\" with forward current (anode to cathode), it starts to glow from a minimum current.",
   // LED đỏ thông thường cần khoảng 10 mA đến 20 mA để sáng tốt. Dòng lớn hơn không giúp sáng h
@@ -503,8 +495,7 @@ window.CT_EN = {
   "wpwk4s": "in",
   // bán kỳ âm bị diode chặn, không xuất hiện trên tải
   "1soj96n": "the negative half-cycle is blocked by the diode and does not reach the load",
-  // Hình 3.14 giáo trình (vẽ lại): mạch chỉnh lưu bán kỳ và dạng sóng vào, ra
-  "kgp945": "Textbook Figure 3.14 (redrawn): half-wave rectifier and its input and output waveforms",
+  "1pal26h": "Half-wave rectifier and its input and output waveforms",
   // Mạch chỉnh lưu bán kỳ cho một trong hai nửa chu kỳ (dương hoặc âm) đi qua diode, nửa kia b
   "pgkvdo": "A <strong>half-wave rectifier</strong> lets one of the two half-cycles (positive or negative) through the diode while the other is blocked, depending on which way the diode is fitted. Since only half of each cycle is rectified, <strong>power transfer efficiency is very low</strong>. The circuit needs only <strong>one diode</strong> in single-phase power supplies.",
   // Thử ngay · Chỉnh lưu bán kỳ
@@ -529,8 +520,7 @@ window.CT_EN = {
   "1ctziox": "<span class=\"tag\">Remember</span>A Zener is like <strong>the overflow valve of a water tank</strong>: when the water (voltage) rises to V<sub>Z</sub>, the valve opens and spills the excess, so the level at the load always stays at V<sub>Z</sub>. The resistor R<sub>S</sub> is <strong>the inlet pipe</strong>, limiting the flow so the overflow valve is not overloaded.",
   // Zener mắc ngược: cathode lên cực +, IS = IZ + IL
   "6cajhg": "Zener reversed: cathode to +, I<tspan class=\"sub\" dy=\"3\">S</tspan><tspan dy=\"-3\"> = I</tspan><tspan class=\"sub\" dy=\"3\">Z</tspan><tspan dy=\"-3\"> + I</tspan><tspan class=\"sub\" dy=\"3\">L</tspan>",
-  // Hình 3.15 giáo trình (vẽ lại): mạch ổn áp dùng diode Zener
-  "lca0pc": "Textbook Figure 3.15 (redrawn): Zener diode voltage regulator",
+  "p23jhp": "Zener diode voltage regulator",
   // Mạch ổn áp Zener: điện áp vào Vin, điện trở hạn dòng RS, điện áp ra Vout bằng điện áp ổn á
   "luwsw2": "<strong>Zener regulator</strong>: input voltage V<sub>in</sub>, current-limiting resistor R<sub>S</sub>, and output voltage V<sub>out</sub> <strong>equal to the Zener voltage</strong> V<sub>Z</sub>. For 5 V use a Zener marked <strong>5V1</strong> (there is no 5 V Zener; 0.1 V error is acceptable). Each Zener has a <strong>rated power P<sub>Z</sub></strong>, which allows only a maximum current through it; common ratings are 0.25 W, 0.5 W, 1 W, 5 W.",
   // IZmax = PZVZ &nbsp;&nbsp;·&nbsp;&nbsp; RSmin = Vin − VZIZmaxPZ: watt oát (W) · V: volt vôn
@@ -609,8 +599,7 @@ window.CT_EN = {
   "13tt1wn": "drive a…g with 1 to light",
   // đưa mức 0 vào a…g để sáng
   "4maghw": "drive a…g with 0 to light",
-  // Hình 3.17 và 3.18 giáo trình (vẽ lại): LED 7 đoạn loại cathode chung và anode chung
-  "162y7rd": "Textbook Figures 3.17 and 3.18 (redrawn): common-cathode and common-anode 7-segment displays",
+  "d186cy": "Common-cathode and common-anode 7-segment displays",
   // LED 7 đoạn gồm 7 LED xếp thành hình chữ nhật. Mỗi LED là một đoạn, mỗi chân được gán một c
   "u4g9op": "A <strong>7-segment display</strong> consists of 7 LEDs arranged in a rectangle. Each LED is a segment and each pin is given a letter from <strong>a to g</strong>; the other ends are tied together into <strong>one common pin</strong>. Sometimes an 8th LED (<strong>DP</strong>) serves as a decimal point when several displays are combined to show numbers above 10. Forward biasing the segments in a particular pattern displays the decimal digits 0 – 9 (or hexadecimal).",
   // Cathode chung (CC, common cathode): tất cả cathode nối với nhau (xuống 0 V). Mỗi đoạn sáng
@@ -629,10 +618,9 @@ window.CT_EN = {
   "1vl2riu": "Logic level",
   // Đoạn
   "1yvte2v": "Segment",
-  // Bấm một chữ số để xem các đoạn sáng (Hình 3.19 giáo trình) và mức logic cần đưa vào chân a
-  "kbel2v": "Press a digit to see which segments light (textbook Figure 3.19) and the logic levels for pins a – g. Switch CC ↔ CA: the 1s and 0s invert completely.",
+  "1hy6chd": "Press a digit to see which segments light and the logic levels for pins a – g. Switch CC ↔ CA: the 1s and 0s invert completely.",
   // Ghi chú: với loại anode chung, các mức logic đảo ngược hoàn toàn (đổi 1 ↔ 0) so với cathod
-  "fc0oq6": "<strong>Note:</strong> with common anode, the logic levels are completely inverted (1 ↔ 0) compared with common cathode. Some decoder ICs show 9 without segment d (a b c f g), as in textbook Figure 3.19.",
+  "1mh7erj": "<strong>Note:</strong> with common anode, the logic levels are completely inverted (1 ↔ 0) compared with common cathode. Some decoder ICs show 9 without segment d (a b c f g).",
   // 11Bảng tóm tắt
   "qrpcvg": "<span class=\"num\">11</span>Summary table",
   // Ghi nhớ, công thức
