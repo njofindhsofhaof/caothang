@@ -26,22 +26,34 @@
     });
   }
 
-  function row(r) {
+  // Màu ô số buổi theo tỉ lệ so với bạn cao nhất: xanh lá → xanh dương → vàng → đỏ.
+  const tierOf = (onTime, max) => {
+    const ratio = max ? onTime / max : 0;
+    if (ratio >= 0.75) return 'green';
+    if (ratio >= 0.5) return 'blue';
+    if (ratio >= 0.25) return 'yellow';
+    return 'red';
+  };
+
+  function row(r, max) {
     const li = el('li', 'lb-row');
     if (r.rank <= PODIUM) li.dataset.podium = String(r.rank);
-    li.append(el('span', 'lb-rank', String(r.rank)), el('span', 'lb-name', r.name), el('span', 'lb-count', `${r.onTime} buổi`));
+    const count = el('span', 'lb-count', `${r.onTime} buổi`);
+    count.dataset.tier = tierOf(r.onTime, max);
+    li.append(el('span', 'lb-rank', String(r.rank)), el('span', 'lb-name', r.name), count);
     li.title = `${r.name}: ${r.onTime} buổi đúng giờ`;
     return li;
   }
 
   function rankList(rows) {
     const list = el('ol', 'lb-list');
-    rows.slice(0, VISIBLE_ROWS).forEach((r) => list.append(row(r)));
+    const max = rows.length ? rows[0].onTime : 0;
+    rows.slice(0, VISIBLE_ROWS).forEach((r) => list.append(row(r, max)));
     if (rows.length <= VISIBLE_ROWS) return [list];
     const more = el('button', 'lb-more', `+ ${rows.length - VISIBLE_ROWS} bạn khác`);
     more.type = 'button';
     more.addEventListener('click', () => {
-      rows.slice(VISIBLE_ROWS).forEach((r) => list.append(row(r)));
+      rows.slice(VISIBLE_ROWS).forEach((r) => list.append(row(r, max)));
       more.remove();
     });
     return [list, more];
