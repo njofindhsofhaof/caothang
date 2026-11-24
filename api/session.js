@@ -98,6 +98,12 @@ async function update(req, res) {
   if (b.action === 'close') { next.closed = true; next.expiresAt = Math.min(s.expiresAt, now); }
   else if (b.action === 'qr') next.requireQr = Boolean(b.value);
   else if (b.action === 'extend') next.expiresAt = Math.min(s.startsAt + MAX_SESSION_MS, Math.max(s.expiresAt, now) + 5 * 60_000);
+  else if (b.action === 'label') {
+    // Đổi tên môn của buổi (vd. buổi cũ tạo khi chưa bắt buộc chọn môn nên tên trống).
+    const label = String(b.value ?? '').trim().slice(0, 60);
+    if (!label) return fail(res, 'Tên môn không được để trống.');
+    next.label = label;
+  }
   else return fail(res, 'Thao tác không hợp lệ.');
   await redis().set(keys.session(s.id), next, { keepTtl: true });
   send(res, 200, { ok: true, session: next, active: isActive(next, now) });

@@ -541,6 +541,10 @@
             class: 'gv-mini', type: 'button', 'aria-label': `Tải ảnh tổng kết ${row.subject} ngày ${row.d}`,
             onclick: (e) => downloadSubjectImage(row.d, row.subject, row.sessions, e.currentTarget),
           }, 'Tải ảnh'),
+          h('button', {
+            class: 'gv-mini', type: 'button', 'aria-label': `Đổi môn ${row.subject} ngày ${row.d}`,
+            onclick: () => renameSubject(row),
+          }, 'Đổi môn'),
           row.first ? h('button', {
             class: 'gv-mini', type: 'button', 'aria-label': `Bỏ ngày ${row.d} khỏi thống kê`,
             onclick: () => dropDay(row.d),
@@ -550,6 +554,22 @@
     );
     const open = rows.find((r) => r.key === openKey);
     if (open) showSubject(open, true); else { openKey = null; $('dayDetail').hidden = true; }
+  }
+
+  // Gán lại môn cho mọi buổi của dòng này (buổi cũ tên trống hiện "Buổi học").
+  async function renameSubject(row) {
+    const { SUBJECTS } = window.DDSubjects;
+    const day = new Date(`${row.d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit' });
+    const menu = SUBJECTS.map((n, i) => `${i + 1}. ${n}`).join('\n');
+    const input = prompt(`Đổi môn "${row.subject}" ${day} thành (nhập số hoặc tên môn):\n${menu}`);
+    if (input === null) return;
+    const pick = SUBJECTS[Number(input.trim()) - 1] ?? input.trim();
+    if (!pick) return;
+    for (const s of row.sessions) {
+      const r = await api('/api/session', { method: 'PATCH', body: { id: s.id, action: 'label', value: pick } });
+      if (!r.ok) { alert(r.message); break; }
+    }
+    loadMonth();
   }
 
   async function dropDay(d) {
