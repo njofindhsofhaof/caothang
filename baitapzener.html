@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập mạch ổn áp diode Zener · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Bài tập Chương 3 Điện tử cơ bản: mạch ổn áp dùng diode Zener, tính I_S, I_RL, I_Z, P_Z, tìm khoảng V_S và khoảng R_L để mạch ổn áp; tự chấm, lời giải từng bước theo định luật Kirchhoff.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bài tập mạch ổn áp diode Zener">
+<meta property="og:description" content="Mạch ổn áp diode Zener: tính I_S, I_Z, P_Z, khoảng V_S và khoảng R_L để mạch ổn áp; tự chấm, lời giải từng bước.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/baitapzener">
+<link rel="canonical" href="https://caothang-gray.vercel.app/baitapzener">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/phanap.css?v=2">
+<link rel="stylesheet" href="/assets/diode.css?v=3">
+<link rel="stylesheet" href="/assets/zener.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập mạch ổn áp diode Zener</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+  <div class="backbar">
+    <a class="backlink" href="/dientucoban">&larr; Điện Tử Cơ Bản</a>
+  </div>
+  <ul class="kh-intro dd-intro">
+    <li><strong>Bài 1 – 6:</strong> mạch ổn áp dùng diode Zener: dạng 1 tính dòng và công suất, dạng 2 tìm khoảng V<sub>S</sub>, dạng 3 tìm khoảng R<sub>L</sub> để mạch vẫn ổn áp.</li>
+    <li>Đọc sơ đồ, tính rồi nhập kết quả để tự chấm; mở lời giải để xem cách làm từng bước.</li>
+  </ul>
+  <p class="pa-rule"><strong>Quy ước:</strong> diode Zener lắp ngược (cathode hướng lên nguồn), ổn áp khi <span class="f">I<sub>Zmin</sub> ≤ I<sub>Z</sub> ≤ I<sub>Zmax</sub></span>, lúc đó V<sub>O</sub> = V<sub>Z</sub>. Dòng điện tính bằng mA, điện áp bằng V, điện trở bằng Ω, công suất bằng W; làm tròn 2 chữ số sau dấu phẩy.</p>
+  <details class="pa-theory">
+    <summary>Nhắc lại cách giải</summary>
+    <ul>
+      <li><strong>K2 cho vòng (1):</strong> <span class="f">−V<sub>S</sub> + I<sub>S</sub>·R<sub>S</sub> + V<sub>Z</sub> = 0</span> ⇒ <span class="f">I<sub>S</sub> = (V<sub>S</sub> − V<sub>Z</sub>) / R<sub>S</sub></span>. R<sub>L</sub> song song D<sub>Z</sub> nên <span class="f">I<sub>RL</sub> = V<sub>Z</sub> / R<sub>L</sub></span>.</li>
+      <li><strong>K1 tại nút A:</strong> <span class="f">I<sub>S</sub> − I<sub>Z</sub> − I<sub>RL</sub> = 0</span> ⇒ <span class="f">I<sub>Z</sub> = I<sub>S</sub> − I<sub>RL</sub></span>; công suất <span class="f">P<sub>Z</sub> = I<sub>Z</sub> × V<sub>Z</sub></span>.</li>
+      <li><strong>Dạng 2 · khoảng V<sub>S</sub>:</strong> <span class="f">(I<sub>Zmin</sub> + I<sub>RL</sub>)·R<sub>S</sub> + V<sub>Z</sub> ≤ V<sub>S</sub> ≤ (I<sub>Zmax</sub> + I<sub>RL</sub>)·R<sub>S</sub> + V<sub>Z</sub></span>.</li>
+      <li><strong>Dạng 3 · khoảng R<sub>L</sub>:</strong> <span class="f">V<sub>Z</sub> / (I<sub>S</sub> − I<sub>Zmin</sub>) ≤ R<sub>L</sub> ≤ V<sub>Z</sub> / (I<sub>S</sub> − I<sub>Zmax</sub>)</span>: nhân −1 và nghịch đảo đều làm đổi chiều bất đẳng thức.</li>
+      <li>Đơn vị: volt <span class="say" title="Cách đọc">vôn</span> (V) · ampere <span class="say" title="Cách đọc">am-pe</span> (A), 1 mA (mili <span class="say" title="Cách đọc">mi-li</span>ampere) = 0,001 A · ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · watt <span class="say" title="Cách đọc">oát</span> (W).</li>
+    </ul>
+  </details>
+  <main id="znApp"></main>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script src="/assets/phanap-calc.js?v=2"></script>
+<script src="/assets/zener-calc.js"></script>
+<script src="/assets/zener-data.js"></script>
+<script src="/assets/zener-svg.js"></script>
+<script src="/assets/zener.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

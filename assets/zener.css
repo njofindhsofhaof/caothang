@@ -1,0 +1,4 @@
+/* Bo sung cho diode.css: trang /baitapzener (mui ten dien ap, vong K2). */
+.dd-varrow{stroke:var(--accent);stroke-width:1.5;}
+.dd-varrow-h{fill:var(--accent);}
+.dd-loop-ring{fill:none;stroke:var(--ink-faint);stroke-width:1.3;stroke-dasharray:3 3;}

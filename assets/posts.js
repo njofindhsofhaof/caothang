@@ -194,6 +194,15 @@ window.CT_POSTS = [
     parent: "/dientucoban"
   },
   {
+    section: "ontap",
+    title: "Bài tập mạch ổn áp diode Zener (Chương 3)",
+    desc: "Mạch ổn áp dùng diode Zener: tính IS, IRL, IZ, PZ, khoảng VS và khoảng RL để mạch ổn áp. 6 bài tự chấm, lời giải từng bước theo K1, K2.",
+    short: "6 bài mạch ổn áp diode Zener, tự chấm có lời giải.",
+    date: "2026-11-24",
+    href: "/baitapzener",
+    parent: "/dientucoban"
+  },
+  {
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
