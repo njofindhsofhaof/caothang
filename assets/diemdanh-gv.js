@@ -644,9 +644,33 @@
       list('Đi trễ', row.report.late, 'm-t'),
       list('Vắng không phép', row.report.K, 'm-k'),
       list('Vắng có phép', row.report.P, 'm-p'),
+      checkinList(row.sessions),
     );
     $('dayDetail').hidden = false;
     if (!keep) renderDaySummary(classDates());
+  }
+
+  // Từng lượt điểm danh của môn trong ngày (giờ, khoảng cách, sai số GPS, cờ nghi vấn),
+  // để tra lại sau buổi ai có thể được điểm danh hộ. Lượt có cờ xếp lên đầu.
+  function checkinList(sessions) {
+    const byMssv = new Map();
+    for (const rec of sessions.flatMap((s) => s.records)) {
+      const prev = byMssv.get(rec.mssv);
+      if (!prev || rec.time < prev.time) byMssv.set(rec.mssv, rec);
+    }
+    const rows = [...byMssv.values()]
+      .map((rec) => ({ rec, st: roster.find((x) => x.mssv === rec.mssv), reasons: flagReasons(rec) }))
+      .sort((a, b) => (b.reasons.length > 0) - (a.reasons.length > 0) || a.rec.time - b.rec.time);
+    const flagged = rows.filter((r) => r.reasons.length).length;
+    const where = (rec) => (rec.manual ? 'giáo viên đánh tay' : `${rec.distance} m · GPS ±${rec.accuracy} m`);
+    return h('div', {},
+      h('p', { class: 'dd-label' }, `Lượt điểm danh (${rows.length}) · nghi vấn ${flagged}`),
+      h('ul', { class: 'gv-list' }, rows.map(({ rec, st, reasons }) => h('li', reasons.length ? { class: 'flagged' } : {},
+        h('span', { class: 'who' }, h('b', {}, st ? fullName(st) : rec.mssv), h('small', {}, rec.mssv),
+          reasons.length ? h('small', { class: 'flag' }, `⚠ Nghi vấn: ${reasons.join(' · ')}`) : ''),
+        h('span', { class: `tag${rec.late ? ' late' : ''}` }, `${rec.late ? 'trễ · ' : ''}${fmtTime(rec.time)} · ${where(rec)}`),
+      ))),
+    );
   }
 
   // K → P → ✓ (đánh dấu tay) → K
