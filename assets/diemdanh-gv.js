@@ -655,7 +655,13 @@
     let calls;
     if (st === 'K') calls = [{ action: 'excuse', mssv, date, value: 'P' }];
     else if (st === 'P') calls = [{ action: 'excuse', mssv, date, value: '' }, { action: 'present', mssv, sessionId: sessions.at(-1).id }];
-    else calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv)).map((s) => ({ action: 'unpresent', mssv, sessionId: s.id }));
+    else {
+      // Xoá điểm danh thật của sinh viên: hỏi lại, vì chạm nhầm khi vuốt bảng trên điện thoại rất dễ xảy ra.
+      const st0 = roster.find((x) => x.mssv === mssv);
+      const day = new Date(`${date}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' });
+      if (!confirm(`Bỏ điểm danh của ${st0 ? fullName(st0) : mssv} (${day})? Bạn này sẽ thành vắng.`)) return;
+      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv)).map((s) => ({ action: 'unpresent', mssv, sessionId: s.id }));
+    }
     for (const body of calls) {
       const r = await api('/api/attendance', { method: 'POST', body });
       if (!r.ok) { alert(r.message); break; }
