@@ -133,8 +133,12 @@
         return fail(r.message, r.code === 'expired_qr' || r.code === 'closed' || r.code === 'device_bound' || r.code === 'device_used' || r.code === 'unknown_mssv');
       }
       const time = new Date(r.time).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-      const title = r.already ? 'Bạn đã điểm danh rồi' : (r.late ? 'Đã điểm danh (trễ)' : 'Điểm danh thành công');
-      setStatus('ok', title, `${r.name} · lúc ${time}${r.late ? ' · ghi trễ' : ''}`);
+      const subj = r.subject ? ` môn ${r.subject}` : '';
+      const title = r.already ? `Bạn đã điểm danh${subj} rồi` : (r.late ? `Đã điểm danh${subj} (trễ)` : `Điểm danh${subj} thành công`);
+      const next = r.already && r.next
+        ? ` · ${r.next.subject} mở điểm danh lúc ${new Date(r.next.startsAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, nhớ quay lại điểm danh`
+        : '';
+      setStatus('ok', title, `${r.name} · lúc ${time}${r.late ? ' · ghi trễ' : ''}${next}`);
       showTally(r.tally);
       showAlias(r.alias);
       if (navigator.vibrate) navigator.vibrate(60);

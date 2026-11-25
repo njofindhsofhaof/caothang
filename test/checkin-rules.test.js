@@ -78,3 +78,19 @@ test('rejects once the period is over', () => assert.equal(run({}, { session: la
 test('rejects late check-in after the teacher closes the session', () => {
   assert.equal(run({}, { session: { ...lateSession, closed: true }, now: vn('12:58') }).code, 'closed');
 });
+
+test('otherOpenSessions: another subject still taking check-ins, active first, QR-only skipped', async () => {
+  const { otherOpenSessions } = await import('../api/_lib/checkin-rules.js');
+  const at = (hm) => new Date(`2026-11-23T${hm}:00+07:00`).getTime();
+  const sess = (id, label, from, to, extra = {}) => ({ id, label, startsAt: at(from), expiresAt: at(to), ...extra });
+  const subj = (s) => s.label;
+  const shcn = sess('a', 'SHCN', '12:15', '13:00');
+  const ltm = sess('b', 'LTM', '12:50', '13:20');
+  const ltm2 = sess('c', 'SHCN', '12:55', '13:20');
+  const qr = sess('d', 'ĐTCB', '12:40', '13:20', { requireQr: true });
+  const now = at('12:55');
+  assert.deepEqual(otherOpenSessions([shcn, ltm, ltm2, qr], shcn, now, subj).map((s) => s.id), ['b']);
+  // Chưa tới giờ hoặc đã đóng thì không chọn.
+  assert.deepEqual(otherOpenSessions([shcn, ltm], shcn, at('12:40'), subj), []);
+  assert.deepEqual(otherOpenSessions([shcn, { ...ltm, closed: true }], shcn, now, subj), []);
+});
