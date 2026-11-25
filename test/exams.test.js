@@ -11,8 +11,13 @@ test('lists exams from today onwards, earliest first', () => {
 
 test('the class exam schedule uses valid dates and standard subject names', async () => {
   await import('../assets/subjects.js');
+  const { readFileSync } = await import('node:fs');
+  const ctx = { window: {} };
+  new Function('window', readFileSync(new URL('../assets/posts.js', import.meta.url), 'utf8'))(ctx.window);
+  const posts = ctx.window.CT_POSTS;
   for (const e of EXAMS) {
     assert.match(e.date, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(globalThis.DDSubjects.SUBJECTS.includes(e.subject), e.subject);
+    for (const href of e.review ?? []) assert.ok(posts.some((p) => p.href === href), `${href} có trong posts.js`);
   }
 });
