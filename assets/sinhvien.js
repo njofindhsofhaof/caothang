@@ -54,6 +54,16 @@
   const weekdayText = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long' });
   const upcomingExams = () => exams.filter((e) => daysUntil(e.date) >= 0);
 
+  // Link ôn tập: bài con (trong assets/posts.js) của các trang trong exam.review; đề ôn kiểm tra lên đầu.
+  function reviewLinks(exam) {
+    const posts = window.CT_POSTS ?? [];
+    const pages = new Set(exam.review ?? []);
+    return posts.filter((p) => pages.has(p.parent) && p.href.startsWith('/'))
+      .map((p) => ({ p, rank: /kiểm tra/i.test(p.title) ? 0 : p.section === 'ontap' ? 1 : 2 }))
+      .sort((a, b) => a.rank - b.rank || (a.p.order ?? 99) - (b.p.order ?? 99) || a.p.title.localeCompare(b.p.title, 'vi'))
+      .map(({ p }) => h('a', { class: 'sv-review-link', href: p.href, 'data-kind': /kiểm tra/i.test(p.title) ? 'exam' : p.section }, p.title));
+  }
+
   function renderExams() {
     const list = upcomingExams();
     $('examBox').hidden = !list.length;
@@ -61,7 +71,11 @@
       h('time', { class: 'sv-exam-date', datetime: e.date },
         h('b', {}, `${e.date.slice(8)}/${e.date.slice(5, 7)}`), h('span', {}, weekdayText(e.date))),
       h('span', { class: 'sv-exam-what' }, h('b', {}, e.subject), h('span', {}, e.kind)),
-      h('span', { class: 'sv-exam-left' }, whenText(e.date)))));
+      h('span', { class: 'sv-exam-left' }, whenText(e.date)),
+      (() => {
+        const links = reviewLinks(e);
+        return links.length ? h('details', { class: 'sv-review' }, h('summary', {}, `Ôn tập ${e.subject} (${links.length} bài)`), h('div', { class: 'sv-review-links' }, ...links)) : null;
+      })())));
   }
 
   let mssv = store.get(STORE_MSSV) || '';
