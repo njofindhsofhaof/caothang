@@ -1,0 +1,13 @@
+/* Bo sung cho diode.css + zener.css: trang /baitaptransistor (transistor BJT, do thi DCLL, o chon che do). */
+.bj-case{fill:none;stroke:var(--ink-faint);stroke-width:1.2;}
+.bj-axis{stroke:var(--ink-soft);stroke-width:1.3;}
+.bj-axis-h{fill:var(--ink-soft);}
+.bj-dcll{stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;}
+.dd-svg .bj-dcll-t{fill:var(--accent);font-family:var(--mono);font-size:12px;font-weight:600;}
+.bj-q{fill:var(--accent-warm);stroke:var(--surface);stroke-width:1.5;}
+.dd-svg .bj-q-t{fill:var(--accent-warm);font-weight:700;font-size:13px;}
+.bj-prob .pa-group-in + .pa-group-in{border-top:1px dashed var(--line);padding-top:10px;}
+.bj-mode{font:inherit;font-size:15px;color:var(--ink);padding:8px 10px;min-height:40px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);}
+.bj-mode:focus{outline:2px solid var(--accent);outline-offset:1px;}
+.bj-mode.ok{border-color:var(--good);background:var(--good-bg);}
+.bj-mode.bad{border-color:var(--bad);background:var(--bad-bg);}

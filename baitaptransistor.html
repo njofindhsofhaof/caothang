@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập transistor BJT · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Bài tập Chương 4 Điện tử cơ bản: transistor BJT, vẽ đường tải tĩnh DCLL, xác định điểm làm việc Q (ngưng dẫn, khuếch đại, bão hoà) và chọn R_B, R_C, R_E; tự chấm, lời giải từng bước theo định luật Kirchhoff.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bài tập transistor BJT">
+<meta property="og:description" content="Transistor BJT: vẽ DCLL, tìm điểm Q và chế độ hoạt động, chọn R_B, R_C, R_E cho chế độ khuếch đại và bão hoà; tự chấm, lời giải từng bước.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/baitaptransistor">
+<link rel="canonical" href="https://caothang-gray.vercel.app/baitaptransistor">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/kirchhoff.css">
+<link rel="stylesheet" href="/assets/phanap.css?v=2">
+<link rel="stylesheet" href="/assets/diode.css?v=3">
+<link rel="stylesheet" href="/assets/zener.css">
+<link rel="stylesheet" href="/assets/bjt.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập transistor BJT</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+  <div class="backbar">
+    <a class="backlink" href="/dientucoban">&larr; Điện Tử Cơ Bản</a>
+  </div>
+  <ul class="kh-intro dd-intro">
+    <li><strong>Bài 1 – 2 (Dạng 1):</strong> mạch phân cực cố định hai nguồn V<sub>BB</sub>, V<sub>CC</sub>: vẽ đường tải tĩnh DCLL, xác định chế độ hoạt động và điểm làm việc Q(I<sub>C</sub>; V<sub>CE</sub>).</li>
+    <li><strong>Bài 3 – 6 (Dạng 2):</strong> mạch một nguồn V<sub>CC</sub>: cho trước điểm Q, tính R<sub>E</sub>, R<sub>C</sub>, R<sub>B</sub> cho chế độ khuếch đại và bão hoà rồi chọn giá trị chuẩn.</li>
+    <li>Đọc sơ đồ, tính rồi nhập kết quả để tự chấm; mở lời giải để xem cách làm từng bước. Lý thuyết: <a href="/dientucoban-chuong4#dang-1">Chương 4, mục 06 – 07</a>.</li>
+  </ul>
+  <p class="pa-rule"><strong>Quy ước:</strong> transistor NPN, <span class="f">V<sub>BE</sub> = 0,7 V</span> khi khuếch đại, <span class="f">V<sub>BEsat</sub> = 0,8 V</span> và <span class="f">V<sub>CEsat</sub> = 0,2 V</span> khi bão hoà, <span class="f">I<sub>E</sub> ≈ I<sub>C</sub></span>. Dòng điện tính bằng mA, điện áp bằng V, điện trở bằng Ω hoặc kΩ; làm tròn 2 chữ số sau dấu phẩy.</p>
+  <details class="pa-theory">
+    <summary>Nhắc lại cách giải</summary>
+    <ul>
+      <li><strong>DCLL (K2 vòng 2):</strong> <span class="f">I<sub>Cmax</sub> = V<sub>CC</sub> / (R<sub>C</sub> + R<sub>E</sub>)</span> khi V<sub>CE</sub> = 0; khi I<sub>C</sub> = 0 thì V<sub>CE</sub> = V<sub>CC</sub>.</li>
+      <li><strong>Dạng 1:</strong> V<sub>BB</sub> &lt; 0,7 V ⇒ ngưng dẫn, Q(0; V<sub>CC</sub>). Ngược lại K2 vòng 1: <span class="f">I<sub>B</sub> = (V<sub>BB</sub> − 0,7) / [R<sub>B</sub> + (1 + β)R<sub>E</sub>]</span>. Nếu β·I<sub>B</sub> &lt; I<sub>Cmax</sub>: khuếch đại, I<sub>C</sub> = β·I<sub>B</sub>, <span class="f">V<sub>CE</sub> = V<sub>CC</sub> − I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>)</span>. Nếu β·I<sub>B</sub> ≥ I<sub>Cmax</sub>: bão hoà, I<sub>C</sub> = I<sub>Cmax</sub>, V<sub>CE</sub> = 0,2 V.</li>
+      <li><strong>Dạng 2 khuếch đại:</strong> chọn V<sub>E</sub> ≈ 10% V<sub>CC</sub>; <span class="f">R<sub>E</sub> = V<sub>E</sub> / I<sub>C</sub></span>, <span class="f">R<sub>C</sub> = (V<sub>CC</sub> − V<sub>CE</sub> − V<sub>E</sub>) / I<sub>C</sub></span>, <span class="f">I<sub>B</sub> = I<sub>C</sub> / β</span>, <span class="f">R<sub>B</sub> = (V<sub>CC</sub> − 0,7 − V<sub>E</sub>) / I<sub>B</sub></span>.</li>
+      <li><strong>Dạng 2 bão hoà:</strong> <span class="f">I<sub>B</sub> = K·I<sub>Cmax</sub> / β</span>, <span class="f">R<sub>B</sub> = (V<sub>CC</sub> − 0,8 − V<sub>E</sub>) / I<sub>B</sub></span>, <span class="f">R<sub>C</sub> = (V<sub>CC</sub> − 0,2 − V<sub>E</sub>) / I<sub>Cmax</sub></span>. Chọn R<sub>B</sub> chuẩn nhỏ hơn giá trị tính để chắc chắn bão hoà.</li>
+      <li>Giá trị chuẩn dãy E12: 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 nhân 10ⁿ.</li>
+      <li>Đơn vị: volt <span class="say" title="Cách đọc">vôn</span> (V) · ampere <span class="say" title="Cách đọc">am-pe</span> (A), 1 mA (mili <span class="say" title="Cách đọc">mi-li</span>ampere) = 0,001 A · ohm <span class="say" title="Cách đọc">ôm</span> (Ω), 1 kΩ (kilo <span class="say" title="Cách đọc">ki-lô</span>ohm) = 1000 Ω.</li>
+    </ul>
+  </details>
+  <main id="bjApp"></main>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script src="/assets/phanap-calc.js?v=2"></script>
+<script src="/assets/bjt-calc.js"></script>
+<script src="/assets/bjt-data.js"></script>
+<script src="/assets/bjt-svg.js"></script>
+<script src="/assets/bjt.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

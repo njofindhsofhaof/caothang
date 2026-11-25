@@ -31,6 +31,7 @@ window.CT_EN = {
   "ndif5f": "<a href=\"#dang-2\">Type 2: choose R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub></a>",
   "fzzf7e": "<a href=\"#tom-tat\">Summary table</a>",
   "1vnzl8d": "<a href=\"#trac-nghiem\">Review quiz</a>",
+  "15d8xgf": "<a href=\"#bai-tap\">Exercises</a>",
 
   // 01
   "xuxbzd": "<span class=\"num\">01</span>What a bipolar junction transistor (BJT) is",
@@ -181,6 +182,15 @@ window.CT_EN = {
   "13je9pn": "R<tspan class=\"sub\" dy=\"3\">E</tspan><tspan dy=\"-3\"> = 0 (dashed)</tspan>",
   "1gczdfh": "The three operating points of Example 1 on one load line. Removing R<sub>E</sub> (dashed) raises I<sub>Cmax</sub> to 19.1 mA",
   "1jf50ti": "<strong>Check:</strong> Q<sub>2</sub>(8 mA; 4 V) must lie on the DCLL: plugging in, I<sub>C</sub> = (9 − 4) / 0.62 ≈ 8.1 mA, it matches. Q<sub>1</sub> and Q<sub>3</sub> sit at the two ends of the load line: the transistor as an open and a closed switch.",
+  // khối Bài tập dưới Ví dụ 1 và Ví dụ 3
+  "1nqvw03": "Exercises",
+  "1myydza": "BJT transistor exercises · Type 1",
+  "1u7z3jm": "Problems 1 – 2: draw the DCLL, find the operating mode and operating point Q for different V",
+  "1ibvk6j": ", with and without R",
+  "1jwzs47": "Solve →",
+  "1moysab": "BJT transistor exercises · Type 2",
+  "1i65nxk": "Problems 3 – 6: choose R",
+  "fplgt0": "for active mode and saturation, then pick standard E12 values.",
 
   // 07
   "16oxy6p": "<span class=\"num\">07</span>Type 2: given Q, find R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub>",
@@ -254,6 +264,10 @@ window.CT_EN = {
   "1c10nl3": "I<sub>B</sub> = 150 µA = 0.15 mA",
   "1dxbjrf": "<span class=\"num\">09</span>Review quiz",
   "888k4t": "10 questions summing up the chapter. Pick an answer to see whether it is right and why.",
+  "1uc1ltq": "<span class=\"num\">10</span>Exercises",
+  "1o67bpc": "Practise finding the operating point Q and choosing bias resistors for a BJT:",
+  "cljcey": "BJT transistor exercises",
+  "sztssw": "Draw the DC load line, find point Q (cut-off, active, saturation), choose R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub> for active mode and saturation. 6 self-checked problems with step-by-step solutions.",
   "1teoyt8": "← Back to Basic Electronics (Year 1)",
 
   // aria-label / alt

@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
-<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong4.en.js?v=1">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong4.en.js?v=2">
 <meta property="og:title" content="Chương 4: Transistor lưỡng cực BJT · Điện tử Cơ bản">
 <meta property="og:description" content="Điện tử cơ bản Chương 4: transistor lưỡng cực BJT, cấu tạo PNP NPN, ký hiệu, nguyên lý hoạt động, I_C = β·I_B, ba vùng ngưng dẫn khuếch đại bão hoà, mạch phân cực cố định, đường tải tĩnh DCLL, xác định điểm Q và chọn R_B, R_C, R_E.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong4">
@@ -337,6 +337,7 @@
         <li><a href="#dang-2">Dạng 2: chọn R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub></a></li>
         <li><a href="#tom-tat">Bảng tóm tắt</a></li>
         <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+        <li><a href="#bai-tap">Bài tập</a></li>
       </ol>
     </nav>
 
@@ -698,6 +699,8 @@
     </figure>
     <div class="note"><strong>Kiểm tra lại:</strong> điểm Q<sub>2</sub>(8 mA; 4 V) phải nằm trên DCLL: thay vào phương trình, I<sub>C</sub> = (9 − 4) / 0,62 ≈ 8,1 mA, khớp. Q<sub>1</sub>, Q<sub>3</sub> nằm ở hai đầu đường tải: transistor làm công tắc hở và công tắc đóng.</div>
 
+    <a class="practice" href="/baitaptransistor#bai1"><span class="practice-k">Bài tập</span><span class="practice-t">Bài tập transistor BJT · Dạng 1</span><span class="practice-d">Bài 1 – 2: vẽ DCLL, xác định chế độ và điểm làm việc Q khi thay đổi V<sub>BB</sub>, có và không có R<sub>E</sub>.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
+
     <!-- 7 -->
     <h2 id="dang-2"><span class="num">07</span>Dạng 2: cho trước điểm Q, tìm R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub></h2>
     <p class="easy"><span class="tag">Dễ nhớ</span>Dạng 1 là "có điện trở, tìm Q"; Dạng 2 làm ngược lại: <strong>muốn Q ở đâu thì chọn điện trở cho nó</strong>. Tính ra giá trị lẻ rồi chọn giá trị chuẩn gần nhất có bán ngoài tiệm.</p>
@@ -755,6 +758,7 @@
       <p>R<sub>B</sub> = (9 − 0,8 − 28,12 × 0,1) / (0,94 × 10⁻³) ≈ 5,7 kΩ ⇒ <span class="ans">chọn R<sub>B</sub> = 5,6 kΩ</span></p>
     </div>
     <div class="note"><strong>Chọn giá trị chuẩn theo hướng an toàn:</strong> ở chế độ bão hoà nên chọn R<sub>B</sub> <strong>nhỏ hơn</strong> giá trị tính (5,6 kΩ &lt; 5,7 kΩ) để I<sub>B</sub> lớn hơn một chút, transistor càng chắc chắn bão hoà. Giá trị chuẩn thường gặp (dãy E12): 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 nhân với 1, 10, 100, 1 000…</div>
+    <a class="practice" href="/baitaptransistor#bai3"><span class="practice-k">Bài tập</span><span class="practice-t">Bài tập transistor BJT · Dạng 2</span><span class="practice-d">Bài 3 – 6: chọn R<sub>E</sub>, R<sub>C</sub>, R<sub>B</sub> cho chế độ khuếch đại và bão hoà, rồi chọn giá trị chuẩn E12.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
     <figure class="sim" id="simDesign">
       <p class="sim-h">Thử ngay · Thiết kế điểm Q ở chế độ khuếch đại</p>
       <div class="simbox">
@@ -818,6 +822,17 @@
     <h2 id="trac-nghiem"><span class="num">09</span>Trắc nghiệm ôn tập</h2>
     <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
     <div class="quiz" id="quiz"></div>
+
+    <!-- 10 -->
+    <h2 id="bai-tap"><span class="num">10</span>Bài tập</h2>
+    <p>Luyện tìm điểm làm việc Q và chọn điện trở phân cực cho transistor BJT:</p>
+    <div class="exlist">
+      <a class="card" href="/baitaptransistor">
+        <h2>Bài tập transistor BJT</h2>
+        <p>Vẽ đường tải tĩnh DCLL, xác định điểm Q (ngưng dẫn, khuếch đại, bão hoà), chọn R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub> cho chế độ khuếch đại và bão hoà. 6 bài tự chấm, lời giải từng bước.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+    </div>
 
     <a class="back" href="/namnhat-dientucoban">← Về Điện tử Cơ bản (Năm nhất)</a>
   </article>

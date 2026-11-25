@@ -203,6 +203,15 @@ window.CT_POSTS = [
     parent: "/dientucoban"
   },
   {
+    section: "ontap",
+    title: "Bài tập transistor BJT (Chương 4)",
+    desc: "Transistor BJT: vẽ đường tải tĩnh DCLL, xác định điểm làm việc Q (ngưng dẫn, khuếch đại, bão hoà), chọn RB, RC, RE cho chế độ khuếch đại và bão hoà. 6 bài tự chấm, lời giải từng bước theo K2.",
+    short: "6 bài transistor BJT: DCLL, điểm Q, chọn RB RC RE, tự chấm.",
+    date: "2026-11-25",
+    href: "/baitaptransistor",
+    parent: "/dientucoban"
+  },
+  {
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
