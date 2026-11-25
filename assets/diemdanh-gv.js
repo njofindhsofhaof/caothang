@@ -126,6 +126,7 @@
     if (tab === 'phien') refreshLive(); else stopLive();
     if (tab === 'thang') { loadMonth(); renderTemplateInfo(); }
     if (tab === 'lop') renderRosterTable();
+    if (tab === 'lichsu') loadLog();
   }
   window.addEventListener('hashchange', route);
 
@@ -738,6 +739,74 @@
     }
     $('monthIssues').replaceChildren(...blocks);
   }
+
+  /* ---------- Lịch sử chỉnh sửa ---------- */
+  let logData = [];
+  const dm = (d) => (d ? `${d.slice(8, 10)}/${d.slice(5, 7)}` : '');
+  const stName = (m) => {
+    const st = roster.find((x) => String(x.mssv) === String(m));
+    return st ? `${fullName(st)} (${m})` : `MSSV ${m}`;
+  };
+  const span = (e) => (e.startsAt ? ` ${fmtTime(e.startsAt)}–${fmtTime(e.expiresAt)}` : '');
+  const where = (e) => `${e.subject || e.label || 'Buổi học'} · ${dm(e.date)}${span(e)}`;
+  const recText = (r) => (!r ? 'chưa có điểm danh'
+    : r.manual ? `có mặt (đánh tay lúc ${fmtTime(r.time)})`
+      : `tự điểm danh lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''}`);
+  const excText = (v) => ({ P: 'vắng có phép (P)', K: 'vắng không phép (K)' }[v] || 'không đặt phép');
+
+  function describeLog(e) {
+    switch (e.action) {
+      case 'present': return `Đánh dấu có mặt: ${stName(e.mssv)} · ${where(e)}. Trước đó: ${recText(e.before)}.`;
+      case 'unpresent': return `Bỏ điểm danh: ${stName(e.mssv)} · ${where(e)}. Bản ghi bị bỏ: ${recText(e.before)}.`;
+      case 'onTime': return `Đổi trễ → đúng giờ: ${stName(e.mssv)} · ${where(e)}. Trước đó: ${recText(e.before)}.`;
+      case 'restore': return `Khôi phục điểm danh: ${stName(e.mssv)} · ${where(e)}.`;
+      case 'excuse': return `Phép ngày ${dm(e.date)}: ${stName(e.mssv)} · ${excText(e.before)} → ${excText(e.value)}.`;
+      case 'dropDay': return `Bỏ ngày ${dm(e.date)} khỏi thống kê (${e.count} buổi${e.subjects?.length ? `: ${e.subjects.join(', ')}` : ''}).`;
+      case 'sessionCreate': return `Đặt lịch: ${e.label || 'Buổi học'} · ${dm(e.date)}${span(e)} · ${e.placeName}${e.count > 1 ? ` · lặp ${e.count} tuần` : ''}${e.requireQr ? ' · bắt buộc QR' : ''}.`;
+      case 'session_label': return `Đổi môn: ${where(e)} → ${e.value}.`;
+      case 'session_close': return `Đóng điểm danh sớm: ${where(e)} (đóng lúc ${fmtTime(e.value)}).`;
+      case 'session_extend': return `Gia hạn: ${where(e)} → đến ${fmtTime(e.value)}.`;
+      case 'session_qr': return `${e.value ? 'Bật' : 'Tắt'} bắt buộc QR: ${where(e)}.`;
+      case 'sessionDelete': return `Xoá lịch: ${where(e)}.`;
+      case 'rosterImport': return `Nhập danh sách lớp: ${e.before} → ${e.count} sinh viên${e.added?.length ? ` · thêm ${e.added.join(', ')}` : ''}${e.removed?.length ? ` · bớt ${e.removed.join(', ')}` : ''}.`;
+      case 'rosterRemove': return `Xoá khỏi danh sách lớp: ${e.name || ''} (${e.mssv}).`;
+      case 'pinChange': return 'Đổi PIN giáo viên.';
+      case 'placeAdd': return `Lưu phòng: ${e.name}.`;
+      case 'placeDelete': return `Xoá phòng: ${e.name}.`;
+      case 'templateSave': return `Lưu file mẫu Excel: ${e.name}.`;
+      default: return e.action;
+    }
+  }
+
+  // Thiết bị rút gọn từ user-agent: đủ để phân biệt máy, không cần chính xác tuyệt đối.
+  function deviceText(ua = '') {
+    const os = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android'
+      : /Windows/.test(ua) ? 'Windows' : /Mac OS X/.test(ua) ? 'Mac' : /Linux/.test(ua) ? 'Linux' : '';
+    const br = /Zalo/i.test(ua) ? 'Zalo' : /FBAN|FBAV/.test(ua) ? 'Facebook' : /Edg\//.test(ua) ? 'Edge'
+      : /CriOS|Chrome\//.test(ua) ? 'Chrome' : /FxiOS|Firefox\//.test(ua) ? 'Firefox' : /Safari\//.test(ua) ? 'Safari' : '';
+    return [os, br].filter(Boolean).join(' · ') || 'Không rõ thiết bị';
+  }
+
+  function renderLog() {
+    const q = $('logSearch').value.trim().toLowerCase();
+    const rows = logData.map((e) => ({ e, text: describeLog(e) }))
+      .filter(({ e, text }) => !q || `${text} ${e.mssv ?? ''}`.toLowerCase().includes(q));
+    $('logMsg').textContent = logData.length ? (q ? `${rows.length}/${logData.length} dòng khớp.` : '') : 'Chưa có thao tác nào được ghi.';
+    $('logList').replaceChildren(...rows.map(({ e, text }) => h('li', {},
+      h('time', { datetime: new Date(e.at).toISOString() }, `${fmtDay(e.at)} ${fmtTime(e.at)}`),
+      h('span', {}, text),
+      h('small', {}, `${deviceText(e.ua)}${e.ip ? ` · IP ${e.ip}` : ''}`))));
+  }
+
+  async function loadLog() {
+    $('logMsg').textContent = 'Đang tải…';
+    const r = await api('/api/attendance?audit=1&limit=1000');
+    if (!r.ok) { $('logMsg').textContent = r.message; return; }
+    logData = r.log;
+    renderLog();
+  }
+  $('logSearch').addEventListener('input', renderLog);
+  $('logReload').addEventListener('click', loadLog);
 
   /* ---------- File mẫu Excel: lưu trên máy chủ, dùng chung cho mọi máy ---------- */
   const toBase64 = async (blob) => {

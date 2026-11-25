@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=20261108d">
-<link rel="stylesheet" href="/assets/diemdanh.css?v=undo1">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=log1">
   <script src="/assets/theme.js"></script>
 </head>
 <body>
@@ -48,6 +48,7 @@
       <a href="#phien" data-tab="phien">Lịch điểm danh</a>
       <a href="#thang" data-tab="thang">Bảng tháng &amp; xuất Excel</a>
       <a href="#lop" data-tab="lop">Danh sách lớp</a>
+      <a href="#lichsu" data-tab="lichsu">Lịch sử</a>
     </nav>
 
     <!-- Lịch điểm danh -->
@@ -166,6 +167,17 @@
     </section>
 
     <!-- Danh sách lớp -->
+    <section data-panel="lichsu" aria-labelledby="lichsuTitle" hidden>
+      <h2 class="sec" id="lichsuTitle">Lịch sử chỉnh sửa</h2>
+      <p class="gv-note">Mọi thao tác thay đổi dữ liệu trên trang này (sửa ô điểm danh, đặt phép, đặt/đổi/xoá lịch, danh sách lớp, đổi PIN…) được ghi lại cùng thời gian và máy thực hiện. Nhật ký bắt đầu từ khi có tính năng này, không có các thao tác trước đó.</p>
+      <div class="gv-toolbar gv-log-tools">
+        <label>Tìm <input type="search" id="logSearch" placeholder="Tên, MSSV, môn hoặc ngày (vd. 23/11)"></label>
+        <button class="dd-btn dd-btn-ghost" type="button" id="logReload">Tải lại</button>
+      </div>
+      <p class="dd-hint" id="logMsg" role="status"></p>
+      <ol class="gv-log" id="logList"></ol>
+    </section>
+
     <section data-panel="lop" aria-labelledby="lopTitle" hidden>
       <h2 class="sec" id="lopTitle">Danh sách lớp</h2>
       <div class="dd-card">
@@ -196,6 +208,6 @@
 <script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
 <script src="/assets/diemdanh-img.js?v=img"></script>
 <script src="/assets/subjects.js?v=1"></script>
-<script src="/assets/diemdanh-gv.js?v=undo6"></script>
+<script src="/assets/diemdanh-gv.js?v=log1"></script>
 </body>
 </html>

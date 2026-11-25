@@ -1,5 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { redis, keys } from './_lib/redis.js';
+import { audit } from './_lib/audit.js';
 import { send, handler, requireSecret, vnDate } from './_lib/http.js';
 import { getSession, getActiveSession, getAttendance, getRoster, listSessions, isActive, MAX_SESSION_MS, teacherGate } from './_lib/store.js';
 import { isValidCoord } from './_lib/geo.js';
@@ -85,6 +86,8 @@ async function create(req, res) {
     redis().zadd(keys.schedule, { score: s.startsAt, member: s.id }),
     redis().sadd(keys.monthSessions(s.date.slice(0, 7)), s.id),
   ]));
+  const first = created[0];
+  await audit(req, { action: 'sessionCreate', label: first.label, date: first.date, startsAt: first.startsAt, expiresAt: first.expiresAt, placeName: first.placeName, count: created.length, requireQr: first.requireQr });
   send(res, 200, { ok: true, sessions: created });
 }
 
@@ -106,6 +109,12 @@ async function update(req, res) {
   }
   else return fail(res, 'Thao tác không hợp lệ.');
   await redis().set(keys.session(s.id), next, { keepTtl: true });
+  await audit(req, {
+    action: `session_${b.action}`, sessionId: s.id, label: s.label, date: s.date, startsAt: s.startsAt, expiresAt: s.expiresAt,
+    ...(b.action === 'label' ? { value: next.label } : {}),
+    ...(b.action === 'qr' ? { value: next.requireQr } : {}),
+    ...(b.action === 'extend' || b.action === 'close' ? { value: next.expiresAt } : {}),
+  });
   send(res, 200, { ok: true, session: next, active: isActive(next, now) });
 }
 
@@ -118,6 +127,7 @@ async function remove(req, res) {
     redis().zrem(keys.schedule, s.id),
     redis().srem(keys.monthSessions(s.date.slice(0, 7)), s.id),
   ]);
+  await audit(req, { action: 'sessionDelete', sessionId: s.id, label: s.label, date: s.date, startsAt: s.startsAt, expiresAt: s.expiresAt });
   send(res, 200, { ok: true });
 }
 

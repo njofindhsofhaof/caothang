@@ -1,6 +1,7 @@
 import { redis, keys } from './_lib/redis.js';
 import { teacherGate } from './_lib/store.js';
 import { send, handler } from './_lib/http.js';
+import { audit } from './_lib/audit.js';
 
 // File mẫu ~vài chục KB; chặn trên để vừa giới hạn một bản ghi Redis.
 export const MAX_BASE64_CHARS = 1_000_000;
@@ -23,6 +24,7 @@ export default handler(async (req, res) => {
     const { template, error } = parseTemplate(req.body);
     if (error) return send(res, 400, { ok: false, message: error });
     await redis().set(keys.template, template);
+    await audit(req, { action: 'templateSave', name: template.name });
     return send(res, 200, { ok: true, name: template.name });
   }
   send(res, 405, { ok: false, message: 'Method not allowed' });
