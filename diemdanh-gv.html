@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=20261108d">
-<link rel="stylesheet" href="/assets/diemdanh.css?v=log1">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=luot1">
   <script src="/assets/theme.js"></script>
 </head>
 <body>
@@ -48,6 +48,7 @@
       <a href="#phien" data-tab="phien">Lịch điểm danh</a>
       <a href="#thang" data-tab="thang">Bảng tháng &amp; xuất Excel</a>
       <a href="#lop" data-tab="lop">Danh sách lớp</a>
+      <a href="#luot" data-tab="luot">Lượt điểm danh</a>
       <a href="#lichsu" data-tab="lichsu">Lịch sử</a>
     </nav>
 
@@ -166,7 +167,20 @@
       <div id="monthIssues" class="gv-issues-wrap"></div>
     </section>
 
-    <!-- Danh sách lớp -->
+    <section data-panel="luot" aria-labelledby="luotTitle" hidden>
+      <h2 class="sec" id="luotTitle">Lượt điểm danh</h2>
+      <p class="gv-note">Mỗi lần sinh viên bấm Điểm danh đều được ghi lại, kể cả lần bị từ chối (ngoài phạm vi, GPS sai, máy đã dùng…). Dùng để đối chiếu khi sinh viên nói đã điểm danh mà bảng ghi vắng. Bạn ngồi trong lớp mà GPS báo lệch: bấm <b>Cho có mặt</b> ở lượt bị từ chối.</p>
+      <div class="gv-toolbar gv-log-tools">
+        <label>Ngày <input type="date" id="tryDate"></label>
+        <label>Tìm <input type="search" id="tryFilter" placeholder="Tên, MSSV hoặc môn"></label>
+        <label class="gv-check"><input type="checkbox" id="tryOnlyBad"> Chỉ lượt bị từ chối</label>
+        <button class="dd-btn dd-btn-ghost" type="button" id="tryReload">Tải lại</button>
+      </div>
+      <div id="tryReview" class="gv-try-review"></div>
+      <p class="dd-hint" id="tryMsg" role="status"></p>
+      <ol class="gv-log gv-try" id="tryList"></ol>
+    </section>
+
     <section data-panel="lichsu" aria-labelledby="lichsuTitle" hidden>
       <h2 class="sec" id="lichsuTitle">Lịch sử chỉnh sửa</h2>
       <p class="gv-note">Mọi thao tác thay đổi dữ liệu trên trang này (sửa ô điểm danh, đặt phép, đặt/đổi/xoá lịch, danh sách lớp, đổi PIN…) được ghi lại cùng thời gian và máy thực hiện. Nhật ký bắt đầu từ khi có tính năng này, không có các thao tác trước đó.</p>
@@ -208,6 +222,7 @@
 <script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
 <script src="/assets/diemdanh-img.js?v=img"></script>
 <script src="/assets/subjects.js?v=1"></script>
-<script src="/assets/diemdanh-gv.js?v=log1"></script>
+<script src="/assets/diemdanh-gv.js?v=luot1"></script>
+<script src="/assets/diemdanh-gv-checkins.js?v=luot2"></script>
 </body>
 </html>

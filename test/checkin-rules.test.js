@@ -44,8 +44,31 @@ test('rejects expired QR', () => assert.equal(run({}, { tokenOk: false }).code, 
 test('rejects unknown student', () => assert.equal(run({}, { student: null }).code, 'unknown_mssv'));
 test('rejects device bound to another MSSV', () => assert.equal(run({}, { boundMssv: '100000002' }).code, 'device_bound'));
 test('rejects device already used in session', () => assert.equal(run({}, { deviceMssvInSession: '100000002' }).code, 'device_used'));
+
+// Upstash tự JSON.parse giá trị đọc ra: MSSV "100000001" lưu trong devsess:<phiên> trả về số 100000001.
+test('the same student pressing again on the same device is not mistaken for another student', () => {
+  const r = run({}, { deviceMssvInSession: 100000001, existing: { mssv: '100000001', time: NOW - 1000 } });
+  assert.equal(r.ok, true);
+  assert.equal(r.already, true);
+});
+test('a numeric device owner that is a different MSSV is still rejected', () => {
+  assert.equal(run({}, { deviceMssvInSession: 100000002 }).code, 'device_used');
+  assert.equal(run({}, { boundMssv: 100000002 }).code, 'device_bound');
+});
 test('rejects low accuracy', () => assert.equal(run({ accuracy: 400 }).code, 'low_accuracy'));
 test('rejects far away', () => assert.equal(run({ lat: 10.78 }).code, 'too_far'));
+
+test('too_far keeps the distance for the check-in log and tells students in class what to try', () => {
+  const r = run({ lat: 10.78 });
+  assert.ok(r.distance > 100);
+  assert.match(r.message, /Wi-Fi/);
+});
+
+test('a malformed body still returns the parsed MSSV so the attempt can be logged', () => {
+  const { input, error } = parseCheckinBody({ ...body, lat: '', lng: '' });
+  assert.equal(error.code, 'no_gps');
+  assert.equal(input.mssv, '100000001');
+});
 
 test('returns already for repeat check-in', () => {
   const existing = { mssv: '100000001', time: NOW - 5000 };

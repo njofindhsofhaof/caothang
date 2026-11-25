@@ -134,6 +134,14 @@
       }
       const time = new Date(r.time).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
       const subj = r.subject ? ` môn ${r.subject}` : '';
+      if (r.already && r.next) {
+        // Bấm trước giờ môn sau: không báo xanh "đã điểm danh" (ngày 23/11 nhiều bạn tưởng đã xong môn sau và bị vắng K).
+        setStatus('idle', `${r.next.subject} chưa mở điểm danh`,
+          `Bạn mới điểm danh${subj} (lúc ${time}). ${r.next.subject} mở lúc ${fmt(r.next.startsAt)}: đến giờ nhớ bấm Điểm danh lần nữa.`);
+        $('retryBtn').hidden = false;
+        $('retryBtn').textContent = 'Kiểm tra lại';
+        return;
+      }
       const title = r.already ? `Bạn đã điểm danh${subj} rồi` : (r.late ? `Đã điểm danh${subj} (trễ)` : `Điểm danh${subj} thành công`);
       const next = r.already && r.next
         ? ` · ${r.next.subject} mở điểm danh lúc ${new Date(r.next.startsAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, nhớ quay lại điểm danh`

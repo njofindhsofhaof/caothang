@@ -3,6 +3,7 @@ import { send, handler, DATE_RE, MONTH_RE } from './_lib/http.js';
 import { getSession, getAttendance, teacherGate } from './_lib/store.js';
 import { withDuplicateFlags } from './_lib/suspicion.js';
 import { audit, readAudit } from './_lib/audit.js';
+import { readCheckinLog } from './_lib/checkin-log.js';
 import '../assets/subjects.js';
 
 const subjectName = globalThis.DDSubjects.subjectName;
@@ -110,6 +111,11 @@ async function dropDay(date, req) {
 export default handler(async (req, res) => {
   const denied = await teacherGate(req);
   if (denied) return send(res, denied.status, { ok: false, message: denied.message });
+  if (req.method === 'GET' && req.query.checkins) {
+    const date = String(req.query.checkins);
+    if (!DATE_RE.test(date)) return send(res, 400, { ok: false, message: 'Ngày không hợp lệ.' });
+    return send(res, 200, { ok: true, date, log: await readCheckinLog(date) });
+  }
   if (req.method === 'GET' && req.query.audit) return send(res, 200, { ok: true, log: await readAudit(req.query.limit) });
   if (req.method === 'GET') {
     const ym = String(req.query.month ?? '');

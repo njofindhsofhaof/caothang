@@ -127,6 +127,7 @@
     if (tab === 'thang') { loadMonth(); renderTemplateInfo(); }
     if (tab === 'lop') renderRosterTable();
     if (tab === 'lichsu') loadLog();
+    if (tab === 'luot') window.DDGvCheckins?.load();
   }
   window.addEventListener('hashchange', route);
 
@@ -937,4 +938,6 @@
 
   /* ---------- Khởi động ---------- */
   if (pin.get()) start(); else showLogin();
+  // Dùng chung cho tab Lượt điểm danh (assets/diemdanh-gv-checkins.js).
+  window.DDGv = { h, api, fmtTime, fullName, deviceText, getRoster: () => roster };
 })();
