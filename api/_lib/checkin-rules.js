@@ -25,11 +25,11 @@ export function parseCheckinBody(body) {
     accuracy: toNum(b.accuracy),
     samples: parseSamples(b.samples),
   };
-  if (!input.sessionId) return { error: fail('closed', 'Hiện không có buổi điểm danh nào đang mở.') };
-  if (!MSSV_RE.test(input.mssv)) return { error: fail('bad_mssv', 'MSSV không đúng định dạng.') };
-  if (!DEVICE_RE.test(input.deviceId)) return { error: fail('bad_device', 'Thiết bị không hợp lệ. Hãy tải lại trang.') };
+  if (!input.sessionId) return { input, error: fail('closed', 'Hiện không có buổi điểm danh nào đang mở.') };
+  if (!MSSV_RE.test(input.mssv)) return { input, error: fail('bad_mssv', 'MSSV không đúng định dạng.') };
+  if (!DEVICE_RE.test(input.deviceId)) return { input, error: fail('bad_device', 'Thiết bị không hợp lệ. Hãy tải lại trang.') };
   if (!isValidCoord(input.lat, input.lng) || !Number.isFinite(input.accuracy)) {
-    return { error: fail('no_gps', 'Không lấy được vị trí. Hãy bật định vị (GPS) và cho phép trình duyệt truy cập vị trí.') };
+    return { input, error: fail('no_gps', 'Không lấy được vị trí. Hãy bật định vị (GPS) và cho phép trình duyệt truy cập vị trí.') };
   }
   return { input };
 }
@@ -40,7 +40,11 @@ export function parseCheckinBody(body) {
  * state: { session, now, tokenOk, student, existing, deviceMssvInSession, boundMssv }
  */
 export function evaluateCheckin(input, state) {
-  const { session, now, tokenOk, student, existing, deviceMssvInSession, boundMssv } = state;
+  const { session, now, tokenOk, student, existing } = state;
+  // Upstash tự JSON.parse giá trị đọc ra nên MSSV có thể về dạng số: luôn so sánh dạng chuỗi.
+  const asMssv = (v) => (v === null || v === undefined || v === '' ? null : String(v));
+  const deviceMssvInSession = asMssv(state.deviceMssvInSession);
+  const boundMssv = asMssv(state.boundMssv);
   if (!session || session.closed || now > lateUntil(session)) {
     return fail('closed', 'Buổi điểm danh đã kết thúc hoặc không tồn tại.');
   }
@@ -59,7 +63,10 @@ export function evaluateCheckin(input, state) {
   }
   const distance = haversineMeters(session.lat, session.lng, input.lat, input.lng);
   if (distance > session.radius) {
-    return fail('too_far', `Bạn đang cách lớp khoảng ${Math.round(distance)} m (cho phép ${session.radius} m).`);
+    return {
+      ...fail('too_far', `Bạn đang cách lớp khoảng ${Math.round(distance)} m (cho phép ${session.radius} m). Nếu bạn đang ngồi trong lớp: tắt Wi-Fi rồi bấm Thử lại (Wi-Fi hay làm iPhone định vị lệch), hoặc mở trang bằng Safari/Chrome thay vì Zalo. Lượt này đã được ghi lại để thầy kiểm tra.`),
+      distance: Math.round(distance),
+    };
   }
   const flags = checkinFlags(input, session);
   const record = {

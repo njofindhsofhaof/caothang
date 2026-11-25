@@ -5,6 +5,7 @@ import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
 import { parseCheckinBody, evaluateCheckin, normalizeMssv, otherOpenSessions } from './_lib/checkin-rules.js';
 import { loadCheckinStats, subjectOf } from './_lib/tally.js';
 import { aliasMap } from './_lib/alias.js';
+import { logCheckin, attemptEntry } from './_lib/checkin-log.js';
 
 const DEVICE_BIND_TTL_S = 400 * 86_400;
 
@@ -47,7 +48,11 @@ export default handler(async (req, res) => {
   if (req.query.ticket) return issueTicket(req, res);
 
   const { input, error } = parseCheckinBody(req.body);
-  if (error) return send(res, 400, error);
+  if (error) {
+    // Ghi cả lượt hỏng (vd. không có GPS) nếu biết là ai, để đối chiếu khi sinh viên nói đã bấm điểm danh.
+    if (/^\d{6,12}$/.test(input?.mssv ?? '')) await logCheckin(req, attemptEntry({ input, session: null, result: error, now: Date.now() }));
+    return send(res, 400, error);
+  }
 
   if (await isRateLimited(`ip:${clientIp(req)}`, 60) || await isRateLimited(`dev:${input.deviceId}`)) {
     return send(res, 429, { ok: false, code: 'rate', message: 'Thử quá nhiều lần. Đợi một phút rồi thử lại.' });
@@ -61,6 +66,7 @@ export default handler(async (req, res) => {
     redis().hget(keys.deviceInSession(input.sessionId), input.deviceId),
     redis().get(keys.device(input.deviceId)),
   ]);
+  const chosenId = input.sessionId; // buổi trang chọn, trước khi đổi sang buổi khác bên dưới
   // Đã điểm danh buổi này mà đang có buổi môn khác cũng mở → ghi vào buổi đó thay vì báo "đã điểm danh rồi".
   if (existing && session) {
     const others = otherOpenSessions(await listSessions(now - MAX_SESSION_MS, now), session, now, subjectOf);
@@ -82,12 +88,17 @@ export default handler(async (req, res) => {
   const result = evaluateCheckin(input, {
     session, now, tokenOk, student, existing, deviceMssvInSession, boundMssv: boundMssv ? String(boundMssv) : null,
   });
-  if (!result.ok) return send(res, 400, result);
+  const log = (r) => logCheckin(req, attemptEntry({ input, session, result: r, now, redirectedFrom: input.sessionId !== chosenId ? chosenId : null }));
+  if (!result.ok) {
+    await log(result);
+    return send(res, 400, result);
+  }
 
   const name = `${student.ho} ${student.ten}`.trim();
   const alias = aliasMap(roster).get(input.mssv) ?? null; // tên ẩn danh của bạn này trên bảng Leo rank
   const subject = subjectOf(session);
   if (result.already) {
+    await log(result);
     // Báo rõ môn đã điểm danh và môn kế tiếp trong ngày (nếu có) để sinh viên biết cần quay lại.
     const next = (await listSessions(now, now + 12 * 3_600_000)).find((s) => !s.closed && s.date === session.date && s.id !== session.id);
     return send(res, 200, {
@@ -101,12 +112,17 @@ export default handler(async (req, res) => {
   const claimed = await redis().hsetnx(keys.deviceInSession(input.sessionId), input.deviceId, input.mssv);
   if (!claimed) {
     const owner = await redis().hget(keys.deviceInSession(input.sessionId), input.deviceId);
-    if (String(owner) !== input.mssv) return send(res, 400, { ok: false, code: 'device_used', message: 'Máy này đã điểm danh cho một bạn khác trong buổi này.' });
+    if (String(owner) !== input.mssv) {
+      const used = { ok: false, code: 'device_used', message: 'Máy này đã điểm danh cho một bạn khác trong buổi này.' };
+      await log(used);
+      return send(res, 400, used);
+    }
   }
   await Promise.all([
     redis().hsetnx(keys.att(input.sessionId), input.mssv, result.record),
     redis().set(keys.device(input.deviceId), input.mssv, { ex: DEVICE_BIND_TTL_S, nx: true }),
   ]);
+  await log(result);
   send(res, 200, {
     ok: true, already: false, name, subject, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late),
     alias, tally: await safeTally(session, input.mssv, now),

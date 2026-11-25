@@ -204,3 +204,18 @@
 .gv-log small{font-size:12px;color:var(--ink-faint);}
 .gv-log:empty{display:none;}
 @media (max-width:560px){.gv-log li{grid-template-columns:1fr;}.gv-log time{grid-row:auto;}}
+
+/* Tab Lượt điểm danh */
+.gv-try li{grid-template-columns:70px 1fr auto;}
+.gv-try li time{grid-row:span 2;}
+.gv-try li > span, .gv-try li > small{grid-column:2;}
+.gv-try li .gv-mini{grid-column:3;grid-row:1 / span 2;align-self:center;}
+.gv-try li.gv-try-bad{background:var(--bad-soft);}
+.gv-try-tag{font-weight:600;}
+.gv-try-tag.ok{color:var(--ok, #2e7d32);}
+.gv-try-tag.late{color:var(--warn, #b26a00);}
+.gv-try-tag.bad{color:var(--bad, #c0392b);}
+.gv-try-review:empty{display:none;}
+.gv-try-review{margin:6px 0 10px;}
+.gv-check{display:flex;align-items:center;gap:6px;flex:0 0 auto;min-width:0;}
+@media (max-width:560px){.gv-try li{grid-template-columns:1fr;}.gv-try li > span, .gv-try li > small{grid-column:auto;}.gv-try li .gv-mini{grid-column:auto;grid-row:auto;justify-self:start;}}
