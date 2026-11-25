@@ -26,7 +26,9 @@
   }
 
   const ICONS = { idle: '·', wait: '◌', ok: '✓', bad: '!' };
+  let shownAt = Date.now();
   function setStatus(state, title, msg = '') {
+    shownAt = Date.now();
     $('statusCard').dataset.state = state;
     $('stampIcon').textContent = ICONS[state];
     $('statusTitle').textContent = title;
@@ -278,6 +280,15 @@
     if (qrToken) submit(); else showReady();
   });
 
+  // Mở lại tab cũ (vd. vẫn còn màn hình "thành công" của môn trước): làm mới để thấy môn đang mở,
+  // tránh nhìn nhầm thông báo cũ rồi bỏ qua điểm danh môn sau.
+  function refreshIfStale() {
+    if (submitting || qrToken || !store.get(STORE_MSSV) || Date.now() - shownAt < 60_000) return;
+    showReady();
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refreshIfStale(); });
+  window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
+
   // Khởi động
   if (sessionId && qrToken) {
     ticketPromise = api('/api/checkin?ticket=1', { s: sessionId, t: qrToken, deviceId: dev })
@@ -293,6 +304,6 @@
     if (qrToken) submit(); else showReady();
   } else {
     $('mssvForm').hidden = false;
-    setStatus('idle', 'Nhập MSSV để điểm danh', 'Chỉ nhập lần đầu, lần sau mở trang là tự điểm danh.');
+    setStatus('idle', 'Nhập MSSV để điểm danh', 'Chỉ nhập lần đầu. Lần sau mở trang rồi bấm nút Điểm danh của môn đang mở.');
   }
 })();
