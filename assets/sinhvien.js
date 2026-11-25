@@ -146,7 +146,7 @@
     const rows = h('ul', { class: 'sv-rows' }, ...g.entries.map((e) => h('li', {},
       h('span', { class: 'sv-dot', 'data-s': e.state }),
       h('span', {}, h('time', { datetime: e.date }, dayText(e.date)), ` · ${STATES[e.state]}`),
-      h('small', {}, e.time ? (e.manual ? 'thầy ghi' : timeText(e.time)) : ''))));
+      h('small', {}, e.time ? (e.manual ? 'Cán bộ lớp ghi' : timeText(e.time)) : ''))));
     const exam = upcomingExams().find((e) => e.subject === g.name);
     return h('article', { class: 'sv-subject' },
       h('div', { class: 'sv-head' }, h('h3', {}, g.name), streak),
