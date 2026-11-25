@@ -12,22 +12,50 @@ async function month(ym) {
   // Chỉ tính các buổi đã bắt đầu — buổi đặt lịch trong tương lai chưa ai vắng.
   const sessions = (await Promise.all(ids.map(getSession))).filter((s) => s && s.startsAt <= now).sort((a, b) => a.startsAt - b.startsAt);
   const records = await Promise.all(sessions.map((s) => getAttendance(s.id)));
+  const removed = await Promise.all(sessions.map(async (s) => Object.values((await redis().hgetall(keys.attRemoved(s.id))) ?? {})));
   const dates = [...new Set(sessions.map((s) => s.date))];
   const excuses = await Promise.all(dates.map(async (d) => [d, (await redis().hgetall(keys.excuse(d))) ?? {}]));
   return {
-    sessions: sessions.map((s, i) => ({ ...s, records: withDuplicateFlags(records[i].map(({ deviceId, ...r }) => r)) })),
+    sessions: sessions.map((s, i) => ({
+      ...s,
+      records: withDuplicateFlags(records[i].map(({ deviceId, ...r }) => r)),
+      removed: removed[i].map(({ deviceId, lat, lng, ...r }) => r),
+    })),
     excuses: Object.fromEntries(excuses),
   };
+}
+
+// Bỏ có mặt. Bản ghi sinh viên tự điểm danh (GPS) chỉ bỏ khi trang gửi force (thầy đã xác nhận),
+// và luôn được cất sang att:removed để khôi phục được nếu lỡ tay.
+export async function unpresent(sessionId, mssv, force, db = redis()) {
+  const rec = await db.hget(keys.att(sessionId), mssv);
+  if (!rec) return { status: 200 };
+  if (!rec.manual && !force) return { status: 409, message: 'Bạn này đã tự điểm danh bằng GPS. Cần xác nhận trước khi bỏ.' };
+  if (!rec.manual) await db.hset(keys.attRemoved(sessionId), { [mssv]: { ...rec, removedAt: Date.now() } });
+  await db.hdel(keys.att(sessionId), mssv);
+  return { status: 200 };
+}
+
+export async function restore(sessionId, mssv, db = redis()) {
+  const rec = await db.hget(keys.attRemoved(sessionId), mssv);
+  if (!rec) return { status: 404, message: 'Không có bản ghi đã bỏ để khôi phục.' };
+  const { removedAt, ...record } = rec;
+  await db.hset(keys.att(sessionId), { [mssv]: record });
+  await db.hdel(keys.attRemoved(sessionId), mssv);
+  return { status: 200 };
 }
 
 async function patch(body) {
   const { action, sessionId, mssv, date, value } = body ?? {};
   if (typeof mssv !== 'string' || !/^\d{6,12}$/.test(mssv)) return { status: 400, message: 'MSSV không hợp lệ.' };
-  if (action === 'present' || action === 'unpresent') {
+  if (action === 'present' || action === 'unpresent' || action === 'restore') {
     if (!(await getSession(sessionId))) return { status: 404, message: 'Không tìm thấy phiên.' };
-    if (action === 'present') await redis().hsetnx(keys.att(sessionId), mssv, { mssv, time: Date.now(), manual: true });
-    else await redis().hdel(keys.att(sessionId), mssv);
-    return { status: 200 };
+    if (action === 'present') {
+      await redis().hsetnx(keys.att(sessionId), mssv, { mssv, time: Date.now(), manual: true });
+      return { status: 200 };
+    }
+    if (action === 'restore') return restore(sessionId, mssv);
+    return unpresent(sessionId, mssv, body.force === true);
   }
   if (action === 'excuse') {
     if (!DATE_RE.test(String(date))) return { status: 400, message: 'Ngày không hợp lệ.' };

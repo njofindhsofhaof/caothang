@@ -21,6 +21,7 @@ export const keys = {
   monthSessions: (ym) => `sessions:${ym}`,
   droppedSessions: (ym) => `sessions:dropped:${ym}`, // buổi test bị bỏ khỏi thống kê (vẫn giữ dữ liệu)
   att: (id) => `att:${id}`,
+  attRemoved: (id) => `att:removed:${id}`, // bản ghi bị giáo viên bỏ trong bảng tháng — giữ lại để khôi phục
   deviceInSession: (id) => `devsess:${id}`,
   device: (deviceId) => `device:${deviceId}`,
   excuse: (date) => `excuse:${date}`,

@@ -191,3 +191,6 @@
 .gv-day-detail{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;display:grid;gap:8px;}
 .gv-day-title{font-family:var(--serif);font-weight:600;font-size:17px;margin:0;}
 .gv-names{font-size:13.5px;margin:2px 0 0;line-height:1.7;}
+.gv-issues-wrap{display:flex;flex-direction:column;gap:12px;margin-top:14px;}
+.gv-issues-wrap:empty{display:none;}
+.gv-issues{border-left:3px solid var(--bad);}
