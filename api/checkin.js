@@ -50,7 +50,10 @@ export default handler(async (req, res) => {
   const { input, error } = parseCheckinBody(req.body);
   if (error) {
     // Ghi cả lượt hỏng (vd. không có GPS) nếu biết là ai, để đối chiếu khi sinh viên nói đã bấm điểm danh.
-    if (/^\d{6,12}$/.test(input?.mssv ?? '')) await logCheckin(req, attemptEntry({ input, session: null, result: error, now: Date.now() }));
+    // Sau giới hạn số lần theo IP, để không ai gửi rác làm đầy nhật ký trong ngày.
+    if (/^\d{6,12}$/.test(input?.mssv ?? '') && !(await isRateLimited(`ip:${clientIp(req)}`, 60))) {
+      await logCheckin(req, attemptEntry({ input, session: null, result: error, now: Date.now() }));
+    }
     return send(res, 400, error);
   }
 

@@ -31,11 +31,15 @@
     return gv().getRoster().find((s) => String(s.mssv) === String(mssv));
   }
 
-  // Bạn có bấm mà không có lượt nào thành công trong ngày: cần thầy xem lại.
+  // Bạn có bấm mà không lượt nào thành công ở môn đó (tính riêng từng môn: đúng giờ môn 1 mà môn 2 bị từ chối vẫn hiện).
   function needsReview(log) {
-    const byMssv = new Map();
-    for (const e of log) byMssv.set(e.mssv, [...(byMssv.get(e.mssv) ?? []), e]);
-    return [...byMssv.entries()].filter(([, list]) => !list.some((e) => succeeded(e.result))).map(([mssv, list]) => ({ mssv, list }));
+    const groups = new Map();
+    for (const e of log) {
+      const key = `${e.mssv}|${e.subject}`;
+      groups.set(key, [...(groups.get(key) ?? []), e]);
+    }
+    return [...groups.values()].filter((list) => !list.some((e) => succeeded(e.result)))
+      .map((list) => ({ mssv: list[0].mssv, subject: list[0].subject, list }));
   }
 
   async function markPresent(e, btn) {
@@ -77,10 +81,10 @@
     });
     const review = needsReview(data);
     $('tryReview').replaceChildren(...(review.length ? [
-      h('p', { class: 'dd-label m-k' }, `Bấm điểm danh nhưng không lượt nào thành công (${review.length})`),
-      h('p', { class: 'gv-names' }, review.map(({ mssv, list }) => {
+      h('p', { class: 'dd-label m-k' }, `Bấm điểm danh nhưng môn đó không lượt nào thành công (${review.length})`),
+      h('p', { class: 'gv-names' }, review.map(({ mssv, subject, list }) => {
         const st = studentOf(mssv);
-        return `${st ? `${st.stt}. ${fullName(st)}` : `MSSV ${mssv}`} (${list.length} lần, ${labelOf(list[0].result)[0].toLowerCase()})`;
+        return `${st ? `${st.stt}. ${fullName(st)}` : `MSSV ${mssv}`} · ${subject || 'không rõ môn'} (${list.length} lần, ${labelOf(list[0].result)[0].toLowerCase()})`;
       }).join(' · ')),
     ] : []));
     $('tryMsg').textContent = data.length ? `${rows.length}/${data.length} lượt.` : 'Ngày này chưa có lượt điểm danh nào được ghi (nhật ký có từ 25/11/2026).';

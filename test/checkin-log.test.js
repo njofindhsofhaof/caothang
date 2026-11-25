@@ -65,6 +65,11 @@ test('an attempt with no session uses today in Vietnam time', () => {
   assert.equal(e.subject, '');
 });
 
+test('an oversized session id sent by the page is cut short in the log', () => {
+  const e = attemptEntry({ input: { ...input, sessionId: 'x'.repeat(100_000) }, session: null, now: 1, result: { ok: false, code: 'no_gps', message: 'm' } });
+  assert.equal(e.sessionId.length, 64);
+});
+
 test('readCheckinLog rejects malformed dates', async () => {
   await assert.rejects(readCheckinLog('25/11', fakeDb()));
 });

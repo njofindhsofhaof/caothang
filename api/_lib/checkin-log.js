@@ -22,7 +22,7 @@ export function attemptEntry({ input, session, result, now, redirectedFrom = nul
     at: now,
     date: session?.date ?? vnDate(now),
     mssv: input.mssv,
-    sessionId: session?.id ?? input.sessionId ?? '',
+    sessionId: String(session?.id ?? input.sessionId ?? '').slice(0, 64), // id do trang gửi lên: cắt ngắn
     subject: session ? subjectName(session) : '',
     result: outcome,
     ...(result.ok ? {} : { message: result.message }),
