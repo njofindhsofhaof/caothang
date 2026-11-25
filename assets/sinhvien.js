@@ -31,12 +31,8 @@
 
   const TILES = { ok: 'Đúng giờ', late: 'Trễ', P: 'Có phép', K: 'Không phép' };
 
-  // Lịch kiểm tra hiện ở đầu trang và trong thẻ môn tương ứng; qua ngày thì tự ẩn.
-  // Thêm bài kiểm tra: thêm một dòng { date: 'YYYY-MM-DD', subject: tên môn chuẩn trong assets/subjects.js, kind }.
-  const EXAMS = [
-    { date: '2026-12-07', subject: 'Điện tử cơ bản', kind: 'Kiểm tra 1 tiết' },
-    { date: '2026-12-09', subject: 'Lý thuyết mạch', kind: 'Kiểm tra 1 tiết' },
-  ];
+  // Lịch kiểm tra do /api/sinhvien trả về, chỉ khi MSSV có trong danh sách lớp (danh sách ở api/_lib/exams.js).
+  let exams = [];
 
   const vnMonth = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit' }).format(new Date()).slice(0, 7);
   const shiftMonth = (ym, d) => {
@@ -56,7 +52,7 @@
     return n === 0 ? 'Hôm nay' : n === 1 ? 'Ngày mai' : `Còn ${n} ngày`;
   };
   const weekdayText = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long' });
-  const upcomingExams = () => EXAMS.filter((e) => daysUntil(e.date) >= 0).sort((a, b) => a.date.localeCompare(b.date));
+  const upcomingExams = () => exams.filter((e) => daysUntil(e.date) >= 0);
 
   function renderExams() {
     const list = upcomingExams();
@@ -74,6 +70,8 @@
 
   function showForm(msg = '') {
     $('report').hidden = true;
+    exams = [];
+    renderExams();
     $('mssvForm').hidden = false;
     $('mssvMsg').textContent = msg;
     $('mssvInput').value = mssv;
@@ -104,6 +102,8 @@
   }
 
   function render(r) {
+    exams = Array.isArray(r.exams) ? r.exams : [];
+    renderExams();
     $('mssvForm').hidden = true;
     $('report').hidden = false;
     $('whoName').textContent = r.alias || 'Sinh viên';
@@ -154,7 +154,6 @@
   $('prevBtn').addEventListener('click', () => { month = shiftMonth(month, -1); load(); });
   $('nextBtn').addEventListener('click', () => { if (month < vnMonth()) { month = shiftMonth(month, 1); load(); } });
 
-  renderExams();
   if (mssv) { $('report').hidden = false; $('whoMssv').textContent = `MSSV ${mssv}`; $('monthLabel').textContent = monthText(month); load(); }
   else showForm();
 })();

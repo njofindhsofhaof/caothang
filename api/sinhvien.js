@@ -3,6 +3,7 @@ import { getRoster, isRateLimited } from './_lib/store.js';
 import { normalizeMssv } from './_lib/checkin-rules.js';
 import { aliasMap } from './_lib/alias.js';
 import { loadStudentReport } from './_lib/tally.js';
+import { upcomingExams } from './_lib/exams.js';
 
 // Trang cá nhân sinh viên: nhập MSSV là xem được điểm danh từng môn của mình.
 // Không cần mật khẩu nên chỉ trả biệt danh (như bảng Leo rank), không trả họ tên thật.
@@ -21,5 +22,5 @@ export default handler(async (req, res) => {
   if (!roster.some((s) => String(s.mssv) === mssv)) return send(res, 404, { ok: false, message: 'MSSV này không có trong danh sách lớp.' });
   const alias = aliasMap(roster).get(mssv);
   const report = await loadStudentReport(month, mssv, now, nowYm);
-  send(res, 200, { ok: true, alias, month, ...report });
+  send(res, 200, { ok: true, alias, month, ...report, exams: upcomingExams(vnDate(now)) });
 });
