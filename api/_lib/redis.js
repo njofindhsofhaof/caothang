@@ -21,11 +21,13 @@ export const keys = {
   monthSessions: (ym) => `sessions:${ym}`,
   droppedSessions: (ym) => `sessions:dropped:${ym}`, // buổi test bị bỏ khỏi thống kê (vẫn giữ dữ liệu)
   att: (id) => `att:${id}`,
+  attRemoved: (id) => `att:removed:${id}`, // bản ghi bị giáo viên bỏ trong bảng tháng — giữ lại để khôi phục
   deviceInSession: (id) => `devsess:${id}`,
   device: (deviceId) => `device:${deviceId}`,
   excuse: (date) => `excuse:${date}`,
   rate: (who) => `rl:${who}`,
   teacherPin: 'teacher:pin', // PIN giáo viên đổi trên trang (băm scrypt); xoá key này để quay về TEACHER_PIN trên Vercel
+  audit: 'audit', // list: nhật ký thao tác của giáo viên, mới nhất trước
   subscribers: 'subscribers', // set: email đã xác nhận nhận bài mới
   notifySent: 'notify:sent', // set: href bài đã gửi email báo
 };

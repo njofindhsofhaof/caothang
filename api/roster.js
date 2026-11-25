@@ -2,6 +2,7 @@ import { redis, keys } from './_lib/redis.js';
 import { send, handler, clientIp } from './_lib/http.js';
 import { getRoster, isRateLimited, teacherGate } from './_lib/store.js';
 import { normalizeMssv } from './_lib/checkin-rules.js';
+import { audit } from './_lib/audit.js';
 
 const MSSV_RE = /^\d{6,12}$/;
 const MAX_STUDENTS = 300;
@@ -46,7 +47,14 @@ export default handler(async (req, res) => {
   if (req.method === 'PUT') {
     const roster = parseRoster(req.body?.roster);
     if (!roster) return send(res, 400, { ok: false, message: 'Danh sách không hợp lệ (MSSV trống, trùng hoặc sai định dạng).' });
+    const before = await getRoster();
     await redis().set(keys.roster, roster);
+    const had = new Set(before.map((x) => normalizeMssv(x.mssv)));
+    const has = new Set(roster.map((x) => x.mssv));
+    await audit(req, {
+      action: 'rosterImport', count: roster.length, before: before.length,
+      added: [...has].filter((m) => !had.has(m)).slice(0, 50), removed: [...had].filter((m) => !has.has(m)).slice(0, 50),
+    });
     return send(res, 200, { ok: true, count: roster.length });
   }
   if (req.method === 'DELETE') {
@@ -56,6 +64,8 @@ export default handler(async (req, res) => {
     const after = removeStudent(before, want);
     if (after.length === before.length) return send(res, 404, { ok: false, message: 'MSSV không có trong danh sách lớp.' });
     await redis().set(keys.roster, after);
+    const gone = before.find((x) => normalizeMssv(x.mssv) === want);
+    await audit(req, { action: 'rosterRemove', mssv: want, name: gone ? `${gone.ho} ${gone.ten}`.trim() : '' });
     return send(res, 200, { ok: true, count: after.length });
   }
   send(res, 405, { ok: false, message: 'Method not allowed' });

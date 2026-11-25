@@ -1,8 +1,8 @@
 import { redis, keys } from './_lib/redis.js';
 import { send, handler, clientIp, requireSecret, vnDate } from './_lib/http.js';
-import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isOpen } from './_lib/store.js';
+import { getSession, getRoster, isRateLimited, getActiveSession, listSessions, isOpen, MAX_SESSION_MS } from './_lib/store.js';
 import { verifyToken, verifyTicket, makeTicket } from './_lib/token.js';
-import { parseCheckinBody, evaluateCheckin, normalizeMssv } from './_lib/checkin-rules.js';
+import { parseCheckinBody, evaluateCheckin, normalizeMssv, otherOpenSessions } from './_lib/checkin-rules.js';
 import { loadCheckinStats, subjectOf } from './_lib/tally.js';
 import { aliasMap } from './_lib/alias.js';
 
@@ -54,13 +54,25 @@ export default handler(async (req, res) => {
   }
 
   const now = Date.now();
-  const [session, roster, existing, deviceMssvInSession, boundMssv] = await Promise.all([
+  let [session, roster, existing, deviceMssvInSession, boundMssv] = await Promise.all([
     getSession(input.sessionId),
     getRoster(),
     redis().hget(keys.att(input.sessionId), input.mssv),
     redis().hget(keys.deviceInSession(input.sessionId), input.deviceId),
     redis().get(keys.device(input.deviceId)),
   ]);
+  // Đã điểm danh buổi này mà đang có buổi môn khác cũng mở → ghi vào buổi đó thay vì báo "đã điểm danh rồi".
+  if (existing && session) {
+    const others = otherOpenSessions(await listSessions(now - MAX_SESSION_MS, now), session, now, subjectOf);
+    for (const other of others) {
+      if (await redis().hget(keys.att(other.id), input.mssv)) continue;
+      session = other;
+      input.sessionId = other.id;
+      existing = null;
+      deviceMssvInSession = await redis().hget(keys.deviceInSession(other.id), input.deviceId);
+      break;
+    }
+  }
   const student = roster.find((s) => normalizeMssv(s.mssv) === input.mssv) ?? null;
   const secret = requireSecret('QR_SECRET');
   const tokenOk = !session?.requireQr
@@ -74,8 +86,15 @@ export default handler(async (req, res) => {
 
   const name = `${student.ho} ${student.ten}`.trim();
   const alias = aliasMap(roster).get(input.mssv) ?? null; // tên ẩn danh của bạn này trên bảng Leo rank
+  const subject = subjectOf(session);
   if (result.already) {
-    return send(res, 200, { ok: true, already: true, name, time: result.record.time, late: Boolean(result.record.late), alias, tally: await safeTally(session, input.mssv, now) });
+    // Báo rõ môn đã điểm danh và môn kế tiếp trong ngày (nếu có) để sinh viên biết cần quay lại.
+    const next = (await listSessions(now, now + 12 * 3_600_000)).find((s) => !s.closed && s.date === session.date && s.id !== session.id);
+    return send(res, 200, {
+      ok: true, already: true, name, subject, time: result.record.time, late: Boolean(result.record.late), alias,
+      next: next ? { subject: subjectOf(next), startsAt: next.startsAt } : null,
+      tally: await safeTally(session, input.mssv, now),
+    });
   }
 
   // Chiếm chỗ máy trong phiên trước (HSETNX) để hai MSSV gửi đồng thời từ một máy không cùng lọt.
@@ -89,7 +108,7 @@ export default handler(async (req, res) => {
     redis().set(keys.device(input.deviceId), input.mssv, { ex: DEVICE_BIND_TTL_S, nx: true }),
   ]);
   send(res, 200, {
-    ok: true, already: false, name, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late),
+    ok: true, already: false, name, subject, time: result.record.time, distance: result.record.distance, late: Boolean(result.record.late),
     alias, tally: await safeTally(session, input.mssv, now),
   });
 });

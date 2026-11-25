@@ -4,6 +4,7 @@ import { teacherGate } from './_lib/store.js';
 import { send, handler } from './_lib/http.js';
 import { isValidCoord } from './_lib/geo.js';
 import { pastLocations } from './_lib/past-places.js';
+import { audit } from './_lib/audit.js';
 
 const MAX_PLACES = 30;
 const PAST_SESSIONS_SCAN = 300;
@@ -35,10 +36,14 @@ export default handler(async (req, res) => {
     if ((await redis().hlen(keys.places)) >= MAX_PLACES) return send(res, 400, { ok: false, message: 'Đã lưu quá nhiều phòng.' });
     const id = randomBytes(4).toString('hex');
     await redis().hset(keys.places, { [id]: { name, lat, lng, accuracy: Math.round(Number(b.accuracy) || 0) } });
+    await audit(req, { action: 'placeAdd', name });
     return send(res, 200, { ok: true, id });
   }
   if (req.method === 'DELETE') {
-    await redis().hdel(keys.places, String(req.query.id ?? ''));
+    const id = String(req.query.id ?? '');
+    const place = await redis().hget(keys.places, id);
+    await redis().hdel(keys.places, id);
+    if (place) await audit(req, { action: 'placeDelete', name: place.name });
     return send(res, 200, { ok: true });
   }
   send(res, 405, { ok: false, message: 'Method not allowed' });

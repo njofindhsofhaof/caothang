@@ -126,6 +126,7 @@
     if (tab === 'phien') refreshLive(); else stopLive();
     if (tab === 'thang') { loadMonth(); renderTemplateInfo(); }
     if (tab === 'lop') renderRosterTable();
+    if (tab === 'lichsu') loadLog();
   }
   window.addEventListener('hashchange', route);
 
@@ -472,6 +473,7 @@
       table.replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Tháng này chưa có buổi điểm danh nào.'))));
       $('daySummary').replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Chưa có ngày nào có điểm danh.'))));
       $('dayDetail').hidden = true;
+      $('monthIssues').replaceChildren();
       return;
     }
     const cols = monthColumns(dates);
@@ -494,7 +496,7 @@
         return h('td', { class: c.first ? 'gv-day-col' : '' }, h('button', {
           class: `gv-cell ${st.toLowerCase()}`, type: 'button',
           'aria-label': `${fullName(s)} ngày ${c.d} môn ${c.subject}: ${st === 'T' ? `trễ lúc ${when}` : label}`,
-          onclick: () => cycleCell(s.mssv, c.d, st, c.sessions),
+          onclick: () => cycleCell(s, c.d, st, c.sessions, c.subject),
         }, label));
       });
       return h('tr', {},
@@ -509,6 +511,7 @@
     const h1 = head.rows[0].getBoundingClientRect().height;
     if (h1) table.style.setProperty('--head1', `${h1}px`);
     renderDaySummary(dates);
+    renderMonthIssues();
   }
 
   let openKey = null;
@@ -675,16 +678,25 @@
 
   // K → P → ✓ (đánh dấu tay) → K
   // Đánh dấu tay theo môn (cột); phép P/K là của cả ngày.
-  async function cycleCell(mssv, date, st, sessions) {
+  async function cycleCell(student, date, st, sessions, subject) {
+    const { mssv } = student;
     let calls;
     if (st === 'K') calls = [{ action: 'excuse', mssv, date, value: 'P' }];
     else if (st === 'P') calls = [{ action: 'excuse', mssv, date, value: '' }, { action: 'present', mssv, sessionId: sessions.at(-1).id }];
-    else {
-      // Xoá điểm danh thật của sinh viên: hỏi lại, vì chạm nhầm khi vuốt bảng trên điện thoại rất dễ xảy ra.
-      const st0 = roster.find((x) => x.mssv === mssv);
-      const day = new Date(`${date}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' });
-      if (!confirm(`Bỏ điểm danh của ${st0 ? fullName(st0) : mssv} (${day})? Bạn này sẽ thành vắng.`)) return;
-      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv)).map((s) => ({ action: 'unpresent', mssv, sessionId: s.id }));
+    else if (st === 'T') {
+      // Trễ → đúng giờ: ghi đè bản ghi, không xoá.
+      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv && x.late))
+        .map((s) => ({ action: 'onTime', mssv, sessionId: s.id }));
+    } else {
+      // ✓ → bỏ có mặt. Bản ghi sinh viên tự điểm danh (GPS) phải xác nhận; máy chủ cất lại để khôi phục được.
+      const own = sessions.flatMap((s) => s.records.filter((x) => x.mssv === mssv && !x.manual));
+      if (own.length) {
+        const when = fmtTime(Math.min(...own.map((x) => x.time)));
+        const ok = confirm(`${fullName(student)} đã TỰ điểm danh môn ${subject} lúc ${when}.\n\nBỏ điểm danh này và ghi vắng? (Lỡ tay thì khôi phục ở mục "Điểm danh đã bỏ" bên dưới bảng.)`);
+        if (!ok) return;
+      }
+      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv))
+        .map((s) => ({ action: 'unpresent', mssv, sessionId: s.id, force: true }));
     }
     for (const body of calls) {
       const r = await api('/api/attendance', { method: 'POST', body });
@@ -692,6 +704,109 @@
     }
     loadMonth();
   }
+
+  async function restoreRecord(sessionId, mssv) {
+    const r = await api('/api/attendance', { method: 'POST', body: { action: 'restore', mssv, sessionId } });
+    if (!r.ok) alert(r.message);
+    loadMonth();
+  }
+
+  // Dưới bảng tháng: bản ghi đã bỏ (khôi phục được) và điểm danh bằng MSSV không có trong danh sách lớp.
+  function renderMonthIssues() {
+    const inRoster = new Set(roster.map((s) => String(s.mssv)));
+    const nameOf = (m) => { const st = roster.find((x) => String(x.mssv) === m); return st ? `${st.stt}. ${fullName(st)}` : `MSSV ${m}`; };
+    const when = (s) => `${new Date(`${s.date}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })} · ${subjectName(s)}`;
+    const removed = monthData.sessions.flatMap((s) => (s.removed ?? []).map((r) => ({ s, r })))
+      .sort((a, b) => b.r.removedAt - a.r.removedAt);
+    const orphans = monthData.sessions.flatMap((s) => s.records.filter((r) => !inRoster.has(String(r.mssv))).map((r) => ({ s, r })));
+    const blocks = [];
+    if (removed.length) {
+      blocks.push(h('section', { class: 'dd-card gv-issues' },
+        h('h3', { class: 'dd-label' }, `Điểm danh đã bỏ (${removed.length})`),
+        h('p', { class: 'gv-note' }, 'Các bạn đã tự điểm danh nhưng bị bỏ trong bảng tháng. Lỡ tay thì bấm Khôi phục.'),
+        h('ul', { class: 'gv-list' }, removed.map(({ s, r }) => h('li', {},
+          h('span', { class: 'who' }, h('b', {}, nameOf(String(r.mssv))),
+            h('small', {}, `${when(s)} · tự điểm danh lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''} · bỏ lúc ${fmtDay(r.removedAt)} ${fmtTime(r.removedAt)}`)),
+          h('button', { class: 'gv-mini', type: 'button', onclick: () => restoreRecord(s.id, String(r.mssv)) }, 'Khôi phục'))))));
+    }
+    if (orphans.length) {
+      blocks.push(h('section', { class: 'dd-card gv-issues' },
+        h('h3', { class: 'dd-label' }, `MSSV không có trong danh sách lớp (${orphans.length})`),
+        h('p', { class: 'gv-note' }, 'Có điểm danh bằng các MSSV này nhưng danh sách lớp hiện tại không có (vd. danh sách đã nhập lại và MSSV bị đổi). Các bản ghi này không hiện trong bảng tháng.'),
+        h('ul', { class: 'gv-list' }, orphans.map(({ s, r }) => h('li', {},
+          h('span', { class: 'who' }, h('b', {}, `MSSV ${r.mssv}`),
+            h('small', {}, `${when(s)} · lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''}`)))))));
+    }
+    $('monthIssues').replaceChildren(...blocks);
+  }
+
+  /* ---------- Lịch sử chỉnh sửa ---------- */
+  let logData = [];
+  const dm = (d) => (d ? `${d.slice(8, 10)}/${d.slice(5, 7)}` : '');
+  const stName = (m) => {
+    const st = roster.find((x) => String(x.mssv) === String(m));
+    return st ? `${fullName(st)} (${m})` : `MSSV ${m}`;
+  };
+  const span = (e) => (e.startsAt ? ` ${fmtTime(e.startsAt)}–${fmtTime(e.expiresAt)}` : '');
+  const where = (e) => `${e.subject || e.label || 'Buổi học'} · ${dm(e.date)}${span(e)}`;
+  const recText = (r) => (!r ? 'chưa có điểm danh'
+    : r.manual ? `có mặt (đánh tay lúc ${fmtTime(r.time)})`
+      : `tự điểm danh lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''}`);
+  const excText = (v) => ({ P: 'vắng có phép (P)', K: 'vắng không phép (K)' }[v] || 'không đặt phép');
+
+  function describeLog(e) {
+    switch (e.action) {
+      case 'present': return `Đánh dấu có mặt: ${stName(e.mssv)} · ${where(e)}. Trước đó: ${recText(e.before)}.`;
+      case 'unpresent': return `Bỏ điểm danh: ${stName(e.mssv)} · ${where(e)}. Bản ghi bị bỏ: ${recText(e.before)}.`;
+      case 'onTime': return `Đổi trễ → đúng giờ: ${stName(e.mssv)} · ${where(e)}. Trước đó: ${recText(e.before)}.`;
+      case 'restore': return `Khôi phục điểm danh: ${stName(e.mssv)} · ${where(e)}.`;
+      case 'excuse': return `Phép ngày ${dm(e.date)}: ${stName(e.mssv)} · ${excText(e.before)} → ${excText(e.value)}.`;
+      case 'dropDay': return `Bỏ ngày ${dm(e.date)} khỏi thống kê (${e.count} buổi${e.subjects?.length ? `: ${e.subjects.join(', ')}` : ''}).`;
+      case 'sessionCreate': return `Đặt lịch: ${e.label || 'Buổi học'} · ${dm(e.date)}${span(e)} · ${e.placeName}${e.count > 1 ? ` · lặp ${e.count} tuần` : ''}${e.requireQr ? ' · bắt buộc QR' : ''}.`;
+      case 'session_label': return `Đổi môn: ${where(e)} → ${e.value}.`;
+      case 'session_close': return `Đóng điểm danh sớm: ${where(e)} (đóng lúc ${fmtTime(e.value)}).`;
+      case 'session_extend': return `Gia hạn: ${where(e)} → đến ${fmtTime(e.value)}.`;
+      case 'session_qr': return `${e.value ? 'Bật' : 'Tắt'} bắt buộc QR: ${where(e)}.`;
+      case 'sessionDelete': return `Xoá lịch: ${where(e)}.`;
+      case 'rosterImport': return `Nhập danh sách lớp: ${e.before} → ${e.count} sinh viên${e.added?.length ? ` · thêm ${e.added.join(', ')}` : ''}${e.removed?.length ? ` · bớt ${e.removed.join(', ')}` : ''}.`;
+      case 'rosterRemove': return `Xoá khỏi danh sách lớp: ${e.name || ''} (${e.mssv}).`;
+      case 'pinChange': return 'Đổi PIN giáo viên.';
+      case 'placeAdd': return `Lưu phòng: ${e.name}.`;
+      case 'placeDelete': return `Xoá phòng: ${e.name}.`;
+      case 'templateSave': return `Lưu file mẫu Excel: ${e.name}.`;
+      default: return e.action;
+    }
+  }
+
+  // Thiết bị rút gọn từ user-agent: đủ để phân biệt máy, không cần chính xác tuyệt đối.
+  function deviceText(ua = '') {
+    const os = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android'
+      : /Windows/.test(ua) ? 'Windows' : /Mac OS X/.test(ua) ? 'Mac' : /Linux/.test(ua) ? 'Linux' : '';
+    const br = /Zalo/i.test(ua) ? 'Zalo' : /FBAN|FBAV/.test(ua) ? 'Facebook' : /Edg\//.test(ua) ? 'Edge'
+      : /CriOS|Chrome\//.test(ua) ? 'Chrome' : /FxiOS|Firefox\//.test(ua) ? 'Firefox' : /Safari\//.test(ua) ? 'Safari' : '';
+    return [os, br].filter(Boolean).join(' · ') || 'Không rõ thiết bị';
+  }
+
+  function renderLog() {
+    const q = $('logSearch').value.trim().toLowerCase();
+    const rows = logData.map((e) => ({ e, text: describeLog(e) }))
+      .filter(({ e, text }) => !q || `${text} ${e.mssv ?? ''}`.toLowerCase().includes(q));
+    $('logMsg').textContent = logData.length ? (q ? `${rows.length}/${logData.length} dòng khớp.` : '') : 'Chưa có thao tác nào được ghi.';
+    $('logList').replaceChildren(...rows.map(({ e, text }) => h('li', {},
+      h('time', { datetime: new Date(e.at).toISOString() }, `${fmtDay(e.at)} ${fmtTime(e.at)}`),
+      h('span', {}, text),
+      h('small', {}, `${deviceText(e.ua)}${e.ip ? ` · IP ${e.ip}` : ''}`))));
+  }
+
+  async function loadLog() {
+    $('logMsg').textContent = 'Đang tải…';
+    const r = await api('/api/attendance?audit=1&limit=1000');
+    if (!r.ok) { $('logMsg').textContent = r.message; return; }
+    logData = r.log;
+    renderLog();
+  }
+  $('logSearch').addEventListener('input', renderLog);
+  $('logReload').addEventListener('click', loadLog);
 
   /* ---------- File mẫu Excel: lưu trên máy chủ, dùng chung cho mọi máy ---------- */
   const toBase64 = async (blob) => {

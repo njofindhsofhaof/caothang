@@ -71,3 +71,18 @@ export function evaluateCheckin(input, state) {
   if (now > session.expiresAt) return { ok: true, already: false, student, record: { ...record, late: true } };
   return { ok: true, already: false, student, record };
 }
+
+/**
+ * Buổi khác (môn khác) đang nhận điểm danh, để ghi vào đó khi sinh viên đã có bản ghi ở buổi trang chọn.
+ * Vd. Sinh hoạt chủ nhiệm còn mở (hoặc còn khung trễ) lúc Lý thuyết mạch đã mở: trước đây sinh viên
+ * nhận "Bạn đã điểm danh rồi" của môn trước và tưởng đã xong môn sau.
+ * Ưu tiên buổi đang trong giờ (bắt đầu muộn nhất), rồi tới buổi còn khung trễ. Bỏ qua buổi bắt buộc QR
+ * (vé QR gắn với từng buổi). Hàm thuần — không I/O.
+ */
+export function otherOpenSessions(list, current, now, subjectOf) {
+  const open = (s) => !s.closed && now >= s.startsAt && now <= lateUntil(s);
+  const active = (s) => now <= s.expiresAt;
+  return list
+    .filter((s) => s.id !== current.id && !s.requireQr && open(s) && subjectOf(s) !== subjectOf(current))
+    .sort((a, b) => Number(active(b)) - Number(active(a)) || b.startsAt - a.startsAt);
+}
