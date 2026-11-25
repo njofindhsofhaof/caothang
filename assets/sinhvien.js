@@ -31,7 +31,7 @@
 
   const TILES = { ok: 'Đúng giờ', late: 'Trễ', P: 'Có phép', K: 'Không phép' };
 
-  // Lịch kiểm tra do /api/sinhvien trả về, chỉ khi MSSV có trong danh sách lớp (danh sách ở api/_lib/exams.js).
+  // Lịch sắp tới (kiểm tra, học quân sự…) do /api/sinhvien trả về, chỉ khi MSSV có trong danh sách lớp (api/_lib/exams.js).
   let exams = [];
 
   const vnMonth = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit' }).format(new Date()).slice(0, 7);
@@ -52,7 +52,11 @@
     return n === 0 ? 'Hôm nay' : n === 1 ? 'Ngày mai' : `Còn ${n} ngày`;
   };
   const weekdayText = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long' });
-  const upcomingExams = () => exams.filter((e) => daysUntil(e.date) >= 0);
+  const lastDay = (e) => e.endDate ?? e.date;
+  const upcomingExams = () => exams.filter((e) => daysUntil(lastDay(e)) >= 0);
+  const ongoing = (e) => daysUntil(e.date) < 0 && daysUntil(lastDay(e)) >= 0;
+  const eventWhen = (e) => (ongoing(e) ? `Đang diễn ra, đến ${lastDay(e).slice(8)}/${lastDay(e).slice(5, 7)}` : whenText(e.date));
+  const dm = (d) => `${d.slice(8)}/${d.slice(5, 7)}`;
 
   // Link ôn tập: bài con (trong assets/posts.js) của các trang trong exam.review; đề ôn kiểm tra lên đầu.
   function reviewLinks(exam) {
@@ -69,9 +73,10 @@
     $('examBox').hidden = !list.length;
     $('examList').replaceChildren(...list.map((e) => h('li', { class: 'sv-exam', 'data-soon': daysUntil(e.date) <= 2 ? '1' : '0' },
       h('time', { class: 'sv-exam-date', datetime: e.date },
-        h('b', {}, `${e.date.slice(8)}/${e.date.slice(5, 7)}`), h('span', {}, weekdayText(e.date))),
-      h('span', { class: 'sv-exam-what' }, h('b', {}, e.subject), h('span', {}, e.kind)),
-      h('span', { class: 'sv-exam-left' }, whenText(e.date)),
+        h('b', {}, dm(e.date)), h('span', {}, e.endDate ? `→ ${dm(e.endDate)}` : weekdayText(e.date))),
+      h('span', { class: 'sv-exam-what' }, h('b', {}, e.title ?? e.subject), h('span', {}, e.kind),
+        e.detail ? h('strong', { class: 'sv-exam-detail' }, e.detail) : null),
+      h('span', { class: 'sv-exam-left' }, eventWhen(e)),
       (() => {
         const links = reviewLinks(e);
         return links.length ? h('details', { class: 'sv-review' }, h('summary', {}, `Ôn tập ${e.subject} (${links.length} bài)`), h('div', { class: 'sv-review-links' }, ...links)) : null;
@@ -147,7 +152,7 @@
       h('span', { class: 'sv-dot', 'data-s': e.state }),
       h('span', {}, h('time', { datetime: e.date }, dayText(e.date)), ` · ${STATES[e.state]}`),
       h('small', {}, e.time ? (e.manual ? 'Cán bộ lớp ghi' : timeText(e.time)) : ''))));
-    const exam = upcomingExams().find((e) => e.subject === g.name);
+    const exam = upcomingExams().find((e) => e.subject && e.subject === g.name);
     return h('article', { class: 'sv-subject' },
       h('div', { class: 'sv-head' }, h('h3', {}, g.name), streak),
       exam ? h('p', { class: 'sv-exam-tag' }, `${exam.kind} · ${weekdayText(exam.date)} ${dayText(exam.date).split(', ').pop()} · ${whenText(exam.date).toLowerCase()}`) : null,

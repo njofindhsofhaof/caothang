@@ -9,6 +9,12 @@ test('lists exams from today onwards, earliest first', () => {
   assert.deepEqual(upcomingExams('2026-12-10', list), []);
 });
 
+test('a multi-day event stays listed until its last day', () => {
+  const list = [{ date: '2026-11-29', endDate: '2026-12-06', title: 'Học quân sự' }];
+  assert.equal(upcomingExams('2026-12-06', list).length, 1);
+  assert.equal(upcomingExams('2026-12-07', list).length, 0);
+});
+
 test('the class exam schedule uses valid dates and standard subject names', async () => {
   await import('../assets/subjects.js');
   const { readFileSync } = await import('node:fs');
@@ -17,7 +23,9 @@ test('the class exam schedule uses valid dates and standard subject names', asyn
   const posts = ctx.window.CT_POSTS;
   for (const e of EXAMS) {
     assert.match(e.date, /^\d{4}-\d{2}-\d{2}$/);
-    assert.ok(globalThis.DDSubjects.SUBJECTS.includes(e.subject), e.subject);
+    if (e.endDate) assert.ok(e.endDate >= e.date, `${e.title}: endDate sau date`);
+    assert.ok(e.subject || e.title, 'cần subject hoặc title');
+    if (e.subject) assert.ok(globalThis.DDSubjects.SUBJECTS.includes(e.subject), e.subject);
     for (const href of e.review ?? []) assert.ok(posts.some((p) => p.href === href), `${href} có trong posts.js`);
   }
 });
