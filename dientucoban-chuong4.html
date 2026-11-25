@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 4: Transistor lưỡng cực BJT · Điện tử Cơ bản · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Điện tử cơ bản Chương 4: transistor lưỡng cực BJT, cấu tạo PNP NPN, ký hiệu, nguyên lý hoạt động, I_C = β·I_B, ba vùng ngưng dẫn khuếch đại bão hoà, mạch phân cực cố định, đường tải tĩnh DCLL, xác định điểm Q và chọn R_B, R_C, R_E.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong4.en.js?v=1">
+<meta property="og:title" content="Chương 4: Transistor lưỡng cực BJT · Điện tử Cơ bản">
+<meta property="og:description" content="Điện tử cơ bản Chương 4: transistor lưỡng cực BJT, cấu tạo PNP NPN, ký hiệu, nguyên lý hoạt động, I_C = β·I_B, ba vùng ngưng dẫn khuếch đại bão hoà, mạch phân cực cố định, đường tải tĩnh DCLL, xác định điểm Q và chọn R_B, R_C, R_E.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong4">
+<link rel="canonical" href="https://caothang-gray.vercel.app/dientucoban-chuong4">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:block;width:fit-content;margin:30px 0 0 auto;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.post .back-top{display:flex;width:fit-content;align-items:center;gap:6px;margin:0 0 10px auto;padding:6px 12px;font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .15s;}
+.post .back-top:hover{border-color:var(--accent);}
+.post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+</style>
+<style>
+.il .nuc{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--accent-warm);stroke-width:2;}
+.il .orb{fill:none;stroke:var(--ink-faint);stroke-width:1.4;}
+.il .el{fill:var(--accent);}
+.il .el-t{fill:#fff;font-size:12px;font-weight:700;}
+.il .cell{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.il .cap{fill:var(--ink);}
+.sim .cell{fill:var(--surface);stroke:var(--ink);stroke-width:1.8;}
+.sim .cellfill{fill:var(--flow-g);opacity:.35;}
+.sim .warnt{fill:var(--accent-warm);font-weight:600;}
+.post ol.ans{margin-top:4px;}
+.post .gallery{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px 14px;margin:6px 0 16px;}
+.post .gallery-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 10px;}
+.post .ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.post figure.gcard{margin:0;padding:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;}
+.post figure.gcard img{width:100%;height:150px;object-fit:contain;background:#fff;border-radius:6px;}
+.post figure.gcard figcaption{font-family:var(--sans);font-size:13.5px;color:var(--ink);text-align:left;margin-top:8px;}
+.post figure.gcard figcaption strong:first-child{color:var(--accent);}
+.post figure.gcard .credit{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px;}
+.post figure.gcard a{color:var(--accent);}
+</style>
+<style>
+.il .pzone{fill:var(--accent-warm);fill-opacity:.14;stroke:var(--ink);stroke-width:2;}
+.il .nzone{fill:var(--accent);fill-opacity:.14;stroke:var(--ink);stroke-width:2;}
+.il .dep{fill:var(--surface-2);stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .atom{fill:var(--surface);stroke:var(--ink);stroke-width:1.8;}
+.il .atom-n{fill:var(--accent);fill-opacity:.25;stroke:var(--accent);stroke-width:2;}
+.il .atom-p{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--accent-warm);stroke-width:2;}
+.il .bond{stroke:var(--ink-faint);stroke-width:2;}
+.il .hole{fill:var(--surface-2);stroke:var(--accent-warm);stroke-width:2;}
+.il .dsym{fill:var(--ink);}
+.il .dsym-o{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;}
+.il .glow{fill:var(--accent-warm);opacity:.25;}
+.sim .pzone{fill:var(--accent-warm);fill-opacity:.16;stroke:var(--ink);stroke-width:2;}
+.sim .nzone{fill:var(--accent);fill-opacity:.16;stroke:var(--ink);stroke-width:2;}
+.sim .dep{fill:var(--surface);stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .el{fill:var(--accent);}
+.sim .hl{fill:var(--surface);stroke:var(--accent-warm);stroke-width:2;}
+.sim .dsym{fill:var(--ink);transition:fill .2s;}
+.sim .dsym.on{fill:var(--flow-g);}
+.sim .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.4;}
+.sim .grid{stroke:var(--line);stroke-width:1;}
+.sim .wave-in{fill:none;stroke:var(--ink-faint);stroke-width:2;stroke-dasharray:6 4;}
+.sim .wave-out{fill:none;stroke:var(--accent);stroke-width:2.8;stroke-linejoin:round;}
+.sim .curve{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;}
+.sim .cursor{stroke:var(--accent-warm);stroke-width:1.6;}
+.sim .opdot{fill:var(--accent-warm);stroke:var(--surface);stroke-width:2;}
+.sim .glow{fill:var(--accent-warm);transition:opacity .2s,fill .2s;}
+.sim .seg{fill:#3a4148;transition:fill .2s;}
+.sim .seg.on{fill:#FF4A3D;}
+.sim .segbox{fill:#1d2328;}
+.sim .pin1{fill:var(--accent-warm);font-weight:600;}
+.sim .pin0{fill:var(--ink-faint);}
+.sim .digits{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;}
+.sim .digits button{min-width:38px;font-size:15px;}
+.il .curp{fill:none;stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:.35;}
+.il .off{opacity:.38;}
+.il .tap{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:5 4;}
+.il .term{fill:var(--surface);stroke:var(--accent);stroke-width:2;}
+.il .xmark{stroke:#d64545;stroke-width:3;stroke-linecap:round;}
+.il .red{fill:#d64545;}
+</style>
+<style>
+.il .hatch{stroke:var(--ink-faint);stroke-width:1.4;}
+</style>
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Điện tử cơ bản – Chương 4: Transistor lưỡng cực BJT</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+  <article class="post">
+    <a class="back-top" href="/namnhat-dientucoban">← Điện tử Cơ bản (Năm nhất)</a>
+    <p class="byline">25/11/2026 · Học tập · Năm nhất · Điện tử Cơ bản · Chương 4<br>theo giáo trình ThS. Huỳnh Xuân Dũng</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 4, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Biết <a href="#bjt">transistor lưỡng cực BJT</a> là gì, nhận ra transistor thật (vỏ TO-92, TO-220) và hai việc chính của nó: khuếch đại, đóng cắt.</li>
+        <li>Mô tả được <a href="#cau-tao">cấu tạo</a> 3 lớp bán dẫn PNP, NPN; nhớ nồng độ tạp chất của cực E, B, C; vẽ đúng <a href="#ky-hieu">ký hiệu</a> và chiều mũi tên.</li>
+        <li>Hiểu <a href="#hoat-dong">phân cực và nguyên lý hoạt động</a>: dòng I<sub>B</sub> nhỏ điều khiển dòng I<sub>C</sub> lớn; dùng được I<sub>C</sub> = β·I<sub>B</sub>, I<sub>E</sub> = (1 + β)·I<sub>B</sub>.</li>
+        <li>Phân biệt <a href="#vung-lam-viec">ba vùng làm việc</a>: ngưng dẫn, khuếch đại, bão hoà; nhớ V<sub>BE</sub>, V<sub>CE</sub> của từng vùng.</li>
+        <li>Viết được phương trình và vẽ <a href="#dcll">đường tải tĩnh DCLL</a> của mạch phân cực cố định bằng K2.</li>
+        <li><a href="#dang-1">Dạng 1</a>: xác định điểm làm việc Q(I<sub>C</sub>, V<sub>CE</sub>) và chế độ hoạt động của transistor.</li>
+        <li><a href="#dang-2">Dạng 2</a>: cho trước điểm Q, tính và chọn R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub> theo giá trị chuẩn.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#bjt">Transistor BJT là gì</a></li>
+        <li><a href="#cau-tao">Cấu tạo và ký hiệu</a></li>
+        <li><a href="#hoat-dong">Phân cực, nguyên lý hoạt động</a></li>
+        <li><a href="#vung-lam-viec">Ba vùng làm việc</a></li>
+        <li><a href="#dcll">Mạch phân cực cố định, đường tải tĩnh</a></li>
+        <li><a href="#dang-1">Dạng 1: xác định điểm Q</a></li>
+        <li><a href="#dang-2">Dạng 2: chọn R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub></a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1 -->
+    <h2 id="bjt"><span class="num">01</span>Transistor lưỡng cực BJT là gì</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Transistor giống một <strong>vòi nước có tay van</strong>: vặn tay van nhẹ (dòng nhỏ vào cực B) là cho cả dòng nước lớn chảy qua ống chính (từ cực C xuống cực E). Vặn ít thì nước chảy ít, vặn hết cỡ thì nước chảy tối đa, đóng van thì nước ngừng.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 200" role="img" aria-label="Ví von transistor như vòi nước: dòng nhỏ I B ở tay van điều khiển dòng lớn I C chảy qua ống chính từ C xuống E">
+  <rect class="water" x="250" y="20" width="36" height="160" rx="4"/>
+  <path class="tank" d="M246 20 V180 M290 20 V180"/>
+  <rect class="load" x="236" y="86" width="64" height="28" rx="6"/>
+  <path class="wire" d="M154 100 H236"/>
+  <circle class="pump" cx="140" cy="100" r="14"/>
+  <path class="blade" d="M132 92 L148 108"/>
+  <path class="arr-ac" d="M96 100 H120 m-8 -6 l8 6 l-8 6"/>
+  <path class="arr" d="M268 150 V176 m-6 -8 l6 8 l6 -8"/>
+  <text class="b ac" x="40" y="80">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3"> nhỏ</tspan></text>
+  <text class="s" x="40" y="136">tay van = cực B</text>
+  <text class="b" x="300" y="34">C (cực thu)</text>
+  <text class="b" x="300" y="176">E (cực phát)</text>
+  <text class="b warm" x="316" y="98">I<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> lớn chảy qua</tspan></text>
+  <text class="s" x="316" y="120">I<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> = β × I</tspan><tspan class="sub" dy="3">B</tspan></text>
+</svg>
+      <figcaption>Dòng nhỏ ở cực B "mở van" cho dòng lớn chạy từ C xuống E</figcaption>
+    </figure>
+    <div class="def"><strong>Transistor lưỡng cực</strong> (BJT – Bipolar Junction Transistor) là linh kiện bán dẫn 3 cực: <strong>E</strong> (Emitter, cực phát), <strong>B</strong> (Base, cực nền), <strong>C</strong> (Collector, cực thu). "Lưỡng cực" vì dòng điện trong nó do <strong>cả hai loại hạt dẫn</strong> (electron và lỗ trống) tạo ra. Hai công dụng chính: <strong>khuếch đại</strong> tín hiệu và làm <strong>công tắc điện tử</strong> (đóng cắt).</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Transistors-white.jpg/960px-Transistors-white.jpg" alt="Nhiều transistor với các kiểu vỏ khác nhau: vỏ nhựa nhỏ 3 chân và vỏ công suất có tấm tản nhiệt" width="960" height="720" loading="lazy">
+      <figcaption><strong>Transistor ngoài thực tế.</strong> Vỏ nhựa nhỏ 3 chân (TO-92) dùng cho dòng nhỏ như BC547, 2N3904; vỏ có tấm kim loại bắt tản nhiệt (TO-220, TO-3) dùng cho dòng lớn như TIP41, 2N3055.<span class="credit">Ảnh: Benedikt.Seidl · Public domain · <a href="https://commons.wikimedia.org/wiki/File:Transistors-white.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Hai kiểu vỏ transistor: TO-92 nhìn mặt phẳng có 3 chân, 2N3904 theo thứ tự E B C còn BC547 theo thứ tự C B E; TO-220 có tấm tản nhiệt lỗ vít, TIP41 theo thứ tự B C E">
+  <path class="base" d="M70 40 H150 V120 H70 Z"/>
+  <text class="s" x="110" y="84" text-anchor="middle">mặt phẳng</text>
+  <g class="wire"><line x1="90" y1="120" x2="90" y2="175"/><line x1="110" y1="120" x2="110" y2="175"/><line x1="130" y1="120" x2="130" y2="175"/></g>
+  <g class="b" text-anchor="middle"><text x="90" y="194">E</text><text x="110" y="194">B</text><text x="130" y="194">C</text></g>
+  <g class="s" text-anchor="middle"><text x="90" y="212">C</text><text x="110" y="212">B</text><text x="130" y="212">E</text></g>
+  <text class="b" x="110" y="28" text-anchor="middle">TO-92</text>
+  <text class="s ac" x="146" y="194">2N3904</text>
+  <text class="s ac" x="146" y="212">BC547</text>
+  <rect class="base" x="360" y="20" width="90" height="60" rx="3"/>
+  <circle class="load" cx="405" cy="44" r="11"/>
+  <rect class="load" x="360" y="80" width="90" height="70" rx="3"/>
+  <g class="wire"><line x1="380" y1="150" x2="380" y2="195"/><line x1="405" y1="150" x2="405" y2="195"/><line x1="430" y1="150" x2="430" y2="195"/></g>
+  <g class="b" text-anchor="middle"><text x="380" y="212">B</text><text x="405" y="212">C</text><text x="430" y="212">E</text></g>
+  <text class="b" x="340" y="56" text-anchor="end">TO-220</text>
+  <text class="s" x="340" y="76" text-anchor="end">tấm tản nhiệt nối C</text>
+  <text class="s ac" x="446" y="212">TIP41</text>
+</svg>
+      <figcaption>Thứ tự chân thay đổi theo từng mã: luôn tra datasheet hoặc đo bằng đồng hồ trước khi hàn</figcaption>
+    </figure>
+    <a class="practice" href="/machboost"><span class="practice-k">Dự án</span><span class="practice-t">Mạch tăng áp Boost 12V lên 24V</span><span class="practice-d">Transistor BC547 (NPN) làm công tắc hồi tiếp: áp ra vượt ngưỡng thì Q2 dẫn, kéo chân RESET của 555 xuống mass để ngừng phát xung.</span><span class="practice-go" aria-hidden="true">Xem mạch →</span></a>
+
+    <!-- 2 -->
+    <h2 id="cau-tao"><span class="num">02</span>Cấu tạo và ký hiệu</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>BJT là <strong>bánh mì kẹp 3 lớp</strong> bán dẫn: hai lớp ngoài cùng loại, lớp giữa khác loại và <strong>rất mỏng</strong>. Kẹp N giữa hai P là <strong>PNP</strong>; kẹp P giữa hai N là <strong>NPN</strong>. Ba lớp tạo ra hai mối nối P-N, giống hai diode ghép lưng vào nhau.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 170" role="img" aria-label="Cấu tạo transistor: PNP gồm lớp P cực E, lớp N mỏng cực B, lớp P cực C; NPN gồm lớp N cực E, lớp P mỏng cực B, lớp N cực C; mỗi loại có hai mối nối J E và J C">
+  <rect class="pzone" x="50" y="50" width="100" height="56"/><rect class="nzone" x="150" y="50" width="26" height="56"/><rect class="pzone" x="176" y="50" width="94" height="56"/>
+  <rect class="nzone" x="330" y="50" width="100" height="56"/><rect class="pzone" x="430" y="50" width="26" height="56"/><rect class="nzone" x="456" y="50" width="94" height="56"/>
+  <g class="b" text-anchor="middle"><text x="100" y="84">P</text><text x="163" y="84">N</text><text x="223" y="84">P</text><text x="380" y="84">N</text><text x="443" y="84">P</text><text x="503" y="84">N</text></g>
+  <g class="wire"><line x1="20" y1="78" x2="50" y2="78"/><line x1="270" y1="78" x2="296" y2="78"/><line x1="163" y1="106" x2="163" y2="136"/><line x1="304" y1="78" x2="330" y2="78"/><line x1="550" y1="78" x2="580" y2="78"/><line x1="443" y1="106" x2="443" y2="136"/></g>
+  <g class="b" text-anchor="middle"><text x="20" y="68">E</text><text x="282" y="68">C</text><text x="163" y="152">B</text><text x="318" y="68">E</text><text x="580" y="68">C</text><text x="443" y="152">B</text></g>
+  <g class="s" text-anchor="middle"><text x="146" y="42">J<tspan class="sub" dy="3">E</tspan></text><text x="182" y="42">J<tspan class="sub" dy="3">C</tspan></text><text x="426" y="42">J<tspan class="sub" dy="3">E</tspan></text><text x="462" y="42">J<tspan class="sub" dy="3">C</tspan></text></g>
+  <text class="b warm" x="160" y="18" text-anchor="middle">PNP</text><text class="b ac" x="440" y="18" text-anchor="middle">NPN</text>
+</svg>
+      <figcaption>Ba lớp bán dẫn, hai mối nối: J<sub>E</sub> (giữa E và B) và J<sub>C</sub> (giữa B và C). Lớp B ở giữa rất mỏng</figcaption>
+    </figure>
+    <div class="def"><strong>Cấu tạo</strong>: transistor gồm <strong>3 lớp bán dẫn</strong> ghép lại, có hai loại PNP và NPN. Ba lớp khác nhau ở nồng độ tạp chất:</div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Cực</th><th>Tên tiếng Anh</th><th>Nồng độ tạp chất</th><th>Vai trò</th></tr></thead>
+        <tbody>
+          <tr><td>E – cực phát</td><td>Emitter</td><td><strong>Lớn nhất</strong></td><td>Phát ra thật nhiều hạt dẫn</td></tr>
+          <tr><td>B – cực nền</td><td>Base</td><td><strong>Nhỏ nhất</strong>, lớp rất mỏng</td><td>Điều khiển: chỉ giữ lại rất ít hạt dẫn</td></tr>
+          <tr><td>C – cực thu</td><td>Collector</td><td>Trung bình</td><td>Thu gom hạt dẫn đi qua B</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 id="ky-hieu">Ký hiệu</h3>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 220" role="img" aria-label="Ký hiệu transistor NPN có mũi tên ở cực E hướng ra ngoài, V B E lớn hơn 0, V C E lớn hơn 0; PNP có mũi tên ở cực E hướng vào, V B E nhỏ hơn 0">
+  <g transform="translate(20 20)">
+    <line class="plate" x1="100" y1="50" x2="100" y2="110"/>
+    <path class="wire" d="M40 80 H100 M100 65 L140 35 V5 M100 95 L140 125 V160"/>
+    <polygon class="cap" points="132,119 119.4,115.8 125.4,107.8"/>
+    <g class="b"><text x="26" y="76">B</text><text x="150" y="16">C</text><text x="150" y="160">E</text></g>
+    <text class="b ac" x="20" y="194">NPN: mũi tên hướng ra</text>
+    <text class="s" x="180" y="60">V<tspan class="sub" dy="3">BE</tspan><tspan dy="-3"> &gt; 0</tspan></text>
+    <text class="s" x="180" y="80">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> &gt; 0</tspan></text>
+    <text class="s" x="180" y="100">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3">, I</tspan><tspan class="sub" dy="3">C</tspan><tspan dy="-3"> chạy vào</tspan></text>
+    <text class="s" x="180" y="120">I<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> chạy ra</tspan></text>
+  </g>
+  <g transform="translate(310 20)">
+    <line class="plate" x1="100" y1="50" x2="100" y2="110"/>
+    <path class="wire" d="M40 80 H100 M100 65 L140 35 V5 M100 95 L140 125 V160"/>
+    <polygon class="cap" points="108,101 114.6,112.2 120.6,104.2"/>
+    <g class="b"><text x="26" y="76">B</text><text x="150" y="16">C</text><text x="150" y="160">E</text></g>
+    <text class="b warm" x="20" y="194">PNP: mũi tên hướng vào</text>
+    <text class="s" x="180" y="60">V<tspan class="sub" dy="3">BE</tspan><tspan dy="-3"> &lt; 0</tspan></text>
+    <text class="s" x="180" y="80">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> &lt; 0</tspan></text>
+    <text class="s" x="180" y="100">I<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> chạy vào</tspan></text>
+    <text class="s" x="180" y="120">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3">, I</tspan><tspan class="sub" dy="3">C</tspan><tspan dy="-3"> chạy ra</tspan></text>
+  </g>
+</svg>
+      <figcaption>Mũi tên luôn đặt ở cực E và chỉ chiều dòng điện qua mối nối B-E (từ P sang N, giống ký hiệu diode)</figcaption>
+    </figure>
+    <div class="note"><strong>Mẹo nhớ:</strong> mũi tên đi từ <strong>P</strong> sang <strong>N</strong> như diode. NPN: B là P, E là N nên mũi tên từ B <strong>đi ra</strong> E. PNP: E là P, B là N nên mũi tên từ E <strong>đi vào</strong> B. Hai loại hoạt động giống nhau, chỉ đảo chiều mọi điện áp và dòng điện. Phần còn lại của chương dùng <strong>NPN</strong>.</div>
+
+    <!-- 3 -->
+    <h2 id="hoat-dong"><span class="num">03</span>Phân cực và nguyên lý hoạt động</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Electron từ cực E chạy sang như <strong>đoàn người đi qua một hành lang mỏng</strong> (cực B). Hành lang hẹp và vắng nên chỉ vài người rẽ vào phòng bên (dòng I<sub>B</sub>), còn gần như cả đoàn bị "hút" thẳng sang cửa C (dòng I<sub>C</sub>).</p>
+    <div class="def"><strong>Phân cực</strong> cho transistor: để transistor làm việc, ta phải đưa <strong>điện áp một chiều</strong> tới các điện cực của nó. Với NPN ở chế độ khuếch đại: mối nối <strong>B-E phân cực thuận</strong> (V<sub>BE</sub> ≈ 0,7 V), mối nối <strong>B-C phân cực nghịch</strong> (C dương hơn B).</div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 240" role="img" aria-label="Electron trong transistor NPN: nguồn V B E phân cực thuận mối nối B E, electron từ lớp N cực E sang lớp P mỏng cực B, một phần nhỏ tạo dòng I B, phần lớn bị điện áp V C E hút sang cực C tạo dòng I C">
+  <rect class="nzone" x="120" y="40" width="150" height="80"/><rect class="pzone" x="270" y="40" width="30" height="80"/><rect class="nzone" x="300" y="40" width="160" height="80"/>
+  <g class="b" text-anchor="middle"><text x="195" y="32">N (E)</text><text x="285" y="32">P (B)</text><text x="380" y="32">N (C)</text></g>
+  <g class="el"><circle cx="150" cy="62" r="5"/><circle cx="175" cy="100" r="5"/><circle cx="205" cy="62" r="5"/><circle cx="228" cy="102" r="5"/><circle cx="250" cy="60" r="5"/><circle cx="330" cy="62" r="5"/><circle cx="362" cy="100" r="5"/><circle cx="398" cy="60" r="5"/><circle cx="430" cy="100" r="5"/></g>
+  <path class="arr-ac" d="M140 80 H446 m-12 -8 l12 8 l-12 8" style="stroke-width:4"/>
+  <path class="arr-ac" d="M262 84 Q285 100 285 140 m-6 -9 l6 9 l6 -9"/>
+  <path class="wire" d="M120 80 H70 V200 H186 M198 200 H286 V150 M285 120 V150 M286 200 H508 M520 200 H560 V80 H460"/>
+  <g class="wire"><line x1="198" y1="188" x2="198" y2="212"/><line x1="186" y1="193" x2="186" y2="207" style="stroke-width:4"/></g>
+  <g class="wire"><line x1="520" y1="188" x2="520" y2="212"/><line x1="508" y1="193" x2="508" y2="207" style="stroke-width:4"/></g>
+  <text class="s" x="180" y="232">V<tspan class="sub" dy="3">BE</tspan></text>
+  <text class="s" x="502" y="232">V<tspan class="sub" dy="3">CE</tspan></text>
+  <text class="b ac" x="296" y="164">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3"> nhỏ</tspan></text>
+  <text class="s ac" x="330" y="140">phần lớn electron → C</text>
+</svg>
+      <figcaption>Mũi tên xanh là đường đi của electron; dòng điện quy ước chạy ngược lại (từ C xuống E)</figcaption>
+    </figure>
+    <ol>
+      <li>Nguồn V<sub>BE</sub> phân cực thuận mối nối P-N giữa B và E nên có dòng điện chạy từ P sang N, gọi là dòng <strong>I<sub>B</sub></strong>.</li>
+      <li>Lớp bán dẫn P ở cực B <strong>rất mỏng</strong> và <strong>nồng độ tạp chất thấp</strong>, nên số electron từ lớp N (cực E) vượt qua mối nối sang lớp P (cực B) <strong>lớn hơn rất nhiều</strong> số lỗ trống ở đó.</li>
+      <li>Chỉ một phần nhỏ electron lấp vào lỗ trống và tạo thành dòng I<sub>B</sub>; phần lớn còn lại bị <strong>hút về cực C</strong> dưới tác dụng của điện áp V<sub>CE</sub>, tạo thành dòng I<sub>CE</sub> (gọi tắt I<sub>C</sub>) chạy qua transistor.</li>
+    </ol>
+    <h3>Các dòng điện trong mạch</h3>
+    <div class="formula">I<sub>C</sub> = β · I<sub>B</sub><small>β (beta): hệ số khuếch đại dòng điện, datasheet ghi là h<sub>FE</sub>, thường 50 … 300</small></div>
+    <div class="formula">I<sub>E</sub> = I<sub>B</sub> + I<sub>C</sub> = (1 + β) · I<sub>B</sub><small>vì I<sub>B</sub> rất nhỏ nên I<sub>E</sub> ≈ I<sub>C</sub></small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị dòng điện trong transistor</p>
+      <div class="tablewrap">
+        <table class="small">
+          <thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Bằng</th><th>Gặp ở đâu</th></tr></thead>
+          <tbody>
+            <tr class="base"><td>ampere <span class="say" title="Cách đọc">am-pe</span></td><td>A</td><td>1 A</td><td>I<sub>C</sub> transistor công suất (TIP41 tới 6 A)</td></tr>
+            <tr><td>Miliampere <span class="say" title="Cách đọc">mi-li-am-pe</span></td><td>mA</td><td>10⁻³ A = 0,001 A</td><td>I<sub>C</sub> transistor nhỏ: 8 mA, 14,5 mA</td></tr>
+            <tr><td>Microampere <span class="say" title="Cách đọc">mi-crô-am-pe</span></td><td>µA</td><td>10⁻⁶ A = 0,001 mA</td><td>I<sub>B</sub>: 80 µA = 0,08 mA</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="units-ex">
+        <li>I<sub>B</sub> = 0,08 mA, β = 100 → I<sub>C</sub> = 100 × 0,08 = 8 mA = 0,008 A.</li>
+        <li>I<sub>E</sub> = (1 + 100) × 0,08 = 8,08 mA ≈ I<sub>C</sub>.</li>
+      </ul>
+    </div>
+    <figure class="sim" id="simBjt">
+      <p class="sim-h">Thử ngay · Dòng nhỏ I<sub>B</sub> điều khiển dòng lớn I<sub>C</sub></p>
+      <div class="simbox">
+        <svg viewBox="0 0 600 260" role="img" aria-labelledby="bjtTitle">
+          <title id="bjtTitle">Mạch NPN: nguồn V BB qua R B cấp dòng I B vào cực B; nguồn V CC 9 V qua bóng đèn và R C 470 ohm cấp dòng I C vào cực C; dòng I E ra cực E xuống mass.</title>
+          <path class="w" d="M60 120 V60 H180 M220 60 H262 M380 30 V70 M380 110 V128 L340 158 M340 202 L380 232 V246 H60 V170"/>
+          <path class="w" d="M380 30 H520 V112 M520 148 V246 H380"/>
+          <rect class="part" x="180" y="50" width="40" height="20" rx="3"/>
+          <rect class="part" x="370" y="70" width="20" height="40" rx="3"/>
+          <circle class="src" cx="60" cy="145" r="24"/><text class="b" x="60" y="150" text-anchor="middle">V<tspan class="sub" dy="3">BB</tspan></text>
+          <g class="wire"><line class="w" x1="504" y1="112" x2="536" y2="112"/><line class="w" x1="510" y1="148" x2="530" y2="148" style="stroke-width:5"/></g>
+          <path class="w" d="M262 60 V180 H340"/>
+          <line class="w" x1="340" y1="150" x2="340" y2="210" style="stroke-width:4"/>
+          <polygon class="node" points="372,226 359.4,222.8 365.4,214.8"/>
+          <circle class="bulb" id="bjtBulb" cx="450" cy="30" r="14"/>
+          <g class="ray" id="bjtRay"><line x1="450" y1="8" x2="450" y2="1"/><line x1="470" y1="18" x2="477" y2="13"/><line x1="430" y1="18" x2="423" y2="13"/></g>
+          <path class="ov" id="bjtFlowB" d="M60 120 V60 H262 V180 H340 L380 232 V246 H60 V170"/>
+          <path class="ov c-w" id="bjtFlowC" d="M520 112 V30 H380 V128 L340 158 L380 232 V246 H520 V148"/>
+          <text class="s" x="200" y="44" text-anchor="middle">R<tspan class="sub" dy="3">B</tspan></text>
+          <text class="s" x="396" y="94">R<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> 470 Ω</tspan></text>
+          <text class="s" x="544" y="134">V<tspan class="sub" dy="3">CC</tspan><tspan dy="-3"> 9 V</tspan></text>
+          <text class="b ac" id="bjtIB" x="270" y="172"></text>
+          <text class="b warm" id="bjtIC" x="392" y="142"></text>
+          <text class="b" id="bjtIE" x="392" y="228"></text>
+          <text class="s" x="306" y="150">B</text><text class="s" x="372" y="124">C</text><text class="s" x="390" y="246">E</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="bjtIb">Dòng I<sub>B</sub></label><input type="range" id="bjtIb" min="0" max="300" step="5" value="80"><output id="bjtIbo" for="bjtIb">80 µA</output></div>
+      <div class="sl"><label for="bjtBeta">Hệ số β</label><input type="range" id="bjtBeta" min="50" max="300" step="10" value="100"><output id="bjtBetao" for="bjtBeta">100</output></div>
+      <p class="live" id="bjtLive" aria-live="polite"></p>
+      <figcaption>Kéo I<sub>B</sub> lên từ 0: đèn sáng dần vì I<sub>C</sub> = β·I<sub>B</sub>. Tới lúc I<sub>C</sub> chạm I<sub>Cmax</sub> = V<sub>CC</sub> / R<sub>C</sub> ≈ 19,1 mA thì tăng I<sub>B</sub> nữa đèn cũng không sáng thêm: transistor đã bão hoà.</figcaption>
+    </figure>
+
+    <!-- 4 -->
+    <h2 id="vung-lam-viec"><span class="num">04</span>Ba vùng làm việc của transistor</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Lại là vòi nước: <strong>đóng van</strong> thì không có nước (ngưng dẫn); <strong>mở vừa</strong> thì vặn bao nhiêu nước ra bấy nhiêu (khuếch đại); <strong>mở hết cỡ</strong> thì ống đã chảy tối đa, vặn thêm cũng không ra thêm nước (bão hoà).</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 300" role="img" aria-label="Đặc tuyến ra I C theo V C E với các đường I B. Vùng bão hoà sát trục I C, vùng ngưng dẫn sát trục V C E, vùng khuếch đại ở giữa. Đường tải tĩnh DCLL đi từ I C max trên trục I C xuống V CC trên trục V C E">
+  <defs><pattern id="c4hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch" x1="0" y1="0" x2="0" y2="7"/></pattern></defs>
+  <rect x="70" y="40" width="26" height="210" fill="url(#c4hatch)"/>
+  <rect x="70" y="240" width="460" height="10" fill="url(#c4hatch)"/>
+  <path class="axis" d="M70 20 V250 H545 m-8 -5 l8 5 l-8 5 M65 28 l5 -8 l5 8"/>
+  <path class="curve-ac" d="M70 250 Q80 108 104 100 H530"/>
+  <path class="curve-ac" d="M70 250 Q80 156 104 150 H530"/>
+  <path class="curve-ac" d="M70 250 Q80 204 104 200 H530"/>
+  <path class="curve-warm" d="M70 60 L470 250"/>
+  <circle class="cap" cx="86" cy="68" r="5"/><circle class="cap" cx="260" cy="150" r="5"/><circle class="cap" cx="470" cy="250" r="5"/>
+  <g class="s"><text x="536" y="96">I<tspan class="sub" dy="3">B3</tspan></text><text x="536" y="146">I<tspan class="sub" dy="3">B2</tspan></text><text x="536" y="196">I<tspan class="sub" dy="3">B1</tspan></text><text x="536" y="246">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3">=0</tspan></text></g>
+  <text class="b" x="40" y="24">I<tspan class="sub" dy="3">C</tspan></text>
+  <text class="b" x="540" y="278">V<tspan class="sub" dy="3">CE</tspan></text>
+  <text class="s" x="62" y="64" text-anchor="end">I<tspan class="sub" dy="3">Cmax</tspan></text>
+  <text class="s" x="470" y="270" text-anchor="middle">V<tspan class="sub" dy="3">CC</tspan></text>
+  <text class="s" x="64" y="266" text-anchor="end">0</text>
+  <text class="b warm" x="330" y="196">DCLL</text>
+  <text class="b ac" x="300" y="80">vùng khuếch đại</text>
+  <text class="b" x="104" y="40">vùng bão hoà</text>
+  <text class="b" x="240" y="292">vùng ngưng dẫn (vùng ngắt)</text>
+  <text class="s" x="272" y="142">Q</text>
+</svg>
+      <figcaption>Đặc tuyến ra: mỗi đường ứng với một giá trị I<sub>B</sub>. Điểm làm việc Q trượt trên đường tải tĩnh DCLL khi I<sub>B</sub> thay đổi</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Vùng</th><th>Điều kiện</th><th>Dòng, áp</th><th>Dùng để</th></tr></thead>
+        <tbody>
+          <tr><td>Ngưng dẫn (vùng ngắt)</td><td>V<sub>BE</sub> &lt; 0,7 V nên I<sub>B</sub> = 0</td><td>I<sub>C</sub> = 0, V<sub>CE</sub> = V<sub>CC</sub>: Q(0; V<sub>CC</sub>)</td><td>Công tắc <strong>hở</strong></td></tr>
+          <tr><td>Khuếch đại</td><td>V<sub>BE</sub> = 0,7 V và β·I<sub>B</sub> &lt; I<sub>Cmax</sub></td><td>I<sub>C</sub> = β·I<sub>B</sub>; I<sub>B</sub> càng lớn thì I<sub>C</sub> càng lớn, transistor dẫn càng mạnh</td><td>Mạch khuếch đại</td></tr>
+          <tr><td>Bão hoà</td><td>β·I<sub>B</sub> ≥ I<sub>Cmax</sub></td><td>I<sub>C</sub> = I<sub>Cmax</sub>; V<sub>BE</sub> = V<sub>BEsat</sub> = 0,8 V; V<sub>CE</sub> = V<sub>CEsat</sub> = 0,2 V</td><td>Công tắc <strong>đóng</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula">I<sub>C</sub> = I<sub>Cmax</sub> = <span class="frac"><span>β · I<sub>B</sub></span><span>K</span></span><small>bão hoà sâu: K là hệ số bão hoà sâu (thường cho K = 2), tức cấp I<sub>B</sub> gấp K lần mức vừa đủ để chắc chắn transistor bão hoà</small></div>
+    <div class="note"><strong>Chỉ số "sat"</strong> viết tắt của saturation (bão hoà). Khi bão hoà, transistor gần như một công tắc đóng: giữa C và E chỉ còn sụt 0,2 V.</div>
+
+    <!-- 5 -->
+    <h2 id="dcll"><span class="num">05</span>Mạch phân cực cố định và đường tải tĩnh DCLL</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Đường tải tĩnh là <strong>đường ray</strong> mà điểm làm việc Q chạy trên đó. Hai đầu ray là hai trạng thái công tắc: đầu trên (I<sub>Cmax</sub>, V<sub>CE</sub> = 0) là đóng hẳn, đầu dưới (I<sub>C</sub> = 0, V<sub>CE</sub> = V<sub>CC</sub>) là hở hẳn. Dòng I<sub>B</sub> quyết định Q dừng ở ga nào.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 300" role="img" aria-label="Mạch phân cực cố định: nguồn V BB qua R B vào cực B của transistor NPN; V CC qua R C vào cực C; cực E qua R E xuống mass. Vòng 1 gồm V BB, R B, B E, R E; vòng 2 gồm V CC, R C, C E, R E">
+  <path class="wire" d="M330 18 V40 M330 100 V122 L290 146 M290 166 L330 190 V210 M330 260 V280 M80 155 V190 M80 210 V280 H330 M80 155 H160 M230 155 H290"/>
+  <path class="arr" d="M322 26 l8 -10 l8 10"/>
+  <rect class="load" x="320" y="40" width="20" height="60" rx="3"/>
+  <rect class="load" x="320" y="210" width="20" height="50" rx="3"/>
+  <rect class="load" x="160" y="145" width="70" height="20" rx="3"/>
+  <line class="plate" x1="290" y1="132" x2="290" y2="180"/>
+  <polygon class="cap" points="322,185 309.4,181.8 315.4,173.8"/>
+  <g class="wire"><line x1="64" y1="190" x2="96" y2="190"/><line x1="70" y1="210" x2="90" y2="210" style="stroke-width:5"/></g>
+  <g class="wire"><line x1="314" y1="280" x2="346" y2="280"/><line x1="320" y1="286" x2="340" y2="286"/><line x1="326" y1="292" x2="334" y2="292"/></g>
+  <path class="loopv" d="M120 250 A42 42 0 1 1 200 230"/><path class="loopv" d="M192 222 l8 8 l-10 4"/>
+  <text class="b warm" x="150" y="226">1</text>
+  <path class="loopv" d="M420 30 V270 m-6 -10 l6 10 l6 -10"/>
+  <text class="b warm" x="430" y="150">2</text>
+  <g class="b"><text x="342" y="16">V<tspan class="sub" dy="3">CC</tspan></text><text x="348" y="76">R<tspan class="sub" dy="3">C</tspan></text><text x="348" y="240">R<tspan class="sub" dy="3">E</tspan></text><text x="180" y="138">R<tspan class="sub" dy="3">B</tspan></text><text x="20" y="204">V<tspan class="sub" dy="3">BB</tspan></text></g>
+  <g class="s ac"><text x="238" y="146">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3"> →</tspan></text><text x="338" y="118">↓ I<tspan class="sub" dy="3">C</tspan></text><text x="338" y="206">↓ I<tspan class="sub" dy="3">E</tspan></text></g>
+  <text class="s" x="298" y="128">C</text><text class="s" x="276" y="172">B</text><text class="s" x="298" y="196">E</text>
+</svg>
+      <figcaption>Mạch phân cực cố định dùng hai nguồn: vòng 1 (mạch vào, qua B-E) và vòng 2 (mạch ra, qua C-E)</figcaption>
+    </figure>
+    <h3>Bước 1: viết phương trình đường tải tĩnh</h3>
+    <p>Thiết lập phương trình biểu diễn quan hệ giữa hai biến I<sub>C</sub> và V<sub>CE</sub>, coi I<sub>C</sub> ≈ I<sub>E</sub>. Áp dụng <strong>K2 cho vòng 2</strong>:</p>
+    <div class="steps">
+      <p>−V<sub>CC</sub> + I<sub>C</sub>R<sub>C</sub> + V<sub>CE</sub> + I<sub>E</sub>R<sub>E</sub> = 0</p>
+      <p>⇔ −V<sub>CC</sub> + I<sub>C</sub>R<sub>C</sub> + V<sub>CE</sub> + I<sub>C</sub>R<sub>E</sub> = 0</p>
+      <p>⇔ I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>) = V<sub>CC</sub> − V<sub>CE</sub></p>
+    </div>
+    <div class="formula">I<sub>C</sub> = <span class="frac"><span>−V<sub>CE</sub></span><span>R<sub>C</sub> + R<sub>E</sub></span></span> + <span class="frac"><span>V<sub>CC</sub></span><span>R<sub>C</sub> + R<sub>E</sub></span></span><small>phương trình đường tải tĩnh DCLL (DC Load Line): một đường thẳng dốc xuống</small></div>
+    <p>Vẽ đường thẳng qua hai điểm:</p>
+    <ul>
+      <li>Cho V<sub>CE</sub> = 0 ⇒ I<sub>C</sub> = <strong>I<sub>Cmax</sub> = V<sub>CC</sub> / (R<sub>C</sub> + R<sub>E</sub>)</strong> (điểm trên trục I<sub>C</sub>).</li>
+      <li>Cho I<sub>C</sub> = 0 ⇒ <strong>V<sub>CE</sub> = V<sub>CC</sub></strong> (điểm trên trục V<sub>CE</sub>).</li>
+    </ul>
+    <h3>Bước 2: tính điểm làm việc Q</h3>
+    <p>Tính dòng I<sub>B</sub> bằng <strong>K2 cho vòng 1</strong>, với I<sub>E</sub> = (1 + β)I<sub>B</sub>:</p>
+    <div class="steps">
+      <p>−V<sub>BB</sub> + I<sub>B</sub>R<sub>B</sub> + V<sub>BE</sub> + I<sub>E</sub>R<sub>E</sub> = 0</p>
+      <p>⇔ −V<sub>BB</sub> + I<sub>B</sub>R<sub>B</sub> + V<sub>BE</sub> + (1 + β)I<sub>B</sub>R<sub>E</sub> = 0</p>
+      <p>⇔ I<sub>B</sub>[R<sub>B</sub> + (1 + β)R<sub>E</sub>] = V<sub>BB</sub> − V<sub>BE</sub></p>
+    </div>
+    <div class="formula">I<sub>B</sub> = <span class="frac"><span>V<sub>BB</sub> − V<sub>BE</sub></span><span>R<sub>B</sub> + (1 + β)R<sub>E</sub></span></span> &nbsp;⇒&nbsp; I<sub>C</sub> = β·I<sub>B</sub><small>nếu V<sub>BB</sub> &lt; 0,7 V thì I<sub>B</sub> = 0 ⇒ I<sub>C</sub> = 0 ⇒ V<sub>CE</sub> = V<sub>CC</sub></small></div>
+    <p>Sau cùng tính V<sub>CE</sub> từ vòng 2:</p>
+    <div class="formula">V<sub>CE</sub> = V<sub>CC</sub> − I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>)</div>
+    <figure class="sim" id="simQ">
+      <p class="sim-h">Thử ngay · Điểm Q chạy trên đường tải tĩnh</p>
+      <div class="simbox">
+        <svg viewBox="0 0 600 300" role="img" aria-labelledby="qTitle">
+          <title id="qTitle">Đồ thị I C theo V C E: đường tải tĩnh nối I C max với V CC, chấm cam là điểm làm việc Q.</title>
+          <g id="qGrid"></g>
+          <path class="axis" d="M70 20 V250 H560 m-8 -5 l8 5 l-8 5 M65 28 l5 -8 l5 8"/>
+          <line class="curve" id="qLine" x1="70" y1="40" x2="520" y2="250"/>
+          <line class="cursor" id="qGx" x1="70" y1="0" x2="0" y2="0" style="stroke-dasharray:5 4"/>
+          <line class="cursor" id="qGy" x1="0" y1="0" x2="0" y2="250" style="stroke-dasharray:5 4"/>
+          <circle class="opdot" id="qDot" cx="0" cy="0" r="7"/>
+          <text class="b" x="30" y="16">I<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> (mA)</tspan></text>
+          <text class="b" x="520" y="290">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> (V)</tspan></text>
+          <text class="b warm" id="qLab" x="0" y="0"></text>
+          <text class="b ac" id="qRegion" x="330" y="34" text-anchor="middle"></text>
+        </svg>
+      </div>
+      <div class="sl"><label for="qVbb">V<sub>BB</sub></label><input type="range" id="qVbb" min="0" max="9" step="0.1" value="5"><output id="qVbbo" for="qVbb">5 V</output></div>
+      <div class="sl"><label for="qRb">R<sub>B</sub></label><input type="range" id="qRb" min="10" max="100" step="1" value="39"><output id="qRbo" for="qRb">39 kΩ</output></div>
+      <div class="sl"><label for="qRc">R<sub>C</sub></label><input type="range" id="qRc" min="100" max="1000" step="10" value="470"><output id="qRco" for="qRc">470 Ω</output></div>
+      <div class="sl"><label for="qRe">R<sub>E</sub></label><input type="range" id="qRe" min="0" max="300" step="10" value="150"><output id="qReo" for="qRe">150 Ω</output></div>
+      <div class="sl"><label for="qBeta">Hệ số β</label><input type="range" id="qBeta" min="50" max="250" step="10" value="100"><output id="qBetao" for="qBeta">100</output></div>
+      <p class="live" id="qLive" aria-live="polite"></p>
+      <figcaption>V<sub>CC</sub> = 9 V. Kéo V<sub>BB</sub> từ 0 lên 9 V: Q đi từ vùng ngưng dẫn lên vùng khuếch đại rồi tới bão hoà. Đổi R<sub>C</sub>, R<sub>E</sub> thì độ dốc đường tải thay đổi; giá trị mặc định là Ví dụ 1 bên dưới.</figcaption>
+    </figure>
+
+    <!-- 6 -->
+    <h2 id="dang-1"><span class="num">06</span>Dạng 1: xác định chế độ hoạt động của transistor</h2>
+    <p>Xác định chế độ hoạt động tức là xác định <strong>điểm làm việc Q(I<sub>C</sub>, V<sub>CE</sub>)</strong> của transistor. Điểm làm việc tĩnh luôn nằm trên đường tải tĩnh DCLL (ứng với chế độ DC).</p>
+    <div class="steps">
+      <h4>Cách giải</h4>
+      <p>B1. K2 vòng 2 → vẽ DCLL qua (0; I<sub>Cmax</sub>) và (V<sub>CC</sub>; 0).</p>
+      <p>B2. V<sub>BB</sub> &lt; 0,7 V → ngưng dẫn, Q(0; V<sub>CC</sub>). Ngược lại: K2 vòng 1 → I<sub>B</sub>, rồi β·I<sub>B</sub>.</p>
+      <p>B3. β·I<sub>B</sub> &lt; I<sub>Cmax</sub> → khuếch đại: I<sub>C</sub> = β·I<sub>B</sub>, V<sub>CE</sub> = V<sub>CC</sub> − I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>).</p>
+      <p>B4. β·I<sub>B</sub> ≥ I<sub>Cmax</sub> → bão hoà: I<sub>C</sub> = I<sub>Cmax</sub>, V<sub>CE</sub> = V<sub>CEsat</sub> = 0,2 V.</p>
+    </div>
+    <h3>Ví dụ 1</h3>
+    <p>Cho mạch phân cực cố định như hình ở mục 05, biết V<sub>CC</sub> = 9 V, R<sub>B</sub> = 39 kΩ, R<sub>C</sub> = 470 Ω, R<sub>E</sub> = 150 Ω, β = 100.</p>
+    <ol>
+      <li>Hãy vẽ đường tải tĩnh DCLL.</li>
+      <li>Xác định điểm làm việc Q trên đường tải tĩnh trong các trường hợp: a. V<sub>BB</sub> = 0 V; b. V<sub>BB</sub> = 5 V; c. V<sub>BB</sub> = 9 V.</li>
+      <li>Cho R<sub>E</sub> = 0. Hãy vẽ lại đường tải tĩnh và xác định điểm làm việc Q trong ba trường hợp trên.</li>
+    </ol>
+    <div class="steps">
+      <h4>1. Vẽ DCLL (K2 vòng 2, I<sub>E</sub> ≈ I<sub>C</sub>)</h4>
+      <p>I<sub>C</sub> = −V<sub>CE</sub> / (R<sub>C</sub> + R<sub>E</sub>) + V<sub>CC</sub> / (R<sub>C</sub> + R<sub>E</sub>)</p>
+      <p>V<sub>CE</sub> = 0 ⇒ I<sub>Cmax</sub> = 9 / (470 + 150) = 9 / 620 ≈ <span class="ans">14,5 mA</span></p>
+      <p>I<sub>C</sub> = 0 ⇒ V<sub>CE</sub> = V<sub>CC</sub> = <span class="ans">9 V</span></p>
+      <h4>2a. V<sub>BB</sub> = 0 V</h4>
+      <p>V<sub>BB</sub> = 0 &lt; V<sub>BE</sub> = 0,7 V ⇒ I<sub>B</sub> = 0 ⇒ I<sub>C</sub> = 0: transistor <strong>ngưng dẫn</strong></p>
+      <p>V<sub>CE</sub> = V<sub>CC</sub> = 9 V ⇒ <span class="ans">Q<sub>1</sub>(0 mA; 9 V)</span></p>
+      <h4>2b. V<sub>BB</sub> = 5 V &gt; 0,7 V: transistor dẫn, giả sử ở chế độ khuếch đại</h4>
+      <p>I<sub>B</sub> = (V<sub>BB</sub> − V<sub>BE</sub>) / [R<sub>B</sub> + (1 + β)R<sub>E</sub>] = (5 − 0,7) / (39 + 101 × 0,15) kΩ = 4,3 / 54,15 ≈ 0,08 mA</p>
+      <p>I<sub>C</sub> = β·I<sub>B</sub> = 100 × 0,08 = 8 mA &lt; I<sub>Cmax</sub> = 14,5 mA ⇒ đúng là <strong>khuếch đại</strong></p>
+      <p>V<sub>CE</sub> = V<sub>CC</sub> − I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>) = 9 − 8 × 0,62 ≈ 4 V ⇒ <span class="ans">Q<sub>2</sub>(8 mA; 4 V)</span></p>
+      <h4>2c. V<sub>BB</sub> = 9 V</h4>
+      <p>I<sub>B</sub> = (9 − 0,7) / (39 + 101 × 0,15) = 8,3 / 54,15 ≈ 0,15 mA</p>
+      <p>β·I<sub>B</sub> = 100 × 0,15 = 15 mA &gt; I<sub>Cmax</sub> = 14,5 mA ⇒ transistor <strong>bão hoà</strong></p>
+      <p>V<sub>CE</sub> = V<sub>CEsat</sub> = 0,2 V; I<sub>C</sub> = I<sub>Cmax</sub> = 14,5 mA ⇒ <span class="ans">Q<sub>3</sub>(14,5 mA; 0,2 V)</span></p>
+      <h4>3. R<sub>E</sub> = 0</h4>
+      <p>I<sub>Cmax</sub> = 9 / 470 ≈ 19,1 mA; điểm I<sub>C</sub> = 0 vẫn là V<sub>CE</sub> = 9 V: đường tải <strong>dốc hơn</strong>.</p>
+      <p>a. V<sub>BB</sub> = 0: ngưng dẫn ⇒ <span class="ans">Q(0 mA; 9 V)</span></p>
+      <p>b. I<sub>B</sub> = (5 − 0,7) / 39 ≈ 0,11 mA; I<sub>C</sub> = 11 mA &lt; 19,1 mA ⇒ khuếch đại; V<sub>CE</sub> = 9 − 11 × 0,47 ≈ 3,8 V ⇒ <span class="ans">Q(11 mA; 3,8 V)</span></p>
+      <p>c. I<sub>B</sub> = (9 − 0,7) / 39 ≈ 0,21 mA; β·I<sub>B</sub> ≈ 21 mA &gt; 19,1 mA ⇒ bão hoà ⇒ <span class="ans">Q(19,1 mA; 0,2 V)</span></p>
+    </div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 600 290" role="img" aria-label="Đồ thị Ví dụ 1: đường tải R E bằng 150 ohm từ 14,5 mA xuống 9 V với Q1 tại 9 V, Q2 tại 4 V 8 mA, Q3 tại 0,2 V 14,5 mA; đường tải nét đứt khi R E bằng 0 từ 19,1 mA xuống 9 V">
+  <path class="axis" d="M70 20 V250 H560 m-8 -5 l8 5 l-8 5 M65 28 l5 -8 l5 8"/>
+  <path class="dash" d="M70 163 H254 V250 M70 91 H79"/>
+  <path class="curve-warm" d="M70 90.5 L475 250"/>
+  <path class="curve-ac" d="M70 39.3 L475 250" style="stroke-dasharray:8 6"/>
+  <circle class="cap" cx="475" cy="250" r="5"/><circle class="cap" cx="254" cy="163" r="5"/><circle class="cap" cx="79" cy="91" r="5"/>
+  <circle class="cap" cx="242" cy="129" r="4"/><circle class="cap" cx="79" cy="40" r="4"/>
+  <g class="b warm"><text x="480" y="240">Q<tspan class="sub" dy="3">1</tspan></text><text x="262" y="176">Q<tspan class="sub" dy="3">2</tspan></text><text x="88" y="106">Q<tspan class="sub" dy="3">3</tspan></text></g>
+  <g class="s" text-anchor="end"><text x="62" y="167">8</text><text x="62" y="95">14,5</text><text x="62" y="44">19,1</text></g>
+  <g class="s" text-anchor="middle"><text x="70" y="268">0</text><text x="254" y="268">4</text><text x="475" y="268">9</text></g>
+  <text class="b" x="30" y="16">I<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> (mA)</tspan></text>
+  <text class="b" x="520" y="284">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> (V)</tspan></text>
+  <text class="s warm" x="340" y="232">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 150 Ω</tspan></text>
+  <text class="s ac" x="270" y="112">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 0 (nét đứt)</tspan></text>
+</svg>
+      <figcaption>Ba điểm làm việc của Ví dụ 1 trên cùng một đường tải tĩnh. Bỏ R<sub>E</sub> (nét đứt) làm I<sub>Cmax</sub> tăng lên 19,1 mA</figcaption>
+    </figure>
+    <div class="note"><strong>Kiểm tra lại:</strong> điểm Q<sub>2</sub>(8 mA; 4 V) phải nằm trên DCLL: thay vào phương trình, I<sub>C</sub> = (9 − 4) / 0,62 ≈ 8,1 mA, khớp. Q<sub>1</sub>, Q<sub>3</sub> nằm ở hai đầu đường tải: transistor làm công tắc hở và công tắc đóng.</div>
+
+    <!-- 7 -->
+    <h2 id="dang-2"><span class="num">07</span>Dạng 2: cho trước điểm Q, tìm R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub></h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Dạng 1 là "có điện trở, tìm Q"; Dạng 2 làm ngược lại: <strong>muốn Q ở đâu thì chọn điện trở cho nó</strong>. Tính ra giá trị lẻ rồi chọn giá trị chuẩn gần nhất có bán ngoài tiệm.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 290" role="img" aria-label="Mạch phân cực dùng một nguồn V CC 9 V: R B nối từ V CC xuống cực B, R C từ V CC xuống cực C, R E từ cực E xuống mass">
+  <path class="wire" d="M160 30 H330 V50 M330 110 V122 L290 146 M290 166 L330 190 V200 M330 250 V272 M160 30 V60 M160 120 V156 H290"/>
+  <path class="arr" d="M237 22 l8 -10 l8 10 M245 12 V30"/>
+  <rect class="load" x="320" y="50" width="20" height="60" rx="3"/>
+  <rect class="load" x="320" y="200" width="20" height="50" rx="3"/>
+  <rect class="load" x="150" y="60" width="20" height="60" rx="3"/>
+  <line class="plate" x1="290" y1="132" x2="290" y2="180"/>
+  <polygon class="cap" points="322,185 309.4,181.8 315.4,173.8"/>
+  <g class="wire"><line x1="314" y1="272" x2="346" y2="272"/><line x1="320" y1="278" x2="340" y2="278"/><line x1="326" y1="284" x2="334" y2="284"/></g>
+  <path class="loopv" d="M190 44 V240 H300"/><path class="loopv" d="M292 234 l8 6 l-8 6"/><text class="b warm" x="200" y="214">1</text>
+  <path class="loopv" d="M420 40 V262 m-6 -10 l6 10 l6 -10"/><text class="b warm" x="430" y="150">2</text>
+  <g class="b"><text x="262" y="16">V<tspan class="sub" dy="3">CC</tspan><tspan dy="-3"> = 9 V</tspan></text><text x="348" y="86">R<tspan class="sub" dy="3">C</tspan></text><text x="348" y="230">R<tspan class="sub" dy="3">E</tspan></text><text x="112" y="96">R<tspan class="sub" dy="3">B</tspan></text></g>
+  <g class="s ac"><text x="218" y="150">I<tspan class="sub" dy="3">B</tspan><tspan dy="-3"> →</tspan></text><text x="338" y="122">↓ I<tspan class="sub" dy="3">C</tspan></text><text x="338" y="196">↓ I<tspan class="sub" dy="3">E</tspan></text></g>
+  <text class="s" x="350" y="266">V<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = I</tspan><tspan class="sub" dy="3">E</tspan><tspan dy="-3">R</tspan><tspan class="sub" dy="3">E</tspan></text>
+</svg>
+      <figcaption>Mạch phân cực dùng chung một nguồn V<sub>CC</sub> = 9 V: R<sub>B</sub> lấy dòng nền thẳng từ V<sub>CC</sub></figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Cách giải (chế độ khuếch đại)</h4>
+      <p>1. Chọn V<sub>E</sub> ≈ 10% V<sub>CC</sub> ⇒ R<sub>E</sub> = V<sub>E</sub> / I<sub>E</sub> ≈ V<sub>E</sub> / I<sub>C</sub></p>
+      <p>2. K2 vòng 2: −V<sub>CC</sub> + I<sub>C</sub>R<sub>C</sub> + V<sub>CE</sub> + V<sub>E</sub> = 0 ⇒ R<sub>C</sub> = (V<sub>CC</sub> − V<sub>CE</sub> − V<sub>E</sub>) / I<sub>C</sub></p>
+      <p>3. I<sub>B</sub> = I<sub>C</sub> / β; K2 vòng 1: −V<sub>CC</sub> + I<sub>B</sub>R<sub>B</sub> + V<sub>BE</sub> + V<sub>E</sub> = 0 ⇒ R<sub>B</sub> = (V<sub>CC</sub> − V<sub>BE</sub> − V<sub>E</sub>) / I<sub>B</sub></p>
+      <p>4. Chế độ bão hoà: thay V<sub>CE</sub> = V<sub>CEsat</sub> = 0,2 V, V<sub>BE</sub> = V<sub>BEsat</sub> = 0,8 V, I<sub>C</sub> = I<sub>Cmax</sub>, và I<sub>B</sub> = K·I<sub>Cmax</sub> / β.</p>
+    </div>
+    <h3>Ví dụ 2</h3>
+    <p>Cho mạch như hình, V<sub>CC</sub> = 9 V. Hãy chọn R<sub>B</sub>, R<sub>C</sub>, R<sub>E</sub> để transistor hoạt động ở chế độ:</p>
+    <p>a) Khuếch đại có điểm Q: I<sub>C</sub> = 18 mA, V<sub>CE</sub> = ⅓V<sub>CC</sub>; transistor có β = 120.<br>b) Bão hoà có I<sub>Cmax</sub> = 40 mA; transistor bão hoà sâu có β = 60, K = 2; cho V<sub>E</sub> = 1 V.</p>
+    <div class="steps">
+      <h4>a) Chế độ khuếch đại</h4>
+      <p>I<sub>C</sub> = 18 mA; V<sub>CE</sub> = ⅓ × 9 = 3 V</p>
+      <p>Chọn V<sub>E</sub> = I<sub>E</sub>R<sub>E</sub> ≈ I<sub>C</sub>R<sub>E</sub> = 0,9 V ⇒ R<sub>E</sub> = 0,9 / (18 × 10⁻³) = 50 Ω ⇒ <span class="ans">chọn R<sub>E</sub> = 47 Ω</span></p>
+      <p>Tính R<sub>C</sub> (K2 vòng 2): R<sub>C</sub> = (9 − 3 − 0,9) / (18 × 10⁻³) ≈ 283,3 Ω ⇒ <span class="ans">chọn R<sub>C</sub> = 270 Ω</span> (hoặc 300 Ω)</p>
+      <p>Tính R<sub>B</sub>: I<sub>B</sub> = I<sub>C</sub> / β = 18 / 120 = 0,15 mA</p>
+      <p>K2 vòng 1: R<sub>B</sub> = (9 − 0,7 − 0,9) / (0,15 × 10⁻³) ≈ 49,33 kΩ ⇒ <span class="ans">chọn R<sub>B</sub> = 47 kΩ</span></p>
+      <h4>Kiểm tra lại với giá trị đã chọn</h4>
+      <p>I<sub>B</sub> = (9 − 0,7) / (47 + 121 × 0,047) kΩ ≈ 0,158 mA ⇒ I<sub>C</sub> = 120 × 0,158 ≈ 18,9 mA</p>
+      <p>V<sub>CE</sub> = 9 − 18,9 × 0,27 − 19,1 × 0,047 ≈ 3,0 V: đúng điểm Q cần thiết kế.</p>
+      <h4>b) Chế độ bão hoà</h4>
+      <p>I<sub>Cmax</sub> = I<sub>C</sub> ≈ I<sub>E</sub> = 40 mA ⇒ R<sub>E</sub> = V<sub>E</sub> / I<sub>E</sub> = 1 / (40 × 10⁻³) = 25 Ω ⇒ <span class="ans">chọn R<sub>E</sub> = 27 Ω</span></p>
+      <p>Tính R<sub>B</sub>: I<sub>C</sub> = β·I<sub>B</sub> / K ⇒ I<sub>B</sub> = I<sub>C</sub>·K / β = 40 × 2 / 60 ≈ 1,33 mA</p>
+      <p>K2 vòng 1: −V<sub>CC</sub> + I<sub>B</sub>R<sub>B</sub> + V<sub>BEsat</sub> + V<sub>E</sub> = 0 ⇒ R<sub>B</sub> = (9 − 0,8 − 1) / (1,33 × 10⁻³) ≈ 5,4 kΩ ⇒ <span class="ans">chọn R<sub>B</sub> = 5,6 kΩ</span></p>
+      <p>Tính R<sub>C</sub> (K2 vòng 2): −V<sub>CC</sub> + I<sub>Cmax</sub>R<sub>C</sub> + V<sub>CEsat</sub> + V<sub>E</sub> = 0 ⇒ R<sub>C</sub> = (9 − 0,2 − 1) / (40 × 10⁻³) = 195 Ω ⇒ <span class="ans">chọn R<sub>C</sub> = 200 Ω</span></p>
+    </div>
+    <h3>Ví dụ 3</h3>
+    <p>Cho R<sub>C</sub> = 220 Ω, R<sub>E</sub> = 100 Ω. Tìm R<sub>B</sub> để transistor hoạt động ở chế độ bão hoà, cho β = 60, K = 2.</p>
+    <div class="steps">
+      <p>K2 vòng 2: −V<sub>CC</sub> + I<sub>C</sub>R<sub>C</sub> + V<sub>CE</sub> + I<sub>C</sub>R<sub>E</sub> = 0 ⇒ I<sub>C</sub> = (V<sub>CC</sub> − V<sub>CE</sub>) / (R<sub>C</sub> + R<sub>E</sub>)</p>
+      <p>Cho V<sub>CE</sub> = 0 ⇒ I<sub>Cmax</sub> = 9 / (0,22 + 0,1) kΩ ≈ 28,12 mA</p>
+      <p>I<sub>B</sub> = K·I<sub>Cmax</sub> / β = 2 × 28,12 / 60 ≈ 0,94 mA</p>
+      <p>K2 vòng 1: −V<sub>CC</sub> + I<sub>B</sub>R<sub>B</sub> + V<sub>BEsat</sub> + I<sub>Cmax</sub>R<sub>E</sub> = 0</p>
+      <p>R<sub>B</sub> = (9 − 0,8 − 28,12 × 0,1) / (0,94 × 10⁻³) ≈ 5,7 kΩ ⇒ <span class="ans">chọn R<sub>B</sub> = 5,6 kΩ</span></p>
+    </div>
+    <div class="note"><strong>Chọn giá trị chuẩn theo hướng an toàn:</strong> ở chế độ bão hoà nên chọn R<sub>B</sub> <strong>nhỏ hơn</strong> giá trị tính (5,6 kΩ &lt; 5,7 kΩ) để I<sub>B</sub> lớn hơn một chút, transistor càng chắc chắn bão hoà. Giá trị chuẩn thường gặp (dãy E12): 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 nhân với 1, 10, 100, 1 000…</div>
+    <figure class="sim" id="simDesign">
+      <p class="sim-h">Thử ngay · Thiết kế điểm Q ở chế độ khuếch đại</p>
+      <div class="simbox">
+        <svg viewBox="0 0 600 232" role="img" aria-labelledby="desTitle">
+          <title id="desTitle">Mạch một nguồn V CC 9 V với ba điện trở R B, R C, R E; giá trị tính được hiện cạnh từng điện trở.</title>
+          <path class="w" d="M120 24 H300 V40 M300 90 V100 L262 122 M262 140 L300 162 V168 M300 208 V214 M120 24 V40 M120 90 V131 H262"/>
+          <rect class="part" x="290" y="40" width="20" height="50" rx="3"/>
+          <rect class="part" x="290" y="168" width="20" height="40" rx="3"/>
+          <rect class="part" x="110" y="40" width="20" height="50" rx="3"/>
+          <path class="w" d="M288 214 H312 M293 220 H307 M297 226 H303"/>
+          <line class="w" x1="262" y1="110" x2="262" y2="152" style="stroke-width:4"/>
+          <polygon class="node" points="292,157 279.4,153.8 285.4,145.8"/>
+          <text class="s" x="180" y="16">V<tspan class="sub" dy="3">CC</tspan><tspan dy="-3"> = 9 V</tspan></text>
+          <text class="b" x="320" y="62">R<tspan class="sub" dy="3">C</tspan></text><text class="b warm" id="desRc" x="350" y="62"></text>
+          <text class="b" x="320" y="192">R<tspan class="sub" dy="3">E</tspan></text><text class="b warm" id="desRe" x="350" y="192"></text>
+          <text class="b" x="40" y="62">R<tspan class="sub" dy="3">B</tspan></text><text class="b warm" id="desRb" x="20" y="84"></text>
+          <text class="s" id="desQ" x="330" y="126"></text>
+        </svg>
+      </div>
+      <div class="sl"><label for="desIc">I<sub>C</sub> mong muốn</label><input type="range" id="desIc" min="5" max="40" step="1" value="18"><output id="desIco" for="desIc">18 mA</output></div>
+      <div class="sl"><label for="desVce">V<sub>CE</sub> mong muốn</label><input type="range" id="desVce" min="1" max="7" step="0.5" value="3"><output id="desVceo" for="desVce">3 V</output></div>
+      <div class="sl"><label for="desBeta">Hệ số β</label><input type="range" id="desBeta" min="50" max="300" step="10" value="120"><output id="desBetao" for="desBeta">120</output></div>
+      <p class="live" id="desLive" aria-live="polite"></p>
+      <figcaption>Chọn V<sub>E</sub> = 0,9 V (10% V<sub>CC</sub>), V<sub>BE</sub> = 0,7 V. Mô phỏng tính R<sub>E</sub>, R<sub>C</sub>, R<sub>B</sub>, làm tròn về dãy E12 rồi kiểm tra lại điểm Q thật với các giá trị chuẩn đó. Mặc định là Ví dụ 2a.</figcaption>
+    </figure>
+
+    <!-- 8 -->
+    <h2 id="tom-tat"><span class="num">08</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nội dung</th><th>Ghi nhớ, công thức</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>BJT</td><td>3 cực E (phát), B (nền), C (thu); 2 loại PNP, NPN</td><td>BC547, 2N3904 (NPN, TO-92)</td></tr>
+          <tr><td>Tạp chất</td><td>E nhiều nhất · C trung bình · B ít nhất và mỏng nhất</td><td>B mỏng nên I<sub>B</sub> rất nhỏ</td></tr>
+          <tr><td>Ký hiệu</td><td>Mũi tên ở E, chỉ từ P sang N: NPN hướng ra, PNP hướng vào</td><td>NPN: V<sub>BE</sub> &gt; 0, V<sub>CE</sub> &gt; 0</td></tr>
+          <tr><td>Dòng điện</td><td>I<sub>C</sub> = β·I<sub>B</sub> · I<sub>E</sub> = I<sub>B</sub> + I<sub>C</sub> = (1 + β)I<sub>B</sub> ≈ I<sub>C</sub></td><td>I<sub>B</sub> = 0,08 mA, β = 100 → I<sub>C</sub> = 8 mA</td></tr>
+          <tr><td>Ngưng dẫn</td><td>V<sub>BE</sub> &lt; 0,7 V → I<sub>B</sub> = I<sub>C</sub> = 0, V<sub>CE</sub> = V<sub>CC</sub></td><td>Q<sub>1</sub>(0 mA; 9 V)</td></tr>
+          <tr><td>Khuếch đại</td><td>V<sub>BE</sub> = 0,7 V, I<sub>C</sub> = β·I<sub>B</sub> &lt; I<sub>Cmax</sub></td><td>Q<sub>2</sub>(8 mA; 4 V)</td></tr>
+          <tr><td>Bão hoà</td><td>V<sub>BEsat</sub> = 0,8 V, V<sub>CEsat</sub> = 0,2 V, I<sub>C</sub> = I<sub>Cmax</sub> = β·I<sub>B</sub> / K</td><td>Q<sub>3</sub>(14,5 mA; 0,2 V)</td></tr>
+          <tr><td>DCLL</td><td>I<sub>C</sub> = (V<sub>CC</sub> − V<sub>CE</sub>) / (R<sub>C</sub> + R<sub>E</sub>) · I<sub>Cmax</sub> = V<sub>CC</sub> / (R<sub>C</sub> + R<sub>E</sub>)</td><td>9 / 620 ≈ 14,5 mA</td></tr>
+          <tr><td>I<sub>B</sub> phân cực cố định</td><td>I<sub>B</sub> = (V<sub>BB</sub> − V<sub>BE</sub>) / [R<sub>B</sub> + (1 + β)R<sub>E</sub>]</td><td>4,3 / 54,15 ≈ 0,08 mA</td></tr>
+          <tr><td>Thiết kế khuếch đại</td><td>V<sub>E</sub> ≈ 10% V<sub>CC</sub> · R<sub>E</sub> = V<sub>E</sub> / I<sub>C</sub> · R<sub>C</sub> = (V<sub>CC</sub> − V<sub>CE</sub> − V<sub>E</sub>) / I<sub>C</sub> · R<sub>B</sub> = (V<sub>CC</sub> − V<sub>BE</sub> − V<sub>E</sub>) / I<sub>B</sub></td><td>47 Ω, 270 Ω, 47 kΩ</td></tr>
+          <tr><td>Thiết kế bão hoà</td><td>I<sub>B</sub> = K·I<sub>Cmax</sub> / β · dùng V<sub>BEsat</sub>, V<sub>CEsat</sub></td><td>27 Ω, 200 Ω, 5,6 kΩ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Bảng tiền tố dùng trong chương</h3>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Tiền tố</th><th>Ký hiệu</th><th>Giá trị</th><th>Ví dụ trong chương</th></tr></thead>
+        <tbody>
+          <tr><td>Kilo <span class="say" title="Cách đọc">ki-lô</span></td><td>k</td><td>10³</td><td>R<sub>B</sub> = 39 kΩ = 39 000 Ω</td></tr>
+          <tr class="base"><td>(đơn vị gốc)</td><td>–</td><td>1</td><td>V, A, Ω</td></tr>
+          <tr><td>Mili <span class="say" title="Cách đọc">mi-li</span></td><td>m</td><td>10⁻³</td><td>I<sub>C</sub> = 18 mA = 0,018 A</td></tr>
+          <tr><td>Micro <span class="say" title="Cách đọc">mi-crô</span></td><td>µ</td><td>10⁻⁶</td><td>I<sub>B</sub> = 150 µA = 0,15 mA</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 9 -->
+    <h2 id="trac-nghiem"><span class="num">09</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <a class="back" href="/namnhat-dientucoban">← Về Điện tử Cơ bản (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script>
+/* Mô phỏng Chương 4 Điện tử cơ bản: dòng I_B điều khiển I_C, điểm Q trên DCLL, thiết kế R_B R_C R_E */
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var VCC = 9;
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  /* Nút VI/EN (assets/i18n.js) đặt <html lang> rồi phát "ct:lang": mỗi mô phỏng vẽ lại theo ngôn ngữ. */
+  function isEn() { return document.documentElement.lang === "en"; }
+  function tr(vi, en) { return isEn() ? en : vi; }
+  function onLang(fn) { document.addEventListener("ct:lang", fn); }
+  function fmt(x, d) {
+    var p = Math.pow(10, d == null ? 2 : d), r = Math.round(x * p) / p;
+    var t = String(Math.abs(r));
+    return (r < 0 ? "−" : "") + (isEn() ? t : t.replace(".", ","));
+  }
+  function svgEl(tag, attrs, text) {
+    var el = document.createElementNS(NS, tag);
+    Object.keys(attrs || {}).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+    if (text != null) el.textContent = text;
+    return el;
+  }
+  function clear(g) { while (g.firstChild) g.removeChild(g.firstChild); }
+  /* "I_C = 5 mA" → I<sub>C</sub> = 5 mA trong SVG */
+  function setSub(id, s) {
+    var el = $(id), m = /^([A-Za-z]+)_(\w+)(.*)$/.exec(s);
+    clear(el);
+    if (!m) { el.textContent = s; return; }
+    el.appendChild(document.createTextNode(m[1]));
+    el.appendChild(svgEl("tspan", { "class": "sub", dy: "3" }, m[2]));
+    el.appendChild(svgEl("tspan", { dy: "-3" }, m[3]));
+  }
+  function setFlow(el, level) {
+    if (level <= 0.001) { el.classList.add("off"); return; }
+    el.classList.remove("off");
+    el.style.setProperty("--dur", clamp(1.6 / Math.sqrt(level), 0.25, 4).toFixed(2) + "s");
+    el.style.strokeWidth = String(clamp(2 + level * 2, 2, 6));
+  }
+  function bind(ids, draw) {
+    ids.forEach(function (id) { $(id).addEventListener("input", draw); });
+    onLang(draw);
+    draw();
+  }
+  function dec() { return isEn() ? "." : ","; }
+  function ohm(v) {
+    return v >= 1000 ? fmt(v / 1000, v >= 10000 ? 1 : 2) + " kΩ" : fmt(v, v >= 100 ? 0 : 1) + " Ω";
+  }
+  var E12 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82, 100];
+  function nearestE12(v) {
+    var d = Math.pow(10, Math.floor(Math.log10(v)) - 1), best = E12[0] * d;
+    E12.forEach(function (b) {
+      var c = b * d;
+      if (Math.abs(Math.log(c / v)) < Math.abs(Math.log(best / v))) best = c;
+    });
+    return best;
+  }
+
+  /* 1. Dòng I_B nhỏ điều khiển I_C lớn (V_CC = 9 V, R_C = 470 Ω) */
+  function initBjt() {
+    var RC = 0.47, ICMAX = VCC / RC;
+    function draw() {
+      var ib = +$("bjtIb").value / 1000, beta = +$("bjtBeta").value;
+      var ica = beta * ib, sat = ica >= ICMAX, ic = sat ? ICMAX : ica, ie = ib + ic;
+      var level = ic / ICMAX;
+      $("bjtIbo").textContent = $("bjtIb").value + " µA";
+      $("bjtBetao").textContent = String(beta);
+      setFlow($("bjtFlowB"), ib / 0.3);
+      setFlow($("bjtFlowC"), level);
+      $("bjtBulb").style.fillOpacity = String(0.08 + 0.92 * level);
+      $("bjtRay").style.opacity = String(level);
+      setSub("bjtIB", "I_B = " + fmt(ib * 1000, 0) + " µA");
+      setSub("bjtIC", "I_C = " + fmt(ic, 1) + " mA");
+      setSub("bjtIE", "I_E = " + fmt(ie, 1) + " mA");
+      var max = fmt(ICMAX, 1), live;
+      if (ib === 0) {
+        live = tr("<span class=\"neg\">Ngưng dẫn</span>: I<sub>B</sub> = 0 nên I<sub>C</sub> = 0, đèn tắt, V<sub>CE</sub> = V<sub>CC</sub> = 9 V.",
+          "<span class=\"neg\">Cut-off</span>: I<sub>B</sub> = 0 so I<sub>C</sub> = 0, the lamp is off and V<sub>CE</sub> = V<sub>CC</sub> = 9 V.");
+      } else if (!sat) {
+        live = tr("<span class=\"ok\">Khuếch đại</span>: ", "<span class=\"ok\">Active</span>: ") +
+          "I<sub>C</sub> = β·I<sub>B</sub> = " + beta + " × " + fmt(ib, 3) + " mA = <b>" + fmt(ic, 2) + " mA</b> &lt; I<sub>Cmax</sub> ≈ " + max + " mA. " +
+          "I<sub>E</sub> = I<sub>B</sub> + I<sub>C</sub> = " + fmt(ie, 2) + " mA; V<sub>CE</sub> = 9 − I<sub>C</sub>·R<sub>C</sub> ≈ " + fmt(VCC - ic * RC, 2) + " V.";
+      } else {
+        live = tr("<span class=\"neg\">Bão hoà</span>: β·I<sub>B</sub> = " + fmt(ica, 1) + " mA ≥ I<sub>Cmax</sub> ≈ " + max + " mA nên I<sub>C</sub> dừng ở <b>" + max + " mA</b>, V<sub>CE</sub> ≈ 0,2 V. Tăng I<sub>B</sub> thêm đèn cũng không sáng hơn.",
+          "<span class=\"neg\">Saturation</span>: β·I<sub>B</sub> = " + fmt(ica, 1) + " mA ≥ I<sub>Cmax</sub> ≈ " + max + " mA, so I<sub>C</sub> stops at <b>" + max + " mA</b> and V<sub>CE</sub> ≈ 0.2 V. More I<sub>B</sub> no longer makes the lamp brighter.");
+      }
+      $("bjtLive").innerHTML = live;
+    }
+    bind(["bjtIb", "bjtBeta"], draw);
+  }
+
+  /* 2. Điểm Q trên đường tải tĩnh của mạch phân cực cố định */
+  function initQ() {
+    var X0 = 70, X1 = 520, Y0 = 250, Y1 = 40;
+    var STEPS = [5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 120];
+    function xs(v) { return X0 + (X1 - X0) * v / VCC; }
+    function grid(ymax, ys) {
+      var g = $("qGrid");
+      clear(g);
+      for (var v = 0; v <= VCC; v++) {
+        g.appendChild(svgEl("line", { "class": "grid", x1: xs(v), y1: Y1, x2: xs(v), y2: Y0 }));
+        g.appendChild(svgEl("text", { "class": "s", x: xs(v), y: Y0 + 18, "text-anchor": "middle" }, String(v)));
+      }
+      for (var i = 0; i <= 5; i++) {
+        var c = ymax * i / 5;
+        g.appendChild(svgEl("line", { "class": "grid", x1: X0, y1: ys(c), x2: X1, y2: ys(c) }));
+        g.appendChild(svgEl("text", { "class": "s", x: X0 - 8, y: ys(c) + 4, "text-anchor": "end" }, fmt(c, 1)));
+      }
+    }
+    function draw() {
+      var vbb = +$("qVbb").value, rb = +$("qRb").value, rc = +$("qRc").value / 1000;
+      var re = +$("qRe").value / 1000, beta = +$("qBeta").value;
+      $("qVbbo").textContent = fmt(vbb, 1) + " V";
+      $("qRbo").textContent = rb + " kΩ";
+      $("qRco").textContent = Math.round(rc * 1000) + " Ω";
+      $("qReo").textContent = Math.round(re * 1000) + " Ω";
+      $("qBetao").textContent = String(beta);
+      var icmax = VCC / (rc + re);
+      var ymax = STEPS.filter(function (s) { return s >= icmax * 1.1; })[0] || 120;
+      function ys(c) { return Y0 - (Y0 - Y1) * c / ymax; }
+      grid(ymax, ys);
+      var line = $("qLine");
+      line.setAttribute("x1", X0); line.setAttribute("y1", ys(icmax));
+      line.setAttribute("x2", xs(VCC)); line.setAttribute("y2", Y0);
+      var ib = 0, ica = 0, ic, vce, region, live;
+      if (vbb < 0.7) {
+        ic = 0; vce = VCC; region = "cut";
+      } else {
+        ib = (vbb - 0.7) / (rb + (1 + beta) * re);
+        ica = beta * ib;
+        if (ica < icmax) { ic = ica; vce = VCC - ic * (rc + re); region = "act"; }
+        else { ic = icmax; vce = 0.2; region = "sat"; }
+      }
+      var qx = xs(vce), qy = ys(ic);
+      $("qDot").setAttribute("cx", qx); $("qDot").setAttribute("cy", qy);
+      var gx = $("qGx"), gy = $("qGy");
+      gx.setAttribute("y1", qy); gx.setAttribute("x2", qx); gx.setAttribute("y2", qy);
+      gy.setAttribute("x1", qx); gy.setAttribute("y1", qy); gy.setAttribute("x2", qx);
+      var lab = $("qLab");
+      lab.textContent = "Q(" + fmt(ic, 1) + " mA; " + fmt(vce, 1) + " V)";
+      lab.setAttribute("x", clamp(qx + 12, X0 + 4, X1 - 150));
+      lab.setAttribute("y", clamp(qy - 12, Y1 + 16, Y0 - 8));
+      var names = { cut: tr("Ngưng dẫn", "Cut-off"), act: tr("Khuếch đại", "Active"), sat: tr("Bão hoà", "Saturation") };
+      $("qRegion").textContent = names[region];
+      var head = "I<sub>Cmax</sub> = 9 / (R<sub>C</sub> + R<sub>E</sub>) = <b>" + fmt(icmax, 2) + " mA</b>. ";
+      if (region === "cut") {
+        live = tr("V<sub>BB</sub> &lt; 0,7 V ⇒ I<sub>B</sub> = 0, I<sub>C</sub> = 0: <span class=\"neg\">ngưng dẫn</span>, Q(0; 9 V).",
+          "V<sub>BB</sub> &lt; 0.7 V ⇒ I<sub>B</sub> = 0, I<sub>C</sub> = 0: <span class=\"neg\">cut-off</span>, Q(0; 9 V).");
+      } else {
+        live = "I<sub>B</sub> = (" + fmt(vbb, 1) + " − 0" + dec() + "7) / (" + rb + " + " + (1 + beta) + " × " + fmt(re, 2) + ") = " + fmt(ib, 3) + " mA; β·I<sub>B</sub> = " + fmt(ica, 2) + " mA " +
+          (region === "act"
+            ? tr("&lt; I<sub>Cmax</sub>: <span class=\"ok\">khuếch đại</span>, ", "&lt; I<sub>Cmax</sub>: <span class=\"ok\">active</span>, ") + "V<sub>CE</sub> = 9 − I<sub>C</sub>(R<sub>C</sub> + R<sub>E</sub>) = " + fmt(vce, 2) + " V."
+            : tr("≥ I<sub>Cmax</sub>: <span class=\"neg\">bão hoà</span>, I<sub>C</sub> = I<sub>Cmax</sub>, V<sub>CE</sub> = V<sub>CEsat</sub> = 0,2 V.",
+              "≥ I<sub>Cmax</sub>: <span class=\"neg\">saturation</span>, I<sub>C</sub> = I<sub>Cmax</sub>, V<sub>CE</sub> = V<sub>CEsat</sub> = 0.2 V."));
+      }
+      $("qLive").innerHTML = head + live;
+    }
+    bind(["qVbb", "qRb", "qRc", "qRe", "qBeta"], draw);
+  }
+
+  /* 3. Thiết kế R_E, R_C, R_B cho điểm Q (V_CC = 9 V, V_E = 0,9 V, V_BE = 0,7 V) */
+  function initDesign() {
+    var VE = 0.9, VBE = 0.7;
+    function draw() {
+      var ic = +$("desIc").value, vce = +$("desVce").value, beta = +$("desBeta").value;
+      $("desIco").textContent = ic + " mA";
+      $("desVceo").textContent = fmt(vce, 1) + " V";
+      $("desBetao").textContent = String(beta);
+      var re = VE / ic * 1000, rc = (VCC - vce - VE) / ic * 1000;
+      var ib = ic / beta, rb = (VCC - VBE - VE) / ib * 1000;
+      var reS = nearestE12(re), rcS = nearestE12(rc), rbS = nearestE12(rb);
+      $("desRe").textContent = ohm(re) + " → " + ohm(reS);
+      $("desRc").textContent = ohm(rc) + " → " + ohm(rcS);
+      $("desRb").textContent = ohm(rb) + " → " + ohm(rbS);
+      var ib2 = (VCC - VBE) / (rbS + (1 + beta) * reS) * 1000;
+      var ic2 = beta * ib2, vce2 = VCC - ic2 * rcS / 1000 - (1 + beta) * ib2 * reS / 1000;
+      var sat = vce2 < 0.2;
+      $("desQ").textContent = sat ? tr("Q thật: bão hoà", "Real Q: saturated")
+        : tr("Q thật: ", "Real Q: ") + fmt(ic2, 1) + " mA; " + fmt(vce2, 2) + " V";
+      $("desLive").innerHTML =
+        "R<sub>E</sub> = 0" + dec() + "9 V / " + ic + " mA = " + ohm(re) + " · " +
+        "R<sub>C</sub> = (9 − " + fmt(vce, 1) + " − 0" + dec() + "9) / " + ic + " mA = " + ohm(rc) + " · " +
+        "I<sub>B</sub> = " + ic + " / " + beta + " = " + fmt(ib, 3) + " mA · " +
+        "R<sub>B</sub> = (9 − 0" + dec() + "7 − 0" + dec() + "9) / I<sub>B</sub> = " + ohm(rb) + ". " +
+        (sat
+          ? tr("<span class=\"neg\">Với giá trị chuẩn, transistor bị bão hoà</span>: giảm I<sub>C</sub> hoặc V<sub>CE</sub>.",
+            "<span class=\"neg\">With standard values the transistor saturates</span>: lower I<sub>C</sub> or V<sub>CE</sub>.")
+          : tr("Kiểm tra với giá trị chuẩn: ", "Check with standard values: ") +
+            "<span class=\"ok\">I<sub>C</sub> ≈ " + fmt(ic2, 1) + " mA, V<sub>CE</sub> ≈ " + fmt(vce2, 2) + " V</span>.");
+    }
+    bind(["desIc", "desVce", "desBeta"], draw);
+  }
+
+  initBjt();
+  initQ();
+  initDesign();
+})();
+</script>
+<script>
+window.CT_QUIZ = [
+  { q: "Transistor lưỡng cực BJT gồm bao nhiêu lớp bán dẫn và bao nhiêu mối nối P-N?",
+    opts: ["2 lớp, 1 mối nối", "3 lớp, 2 mối nối", "3 lớp, 3 mối nối", "4 lớp, 3 mối nối"], a: 1,
+    why: "BJT gồm 3 lớp (PNP hoặc NPN) nên có 2 mối nối: J_E giữa E và B, J_C giữa B và C. 2 lớp 1 mối nối là diode; 4 lớp là thyristor, không phải BJT." },
+  { q: "Trong BJT, cực nào có nồng độ tạp chất lớn nhất?",
+    opts: ["Cực phát E (Emitter)", "Cực nền B (Base)", "Cực thu C (Collector)", "Cả ba cực như nhau"], a: 0,
+    why: "Cực phát E pha nhiều tạp chất nhất để phát ra thật nhiều hạt dẫn; cực thu C trung bình; cực nền B ít nhất và rất mỏng. Nếu ba cực như nhau thì transistor không khuếch đại được." },
+  { q: "Trong ký hiệu transistor NPN, mũi tên nằm ở đâu và hướng thế nào?",
+    opts: ["Ở cực B, hướng vào", "Ở cực E, hướng ra ngoài", "Ở cực E, hướng vào trong", "Ở cực C, hướng ra ngoài"], a: 1,
+    why: "Mũi tên luôn đặt ở cực E và chỉ từ P sang N. NPN có B là P, E là N nên mũi tên hướng ra. Mũi tên hướng vào là PNP; cực B và C không có mũi tên." },
+  { q: "Transistor có β = 100, I_B = 50 µA. Dòng I_C và I_E lần lượt là:",
+    opts: ["I_C = 5 mA, I_E = 5,05 mA", "I_C = 0,5 mA, I_E = 0,55 mA", "I_C = 5 mA, I_E = 4,95 mA", "I_C = 50 mA, I_E = 50,05 mA"], a: 0,
+    why: "I_C = β·I_B = 100 × 0,05 mA = 5 mA; I_E = I_B + I_C = 5,05 mA. 0,5 mA là đổi sai µA; I_E = 4,95 mA là lấy trừ thay vì cộng; 50 mA là quên đổi 50 µA = 0,05 mA." },
+  { q: "Vì sao dòng I_B rất nhỏ so với I_C?",
+    opts: ["Lớp B rất mỏng và ít tạp chất nên phần lớn electron bị hút sang cực C", "Lớp B rất dày nên chặn electron lại", "Vì mối nối B-C phân cực thuận", "Vì cực C nối với cực âm của nguồn"], a: 0,
+    why: "Electron từ E sang B gặp rất ít lỗ trống (B mỏng, ít tạp chất) nên chỉ một phần nhỏ tạo I_B, phần lớn bị điện áp V_CE hút sang C. Ở chế độ khuếch đại mối nối B-C phân cực nghịch, và cực C của NPN nối cực dương." },
+  { q: "Transistor ở chế độ ngưng dẫn khi nào và lúc đó V_CE bằng bao nhiêu?",
+    opts: ["V_BE < 0,7 V; I_B = I_C = 0; V_CE = V_CC", "V_BE = 0,7 V; V_CE = 0,2 V", "β·I_B ≥ I_Cmax; V_CE = 0,2 V", "I_C = β·I_B; V_CE = V_CC / 2"], a: 0,
+    why: "Khi V_BE chưa tới 0,7 V thì mối nối B-E chưa dẫn, I_B = 0 nên I_C = 0, không có sụt áp trên R_C, R_E nên V_CE = V_CC: Q nằm ở đầu dưới đường tải. V_CE = 0,2 V là bão hoà; I_C = β·I_B là khuếch đại." },
+  { q: "Khi transistor bão hoà, các giá trị thường dùng trong tính toán là:",
+    opts: ["V_BEsat = 0,8 V; V_CEsat = 0,2 V; I_C = I_Cmax", "V_BE = 0,7 V; V_CE = V_CC", "V_BE = 0; V_CE = 0; I_C = 0", "V_BE = 0,2 V; V_CE = 0,8 V"], a: 0,
+    why: "Bão hoà: V_BE = V_BEsat = 0,8 V, V_CE = V_CEsat = 0,2 V và I_C đạt I_Cmax, transistor như công tắc đóng. V_CE = V_CC là ngưng dẫn; phương án cuối đảo ngược hai giá trị." },
+  { q: "Mạch phân cực cố định có V_CC = 12 V, R_C = 1 kΩ, R_E = 200 Ω. Đường tải tĩnh cắt trục I_C tại:",
+    opts: ["I_Cmax = 10 mA", "I_Cmax = 12 mA", "I_Cmax = 60 mA", "I_Cmax = 14,4 mA"], a: 0,
+    why: "Cho V_CE = 0: I_Cmax = V_CC / (R_C + R_E) = 12 / 1,2 kΩ = 10 mA. 12 mA là quên R_E; 60 mA là chỉ lấy R_E; 14,4 mA là nhân thay vì chia. Đầu kia của đường tải là V_CE = V_CC = 12 V." },
+  { q: "Tính ra β·I_B = 25 mA trong khi I_Cmax của đường tải là 20 mA. Kết luận đúng là:",
+    opts: ["Khuếch đại, I_C = 25 mA", "Bão hoà, I_C = I_Cmax = 20 mA, V_CE = 0,2 V", "Ngưng dẫn, I_C = 0", "Transistor hỏng"], a: 1,
+    why: "I_C không thể vượt I_Cmax mà mạch ngoài cho phép. β·I_B ≥ I_Cmax nghĩa là transistor bão hoà: I_C = I_Cmax = 20 mA, V_CE = V_CEsat = 0,2 V. Chỉ khi β·I_B < I_Cmax mới là khuếch đại với I_C = β·I_B." },
+  { q: "Thiết kế chế độ khuếch đại: V_CC = 9 V, I_C = 10 mA, V_E = 0,9 V, V_BE = 0,7 V, β = 100. R_B tính được là:",
+    opts: ["74 kΩ", "83 kΩ", "740 Ω", "90 kΩ"], a: 0,
+    why: "I_B = I_C / β = 0,1 mA; R_B = (V_CC − V_BE − V_E) / I_B = (9 − 0,7 − 0,9) / 0,1 mA = 74 kΩ, rồi chọn giá trị chuẩn gần nhất (68 kΩ) và kiểm tra lại. 83 kΩ là quên trừ V_E; 740 Ω là chia cho I_C thay vì I_B; 90 kΩ là lấy 9 V / 0,1 mA." }
+];
+</script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

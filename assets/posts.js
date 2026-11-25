@@ -214,6 +214,16 @@ window.CT_POSTS = [
   {
     section: "hoctap",
     parent: "/namnhat-dientucoban",
+    title: "Chương 4: Transistor lưỡng cực BJT",
+    desc: "Cấu tạo PNP, NPN, ký hiệu, nguyên lý hoạt động và I_C = β·I_B, ba vùng ngưng dẫn – khuếch đại – bão hoà, mạch phân cực cố định, đường tải tĩnh DCLL, xác định điểm Q và chọn R_B, R_C, R_E; có mô phỏng và trắc nghiệm.",
+    short: "Transistor BJT, ba vùng làm việc, đường tải tĩnh và điểm Q.",
+    date: "2026-11-25",
+    href: "/dientucoban-chuong4",
+    order: 4
+  },
+  {
+    section: "hoctap",
+    parent: "/namnhat-dientucoban",
     title: "Chương 3: Chất bán dẫn và diode",
     desc: "Bán dẫn Si, Ge, loại N và P, mối nối P-N, phân cực thuận nghịch, các loại diode, thiết kế mạch LED, chỉnh lưu bán kỳ, ổn áp Zener và LED 7 đoạn; có mô phỏng và trắc nghiệm.",
     short: "Bán dẫn, mối nối P-N, các loại diode, chỉnh lưu và ổn áp Zener.",
