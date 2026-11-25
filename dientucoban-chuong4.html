@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
-<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong4.en.js?v=2">
+<meta name="ct-i18n" content="/assets/i18n/dientucoban-chuong4.en.js?v=3">
 <meta property="og:title" content="Chương 4: Transistor lưỡng cực BJT · Điện tử Cơ bản">
 <meta property="og:description" content="Điện tử cơ bản Chương 4: transistor lưỡng cực BJT, cấu tạo PNP NPN, ký hiệu, nguyên lý hoạt động, I_C = β·I_B, ba vùng ngưng dẫn khuếch đại bão hoà, mạch phân cực cố định, đường tải tĩnh DCLL, xác định điểm Q và chọn R_B, R_C, R_E.">
 <meta property="og:url" content="https://caothang-gray.vercel.app/dientucoban-chuong4">
@@ -287,6 +287,10 @@
 </style>
 <style>
 .il .hatch{stroke:var(--ink-faint);stroke-width:1.4;}
+.il .dot-w circle{fill:var(--accent-warm);stroke:var(--surface-2);stroke-width:2;}
+.il .dot-a circle{fill:var(--accent);stroke:var(--surface-2);stroke-width:2;}
+.il .dot-k{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .dash-a{stroke:var(--accent);opacity:.7;}
 </style>
   <script src="/assets/theme.js"></script>
 </head>
@@ -680,22 +684,26 @@
       <p>c. I<sub>B</sub> = (9 − 0,7) / 39 ≈ 0,21 mA; β·I<sub>B</sub> ≈ 21 mA &gt; 19,1 mA ⇒ bão hoà ⇒ <span class="ans">Q(19,1 mA; 0,2 V)</span></p>
     </div>
     <figure class="ill">
-      <svg class="il" viewBox="0 0 600 290" role="img" aria-label="Đồ thị Ví dụ 1: đường tải R E bằng 150 ohm từ 14,5 mA xuống 9 V với Q1 tại 9 V, Q2 tại 4 V 8 mA, Q3 tại 0,2 V 14,5 mA; đường tải nét đứt khi R E bằng 0 từ 19,1 mA xuống 9 V">
+      <svg class="il" viewBox="0 0 600 300" role="img" aria-label="Đồ thị Ví dụ 1: đường tải R E bằng 150 ohm từ 14,5 mA xuống 9 V với Q1 tại 9 V, Q2 tại 4 V 8 mA, Q3 tại 0,2 V 14,5 mA; đường tải nét đứt khi R E bằng 0 từ 19,1 mA xuống 9 V với Q2 phẩy tại 3,8 V 11 mA và Q3 phẩy tại 0,2 V 19,1 mA">
   <path class="axis" d="M70 20 V250 H560 m-8 -5 l8 5 l-8 5 M65 28 l5 -8 l5 8"/>
-  <path class="dash" d="M70 163 H254 V250 M70 91 H79"/>
-  <path class="curve-warm" d="M70 90.5 L475 250"/>
-  <path class="curve-ac" d="M70 39.3 L475 250" style="stroke-dasharray:8 6"/>
-  <circle class="cap" cx="475" cy="250" r="5"/><circle class="cap" cx="254" cy="163" r="5"/><circle class="cap" cx="79" cy="91" r="5"/>
-  <circle class="cap" cx="242" cy="129" r="4"/><circle class="cap" cx="79" cy="40" r="4"/>
-  <g class="b warm"><text x="480" y="240">Q<tspan class="sub" dy="3">1</tspan></text><text x="262" y="176">Q<tspan class="sub" dy="3">2</tspan></text><text x="88" y="106">Q<tspan class="sub" dy="3">3</tspan></text></g>
-  <g class="s" text-anchor="end"><text x="62" y="167">8</text><text x="62" y="95">14,5</text><text x="62" y="44">19,1</text></g>
-  <g class="s" text-anchor="middle"><text x="70" y="268">0</text><text x="254" y="268">4</text><text x="475" y="268">9</text></g>
+  <path class="dash" d="M70 162.7 H253.6 V250"/>
+  <path class="dash dash-a" d="M70 128.7 H241.7 V250"/>
+  <line class="curve-warm" x1="70" y1="90.3" x2="475.0" y2="250"/>
+  <line class="curve-ac" x1="70" y1="39.4" x2="475.0" y2="250" style="stroke-dasharray:9 6"/>
+  <g class="dot-w"><circle cx="253.6" cy="162.7" r="6"/><circle cx="79.0" cy="93.9" r="6"/></g>
+  <g class="dot-a"><circle cx="241.7" cy="128.7" r="6"/><circle cx="79.0" cy="44.0" r="6"/></g>
+  <circle class="dot-k" cx="475.0" cy="250" r="6"/>
+  <g class="b warm"><text x="263.6" y="182.7">Q<tspan class="sub" dy="3">2</tspan></text><text x="91.0" y="113.9">Q<tspan class="sub" dy="3">3</tspan></text></g>
+  <g class="b ac"><text x="251.7" y="120.7">Q′<tspan class="sub" dy="3">2</tspan></text><text x="91.0" y="38.0">Q′<tspan class="sub" dy="3">3</tspan></text></g>
+  <text class="b" x="483.0" y="240">Q<tspan class="sub" dy="3">1</tspan></text>
+  <g class="s" text-anchor="end"><text class="warm" x="62" y="166.7">8</text><text class="ac" x="62" y="132.7">11</text><text class="warm" x="62" y="94.3">14,5</text><text class="ac" x="62" y="43.4">19,1</text></g>
+  <g class="s"><text x="70" y="268" text-anchor="middle">0</text><text class="ac" x="239.7" y="268" text-anchor="end">3,8</text><text class="warm" x="255.6" y="268">4</text><text x="475.0" y="268" text-anchor="middle">9</text></g>
   <text class="b" x="30" y="16">I<tspan class="sub" dy="3">C</tspan><tspan dy="-3"> (mA)</tspan></text>
-  <text class="b" x="520" y="284">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> (V)</tspan></text>
-  <text class="s warm" x="340" y="232">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 150 Ω</tspan></text>
-  <text class="s ac" x="270" y="112">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 0 (nét đứt)</tspan></text>
+  <text class="b" x="520" y="290">V<tspan class="sub" dy="3">CE</tspan><tspan dy="-3"> (V)</tspan></text>
+  <text class="s warm" x="330" y="222">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 150 Ω</tspan></text>
+  <text class="s ac" x="300" y="134">R<tspan class="sub" dy="3">E</tspan><tspan dy="-3"> = 0 (nét đứt)</tspan></text>
 </svg>
-      <figcaption>Ba điểm làm việc của Ví dụ 1 trên cùng một đường tải tĩnh. Bỏ R<sub>E</sub> (nét đứt) làm I<sub>Cmax</sub> tăng lên 19,1 mA</figcaption>
+      <figcaption>Đường liền (R<sub>E</sub> = 150 Ω): Q<sub>1</sub>, Q<sub>2</sub>, Q<sub>3</sub>. Đường nét đứt (R<sub>E</sub> = 0): Q<sub>1</sub>, Q′<sub>2</sub>, Q′<sub>3</sub>. Mỗi điểm Q đều nằm đúng trên đường tải của nó; bỏ R<sub>E</sub> làm đường tải dốc hơn, I<sub>Cmax</sub> tăng lên 19,1 mA</figcaption>
     </figure>
     <div class="note"><strong>Kiểm tra lại:</strong> điểm Q<sub>2</sub>(8 mA; 4 V) phải nằm trên DCLL: thay vào phương trình, I<sub>C</sub> = (9 − 4) / 0,62 ≈ 8,1 mA, khớp. Q<sub>1</sub>, Q<sub>3</sub> nằm ở hai đầu đường tải: transistor làm công tắc hở và công tắc đóng.</div>
 
