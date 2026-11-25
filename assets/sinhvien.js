@@ -31,6 +31,9 @@
 
   const TILES = { ok: 'Đúng giờ', late: 'Trễ', P: 'Có phép', K: 'Không phép' };
 
+  // Lịch kiểm tra do /api/sinhvien trả về, chỉ khi MSSV có trong danh sách lớp (danh sách ở api/_lib/exams.js).
+  let exams = [];
+
   const vnMonth = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit' }).format(new Date()).slice(0, 7);
   const shiftMonth = (ym, d) => {
     const [y, m] = ym.split('-').map(Number);
@@ -41,12 +44,34 @@
   const dayText = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' });
   const timeText = (ms) => new Date(ms).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Ho_Chi_Minh' });
 
+  const vnToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh' }).format(new Date());
+  const DAY_MS = 86_400_000;
+  const daysUntil = (d) => Math.round((Date.parse(`${d}T00:00:00Z`) - Date.parse(`${vnToday()}T00:00:00Z`)) / DAY_MS);
+  const whenText = (d) => {
+    const n = daysUntil(d);
+    return n === 0 ? 'Hôm nay' : n === 1 ? 'Ngày mai' : `Còn ${n} ngày`;
+  };
+  const weekdayText = (d) => new Date(`${d}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'long' });
+  const upcomingExams = () => exams.filter((e) => daysUntil(e.date) >= 0);
+
+  function renderExams() {
+    const list = upcomingExams();
+    $('examBox').hidden = !list.length;
+    $('examList').replaceChildren(...list.map((e) => h('li', { class: 'sv-exam', 'data-soon': daysUntil(e.date) <= 2 ? '1' : '0' },
+      h('time', { class: 'sv-exam-date', datetime: e.date },
+        h('b', {}, `${e.date.slice(8)}/${e.date.slice(5, 7)}`), h('span', {}, weekdayText(e.date))),
+      h('span', { class: 'sv-exam-what' }, h('b', {}, e.subject), h('span', {}, e.kind)),
+      h('span', { class: 'sv-exam-left' }, whenText(e.date)))));
+  }
+
   let mssv = store.get(STORE_MSSV) || '';
   let month = vnMonth();
   let loading = 0;
 
   function showForm(msg = '') {
     $('report').hidden = true;
+    exams = [];
+    renderExams();
     $('mssvForm').hidden = false;
     $('mssvMsg').textContent = msg;
     $('mssvInput').value = mssv;
@@ -77,6 +102,8 @@
   }
 
   function render(r) {
+    exams = Array.isArray(r.exams) ? r.exams : [];
+    renderExams();
     $('mssvForm').hidden = true;
     $('report').hidden = false;
     $('whoName').textContent = r.alias || 'Sinh viên';
@@ -106,8 +133,10 @@
       h('span', { class: 'sv-dot', 'data-s': e.state }),
       h('span', {}, h('time', { datetime: e.date }, dayText(e.date)), ` · ${STATES[e.state]}`),
       h('small', {}, e.time ? (e.manual ? 'thầy ghi' : timeText(e.time)) : ''))));
+    const exam = upcomingExams().find((e) => e.subject === g.name);
     return h('article', { class: 'sv-subject' },
       h('div', { class: 'sv-head' }, h('h3', {}, g.name), streak),
+      exam ? h('p', { class: 'sv-exam-tag' }, `${exam.kind} · ${weekdayText(exam.date)} ${dayText(exam.date).split(', ').pop()} · ${whenText(exam.date).toLowerCase()}`) : null,
       counts, dots,
       h('details', { class: 'sv-more' }, h('summary', {}, 'Xem từng buổi'), rows));
   }
