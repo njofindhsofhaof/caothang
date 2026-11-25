@@ -472,6 +472,7 @@
       table.replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Tháng này chưa có buổi điểm danh nào.'))));
       $('daySummary').replaceChildren(h('tbody', {}, h('tr', {}, h('td', {}, 'Chưa có ngày nào có điểm danh.'))));
       $('dayDetail').hidden = true;
+      $('monthIssues').replaceChildren();
       return;
     }
     const cols = monthColumns(dates);
@@ -494,7 +495,7 @@
         return h('td', { class: c.first ? 'gv-day-col' : '' }, h('button', {
           class: `gv-cell ${st.toLowerCase()}`, type: 'button',
           'aria-label': `${fullName(s)} ngày ${c.d} môn ${c.subject}: ${st === 'T' ? `trễ lúc ${when}` : label}`,
-          onclick: () => cycleCell(s.mssv, c.d, st, c.sessions),
+          onclick: () => cycleCell(s, c.d, st, c.sessions, c.subject),
         }, label));
       });
       return h('tr', {},
@@ -509,6 +510,7 @@
     const h1 = head.rows[0].getBoundingClientRect().height;
     if (h1) table.style.setProperty('--head1', `${h1}px`);
     renderDaySummary(dates);
+    renderMonthIssues();
   }
 
   let openKey = null;
@@ -675,22 +677,62 @@
 
   // K → P → ✓ (đánh dấu tay) → K
   // Đánh dấu tay theo môn (cột); phép P/K là của cả ngày.
-  async function cycleCell(mssv, date, st, sessions) {
+  async function cycleCell(student, date, st, sessions, subject) {
+    const { mssv } = student;
     let calls;
     if (st === 'K') calls = [{ action: 'excuse', mssv, date, value: 'P' }];
     else if (st === 'P') calls = [{ action: 'excuse', mssv, date, value: '' }, { action: 'present', mssv, sessionId: sessions.at(-1).id }];
     else {
-      // Xoá điểm danh thật của sinh viên: hỏi lại, vì chạm nhầm khi vuốt bảng trên điện thoại rất dễ xảy ra.
-      const st0 = roster.find((x) => x.mssv === mssv);
-      const day = new Date(`${date}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' });
-      if (!confirm(`Bỏ điểm danh của ${st0 ? fullName(st0) : mssv} (${day})? Bạn này sẽ thành vắng.`)) return;
-      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv)).map((s) => ({ action: 'unpresent', mssv, sessionId: s.id }));
+      // ✓ hoặc T → bỏ có mặt. Bản ghi sinh viên tự điểm danh (GPS) phải xác nhận; máy chủ cất lại để khôi phục được.
+      const own = sessions.flatMap((s) => s.records.filter((x) => x.mssv === mssv && !x.manual));
+      if (own.length) {
+        const when = fmtTime(Math.min(...own.map((x) => x.time)));
+        const ok = confirm(`${fullName(student)} đã TỰ điểm danh môn ${subject} lúc ${when}${own.some((x) => x.late) ? ' (trễ)' : ''}.\n\nBỏ điểm danh này và ghi vắng? (Lỡ tay thì khôi phục ở mục "Điểm danh đã bỏ" bên dưới bảng.)`);
+        if (!ok) return;
+      }
+      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv))
+        .map((s) => ({ action: 'unpresent', mssv, sessionId: s.id, force: true }));
     }
     for (const body of calls) {
       const r = await api('/api/attendance', { method: 'POST', body });
       if (!r.ok) { alert(r.message); break; }
     }
     loadMonth();
+  }
+
+  async function restoreRecord(sessionId, mssv) {
+    const r = await api('/api/attendance', { method: 'POST', body: { action: 'restore', mssv, sessionId } });
+    if (!r.ok) alert(r.message);
+    loadMonth();
+  }
+
+  // Dưới bảng tháng: bản ghi đã bỏ (khôi phục được) và điểm danh bằng MSSV không có trong danh sách lớp.
+  function renderMonthIssues() {
+    const inRoster = new Set(roster.map((s) => String(s.mssv)));
+    const nameOf = (m) => { const st = roster.find((x) => String(x.mssv) === m); return st ? `${st.stt}. ${fullName(st)}` : `MSSV ${m}`; };
+    const when = (s) => `${new Date(`${s.date}T00:00:00`).toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit' })} · ${subjectName(s)}`;
+    const removed = monthData.sessions.flatMap((s) => (s.removed ?? []).map((r) => ({ s, r })))
+      .sort((a, b) => b.r.removedAt - a.r.removedAt);
+    const orphans = monthData.sessions.flatMap((s) => s.records.filter((r) => !inRoster.has(String(r.mssv))).map((r) => ({ s, r })));
+    const blocks = [];
+    if (removed.length) {
+      blocks.push(h('section', { class: 'dd-card gv-issues' },
+        h('h3', { class: 'dd-label' }, `Điểm danh đã bỏ (${removed.length})`),
+        h('p', { class: 'gv-note' }, 'Các bạn đã tự điểm danh nhưng bị bỏ trong bảng tháng. Lỡ tay thì bấm Khôi phục.'),
+        h('ul', { class: 'gv-list' }, removed.map(({ s, r }) => h('li', {},
+          h('span', { class: 'who' }, h('b', {}, nameOf(String(r.mssv))),
+            h('small', {}, `${when(s)} · tự điểm danh lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''} · bỏ lúc ${fmtDay(r.removedAt)} ${fmtTime(r.removedAt)}`)),
+          h('button', { class: 'gv-mini', type: 'button', onclick: () => restoreRecord(s.id, String(r.mssv)) }, 'Khôi phục'))))));
+    }
+    if (orphans.length) {
+      blocks.push(h('section', { class: 'dd-card gv-issues' },
+        h('h3', { class: 'dd-label' }, `MSSV không có trong danh sách lớp (${orphans.length})`),
+        h('p', { class: 'gv-note' }, 'Có điểm danh bằng các MSSV này nhưng danh sách lớp hiện tại không có (vd. danh sách đã nhập lại và MSSV bị đổi). Các bản ghi này không hiện trong bảng tháng.'),
+        h('ul', { class: 'gv-list' }, orphans.map(({ s, r }) => h('li', {},
+          h('span', { class: 'who' }, h('b', {}, `MSSV ${r.mssv}`),
+            h('small', {}, `${when(s)} · lúc ${fmtTime(r.time)}${r.late ? ' (trễ)' : ''}`)))))));
+    }
+    $('monthIssues').replaceChildren(...blocks);
   }
 
   /* ---------- File mẫu Excel: lưu trên máy chủ, dùng chung cho mọi máy ---------- */
