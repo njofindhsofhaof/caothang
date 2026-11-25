@@ -36,6 +36,16 @@ export async function unpresent(sessionId, mssv, force, db = redis()) {
   return { status: 200 };
 }
 
+// Đổi trễ → đúng giờ: ghi đè bản ghi (giữ giờ, vị trí, thiết bị), đánh dấu lateCleared để biết thầy đã đổi.
+export async function markOnTime(sessionId, mssv, db = redis()) {
+  const rec = await db.hget(keys.att(sessionId), mssv);
+  if (!rec) return { status: 404, message: 'Bạn này chưa có điểm danh ở buổi này.' };
+  if (!rec.late) return { status: 200 };
+  const { late, ...rest } = rec;
+  await db.hset(keys.att(sessionId), { [mssv]: { ...rest, lateCleared: Date.now() } });
+  return { status: 200 };
+}
+
 export async function restore(sessionId, mssv, db = redis()) {
   const rec = await db.hget(keys.attRemoved(sessionId), mssv);
   if (!rec) return { status: 404, message: 'Không có bản ghi đã bỏ để khôi phục.' };
@@ -48,13 +58,14 @@ export async function restore(sessionId, mssv, db = redis()) {
 async function patch(body) {
   const { action, sessionId, mssv, date, value } = body ?? {};
   if (typeof mssv !== 'string' || !/^\d{6,12}$/.test(mssv)) return { status: 400, message: 'MSSV không hợp lệ.' };
-  if (action === 'present' || action === 'unpresent' || action === 'restore') {
+  if (action === 'present' || action === 'unpresent' || action === 'restore' || action === 'onTime') {
     if (!(await getSession(sessionId))) return { status: 404, message: 'Không tìm thấy phiên.' };
     if (action === 'present') {
       await redis().hsetnx(keys.att(sessionId), mssv, { mssv, time: Date.now(), manual: true });
       return { status: 200 };
     }
     if (action === 'restore') return restore(sessionId, mssv);
+    if (action === 'onTime') return markOnTime(sessionId, mssv);
     return unpresent(sessionId, mssv, body.force === true);
   }
   if (action === 'excuse') {
