@@ -212,6 +212,15 @@ window.CT_POSTS = [
     parent: "/dientucoban"
   },
   {
+    section: "ontap",
+    title: "Đề mẫu kiểm tra 1 tiết Điện tử cơ bản (Chương 1–4)",
+    desc: "4 đề 45 phút / 10 điểm: chỉnh lưu bán kỳ dương/âm, đọc điện trở vòng màu, tụ, SMD, điện trở hỗn hợp, diode, Zener, transistor BJT. Mỗi câu ghi số phút và điểm, có sơ đồ, lời giải từng bước và bảng thời gian/điểm để tự ghép đề.",
+    short: "4 đề kiểm tra 45 phút Chương 1–4, có thời gian, điểm và lời giải.",
+    date: "2026-11-26",
+    href: "/dekiemtradientucoban",
+    parent: "/dientucoban"
+  },
+  {
     section: "hoctap",
     parent: "/namnhat-thuchanh",
     title: "Hướng dẫn lắp mạch dây điện đèn luân phiên (CS3) - môn Thực hành Điện cơ bản",
