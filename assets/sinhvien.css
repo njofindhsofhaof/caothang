@@ -49,6 +49,7 @@ details.sv-more summary{cursor:pointer;font:500 13px var(--sans);color:var(--acc
 .sv-exam-what{display:flex;flex-direction:column;gap:2px;min-width:0;}
 .sv-exam-what b{font:600 16px/1.25 var(--serif);color:var(--ink);}
 .sv-exam-what span{font-size:13.5px;color:var(--ink-soft);}
+.sv-exam-detail{font:600 13.5px var(--sans);color:var(--accent-warm);margin-top:2px;}
 .sv-exam-left{font:600 13px var(--sans);color:var(--ink-soft);white-space:nowrap;}
 .sv-exam[data-soon="1"] .sv-exam-left{color:var(--accent-warm);}
 .sv-exam[data-soon="1"] .sv-exam-date{border-color:var(--accent-warm);}
