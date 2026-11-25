@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { unpresent, restore } from '../api/attendance.js';
+import { unpresent, restore, markOnTime } from '../api/attendance.js';
 
 function fakeDb() {
   const m = new Map();
@@ -40,4 +40,17 @@ test('manual marks are removed directly without a copy', async () => {
   assert.equal(await db.hget('att:s1', '123456'), null);
   assert.equal(await db.hget('att:removed:s1', '123456'), null);
   assert.equal((await restore('s1', '123456', db)).status, 404);
+});
+
+test('late → on time overwrites the record and keeps GPS data', async () => {
+  const db = fakeDb();
+  await db.hset('att:s1', { 123456: { mssv: '123456', time: 5, late: true, distance: 12 } });
+  assert.equal((await markOnTime('s1', '123456', db)).status, 200);
+  const rec = await db.hget('att:s1', '123456');
+  assert.equal(rec.late, undefined);
+  assert.equal(rec.time, 5);
+  assert.equal(rec.distance, 12);
+  assert.ok(rec.lateCleared);
+  assert.equal(await db.hget('att:removed:s1', '123456'), null);
+  assert.equal((await markOnTime('s1', '999999', db)).status, 404);
 });

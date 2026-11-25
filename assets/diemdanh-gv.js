@@ -638,12 +638,16 @@
     let calls;
     if (st === 'K') calls = [{ action: 'excuse', mssv, date, value: 'P' }];
     else if (st === 'P') calls = [{ action: 'excuse', mssv, date, value: '' }, { action: 'present', mssv, sessionId: sessions.at(-1).id }];
-    else {
-      // ✓ hoặc T → bỏ có mặt. Bản ghi sinh viên tự điểm danh (GPS) phải xác nhận; máy chủ cất lại để khôi phục được.
+    else if (st === 'T') {
+      // Trễ → đúng giờ: ghi đè bản ghi, không xoá.
+      calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv && x.late))
+        .map((s) => ({ action: 'onTime', mssv, sessionId: s.id }));
+    } else {
+      // ✓ → bỏ có mặt. Bản ghi sinh viên tự điểm danh (GPS) phải xác nhận; máy chủ cất lại để khôi phục được.
       const own = sessions.flatMap((s) => s.records.filter((x) => x.mssv === mssv && !x.manual));
       if (own.length) {
         const when = fmtTime(Math.min(...own.map((x) => x.time)));
-        const ok = confirm(`${fullName(student)} đã TỰ điểm danh môn ${subject} lúc ${when}${own.some((x) => x.late) ? ' (trễ)' : ''}.\n\nBỏ điểm danh này và ghi vắng? (Lỡ tay thì khôi phục ở mục "Điểm danh đã bỏ" bên dưới bảng.)`);
+        const ok = confirm(`${fullName(student)} đã TỰ điểm danh môn ${subject} lúc ${when}.\n\nBỏ điểm danh này và ghi vắng? (Lỡ tay thì khôi phục ở mục "Điểm danh đã bỏ" bên dưới bảng.)`);
         if (!ok) return;
       }
       calls = sessions.filter((s) => s.records.some((x) => x.mssv === mssv))
