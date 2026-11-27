@@ -318,6 +318,15 @@ window.CT_POSTS = [
   },
   {
     section: "ontap",
+    title: "Bài tập dòng mắt lưới và điện thế nút (Chương 3)",
+    desc: "4 bài tự chấm: 2 bài dòng mắt lưới (có nguồn dòng), 2 bài điện thế nút (có biến đổi nguồn áp thành nguồn dòng). Lời giải từng bước, kiểm tra lại bằng K1 và cân bằng công suất.",
+    short: "4 bài dòng mắt lưới và điện thế nút, tự chấm có lời giải.",
+    date: "2026-11-27",
+    href: "/baitapmatluoinut",
+    parent: "/lythuyetmach"
+  },
+  {
+    section: "ontap",
     title: "Đề ôn kiểm tra 1 tiết môn Lý thuyết Mạch",
     desc: "3 đề, mỗi đề 1 bài Kirchhoff nâng cao + 1 bài mạch xác lập điều hoà, có lời giải từng bước.",
     short: "3 đề Kirchhoff và mạch xác lập điều hoà, có lời giải.",
