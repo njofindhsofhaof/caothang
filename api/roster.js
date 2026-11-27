@@ -33,6 +33,20 @@ export function removeStudent(roster, mssv) {
   return roster.filter((s) => normalizeMssv(s.mssv) !== mssv).map((s, i) => ({ ...s, stt: i + 1 }));
 }
 
+// Thêm một sinh viên, chèn theo thứ tự MSSV như danh sách của trường rồi đánh lại STT.
+export function addStudent(roster, row) {
+  const mssv = normalizeMssv(row?.mssv);
+  if (!MSSV_RE.test(mssv)) return { error: 'MSSV gồm 6–12 chữ số.' };
+  const ho = clean(row?.ho);
+  const ten = clean(row?.ten);
+  if (!ten) return { error: 'Thiếu tên sinh viên.' };
+  if (roster.some((s) => normalizeMssv(s.mssv) === mssv)) return { error: `MSSV ${mssv} đã có trong danh sách lớp.` };
+  if (roster.length >= MAX_STUDENTS) return { error: 'Danh sách lớp đã đủ số tối đa.' };
+  const at = roster.findIndex((s) => Number(normalizeMssv(s.mssv)) > Number(mssv));
+  const list = at < 0 ? [...roster, { mssv, ho, ten }] : [...roster.slice(0, at), { mssv, ho, ten }, ...roster.slice(at)];
+  return { roster: list.map((s, i) => ({ ...s, stt: i + 1 })) };
+}
+
 export default handler(async (req, res) => {
   if (req.method === 'GET' && req.query.mssv) {
     // Sinh viên tra tên để xác nhận — chỉ trả tên rút gọn của đúng MSSV đó.
@@ -56,6 +70,16 @@ export default handler(async (req, res) => {
       added: [...has].filter((m) => !had.has(m)).slice(0, 50), removed: [...had].filter((m) => !has.has(m)).slice(0, 50),
     });
     return send(res, 200, { ok: true, count: roster.length });
+  }
+  if (req.method === 'POST') {
+    // Thêm một sinh viên. Bạn mới không có bản ghi ở các buổi đã qua nên bảng tháng tự tính vắng K.
+    const before = await getRoster();
+    const { roster, error } = addStudent(before, req.body);
+    if (error) return send(res, 400, { ok: false, message: error });
+    await redis().set(keys.roster, roster);
+    const added = roster.find((s) => s.mssv === normalizeMssv(req.body?.mssv));
+    await audit(req, { action: 'rosterAdd', mssv: added.mssv, name: `${added.ho} ${added.ten}`.trim() });
+    return send(res, 200, { ok: true, count: roster.length, stt: added.stt });
   }
   if (req.method === 'DELETE') {
     // Xoá một sinh viên khỏi lớp; điểm danh cũ của bạn đó vẫn giữ trong các buổi đã qua.

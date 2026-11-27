@@ -770,6 +770,7 @@
       case 'session_qr': return `${e.value ? 'Bật' : 'Tắt'} bắt buộc QR: ${where(e)}.`;
       case 'sessionDelete': return `Xoá lịch: ${where(e)}.`;
       case 'rosterImport': return `Nhập danh sách lớp: ${e.before} → ${e.count} sinh viên${e.added?.length ? ` · thêm ${e.added.join(', ')}` : ''}${e.removed?.length ? ` · bớt ${e.removed.join(', ')}` : ''}.`;
+      case 'rosterAdd': return `Thêm vào danh sách lớp: ${e.name || ''} (${e.mssv}).`;
       case 'rosterRemove': return `Xoá khỏi danh sách lớp: ${e.name || ''} (${e.mssv}).`;
       case 'pinChange': return 'Đổi PIN giáo viên.';
       case 'placeAdd': return `Lưu phòng: ${e.name}.`;
@@ -935,6 +936,21 @@
     renderRosterTable();
     $('rosterMsg').textContent = `Đã xoá ${fullName(s)}. Lớp còn ${r.count} sinh viên.`;
   }
+
+  $('addStudentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = { mssv: $('addMssv').value.trim(), ho: $('addHo').value, ten: $('addTen').value };
+    const name = `${body.ho} ${body.ten}`.replace(/\s+/g, ' ').trim();
+    if (!confirm(`Thêm ${name} (MSSV ${body.mssv}) vào lớp? Các buổi đã qua sẽ tính vắng K cho bạn này.`)) return;
+    const r = await api('/api/roster', { method: 'POST', body });
+    if (!r.ok) { $('addStudentMsg').textContent = r.message; return; }
+    const fresh = await api('/api/roster');
+    roster = (fresh.roster ?? []).sort(byStt);
+    renderRosterInfo();
+    renderRosterTable();
+    e.target.reset();
+    $('addStudentMsg').textContent = `Đã thêm ${name}, STT ${r.stt}. Lớp có ${r.count} sinh viên.`;
+  });
 
   /* ---------- Khởi động ---------- */
   if (pin.get()) start(); else showLogin();

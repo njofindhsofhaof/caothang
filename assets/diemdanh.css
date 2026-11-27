@@ -219,3 +219,9 @@
 .gv-try-review{margin:6px 0 10px;}
 .gv-check{display:flex;align-items:center;gap:6px;flex:0 0 auto;min-width:0;}
 @media (max-width:560px){.gv-try li{grid-template-columns:1fr;}.gv-try li > span, .gv-try li > small{grid-column:auto;}.gv-try li .gv-mini{grid-column:auto;grid-row:auto;justify-self:start;}}
+
+/* Thêm sinh viên */
+.gv-add-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;}
+.gv-add-row label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-soft);flex:1 1 140px;min-width:0;}
+.gv-add-row input{font:500 15px var(--sans);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;min-width:0;}
+.gv-add-row .dd-btn{flex:0 0 auto;}
