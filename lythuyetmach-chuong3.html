@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 3: Phương pháp dòng mắt lưới và điện thế nút · Lý Thuyết Mạch · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Lý thuyết mạch Chương 3: phương pháp dòng mắt lưới (dòng điện vòng) và phương pháp điện thế nút, biến đổi nguồn áp thành nguồn dòng, ví dụ giải từng bước, mô phỏng và trắc nghiệm.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/lythuyetmach-chuong3.en.js?v=1">
+<meta property="og:title" content="Chương 3: Phương pháp dòng mắt lưới và điện thế nút · Lý Thuyết Mạch">
+<meta property="og:description" content="Lý thuyết mạch Chương 3: phương pháp dòng mắt lưới (dòng điện vòng) và phương pháp điện thế nút, biến đổi nguồn áp thành nguồn dòng, ví dụ giải từng bước, mô phỏng và trắc nghiệm.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/lythuyetmach-chuong3">
+<link rel="canonical" href="https://caothang-gray.vercel.app/lythuyetmach-chuong3">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .frac .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.post kbd{font-family:var(--mono);font-size:.85em;background:var(--surface);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;white-space:nowrap;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:block;width:fit-content;margin:30px 0 0 auto;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.post .back-top{display:flex;width:fit-content;align-items:center;gap:6px;margin:0 0 10px auto;padding:6px 12px;font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .15s;}
+.post .back-top:hover{border-color:var(--accent);}
+.post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+.il .warmline{stroke:var(--accent-warm);}
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+.sim .cu{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.sim .ci{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.sim .va{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vw{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vg{fill:none;stroke:var(--flow-g);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .ink{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .dotu{fill:var(--accent);}
+.sim .beer{fill:#E3A92B;}
+.sim .foam{fill:#F4EEDC;stroke:var(--line);}
+.il .win{fill:var(--accent);fill-opacity:.08;}
+.il .win2{fill:var(--accent-warm);fill-opacity:.1;}
+.il .loopw{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .node{stroke-width:0;}
+</style>
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lý thuyết mạch – Chương 3: Phương pháp dòng mắt lưới và điện thế nút</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+
+  <article class="post">
+    <a class="back-top" href="/namnhat-lythuyetmach">← Lý thuyết mạch (Năm nhất)</a>
+    <p class="byline">26/11/2026 · Học tập · Năm nhất · Lý thuyết mạch · Chương 3</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 3, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Phân biệt <a href="#khai-niem">nhánh, nút, vòng và mắt lưới</a>; đếm được số phương trình cần lập: b − n + 1 (mắt lưới) và n − 1 (nút).</li>
+        <li>Hiểu <a href="#dong-mat-luoi">dòng mắt lưới</a> và suy ra dòng nhánh: nhánh riêng = I<sub>m</sub>, nhánh chung = tổng hoặc hiệu hai dòng mắt lưới.</li>
+        <li>Lập hệ phương trình <a href="#cac-buoc-ml">dòng mắt lưới theo 3 bước</a>, đúng dấu điện trở chung và dấu nguồn áp.</li>
+        <li>Giải mạch có <a href="#nguon-dong">nguồn dòng ở nhánh ngoài</a>: dòng mắt lưới đó bằng ±J, bớt được một phương trình.</li>
+        <li>Hiểu <a href="#dien-the-nut">điện thế nút và nút gốc</a>; tính dòng nhánh I = (V<sub>đầu</sub> − V<sub>cuối</sub>) / R.</li>
+        <li><a href="#bien-doi-nguon">Biến đổi nguồn áp</a> nối tiếp điện trở thành nguồn dòng J = E/R song song điện trở.</li>
+        <li>Lập và giải <a href="#cac-buoc-nut">phương trình điện thế nút</a>, tính dòng các nhánh, kể cả nhánh có nguồn áp.</li>
+        <li><a href="#so-sanh">Chọn phương pháp</a> cho ít phương trình hơn và kiểm tra lại kết quả bằng K1 hoặc cân bằng công suất.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#khai-niem">Nhánh, nút, vòng, mắt lưới</a></li>
+        <li><a href="#dong-mat-luoi">Dòng mắt lưới</a></li>
+        <li><a href="#cac-buoc-ml">Các bước giải bằng dòng mắt lưới</a></li>
+        <li><a href="#vi-du-ml">Ví dụ: mạch 2 mắt lưới</a></li>
+        <li><a href="#nguon-dong">Mắt lưới có nguồn dòng</a></li>
+        <li><a href="#dien-the-nut">Điện thế nút</a></li>
+        <li><a href="#bien-doi-nguon">Biến đổi nguồn áp thành nguồn dòng</a></li>
+        <li><a href="#cac-buoc-nut">Các bước giải bằng điện thế nút</a></li>
+        <li><a href="#vi-du-nut">Ví dụ: mạch 2 nút</a></li>
+        <li><a href="#vi-du-nut2">Ví dụ: mạch có nguồn áp</a></li>
+        <li><a href="#so-sanh">So sánh hai phương pháp</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+      </ol>
+    </nav>
+    <p>Ở Chương 1, ta giải mạch bằng cách viết K1, K2 cho từng dòng nhánh: mạch có bao nhiêu nhánh thì có bấy nhiêu ẩn. Mạch càng lớn thì hệ phương trình càng dài. Chương 3 học hai phương pháp <strong>giảm số ẩn</strong>: <strong>dòng mắt lưới</strong> (còn gọi là dòng điện vòng) dùng K2, và <strong>điện thế nút</strong> dùng K1. Giải xong ẩn phụ thì suy ra mọi dòng nhánh.</p>
+
+    <!-- 1 -->
+    <h2 id="khai-niem"><span class="num">01</span>Nhánh, nút, vòng, mắt lưới</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nhìn sơ đồ mạch như <strong>một khung cửa sổ có nhiều ô kính</strong>. Mỗi ô kính trống bên trong là một <strong>mắt lưới</strong>. Viền ngoài cùng ôm cả hai ô cũng là một vòng kín, nhưng không phải mắt lưới vì bên trong còn có thanh chắn.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 262" role="img" aria-label="Mạch 3 nhánh, 2 nút A và B, chia thành 2 mắt lưới; viền ngoài là một vòng nhưng không phải mắt lưới">
+  <rect class="win" x="100" y="50" width="180" height="160"/>
+  <rect class="win2" x="280" y="50" width="180" height="160"/>
+  <rect class="outer" x="84" y="34" width="392" height="192" rx="10"/>
+  <path class="wire" d="M100 105 L100 50 L460 50 L460 105 M460 155 L460 210 L100 210 L100 155 M280 50 L280 105 M280 155 L280 210"/>
+  <rect class="load" x="86" y="105" width="28" height="50" rx="3"/>
+  <rect class="load" x="266" y="105" width="28" height="50" rx="3"/>
+  <rect class="load" x="446" y="105" width="28" height="50" rx="3"/>
+  <circle class="node" cx="280" cy="50" r="5"/><circle class="node" cx="280" cy="210" r="5"/>
+  <text class="b" x="288" y="44">A</text><text class="b" x="288" y="204">B</text>
+  <text class="s" x="120" y="135">nhánh 1</text><text class="s" x="300" y="135">nhánh 2</text><text class="s" x="440" y="135" text-anchor="end">nhánh 3</text>
+  <text class="b ac" x="190" y="180" text-anchor="middle">mắt lưới 1</text>
+  <text class="b warm" x="370" y="180" text-anchor="middle">mắt lưới 2</text>
+  <text class="s warm" x="280" y="250" text-anchor="middle">viền đứt nét: vòng ngoài (là vòng, không phải mắt lưới)</text>
+</svg>
+      <figcaption>b = 3 nhánh, n = 2 nút (A, B) ⇒ số mắt lưới = 3 − 2 + 1 = 2</figcaption>
+    </figure>
+    <a class="practice" href="/kirchhoff"><span class="practice-k">Ôn lại</span><span class="practice-t">Bài tập Kirchhoff K1, K2</span><span class="practice-d">Hai phương pháp ở chương này đều xây trên K1, K2: ôn lại cách viết dấu trước khi học.</span><span class="practice-go" aria-hidden="true">Làm bài →</span></a>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Khái niệm</th><th>Định nghĩa</th><th>Hình trên</th></tr></thead>
+        <tbody>
+          <tr><td>Nhánh (b)</td><td>Đoạn mạch có <strong>cùng một dòng điện</strong> chạy qua, nối giữa hai nút</td><td>3 nhánh</td></tr>
+          <tr><td>Nút (n)</td><td>Điểm nối của <strong>từ 3 nhánh trở lên</strong></td><td>A, B</td></tr>
+          <tr><td>Vòng</td><td>Đường khép kín đi qua các nhánh, mỗi nhánh qua một lần</td><td>3 vòng</td></tr>
+          <tr><td>Mắt lưới</td><td>Vòng <strong>không chứa nhánh nào bên trong</strong> (một ô trống của sơ đồ)</td><td>2 mắt lưới</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula">Số phương trình mắt lưới = b − n + 1 &nbsp;&nbsp;&nbsp; Số phương trình nút = n − 1<small>b: số nhánh · n: số nút. Hai con số này cho biết phương pháp nào ít ẩn hơn (mục 11).</small></div>
+
+    <!-- 2 -->
+    <h2 id="dong-mat-luoi"><span class="num">02</span>Dòng mắt lưới</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Mỗi mắt lưới có một <strong>băng chuyền</strong> chạy vòng quanh ô của nó. Nhánh nằm riêng một ô chỉ có một băng chuyền đi qua. Nhánh chung giữa hai ô có hai băng chuyền cùng chạy qua: cùng hướng thì cộng, ngược hướng thì trừ.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Hai cách đặt chiều dòng mắt lưới: ngược nhau thì dòng nhánh chung bằng tổng, cùng chiều kim đồng hồ thì bằng hiệu">
+  <path class="wire" d="M20 40 L260 40 L260 180 L20 180 Z M140 40 L140 180"/>
+  <path class="wire" d="M300 40 L540 40 L540 180 L300 180 Z M420 40 L420 180"/>
+  <path class="loopv" d="M50 110 A30 30 0 1 1 80 140 M88 134 L80 140 L88 146"/>
+  <path class="loopw" d="M230 110 A30 30 0 1 0 200 140 M192 134 L200 140 L192 146"/>
+  <path class="loopv" d="M330 110 A30 30 0 1 1 360 140 M368 134 L360 140 L368 146"/>
+  <path class="loopw" d="M450 110 A30 30 0 1 1 480 140 M488 134 L480 140 L488 146"/>
+  <text class="b ac" x="80" y="115" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan></text>
+  <text class="b warm" x="200" y="115" text-anchor="middle">I<tspan class="sub" dy="4">m2</tspan></text>
+  <text class="b ac" x="360" y="115" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan></text>
+  <text class="b warm" x="480" y="115" text-anchor="middle">I<tspan class="sub" dy="4">m2</tspan></text>
+  <path class="arr" d="M133 66 L140 74 L147 66"/><text class="b" x="148" y="70">I</text>
+  <path class="arr" d="M413 66 L420 74 L427 66"/><text class="b" x="428" y="70">I</text>
+  <text class="s" x="140" y="204" text-anchor="middle">cả hai đi xuống qua nhánh giữa</text>
+  <text class="b" x="140" y="222" text-anchor="middle">I = I<tspan class="sub" dy="4">m1</tspan><tspan dy="-4"> + I</tspan><tspan class="sub" dy="4">m2</tspan></text>
+  <text class="s" x="420" y="204" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan><tspan dy="-4"> đi xuống, I</tspan><tspan class="sub" dy="4">m2</tspan><tspan dy="-4"> đi lên</tspan></text>
+  <text class="b" x="420" y="222" text-anchor="middle">I = I<tspan class="sub" dy="4">m1</tspan><tspan dy="-4"> − I</tspan><tspan class="sub" dy="4">m2</tspan></text>
+</svg>
+      <figcaption>Dòng thật trong nhánh chung là tổng đại số của hai dòng mắt lưới đi qua nó</figcaption>
+    </figure>
+    <div class="def"><strong>Dòng mắt lưới</strong> I<sub>m1</sub>, I<sub>m2</sub>, … là các ẩn phụ, mỗi dòng chạy khép kín trong một mắt lưới theo chiều tự chọn (cùng hoặc ngược chiều kim đồng hồ). Dòng nhánh thật được suy ra từ dòng mắt lưới.</div>
+    <div class="formula">Nhánh riêng: I<sub>nhánh</sub> = ± I<sub>m</sub> &nbsp;&nbsp;&nbsp; Nhánh chung: I<sub>nhánh</sub> = I<sub>m1</sub> ± I<sub>m2</sub><small>Dòng mắt lưới cùng chiều với chiều dòng nhánh đã vẽ thì lấy +, ngược chiều lấy −</small></div>
+    <ul>
+      <li>Mỗi dòng mắt lưới đi vào một nút thì cũng đi ra khỏi nút đó, nên <strong>K1 tự động đúng</strong>. Chỉ còn phải viết K2, mỗi mắt lưới một phương trình.</li>
+      <li>Chiều dòng mắt lưới chọn tuỳ ý. Chọn sai chiều thì kết quả ra số âm, độ lớn vẫn đúng.</li>
+    </ul>
+
+    <!-- 3 -->
+    <h2 id="cac-buoc-ml"><span class="num">03</span>Các bước giải bằng dòng mắt lưới</h2>
+    <div class="steps">
+      <h4>Bước 1 – Đặt ẩn</h4>
+      <p>Đặt ẩn phụ là dòng mắt lưới I<sub>m1</sub>, I<sub>m2</sub>, … và vẽ chiều dòng mắt lưới (cùng hoặc ngược chiều kim đồng hồ).</p>
+      <h4>Bước 2 – Lập và giải hệ phương trình</h4>
+      <p>Viết K2 cho từng mắt lưới, giải tìm I<sub>m1</sub>, I<sub>m2</sub>, …</p>
+      <h4>Bước 3 – Tìm dòng nhánh</h4>
+      <p>Từ dòng mắt lưới suy ra dòng điện trên các nhánh (nhánh riêng, nhánh chung như mục 02).</p>
+    </div>
+    <p>Phương trình cho mắt lưới k viết theo khuôn:</p>
+    <div class="formula">(ΣR trong mắt k) · I<sub>mk</sub> ± R<sub>chung</sub> · I<sub>m kề</sub> = ΣE trong mắt k<small>Vế trái: điện trở riêng nhân dòng mắt đó, cộng hoặc trừ điện trở chung nhân dòng mắt bên cạnh · Vế phải: tổng sức điện động trong mắt</small></div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Thành phần</th><th>Lấy dấu +</th><th>Lấy dấu −</th></tr></thead>
+        <tbody>
+          <tr><td>R<sub>chung</sub> · I<sub>m kề</sub></td><td>Hai dòng mắt lưới qua R chung <strong>cùng chiều</strong></td><td>Hai dòng mắt lưới qua R chung <strong>ngược chiều</strong></td></tr>
+          <tr><td>E (vế phải)</td><td>Dòng mắt lưới đi qua nguồn <strong>từ − sang +</strong> (nguồn đẩy cùng chiều)</td><td>Dòng mắt lưới đi qua nguồn từ + sang −</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Dạng ma trận (2 mắt lưới):</strong> [R<sub>11</sub> R<sub>12</sub>; R<sub>21</sub> R<sub>22</sub>] · [I<sub>m1</sub>; I<sub>m2</sub>] = [E<sub>11</sub>; E<sub>22</sub>]. Đường chéo R<sub>11</sub>, R<sub>22</sub> là tổng điện trở của từng mắt (luôn dương); R<sub>12</sub> = R<sub>21</sub> = ±R<sub>chung</sub>. Nếu đặt mọi dòng mắt lưới <strong>cùng chiều kim đồng hồ</strong> thì hai dòng luôn ngược chiều nhau ở nhánh chung, nên R<sub>12</sub> luôn mang dấu −.</div>
+    <p>Có thể giữ E ở vế trái như khi viết K2 trực tiếp: (ΣR)·I<sub>mk</sub> ± R<sub>chung</sub>·I<sub>m kề</sub> − ΣE = 0. Hai cách viết cho cùng một hệ phương trình.</p>
+
+    <!-- 4 -->
+    <h2 id="vi-du-ml"><span class="num">04</span>Ví dụ: mạch 2 mắt lưới</h2>
+    <p>Cho mạch: E<sub>1</sub> = 12 V, E<sub>2</sub> = 3 V, E<sub>3</sub> = 15 V, R<sub>1</sub> = 3 Ω, R<sub>2</sub> = 9 Ω, R<sub>3</sub> = 3 Ω. Tìm dòng điện trên các nhánh bằng phương pháp dòng mắt lưới.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Mạch 2 mắt lưới: E1 bên trái, R1 và R2 ở trên, R3 nối tiếp E2 ở giữa, E3 bên phải; Im1 cùng chiều kim đồng hồ, Im2 ngược chiều kim đồng hồ">
+  <path class="wire" d="M100 117 L100 50 L160 50 M220 50 L340 50 M400 50 L460 50 L460 117 M460 153 L460 220 L100 220 L100 153 M280 50 L280 70 M280 120 L280 152 M280 188 L280 220"/>
+  <path class="wire" d="M160 50 L165 43 L175 57 L185 43 L195 57 L205 43 L215 57 L220 50"/>
+  <path class="wire" d="M340 50 L345 43 L355 57 L365 43 L375 57 L385 43 L395 57 L400 50"/>
+  <path class="wire" d="M280 70 L273 75 L287 85 L273 95 L287 105 L273 115 L280 120"/>
+  <circle class="srcc" cx="100" cy="135" r="18"/><text class="pm" x="100" y="131" text-anchor="middle">+</text><text class="pm" x="100" y="148" text-anchor="middle">−</text>
+  <circle class="srcc" cx="280" cy="170" r="18"/><text class="pm" x="280" y="166" text-anchor="middle">−</text><text class="pm" x="280" y="183" text-anchor="middle">+</text>
+  <circle class="srcc" cx="460" cy="135" r="18"/><text class="pm" x="460" y="131" text-anchor="middle">+</text><text class="pm" x="460" y="148" text-anchor="middle">−</text>
+  <circle class="node" cx="280" cy="50" r="4.5"/><circle class="node" cx="280" cy="220" r="4.5"/>
+  <text class="b" x="190" y="32" text-anchor="middle">R₁ = 3 Ω</text>
+  <text class="b" x="370" y="32" text-anchor="middle">R₂ = 9 Ω</text>
+  <text class="b" x="294" y="92">R₃ = 3 Ω</text>
+  <text class="b" x="76" y="140" text-anchor="end">E₁ = 12 V</text>
+  <text class="b" x="296" y="207">E₂ = 3 V</text>
+  <text class="b" x="484" y="140">E₃ = 15 V</text>
+  <path class="loopv" d="M152 140 A38 38 0 1 1 190 178 M198 172 L190 178 L198 184"/>
+  <path class="loopw" d="M408 140 A38 38 0 1 0 370 178 M362 172 L370 178 L362 184"/>
+  <text class="b ac" x="190" y="145" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan></text>
+  <text class="b warm" x="370" y="145" text-anchor="middle">I<tspan class="sub" dy="4">m2</tspan></text>
+  <path class="arr" d="M244 43 L252 50 L244 57"/><text class="b" x="248" y="36" text-anchor="middle">I₁</text>
+  <path class="arr" d="M316 43 L308 50 L316 57"/><text class="b" x="312" y="36" text-anchor="middle">I₂</text>
+  <path class="arr" d="M273 132 L280 140 L287 132"/><text class="b" x="266" y="140" text-anchor="end">I₃</text>
+</svg>
+      <figcaption>I<sub>m1</sub> cùng chiều kim đồng hồ, I<sub>m2</sub> ngược chiều kim đồng hồ: cả hai cùng đi xuống qua R<sub>3</sub></figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Đặt ẩn</h4>
+      <p>b = 3 nhánh, n = 2 nút ⇒ 3 − 2 + 1 = 2 ẩn: I<sub>m1</sub> (mắt trái), I<sub>m2</sub> (mắt phải), chiều như hình.</p>
+      <h4>Bước 2 – Phương trình dòng mắt lưới I<sub>m1</sub></h4>
+      <p>Điện trở trong mắt 1: R<sub>1</sub> + R<sub>3</sub>. R<sub>3</sub> chung với mắt 2, hai dòng cùng đi xuống ⇒ +R<sub>3</sub>·I<sub>m2</sub>.</p>
+      <p>I<sub>m1</sub> đi qua E<sub>1</sub> từ − lên +, qua E<sub>2</sub> từ − xuống + ⇒ cả hai nguồn lấy dấu +.</p>
+      <p>(R<sub>1</sub> + R<sub>3</sub>)·I<sub>m1</sub> − E<sub>2</sub> − E<sub>1</sub> + R<sub>3</sub>·I<sub>m2</sub> = 0</p>
+      <p>⇔ 6·I<sub>m1</sub> − 15 + 3·I<sub>m2</sub> = 0 &nbsp;⇔&nbsp; <span class="ans">6·I<sub>m1</sub> + 3·I<sub>m2</sub> = 15 &nbsp;(1)</span></p>
+      <h4>Bước 2 – Phương trình dòng mắt lưới I<sub>m2</sub></h4>
+      <p>(R<sub>2</sub> + R<sub>3</sub>)·I<sub>m2</sub> − E<sub>3</sub> − E<sub>2</sub> + R<sub>3</sub>·I<sub>m1</sub> = 0</p>
+      <p>⇔ 12·I<sub>m2</sub> − 18 + 3·I<sub>m1</sub> = 0 &nbsp;⇔&nbsp; <span class="ans">3·I<sub>m1</sub> + 12·I<sub>m2</sub> = 18 &nbsp;(2)</span></p>
+      <h4>Giải hệ (1), (2)</h4>
+      <p>Từ (1): I<sub>m2</sub> = 5 − 2·I<sub>m1</sub>. Thay vào (2): 3·I<sub>m1</sub> + 60 − 24·I<sub>m1</sub> = 18 ⇒ I<sub>m1</sub> = 2 A</p>
+      <p class="ans">⇒ I<sub>m1</sub> = 2 A, I<sub>m2</sub> = 1 A</p>
+      <h4>Bước 3 – Dòng nhánh</h4>
+      <p class="ans">I<sub>1</sub> = I<sub>m1</sub> = 2 A &nbsp;·&nbsp; I<sub>2</sub> = I<sub>m2</sub> = 1 A &nbsp;·&nbsp; I<sub>3</sub> = I<sub>m1</sub> + I<sub>m2</sub> = 3 A</p>
+      <h4>Kiểm tra lại</h4>
+      <p>K1 tại nút trên: I<sub>1</sub> + I<sub>2</sub> = 2 + 1 = 3 = I<sub>3</sub> ✓</p>
+      <p>P<sub>nguồn</sub> = 12 × 2 + 3 × 3 + 15 × 1 = 48 W; P<sub>tải</sub> = 3 × 2² + 9 × 1² + 3 × 3² = 12 + 9 + 27 = 48 W ✓</p>
+    </div>
+
+    <figure class="sim" id="simMesh">
+      <p class="sim-h">Thử ngay · Đổi nguồn, xem dòng mắt lưới và dòng nhánh</p>
+      <div class="simbox">
+        <svg viewBox="0 0 560 250" role="img" aria-labelledby="mhTitle">
+          <title id="mhTitle">Mạch ví dụ 2 mắt lưới. Đường chạy màu là dòng nhánh I1, I2, I3; chạy ngược khi dòng ra số âm.</title>
+          <path class="w" d="M100 117 L100 50 L160 50 M220 50 L340 50 M400 50 L460 50 L460 117 M460 153 L460 220 L100 220 L100 153 M280 50 L280 70 M280 120 L280 152 M280 188 L280 220"/>
+          <path class="ov" id="mhF1" d="M280 220 L100 220 L100 50 L280 50"/>
+          <path class="ov c-w" id="mhF2" d="M280 220 L460 220 L460 50 L280 50"/>
+          <path class="ov c-g" id="mhF3" d="M280 50 L280 220"/>
+          <rect class="gap" x="158" y="38" width="64" height="24"/>
+          <rect class="gap" x="338" y="38" width="64" height="24"/>
+          <rect class="gap" x="268" y="68" width="24" height="54"/>
+          <path class="w" d="M160 50 L165 43 L175 57 L185 43 L195 57 L205 43 L215 57 L220 50"/>
+          <path class="w" d="M340 50 L345 43 L355 57 L365 43 L375 57 L385 43 L395 57 L400 50"/>
+          <path class="w" d="M280 70 L273 75 L287 85 L273 95 L287 105 L273 115 L280 120"/>
+          <circle class="src" cx="100" cy="135" r="18"/><text class="b" x="100" y="131" text-anchor="middle">+</text><text class="b" x="100" y="148" text-anchor="middle">−</text>
+          <circle class="src" cx="280" cy="170" r="18"/><text class="b" x="280" y="166" text-anchor="middle">−</text><text class="b" x="280" y="183" text-anchor="middle">+</text>
+          <circle class="src" cx="460" cy="135" r="18"/><text class="b" x="460" y="131" text-anchor="middle">+</text><text class="b" x="460" y="148" text-anchor="middle">−</text>
+          <path class="loopv" d="M152 140 A38 38 0 1 1 190 178 M198 172 L190 178 L198 184"/>
+          <path class="loopv" d="M408 140 A38 38 0 1 0 370 178 M362 172 L370 178 L362 184"/>
+          <text class="b" x="190" y="32" text-anchor="middle">R₁ = 3 Ω</text>
+          <text class="b" x="370" y="32" text-anchor="middle">R₂ = 9 Ω</text>
+          <text class="b" id="mhLR3" x="294" y="92">R₃ = 3 Ω</text>
+          <text class="b" id="mhLE1" x="76" y="140" text-anchor="end">E₁ = 12 V</text>
+          <text class="b" id="mhLE2" x="296" y="207">E₂ = 3 V</text>
+          <text class="b" id="mhLE3" x="484" y="140">E₃ = 15 V</text>
+          <text class="s" x="190" y="134" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan></text>
+          <text class="b ac" id="mhM1" x="190" y="154" text-anchor="middle">2 A</text>
+          <text class="s" x="370" y="134" text-anchor="middle">I<tspan class="sub" dy="4">m2</tspan></text>
+          <text class="b ac" id="mhM2" x="370" y="154" text-anchor="middle">1 A</text>
+          <text class="s" x="280" y="244" text-anchor="middle">xanh: I₁ · cam: I₂ · xanh lá: I₃</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="mhE1">Nguồn E<sub>1</sub></label><input type="range" id="mhE1" min="0" max="30" step="1" value="12"><output id="mhE1o" for="mhE1">12 V</output></div>
+      <div class="sl"><label for="mhE2">Nguồn E<sub>2</sub></label><input type="range" id="mhE2" min="0" max="15" step="1" value="3"><output id="mhE2o" for="mhE2">3 V</output></div>
+      <div class="sl"><label for="mhE3">Nguồn E<sub>3</sub></label><input type="range" id="mhE3" min="0" max="30" step="1" value="15"><output id="mhE3o" for="mhE3">15 V</output></div>
+      <div class="sl"><label for="mhR3">Điện trở chung R<sub>3</sub></label><input type="range" id="mhR3" min="1" max="12" step="1" value="3"><output id="mhR3o" for="mhR3">3 Ω</output></div>
+      <p class="live" id="mhLive" aria-live="polite"></p>
+      <figcaption>Kéo E<sub>3</sub> về 0 V: I<sub>2</sub> ra số âm, dòng trong nhánh phải chạy ngược chiều vẽ. R<sub>3</sub> càng lớn thì hai mắt lưới "kéo" nhau càng mạnh.</figcaption>
+    </figure>
+
+    <!-- 5 -->
+    <h2 id="nguon-dong"><span class="num">05</span>Mắt lưới có nguồn dòng</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nguồn dòng giống <strong>máy bơm định lưu lượng</strong>: nó ép dòng qua nhánh của nó đúng J ampere, không phụ thuộc phần còn lại. Nếu nhánh đó chỉ thuộc một mắt lưới thì dòng mắt lưới ấy đã biết sẵn.</p>
+    <div class="def"><strong>Nguồn dòng ở nhánh ngoài cùng</strong> (chỉ thuộc một mắt lưới): dòng mắt lưới đó bằng J nếu cùng chiều nguồn, bằng −J nếu ngược chiều. Không cần viết phương trình cho mắt lưới này, chỉ thay giá trị đã biết vào các phương trình còn lại.</div>
+    <div class="formula">I<sub>mk</sub> = + J (cùng chiều) &nbsp;&nbsp;&nbsp; I<sub>mk</sub> = − J (ngược chiều)</div>
+    <h3>Ví dụ</h3>
+    <p>Cho E = 10 V, R<sub>1</sub> = 2 Ω, R<sub>2</sub> = 3 Ω, R<sub>3</sub> = 8 Ω, nguồn dòng J = 4 A. Tìm dòng điện các nhánh.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Mạch 3 mắt lưới: nguồn áp E bên trái, R1 và R3 thẳng đứng, R2 nằm trên giữa nút A và B, nguồn dòng 4 A bên phải hướng lên; 3 dòng mắt lưới cùng chiều kim đồng hồ">
+  <path class="wire" d="M90 117 L90 50 L265 50 M325 50 L490 50 L490 117 M490 153 L490 220 L90 220 L90 153 M220 50 L220 110 M220 160 L220 220 M370 50 L370 110 M370 160 L370 220"/>
+  <path class="wire" d="M265 50 L270 43 L280 57 L290 43 L300 57 L310 43 L320 57 L325 50"/>
+  <path class="wire" d="M220 110 L213 115 L227 122 L213 129 L227 136 L213 143 L227 150 L213 155 L220 160"/>
+  <path class="wire" d="M370 110 L363 115 L377 122 L363 129 L377 136 L363 143 L377 150 L363 155 L370 160"/>
+  <circle class="srcc" cx="90" cy="135" r="18"/><text class="pm" x="90" y="131" text-anchor="middle">+</text><text class="pm" x="90" y="148" text-anchor="middle">−</text>
+  <circle class="srcc" cx="490" cy="135" r="18"/><path class="arr" d="M490 147 L490 123 M484 130 L490 122 L496 130"/>
+  <circle class="node" cx="220" cy="50" r="4.5"/><circle class="node" cx="370" cy="50" r="4.5"/><circle class="node" cx="220" cy="220" r="4.5"/><circle class="node" cx="370" cy="220" r="4.5"/>
+  <text class="b" x="212" y="40" text-anchor="end">A</text><text class="b" x="378" y="40">B</text><text class="b" x="295" y="242" text-anchor="middle">C</text>
+  <text class="b" x="66" y="131" text-anchor="end">E</text><text class="s" x="66" y="148" text-anchor="end">10 V</text>
+  <text class="b" x="232" y="131">R₁</text><text class="s" x="232" y="148">2 Ω</text>
+  <text class="b" x="295" y="32" text-anchor="middle">R₂ = 3 Ω</text>
+  <text class="b" x="382" y="131">R₃</text><text class="s" x="382" y="148">8 Ω</text>
+  <text class="b" x="514" y="131">J</text><text class="s" x="514" y="148">4 A</text>
+  <path class="loopv" d="M129 140 A26 26 0 1 1 155 166 M163 160 L155 166 L163 172"/>
+  <path class="loopv" d="M269 140 A26 26 0 1 1 295 166 M303 160 L295 166 L303 172"/>
+  <path class="loopw" d="M404 140 A26 26 0 1 1 430 166 M438 160 L430 166 L438 172"/>
+  <text class="b ac" x="155" y="145" text-anchor="middle">I<tspan class="sub" dy="4">m1</tspan></text>
+  <text class="b ac" x="295" y="145" text-anchor="middle">I<tspan class="sub" dy="4">m2</tspan></text>
+  <text class="b warm" x="430" y="145" text-anchor="middle">I<tspan class="sub" dy="4">m3</tspan></text>
+  <path class="arr" d="M152 43 L160 50 L152 57"/><text class="b" x="156" y="36" text-anchor="middle">I</text>
+  <path class="arr" d="M213 76 L220 84 L227 76"/><text class="b" x="208" y="84" text-anchor="end">I₁</text>
+  <path class="arr" d="M253 43 L245 50 L253 57"/><text class="b" x="249" y="36" text-anchor="middle">I₂</text>
+  <path class="arr" d="M363 76 L370 84 L377 76"/><text class="b" x="358" y="84" text-anchor="end">I₃</text>
+</svg>
+      <figcaption>Ba dòng mắt lưới cùng chiều kim đồng hồ. I<sub>m3</sub> đi xuống ở nhánh nguồn dòng, ngược chiều mũi tên J</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Mắt lưới chứa nguồn dòng</h4>
+      <p>Nguồn J = 4 A nằm ở nhánh ngoài cùng, chỉ thuộc mắt 3. I<sub>m3</sub> chạy xuống, J chạy lên ⇒ <span class="ans">I<sub>m3</sub> = −4 A</span></p>
+      <h4>Bước 2 – Phương trình dòng mắt lưới I<sub>m1</sub></h4>
+      <p>R<sub>1</sub>·I<sub>m1</sub> − E − R<sub>1</sub>·I<sub>m2</sub> = 0 (R<sub>1</sub> chung, hai dòng ngược chiều nên trừ)</p>
+      <p>⇔ 2·I<sub>m1</sub> − 10 − 2·I<sub>m2</sub> = 0 &nbsp;(1)</p>
+      <h4>Bước 2 – Phương trình dòng mắt lưới I<sub>m2</sub></h4>
+      <p>(R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>)·I<sub>m2</sub> − R<sub>1</sub>·I<sub>m1</sub> − R<sub>3</sub>·I<sub>m3</sub> = 0</p>
+      <p>⇔ 13·I<sub>m2</sub> − 2·I<sub>m1</sub> − 8 × (−4) = 0 ⇔ 13·I<sub>m2</sub> − 2·I<sub>m1</sub> + 32 = 0 &nbsp;(2)</p>
+      <h4>Giải hệ (1), (2)</h4>
+      <p>Từ (1): I<sub>m1</sub> = I<sub>m2</sub> + 5. Thay vào (2): 11·I<sub>m2</sub> + 22 = 0</p>
+      <p class="ans">⇒ I<sub>m2</sub> = −2 A, I<sub>m1</sub> = 3 A</p>
+      <h4>Bước 3 – Dòng nhánh</h4>
+      <p>I = I<sub>m1</sub> = 3 A</p>
+      <p>I<sub>1</sub> = I<sub>m1</sub> − I<sub>m2</sub> = 3 − (−2) = 5 A</p>
+      <p>I<sub>2</sub> = −I<sub>m2</sub> = 2 A (I<sub>2</sub> vẽ hướng về A, ngược chiều I<sub>m2</sub>)</p>
+      <p>I<sub>3</sub> = I<sub>m2</sub> − I<sub>m3</sub> = −2 + 4 = 2 A</p>
+      <p class="ans">⇒ I = 3 A, I<sub>1</sub> = 5 A, I<sub>2</sub> = 2 A, I<sub>3</sub> = 2 A</p>
+      <h4>Kiểm tra lại</h4>
+      <p>K1 tại A: I + I<sub>2</sub> = 3 + 2 = 5 = I<sub>1</sub> ✓ &nbsp;·&nbsp; K1 tại B: J = I<sub>2</sub> + I<sub>3</sub> = 4 ✓</p>
+      <p>U<sub>BC</sub> = R<sub>3</sub>·I<sub>3</sub> = 16 V ⇒ P<sub>nguồn</sub> = 10 × 3 + 16 × 4 = 94 W; P<sub>tải</sub> = 2 × 5² + 3 × 2² + 8 × 2² = 50 + 12 + 32 = 94 W ✓</p>
+    </div>
+    <div class="note"><strong>Lưu ý:</strong> cách này dùng được khi nguồn dòng chỉ thuộc <strong>một</strong> mắt lưới. Nếu đề có nguồn áp nối tiếp điện trở song song với nguồn dòng, hoặc mạch có nhiều nguồn dòng, phương pháp điện thế nút (từ mục 06) thường gọn hơn.</div>
+
+    <!-- 6 -->
+    <h2 id="dien-the-nut"><span class="num">06</span>Điện thế nút</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Điện thế giống <strong>độ cao mực nước</strong> ở mỗi nút, đo so với mặt đất (nút gốc). Nước chảy từ chỗ cao xuống chỗ thấp; chênh lệch càng lớn, ống càng thông (R nhỏ) thì chảy càng mạnh.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Cột điện thế tại nút A cao 18 V, nút B cao 2 V, nút gốc C bằng 0; dòng qua điện trở chảy từ A sang B">
+  <path class="ground" d="M60 180 L500 180"/>
+  <rect class="water" x="100" y="54" width="100" height="126"/>
+  <rect class="water" x="330" y="166" width="100" height="14"/>
+  <path class="tank" d="M100 40 L100 180 M200 40 L200 180 M330 40 L330 180 M430 40 L430 180"/>
+  <path class="arr-ac" d="M210 80 L318 148 M309 139 L319 149 L305 150"/>
+  <text class="b" x="150" y="34" text-anchor="middle">nút A</text><text class="b" x="380" y="34" text-anchor="middle">nút B</text>
+  <text class="b ac" x="150" y="120" text-anchor="middle">V<tspan class="sub" dy="4">A</tspan><tspan dy="-4"> = 18 V</tspan></text>
+  <text class="b ac" x="380" y="156" text-anchor="middle">V<tspan class="sub" dy="4">B</tspan><tspan dy="-4"> = 2 V</tspan></text>
+  <text class="s" x="265" y="56" text-anchor="middle">I = (V<tspan class="sub" dy="4">A</tspan><tspan dy="-4"> − V</tspan><tspan class="sub" dy="4">B</tspan><tspan dy="-4">) / R</tspan></text>
+  <text class="s" x="265" y="76" text-anchor="middle">= (18 − 2) / 4 = 4 A</text>
+  <text class="s" x="280" y="204" text-anchor="middle">nút gốc C: V<tspan class="sub" dy="4">C</tspan><tspan dy="-4"> = 0 (mặt đất)</tspan></text>
+</svg>
+      <figcaption>Biết điện thế hai đầu một nhánh là tính được dòng qua nhánh đó</figcaption>
+    </figure>
+    <div class="def"><strong>Điện thế nút</strong> V<sub>A</sub>, V<sub>B</sub>, … là điện áp của mỗi nút so với một <strong>nút gốc</strong> được chọn có điện thế bằng 0. Mạch có n nút thì chỉ có n − 1 ẩn điện thế.</div>
+    <div class="formula">U<sub>AB</sub> = V<sub>A</sub> − V<sub>B</sub> &nbsp;&nbsp;&nbsp; I<sub>A→B</sub> = <span class="frac"><span>V<sub>A</sub> − V<sub>B</sub></span><span><span class="vh">/</span>R</span></span> = G·(V<sub>A</sub> − V<sub>B</sub>)<small>Dòng vẽ đi từ nút nào thì lấy điện thế nút đó trừ điện thế nút đến · G = 1/R: điện dẫn, đơn vị siemens <span class="say" title="Cách đọc">si-men</span> (S)</small></div>
+    <div class="units">
+      <p class="units-h">Đổi đơn vị điện dẫn (siemens)</p>
+      <div class="tablewrap"><table class="small"><thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th></tr></thead><tbody><tr class="base"><td>Siemens <span class="say" title="Cách đọc">si-men</span></td><td>S</td><td>đơn vị gốc · 1 S = 1/Ω</td></tr><tr><td>Milisiemens</td><td>mS</td><td>1 mS = 10⁻³ S = 0,001 S</td></tr><tr><td>Microsiemens</td><td>µS</td><td>1 µS = 10⁻⁶ S</td></tr></tbody></table></div>
+      <ul class="units-ex"><li>R = 2 Ω ⇒ G = 0,5 S</li><li>R = 1 kΩ ⇒ G = 1 mS</li><li>R = 1 MΩ ⇒ G = 1 µS</li></ul>
+    </div>
+    <ul>
+      <li><strong>Chọn nút gốc</strong> là nút có nhiều nhánh nối tới nhất (thường là đường dây dưới cùng), để phương trình gọn nhất.</li>
+      <li>Kết quả dòng âm nghĩa là dòng thật chạy ngược chiều đã vẽ.</li>
+    </ul>
+
+    <!-- 7 -->
+    <h2 id="bien-doi-nguon"><span class="num">07</span>Biến đổi nguồn áp thành nguồn dòng</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Phương trình nút chỉ "đếm" dòng điện đổ vào nút. Nên trước khi viết, ta đổi mọi <strong>nguồn áp nối tiếp điện trở</strong> thành <strong>nguồn dòng song song điện trở</strong> có tác dụng y hệt ra bên ngoài.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Nguồn áp E nối tiếp điện trở R tương đương nguồn dòng J bằng E chia R mắc song song với R">
+  <path class="wire" d="M130 30 L130 60 M130 110 L130 132 M130 168 L130 210"/>
+  <path class="wire" d="M130 60 L123 65 L137 72 L123 79 L137 86 L123 93 L137 100 L123 105 L130 110"/>
+  <circle class="srcc" cx="130" cy="150" r="18"/><text class="pm" x="130" y="146" text-anchor="middle">+</text><text class="pm" x="130" y="163" text-anchor="middle">−</text>
+  <circle class="node" cx="130" cy="30" r="4.5"/><circle class="node" cx="130" cy="210" r="4.5"/>
+  <text class="b" x="148" y="90">R</text><text class="b" x="156" y="155">E</text>
+  <text class="b big" x="270" y="126" text-anchor="middle">⇔</text>
+  <path class="wire" d="M410 30 L410 50 M350 50 L470 50 L470 95 M470 145 L470 200 L350 200 L350 143 M350 107 L350 50 M410 200 L410 220"/>
+  <path class="wire" d="M470 95 L463 100 L477 107 L463 114 L477 121 L463 128 L477 135 L463 140 L470 145"/>
+  <circle class="srcc" cx="350" cy="125" r="18"/><path class="arr" d="M350 137 L350 113 M344 120 L350 112 L356 120"/>
+  <circle class="node" cx="410" cy="30" r="4.5"/><circle class="node" cx="410" cy="220" r="4.5"/>
+  <text class="b" x="326" y="122" text-anchor="end">J</text><text class="s" x="326" y="140" text-anchor="end">= E/R</text>
+  <text class="b" x="488" y="125">R</text>
+  <text class="s" x="130" y="234" text-anchor="middle">nguồn áp nối tiếp R</text>
+  <text class="s" x="410" y="236" text-anchor="middle">nguồn dòng song song R</text>
+</svg>
+      <figcaption>Mũi tên J chỉ về phía cực + của nguồn áp; R giữ nguyên giá trị, chỉ đổi từ nối tiếp sang song song</figcaption>
+    </figure>
+    <div class="def"><strong>Biến đổi tương đương:</strong> nguồn áp E nối tiếp R ⇒ nguồn dòng J = E/R song song với cùng điện trở R. Hai sơ đồ cho cùng điện áp và dòng điện ở hai cực ra, nên phần mạch còn lại không đổi.</div>
+    <div class="formula">J = <span class="frac"><span>E</span><span><span class="vh">/</span>R</span></span><small>E: volt <span class="say" title="Cách đọc">vôn</span> (V) · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · J: ampere <span class="say" title="Cách đọc">am-pe</span> (A)</small></div>
+    <div class="note"><strong>Cẩn thận:</strong> dòng qua điện trở R sau khi biến đổi <strong>không phải</strong> dòng qua R trong mạch gốc. Muốn tính dòng của nhánh có nguồn áp thì quay về mạch gốc: I = (E − U)/R, hoặc dùng K1 tại nút (xem ví dụ mục 10).</div>
+
+    <!-- 8 -->
+    <h2 id="cac-buoc-nut"><span class="num">08</span>Các bước giải bằng điện thế nút</h2>
+    <div class="steps">
+      <h4>Bước 1 – Biến đổi nguồn</h4>
+      <p>Biến đổi các nguồn áp nối tiếp điện trở thành nguồn dòng song song điện trở (mục 07).</p>
+      <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
+      <p>Gọi điện thế tại các nút là V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub>, … và chọn 1 nút có nhiều nhánh nối tới làm nút gốc (điện thế tại nút gốc = 0).</p>
+      <h4>Bước 3 – Lập và giải hệ phương trình</h4>
+      <p>Viết phương trình điện thế cho từng nút còn lại, giải tìm V<sub>A</sub>, V<sub>B</sub>, …</p>
+      <h4>Bước 4 – Tìm dòng nhánh</h4>
+      <p>I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R cho nhánh điện trở; nhánh có nguồn áp thì tính trên mạch gốc hoặc dùng K1.</p>
+    </div>
+    <p>Phương trình cho nút A viết theo khuôn:</p>
+    <div class="formula">(ΣG nối vào A) · V<sub>A</sub> − G<sub>AB</sub> · V<sub>B</sub> − … = ΣJ đổ vào A<small>Hệ số V<sub>A</sub>: tổng 1/R của mọi nhánh nối vào A (luôn dương) · Trừ 1/R của nhánh nối A với từng nút khác · Vế phải: nguồn dòng đi <strong>vào</strong> A lấy +, đi <strong>ra</strong> lấy −</small></div>
+    <ul>
+      <li>Nhánh nối A với <strong>nút gốc</strong> chỉ góp vào hệ số V<sub>A</sub>, không có số hạng trừ (vì V<sub>gốc</sub> = 0).</li>
+      <li>Nhánh chỉ có <strong>nguồn dòng</strong> (không có điện trở nối tiếp) chỉ góp vào vế phải, không góp vào hệ số.</li>
+      <li>Phương trình này chính là K1 tại nút A: tổng dòng chảy ra qua các điện trở = tổng dòng nguồn đổ vào.</li>
+    </ul>
+
+    <!-- 9 -->
+    <h2 id="vi-du-nut"><span class="num">09</span>Ví dụ: mạch 2 nút</h2>
+    <p>Tìm dòng điện tại các nhánh của mạch dưới đây bằng phương pháp điện thế nút.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 580 270" role="img" aria-label="Mạch 2 nút a, b: nguồn 1 A vào a, 6 ohm từ a xuống gốc, 4 ohm từ a sang b, nguồn 6 A từ b sang a, 2 ohm từ b xuống gốc, nguồn 3 A vào b">
+  <path class="wire" d="M80 142 L80 90 L265 90 M325 90 L510 90 L510 142 M510 178 L510 230 L80 230 L80 178 M210 90 L210 30 L272 30 M308 30 L380 30 L380 90 M210 90 L210 135 M210 185 L210 230 M380 90 L380 135 M380 185 L380 230"/>
+  <path class="wire" d="M265 90 L270 83 L280 97 L290 83 L300 97 L310 83 L320 97 L325 90"/>
+  <path class="wire" d="M210 135 L203 140 L217 147 L203 154 L217 161 L203 168 L217 175 L203 180 L210 185"/>
+  <path class="wire" d="M380 135 L373 140 L387 147 L373 154 L387 161 L373 168 L387 175 L373 180 L380 185"/>
+  <circle class="srcc" cx="80" cy="160" r="18"/><path class="arr" d="M80 172 L80 148 M74 155 L80 147 L86 155"/>
+  <circle class="srcc" cx="510" cy="160" r="18"/><path class="arr" d="M510 172 L510 148 M504 155 L510 147 L516 155"/>
+  <circle class="srcc" cx="290" cy="30" r="18"/><path class="arr" d="M302 30 L278 30 M285 24 L277 30 L285 36"/>
+  <circle class="node" cx="210" cy="90" r="4.5"/><circle class="node" cx="380" cy="90" r="4.5"/><circle class="node" cx="210" cy="230" r="4.5"/><circle class="node" cx="380" cy="230" r="4.5"/>
+  <path class="wire" d="M295 230 L295 244 M283 244 L307 244 M287 249 L303 249 M291 254 L299 254"/>
+  <text class="b" x="200" y="110" text-anchor="end">a</text><text class="b" x="392" y="110">b</text>
+  <text class="s" x="312" y="252">c · nút gốc</text>
+  <text class="b" x="56" y="165" text-anchor="end">1 A</text>
+  <text class="b" x="534" y="165">3 A</text>
+  <text class="b" x="290" y="64" text-anchor="middle">6 A</text>
+  <text class="b" x="295" y="118" text-anchor="middle">4 Ω</text>
+  <text class="b" x="224" y="165">6 Ω</text>
+  <text class="b" x="394" y="165">2 Ω</text>
+  <path class="arr" d="M203 114 L210 122 L217 114"/><text class="b" x="200" y="128" text-anchor="end">I₁</text>
+  <path class="arr" d="M237 83 L245 90 L237 97"/><text class="b" x="241" y="78" text-anchor="middle">I₂</text>
+  <path class="arr" d="M373 114 L380 122 L387 114"/><text class="b" x="370" y="128" text-anchor="end">I₃</text>
+</svg>
+      <figcaption>Nguồn 6 A nối từ b sang a: đi ra khỏi b, đổ vào a</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Biến đổi nguồn</h4>
+      <p>Mạch chỉ có nguồn dòng ⇒ không cần biến đổi.</p>
+      <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
+      <p>Gọi V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> là điện thế tại các nút a, b, c. Chọn nút c làm nút gốc ⇒ V<sub>C</sub> = 0.</p>
+      <h4>Bước 3 – Phương trình điện thế tại nút a</h4>
+      <p>Nhánh nối vào a: 6 Ω (xuống gốc), 4 Ω (sang b). Nguồn đổ vào a: 1 A + 6 A = 7 A.</p>
+      <p class="ans">(1/6 + 1/4)·V<sub>A</sub> − (1/4)·V<sub>B</sub> = 7 &nbsp;(1)</p>
+      <h4>Bước 3 – Phương trình điện thế tại nút b</h4>
+      <p>Nhánh nối vào b: 4 Ω (sang a), 2 Ω (xuống gốc). Nguồn: 3 A đổ vào, 6 A đi ra ⇒ 3 − 6 = −3 A.</p>
+      <p class="ans">−(1/4)·V<sub>A</sub> + (1/4 + 1/2)·V<sub>B</sub> = −3 &nbsp;(2)</p>
+      <h4>Giải hệ (1), (2)</h4>
+      <p>Nhân (2) với 4: −V<sub>A</sub> + 3·V<sub>B</sub> = −12 ⇒ V<sub>A</sub> = 3·V<sub>B</sub> + 12. Thay vào (1) (nhân 12): 5·V<sub>A</sub> − 3·V<sub>B</sub> = 84 ⇒ 12·V<sub>B</sub> + 60 = 84</p>
+      <p class="ans">⇒ V<sub>B</sub> = 2 V, V<sub>A</sub> = 18 V</p>
+      <h4>Bước 4 – Dòng nhánh</h4>
+      <p>I<sub>1</sub> = (V<sub>A</sub> − V<sub>C</sub>)/6 = (18 − 0)/6 = 3 A</p>
+      <p>I<sub>2</sub> = (V<sub>A</sub> − V<sub>B</sub>)/4 = (18 − 2)/4 = 4 A</p>
+      <p>I<sub>3</sub> = (V<sub>B</sub> − V<sub>C</sub>)/2 = (2 − 0)/2 = 1 A</p>
+      <p class="ans">⇒ I<sub>1</sub> = 3 A, I<sub>2</sub> = 4 A, I<sub>3</sub> = 1 A</p>
+      <h4>Kiểm tra lại</h4>
+      <p>K1 tại a: vào 1 + 6 = 7 A; ra I<sub>1</sub> + I<sub>2</sub> = 3 + 4 = 7 A ✓ &nbsp;·&nbsp; K1 tại b: vào I<sub>2</sub> + 3 = 7 A; ra 6 + I<sub>3</sub> = 7 A ✓</p>
+    </div>
+
+    <figure class="sim" id="simNode">
+      <p class="sim-h">Thử ngay · Đổi nguồn dòng, xem điện thế nút và dòng nhánh</p>
+      <div class="simbox">
+        <svg viewBox="0 0 640 270" role="img" aria-labelledby="ndTitle">
+          <title id="ndTitle">Mạch ví dụ 2 nút. Đường chạy xanh là dòng qua điện trở, cam là dòng nguồn; cột bên phải là mức điện thế VA, VB so với nút gốc.</title>
+          <path class="w" d="M80 142 L80 90 L265 90 M325 90 L510 90 L510 142 M510 178 L510 230 L80 230 L80 178 M210 90 L210 30 L272 30 M308 30 L380 30 L380 90 M210 90 L210 135 M210 185 L210 230 M380 90 L380 135 M380 185 L380 230"/>
+          <path class="ov c-w" id="ndFJ1" d="M210 230 L80 230 L80 90 L210 90"/>
+          <path class="ov c-w" id="ndFJ2" d="M380 90 L380 30 L210 30 L210 90"/>
+          <path class="ov c-w" id="ndFJ3" d="M380 230 L510 230 L510 90 L380 90"/>
+          <path class="ov" id="ndF1" d="M210 90 L210 230"/>
+          <path class="ov" id="ndF2" d="M210 90 L380 90"/>
+          <path class="ov" id="ndF3" d="M380 90 L380 230"/>
+          <rect class="gap" x="262" y="78" width="66" height="24"/>
+          <rect class="gap" x="198" y="132" width="24" height="56"/>
+          <rect class="gap" x="368" y="132" width="24" height="56"/>
+          <path class="w" d="M265 90 L270 83 L280 97 L290 83 L300 97 L310 83 L320 97 L325 90"/>
+          <path class="w" d="M210 135 L203 140 L217 147 L203 154 L217 161 L203 168 L217 175 L203 180 L210 185"/>
+          <path class="w" d="M380 135 L373 140 L387 147 L373 154 L387 161 L373 168 L387 175 L373 180 L380 185"/>
+          <circle class="src" cx="80" cy="160" r="18"/><path class="w" d="M80 172 L80 148 M74 155 L80 147 L86 155"/>
+          <circle class="src" cx="510" cy="160" r="18"/><path class="w" d="M510 172 L510 148 M504 155 L510 147 L516 155"/>
+          <circle class="src" cx="290" cy="30" r="18"/><path class="w" d="M302 30 L278 30 M285 24 L277 30 L285 36"/>
+          <circle class="node" cx="210" cy="90" r="4.5"/><circle class="node" cx="380" cy="90" r="4.5"/>
+          <path class="w" d="M295 230 L295 244 M283 244 L307 244 M287 249 L303 249 M291 254 L299 254"/>
+          <text class="b" x="200" y="110" text-anchor="end">a</text><text class="b" x="392" y="110">b</text>
+          <text class="b" id="ndLJ1" x="56" y="165" text-anchor="end">1 A</text>
+          <text class="b" id="ndLJ3" x="534" y="165">3 A</text>
+          <text class="b" id="ndLJ2" x="290" y="64" text-anchor="middle">6 A</text>
+          <text class="b" id="ndLR2" x="295" y="118" text-anchor="middle">4 Ω</text>
+          <text class="b" x="224" y="165">6 Ω</text>
+          <text class="b" x="394" y="165">2 Ω</text>
+          <text class="b ac" x="202" y="80" text-anchor="end">V<tspan class="sub" dy="4">A</tspan><tspan id="ndVa" dy="-4"> = 18 V</tspan></text>
+          <text class="b ac" x="388" y="80">V<tspan class="sub" dy="4">B</tspan><tspan id="ndVb" dy="-4"> = 2 V</tspan></text>
+          <path class="thin" d="M556 230 L630 230"/>
+          <rect class="fillI" id="ndBarA" x="562" y="198.5" width="26" height="31.5"/>
+          <rect class="fillU" id="ndBarB" x="598" y="226.5" width="26" height="3.5"/>
+          <text class="s" x="575" y="248" text-anchor="middle">V<tspan class="sub" dy="4">A</tspan></text>
+          <text class="s" x="611" y="248" text-anchor="middle">V<tspan class="sub" dy="4">B</tspan></text>
+          <text class="s" x="593" y="140" text-anchor="middle">mức điện thế</text>
+        </svg>
+      </div>
+      <div class="sl"><label for="ndJ1">Nguồn J<sub>1</sub> (vào a)</label><input type="range" id="ndJ1" min="0" max="10" step="1" value="1"><output id="ndJ1o" for="ndJ1">1 A</output></div>
+      <div class="sl"><label for="ndJ2">Nguồn J<sub>2</sub> (b → a)</label><input type="range" id="ndJ2" min="0" max="10" step="1" value="6"><output id="ndJ2o" for="ndJ2">6 A</output></div>
+      <div class="sl"><label for="ndJ3">Nguồn J<sub>3</sub> (vào b)</label><input type="range" id="ndJ3" min="0" max="10" step="1" value="3"><output id="ndJ3o" for="ndJ3">3 A</output></div>
+      <div class="sl"><label for="ndR2">Điện trở a–b</label><input type="range" id="ndR2" min="1" max="12" step="1" value="4"><output id="ndR2o" for="ndR2">4 Ω</output></div>
+      <p class="live" id="ndLive" aria-live="polite"></p>
+      <figcaption>Tăng J<sub>2</sub>: nút a "dâng" lên, nút b "tụt" xuống, có lúc V<sub>B</sub> âm và I<sub>3</sub> chạy ngược. Dòng luôn chảy từ nút điện thế cao sang nút thấp.</figcaption>
+    </figure>
+
+    <!-- 10 -->
+    <h2 id="vi-du-nut2"><span class="num">10</span>Ví dụ: mạch có nguồn áp</h2>
+    <p>Cho mạch dưới đây. Tìm I<sub>1</sub> bằng phương pháp điện thế nút.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Mạch gốc: nguồn 10 A, điện trở 5 ohm, 10 ohm giữa a và b, 20 ohm, 30 ohm nối tiếp nguồn áp 100 V">
+  <path class="wire" d="M70 107 L70 50 L230 50 M290 50 L360 50 M420 50 L460 50 L460 107 M460 143 L460 200 L70 200 L70 143 M190 50 L190 100 M190 150 L190 200 M330 50 L330 100 M330 150 L330 200"/>
+  <path class="wire" d="M230 50 L235 43 L245 57 L255 43 L265 57 L275 43 L285 57 L290 50"/>
+  <path class="wire" d="M360 50 L365 43 L375 57 L385 43 L395 57 L405 43 L415 57 L420 50"/>
+  <path class="wire" d="M190 100 L183 105 L197 112 L183 119 L197 126 L183 133 L197 140 L183 145 L190 150"/>
+  <path class="wire" d="M330 100 L323 105 L337 112 L323 119 L337 126 L323 133 L337 140 L323 145 L330 150"/>
+  <circle class="srcc" cx="70" cy="125" r="18"/><path class="arr" d="M70 137 L70 113 M64 120 L70 112 L76 120"/>
+  <circle class="srcc" cx="460" cy="125" r="18"/><text class="pm" x="460" y="121" text-anchor="middle">+</text><text class="pm" x="460" y="138" text-anchor="middle">−</text>
+  <circle class="node" cx="190" cy="50" r="4.5"/><circle class="node" cx="330" cy="50" r="4.5"/><circle class="node" cx="190" cy="200" r="4.5"/><circle class="node" cx="330" cy="200" r="4.5"/>
+  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="s" x="260" y="222" text-anchor="middle">c · nút gốc</text>
+  <text class="b" x="46" y="130" text-anchor="end">10 A</text>
+  <text class="b" x="202" y="130">5 Ω</text>
+  <text class="b" x="260" y="32" text-anchor="middle">10 Ω</text>
+  <text class="b" x="342" y="130">20 Ω</text>
+  <text class="b" x="390" y="32" text-anchor="middle">30 Ω</text>
+  <text class="b" x="484" y="130">100 V</text>
+  <path class="arr" d="M308 43 L316 50 L308 57"/><text class="b" x="306" y="36" text-anchor="middle">I₁</text>
+</svg>
+      <figcaption>Mạch gốc: nhánh bên phải là nguồn áp 100 V nối tiếp 30 Ω</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 1 – Biến đổi nguồn</h4>
+      <p>Nguồn 100 V nối tiếp 30 Ω ⇒ nguồn dòng J = 100/30 = 10/3 ≈ 3,33 A (hướng lên, về phía cực +) song song 30 Ω.</p>
+    </div>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Mạch sau biến đổi: nhánh 100 V nối tiếp 30 ohm thành nguồn dòng 3,33 A song song 30 ohm">
+  <path class="wire" d="M70 107 L70 50 L230 50 M290 50 L520 50 L520 107 M520 143 L520 200 L70 200 L70 143 M190 50 L190 100 M190 150 L190 200 M330 50 L330 100 M330 150 L330 200 M440 50 L440 100 M440 150 L440 200"/>
+  <path class="wire" d="M230 50 L235 43 L245 57 L255 43 L265 57 L275 43 L285 57 L290 50"/>
+  <path class="wire" d="M190 100 L183 105 L197 112 L183 119 L197 126 L183 133 L197 140 L183 145 L190 150"/>
+  <path class="wire" d="M330 100 L323 105 L337 112 L323 119 L337 126 L323 133 L337 140 L323 145 L330 150"/>
+  <path class="wire" d="M440 100 L433 105 L447 112 L433 119 L447 126 L433 133 L447 140 L433 145 L440 150"/>
+  <circle class="srcc" cx="70" cy="125" r="18"/><path class="arr" d="M70 137 L70 113 M64 120 L70 112 L76 120"/>
+  <circle class="srcc" cx="520" cy="125" r="18"/><path class="arr" d="M520 137 L520 113 M514 120 L520 112 L526 120"/>
+  <circle class="node" cx="190" cy="50" r="4.5"/><circle class="node" cx="330" cy="50" r="4.5"/><circle class="node" cx="190" cy="200" r="4.5"/><circle class="node" cx="330" cy="200" r="4.5"/>
+  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="s" x="260" y="222" text-anchor="middle">c · nút gốc</text>
+  <text class="b" x="46" y="130" text-anchor="end">10 A</text>
+  <text class="b" x="202" y="130">5 Ω</text>
+  <text class="b" x="260" y="32" text-anchor="middle">10 Ω</text>
+  <text class="b" x="342" y="130">20 Ω</text>
+  <text class="b" x="452" y="130">30 Ω</text>
+  <text class="b warm" x="512" y="176" text-anchor="end">3,33 A</text>
+  <path class="arr" d="M308 43 L316 50 L308 57"/><text class="b" x="306" y="36" text-anchor="middle">I₁</text>
+</svg>
+      <figcaption>Sau biến đổi: nút b có 3 điện trở nối tới (10 Ω, 20 Ω, 30 Ω) và nguồn 3,33 A đổ vào</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
+      <p>Gọi V<sub>A</sub>, V<sub>B</sub> là điện thế nút a, b; chọn nút c làm gốc ⇒ V<sub>C</sub> = 0.</p>
+      <h4>Bước 3 – Phương trình điện thế</h4>
+      <p>Nút a: <span class="ans">(1/5 + 1/10)·V<sub>A</sub> − (1/10)·V<sub>B</sub> = 10 &nbsp;(1)</span></p>
+      <p>Nút b: <span class="ans">−(1/10)·V<sub>A</sub> + (1/10 + 1/20 + 1/30)·V<sub>B</sub> = 10/3 &nbsp;(2)</span></p>
+      <p>Từ (1): V<sub>A</sub> = (100 + V<sub>B</sub>)/3. Thay vào (2): −(100 + V<sub>B</sub>)/30 + (11/60)·V<sub>B</sub> = 10/3 ⇒ (9/60)·V<sub>B</sub> = 20/3</p>
+      <p class="ans">⇒ V<sub>B</sub> = 400/9 ≈ 44,44 V, V<sub>A</sub> = 1300/27 ≈ 48,15 V</p>
+      <h4>Bước 4 – Dòng nhánh</h4>
+      <p class="ans">I<sub>1</sub> = (V<sub>A</sub> − V<sub>B</sub>)/10 = (48,15 − 44,44)/10 ≈ 0,37 A</p>
+      <p>Dòng thật qua nhánh 100 V – 30 Ω (mạch gốc, chảy vào b): I = (E − V<sub>B</sub>)/30 = (100 − 44,44)/30 ≈ 1,85 A. Không phải V<sub>B</sub>/30 ≈ 1,48 A (đó là dòng qua 30 Ω trong mạch đã biến đổi).</p>
+      <h4>Kiểm tra lại</h4>
+      <p>K1 tại b: vào I<sub>1</sub> + 1,85 = 2,22 A; ra V<sub>B</sub>/20 = 2,22 A ✓ &nbsp;·&nbsp; K1 tại a: 10 = V<sub>A</sub>/5 + I<sub>1</sub> = 9,63 + 0,37 ✓</p>
+    </div>
+
+    <!-- 11 -->
+    <h2 id="so-sanh"><span class="num">11</span>So sánh hai phương pháp</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Đếm trước khi giải: <strong>b − n + 1</strong> mắt lưới hay <strong>n − 1</strong> nút, bên nào ít hơn thì chọn bên đó.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tiêu chí</th><th>Dòng mắt lưới</th><th>Điện thế nút</th></tr></thead>
+        <tbody>
+          <tr><td>Ẩn số</td><td>Dòng mắt lưới I<sub>m1</sub>, I<sub>m2</sub>, … (A)</td><td>Điện thế nút V<sub>A</sub>, V<sub>B</sub>, … (V)</td></tr>
+          <tr><td>Số phương trình</td><td>b − n + 1</td><td>n − 1</td></tr>
+          <tr><td>Định luật dùng</td><td>K2 cho mỗi mắt lưới (K1 tự đúng)</td><td>K1 cho mỗi nút (K2 tự đúng)</td></tr>
+          <tr><td>Hệ số</td><td>Điện trở R (Ω)</td><td>Điện dẫn G = 1/R (S)</td></tr>
+          <tr><td>Hợp với</td><td>Nhiều nguồn áp nối tiếp, mạch dạng "thang" ít mắt</td><td>Nhiều nguồn dòng, nhiều nhánh song song giữa ít nút</td></tr>
+          <tr><td>Nguồn dòng</td><td>Ở nhánh ngoài: I<sub>m</sub> = ±J, bớt 1 phương trình</td><td>Đưa thẳng vào vế phải</td></tr>
+          <tr><td>Nguồn áp</td><td>Đưa thẳng vào vế phải</td><td>Biến đổi thành nguồn dòng trước (J = E/R)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Ví dụ: mạch ở mục 04 có b = 3, n = 2. Dòng mắt lưới cần 2 phương trình; điện thế nút chỉ cần <strong>1</strong>. Đổi ba nguồn thành nguồn dòng: 12/3 = 4 A (vào nút), 3/3 = 1 A (ra khỏi nút, vì cực + của E<sub>2</sub> ở dưới), 15/9 = 5/3 A (vào nút). Nút trên: (1/3 + 1/3 + 1/9)·V = 4 − 1 + 5/3 ⇒ V = 6 V. Quay về mạch gốc: I<sub>1</sub> = (12 − 6)/3 = 2 A, I<sub>2</sub> = (15 − 6)/9 = 1 A, I<sub>3</sub> = (6 + 3)/3 = 3 A, đúng như kết quả ở mục 04.</p>
+
+    <!-- 12 -->
+    <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nội dung</th><th>Dòng mắt lưới</th><th>Điện thế nút</th></tr></thead>
+        <tbody>
+          <tr><td>Bước 1</td><td>Đặt I<sub>m1</sub>, I<sub>m2</sub>, … và vẽ chiều</td><td>Biến đổi nguồn áp nối tiếp R thành J = E/R song song R</td></tr>
+          <tr><td>Bước 2</td><td>Lập hệ phương trình mắt lưới, giải</td><td>Đặt V<sub>A</sub>, V<sub>B</sub>, …; chọn nút gốc V = 0</td></tr>
+          <tr><td>Bước 3</td><td>Suy ra dòng nhánh</td><td>Lập hệ phương trình nút, giải</td></tr>
+          <tr><td>Bước 4</td><td>–</td><td>I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R; nhánh có nguồn áp tính trên mạch gốc</td></tr>
+          <tr><td>Khuôn phương trình</td><td>(ΣR)·I<sub>mk</sub> ± R<sub>chung</sub>·I<sub>m kề</sub> = ΣE</td><td>(ΣG)·V<sub>A</sub> − G<sub>AB</sub>·V<sub>B</sub> = ΣJ<sub>vào</sub></td></tr>
+          <tr><td>Dấu</td><td>R chung: cùng chiều +, ngược chiều −; E: dòng đi − sang + lấy +</td><td>J vào nút +, ra khỏi nút −</td></tr>
+          <tr><td>Trường hợp đặc biệt</td><td>Nguồn dòng nhánh ngoài: I<sub>m</sub> = ±J</td><td>Nhánh nối nút gốc chỉ góp vào hệ số</td></tr>
+          <tr><td>Kiểm tra</td><td colspan="2">K1 tại các nút, hoặc P<sub>nguồn</sub> = ΣR·I²</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Đại lượng</th></tr></thead>
+        <tbody>
+          <tr><td>Ampere <span class="say" title="Cách đọc">am-pe</span></td><td>A</td><td>Dòng mắt lưới, dòng nhánh, nguồn dòng J</td></tr>
+          <tr><td>Volt <span class="say" title="Cách đọc">vôn</span></td><td>V</td><td>Điện thế nút, sức điện động E</td></tr>
+          <tr><td>Ohm <span class="say" title="Cách đọc">ôm</span></td><td>Ω</td><td>Điện trở R</td></tr>
+          <tr><td>Siemens <span class="say" title="Cách đọc">si-men</span></td><td>S</td><td>Điện dẫn G = 1/R</td></tr>
+          <tr><td>Watt <span class="say" title="Cách đọc">oát</span></td><td>W</td><td>Công suất P = U·I = R·I²</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 13 -->
+    <h2 id="trac-nghiem"><span class="num">13</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <a class="back" href="/namnhat-lythuyetmach">← Về Lý thuyết mạch (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script>
+window.CT_QUIZ = [
+  { q: "Trong phương pháp dòng mắt lưới, ẩn số cần tìm là:",
+    opts: ["Dòng điện của từng nhánh", "Điện thế của từng nút", "Dòng điện chạy khép kín trong mỗi mắt lưới", "Điện áp trên từng điện trở"], a: 2,
+    why: "Ẩn phụ là dòng mắt lưới I<sub>m1</sub>, I<sub>m2</sub>, … chạy vòng trong mỗi mắt. Dòng nhánh được suy ra sau (bước 3). Điện thế nút là ẩn của phương pháp kia." },
+  { q: "Mạch có 5 nhánh và 3 nút. Số phương trình dòng mắt lưới cần lập là:",
+    opts: ["2", "3", "4", "5"], a: 1,
+    why: "Số mắt lưới = b − n + 1 = 5 − 3 + 1 = 3. Nếu giải bằng điện thế nút thì cần n − 1 = 2 phương trình." },
+  { q: "Hai dòng mắt lưới I<sub>m1</sub> = 2 A và I<sub>m2</sub> = 1 A cùng đi xuống qua nhánh chung. Dòng thật trong nhánh chung (chiều xuống) là:",
+    opts: ["1 A", "2 A", "3 A", "0,5 A"], a: 2,
+    why: "Cùng chiều qua nhánh chung thì cộng: I = 2 + 1 = 3 A. Nếu ngược chiều thì mới trừ (1 A)." },
+  { q: "Trong phương trình của mắt lưới 1, hệ số đứng trước I<sub>m1</sub> là:",
+    opts: ["Điện trở chung với mắt bên cạnh", "Tổng các điện trở nằm trong mắt lưới 1", "Tổng các sức điện động trong mắt 1", "Tổng điện trở của toàn mạch"], a: 1,
+    why: "Hệ số của I<sub>mk</sub> là điện trở riêng của mắt k: cộng mọi điện trở trên đường vòng của mắt đó (luôn dương). Điện trở chung đứng trước dòng mắt bên cạnh; sức điện động nằm ở vế phải." },
+  { q: "Nguồn dòng J = 4 A nằm ở nhánh ngoài cùng, chỉ thuộc mắt lưới 3, mũi tên J ngược chiều đã chọn cho I<sub>m3</sub>. Khi đó:",
+    opts: ["I<sub>m3</sub> = 4 A", "I<sub>m3</sub> = −4 A", "I<sub>m3</sub> = 0", "Phải giải hệ mới biết I<sub>m3</sub>"], a: 1,
+    why: "Nhánh nguồn dòng chỉ có I<sub>m3</sub> đi qua nên I<sub>m3</sub> bằng đúng J, ngược chiều thì mang dấu âm: I<sub>m3</sub> = −4 A. Không cần viết phương trình cho mắt 3." },
+  { q: "Khi giải bằng điện thế nút, nên chọn nút gốc (V = 0) là:",
+    opts: ["Nút có ít nhánh nối tới nhất", "Nút có nhiều nhánh nối tới nhất", "Nút nằm cạnh nguồn áp lớn nhất", "Bất kỳ điểm nào trên dây, kể cả giữa một nhánh"], a: 1,
+    why: "Chọn nút nối nhiều nhánh nhất làm gốc thì các nhánh đó chỉ góp vào hệ số, không tạo số hạng trừ, nên hệ phương trình gọn nhất. Nút gốc phải là một nút thật, không phải điểm giữa nhánh." },
+  { q: "Nguồn áp E = 100 V nối tiếp R = 30 Ω được biến đổi thành:",
+    opts: ["Nguồn dòng 3 000 A nối tiếp 30 Ω", "Nguồn dòng 3,33 A song song 30 Ω", "Nguồn dòng 0,3 A song song 30 Ω", "Nguồn dòng 3,33 A nối tiếp 30 Ω"], a: 1,
+    why: "J = E/R = 100/30 ≈ 3,33 A, mắc song song với chính điện trở 30 Ω, mũi tên J chỉ về phía cực + của nguồn áp." },
+  { q: "Nút a nối 6 Ω xuống nút gốc, 4 Ω sang nút b; có nguồn 1 A và nguồn 6 A cùng đổ vào a. Phương trình nút a là:",
+    opts: ["(1/6 + 1/4)·V<sub>A</sub> − (1/4)·V<sub>B</sub> = 7", "(6 + 4)·V<sub>A</sub> − 4·V<sub>B</sub> = 7", "(1/6 + 1/4)·V<sub>A</sub> + (1/4)·V<sub>B</sub> = 7", "(1/6 + 1/4)·V<sub>A</sub> − (1/4)·V<sub>B</sub> = 5"], a: 0,
+    why: "Hệ số V<sub>A</sub> là tổng điện dẫn 1/R nối vào a; trừ điện dẫn chung 1/4 nhân V<sub>B</sub>; vế phải là tổng nguồn dòng đổ vào: 1 + 6 = 7 A. Phương pháp nút dùng 1/R, không dùng R." },
+  { q: "Mạch có 7 nhánh và 3 nút. Nên chọn phương pháp nào để ít phương trình nhất?",
+    opts: ["Dòng mắt lưới (5 phương trình)", "Điện thế nút (2 phương trình)", "Hai phương pháp bằng nhau", "Dòng nhánh (3 phương trình)"], a: 1,
+    why: "Mắt lưới: b − n + 1 = 7 − 3 + 1 = 5. Nút: n − 1 = 3 − 1 = 2. Điện thế nút ít hơn hẳn. Giải trực tiếp theo dòng nhánh cần 7 phương trình." },
+  { q: "Giải xong được I<sub>2</sub> = −2 A. Kết luận đúng là:",
+    opts: ["Đã giải sai, dòng điện không thể âm", "Dòng thật có độ lớn 2 A, chạy ngược chiều đã vẽ", "Nhánh đó không có dòng điện", "Phải chọn lại nút gốc rồi giải lại"], a: 1,
+    why: "Chiều dòng (và chiều dòng mắt lưới) được chọn tuỳ ý. Kết quả âm chỉ có nghĩa dòng thật chạy ngược chiều mũi tên đã vẽ, độ lớn vẫn là 2 A." }
+];
+</script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/lt3-sim.js?v=1"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

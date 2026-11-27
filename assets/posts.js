@@ -290,6 +290,16 @@ window.CT_POSTS = [
     order: 2
   },
   {
+    section: "hoctap",
+    parent: "/namnhat-lythuyetmach",
+    title: "Chương 3: Phương pháp dòng mắt lưới và điện thế nút",
+    desc: "Nhánh, nút, mắt lưới; giải mạch bằng dòng mắt lưới (có nguồn dòng) và điện thế nút, biến đổi nguồn áp thành nguồn dòng, so sánh hai phương pháp — có mô phỏng, ví dụ giải từng bước và trắc nghiệm.",
+    short: "Giải mạch bằng dòng mắt lưới và điện thế nút, có ví dụ từng bước.",
+    date: "2026-11-26",
+    href: "/lythuyetmach-chuong3",
+    order: 3
+  },
+  {
     section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     desc: "Bài tập tự chấm định luật Kirchhoff K1, K2: chọn đề, nhập dòng nhánh rồi kiểm tra. Có bài nâng cao giải chi tiết kèm công suất.",
