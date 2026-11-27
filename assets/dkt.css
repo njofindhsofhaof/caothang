@@ -40,3 +40,8 @@
   .menu,.backbar,.kh-tabs,header .headright,.dkt-box,.dkt-plan-wrap{display:none !important;}
   .dkt-sol:not([open]){display:none;}
 }
+/* Trang /dekiemtralythuyetmach: dung them mln.css, bp3.css. */
+.dktm-fig{overflow-x:auto;}
+.dktm-step{margin:14px 0 2px;font-size:14.5px;}
+.dkt-steps li.dktm-rubric{font-family:var(--mono);font-size:12.5px;color:var(--accent-warm);}
+@media (max-width:600px){.dktm-fig .mln-svg{min-width:0;}}
