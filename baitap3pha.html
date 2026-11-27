@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập mạch 3 pha (Chương 4) · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Bài tập tự chấm môn Lý thuyết mạch Chương 4: mạch 3 pha tải đối xứng nối Y và Δ, tính Up, Ip, Id, P, Q, S, cosφ, có xét đường dây, đề ngẫu nhiên và lời giải từng bước.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bài tập mạch 3 pha (Chương 4)">
+<meta property="og:description" content="Bài tập tự chấm môn Lý thuyết mạch Chương 4: mạch 3 pha tải đối xứng nối Y và Δ, tính Up, Ip, Id, P, Q, S, cosφ, có xét đường dây, đề ngẫu nhiên và lời giải từng bước.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/baitap3pha">
+<link rel="canonical" href="https://caothang-gray.vercel.app/baitap3pha">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/kirchhoff.css?v=2">
+<link rel="stylesheet" href="/assets/mln.css?v=1">
+<link rel="stylesheet" href="/assets/bp3.css?v=1">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bài tập mạch 3 pha (Chương 4)</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+  <div class="backbar">
+    <a class="backlink" href="/lythuyetmach">&larr; Lý Thuyết Mạch</a>
+  </div>
+  <p class="kh-intro">Luyện tập Chương 4: tải 3 pha đối xứng nối sao (Y) và tam giác (Δ). Chọn dạng bài, nhập kết quả rồi bấm <strong>Kiểm tra</strong>; mỗi bài có hình mạch và lời giải từng bước. Tab <strong>Đề ngẫu nhiên</strong> sinh đề mới không giới hạn. Lý thuyết và ví dụ mẫu: <a href="/lythuyetmach-chuong4">Chương 4: Mạch điện xoay chiều 3 pha</a>.</p>
+  <div class="mln-rule">
+    <p><strong>Cách nhập:</strong> số thập phân dùng dấu phẩy hoặc dấu chấm (8,78 hay 8.78). Được chấm đúng khi lệch không quá 1% so với đáp số, nên làm tròn I<sub>p</sub> 2 chữ số rồi mới tính P, Q, S vẫn được tính là đúng.</p>
+    <p><strong>Ký hiệu:</strong> chỉ số d = dây, p = pha. Nối Y: U<sub>d</sub> = √3·U<sub>p</sub>, I<sub>d</sub> = I<sub>p</sub>. Nối Δ: U<sub>d</sub> = U<sub>p</sub>, I<sub>d</sub> = √3·I<sub>p</sub>. Z<sub>p</sub> = √(R<sub>p</sub>² + X<sub>p</sub>²), cosφ = R<sub>p</sub>/Z<sub>p</sub>.</p>
+    <p><strong>Công suất:</strong> P = 3·R<sub>p</sub>·I<sub>p</sub>² (watt <span class="say" title="Cách đọc">oát</span>, W) ; Q = 3·X<sub>p</sub>·I<sub>p</sub>² (VAr) ; S = 3·U<sub>p</sub>·I<sub>p</sub> = √(P² + Q²) (VA). Điện áp tính bằng volt <span class="say" title="Cách đọc">vôn</span> (V), dòng điện bằng ampere <span class="say" title="Cách đọc">am-pe</span> (A), trở kháng bằng ohm <span class="say" title="Cách đọc">ôm</span> (Ω).</p>
+  </div>
+  <main id="bp3App"></main>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script src="/assets/bp3-calc.js?v=1"></script>
+<script src="/assets/bp3-data.js?v=1"></script>
+<script src="/assets/bp3-svg.js?v=1"></script>
+<script src="/assets/bp3.js?v=1"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

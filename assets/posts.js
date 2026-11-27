@@ -300,6 +300,16 @@ window.CT_POSTS = [
     order: 3
   },
   {
+    section: "hoctap",
+    parent: "/namnhat-lythuyetmach",
+    title: "Chương 4: Mạch điện xoay chiều 3 pha",
+    desc: "Nguồn 3 pha, điện áp và dòng điện pha – dây, nối hình sao (Y) và tam giác (Δ), tải 3 pha đối xứng có xét trở kháng đường dây, công suất P, Q, S và cosφ, hộp đấu dây động cơ — có mô phỏng, ví dụ giải từng bước và trắc nghiệm.",
+    short: "Mạch 3 pha: nối sao, tam giác, dòng – áp pha, dây và công suất.",
+    date: "2026-11-27",
+    href: "/lythuyetmach-chuong4",
+    order: 4
+  },
+  {
     section: "ontap",
     title: "Bài tập Kirchhoff Law 1,2 môn Lý thuyết Mạch",
     desc: "Bài tập tự chấm định luật Kirchhoff K1, K2: chọn đề, nhập dòng nhánh rồi kiểm tra. Có bài nâng cao giải chi tiết kèm công suất.",
@@ -323,6 +333,15 @@ window.CT_POSTS = [
     short: "4 bài dòng mắt lưới và điện thế nút, tự chấm có lời giải.",
     date: "2026-11-27",
     href: "/baitapmatluoinut",
+    parent: "/lythuyetmach"
+  },
+  {
+    section: "ontap",
+    title: "Bài tập mạch 3 pha (Chương 4)",
+    desc: "Tải 3 pha đối xứng nối Y và Δ: tính Up, Ip, Id, cosφ, P, Q, S, có dạng xét tổng trở đường dây và đề ngẫu nhiên không giới hạn. Tự chấm, có hình mạch và lời giải từng bước.",
+    short: "Bài tập mạch 3 pha nối Y và Δ, tự chấm, có đề ngẫu nhiên.",
+    date: "2026-11-27",
+    href: "/baitap3pha",
     parent: "/lythuyetmach"
   },
   {

@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chương 4: Mạch điện xoay chiều 3 pha · Lý Thuyết Mạch · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
+<meta name="description" content="Lý thuyết mạch Chương 4: nguồn 3 pha, điện áp và dòng điện pha – dây, nối hình sao (Y) và tam giác (Δ), tải 3 pha đối xứng, công suất P, Q, S, ví dụ giải từng bước, mô phỏng và trắc nghiệm.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DDT26C Cao Thắng">
+<meta property="og:locale" content="vi_VN">
+<meta name="ct-i18n" content="/assets/i18n/lythuyetmach-chuong4.en.js?v=1">
+<meta property="og:title" content="Chương 4: Mạch điện xoay chiều 3 pha · Lý Thuyết Mạch">
+<meta property="og:description" content="Lý thuyết mạch Chương 4: nguồn 3 pha, điện áp và dòng điện pha – dây, nối hình sao (Y) và tam giác (Δ), tải 3 pha đối xứng, công suất P, Q, S, ví dụ giải từng bước, mô phỏng và trắc nghiệm.">
+<meta property="og:url" content="https://caothang-gray.vercel.app/lythuyetmach-chuong4">
+<link rel="canonical" href="https://caothang-gray.vercel.app/lythuyetmach-chuong4">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:image" content="https://caothang-gray.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20261108d">
+<link rel="stylesheet" href="/assets/quiz.css?v=1">
+<style>
+.post{max-width:760px;font-size:16px;line-height:1.65;}
+.post .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin:0 0 22px;}
+.post h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:40px 0 10px;scroll-margin-top:16px;}
+.post h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:24px 0 6px;}
+.post p{margin:0 0 12px;}
+.post ol,.post ul{margin:0 0 16px;padding-left:22px;}
+.post li{margin-bottom:6px;}
+.post .num{font-family:var(--mono);font-size:13px;color:var(--accent-warm);margin-right:8px;}
+.post .toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 0 8px;}
+.post .toc p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px;}
+.post .toc ol{columns:2;column-gap:28px;margin:0;font-size:14.5px;}
+.post .toc li{margin-bottom:4px;break-inside:avoid;}
+.post .toc a{color:var(--ink);text-decoration:none;}
+.post .toc a:hover{color:var(--accent);}
+.post .def{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;margin:8px 0 14px;}
+.post .def strong:first-child{color:var(--accent);}
+.post .note{background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:10px 16px;margin:8px 0 14px;font-size:15px;color:var(--ink-soft);}
+.post .note strong{color:var(--accent-warm);}
+.post .formula{font-family:var(--serif);font-size:20px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:6px 0 12px;}
+.post .formula small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-top:4px;}
+.post .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;}
+.post .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px;}
+.post .frac .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.post kbd{font-family:var(--mono);font-size:.85em;background:var(--surface);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;white-space:nowrap;}
+.post .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0 8px;}
+.post table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px;line-height:1.5;}
+.post th{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:10px 12px 8px;border-bottom:1px solid var(--line);}
+.post td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.post tr:last-child td{border-bottom:none;}
+.post td:first-child{font-weight:600;}
+.post figure{margin:10px 0 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.post figcaption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin-top:6px;}
+.post .steps{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 18px 10px;margin:8px 0 14px;}
+.post .steps h4{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:12px 0 4px;}
+.post .steps p{font-family:var(--mono);font-size:13.5px;margin:0 0 4px;}
+.post .steps .ans{color:var(--accent);font-weight:500;}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent-warm);border-radius:10px;padding:16px 20px 6px;margin:0 0 18px;}
+.post figure.photo{background:var(--surface);padding:12px;display:flex;gap:16px;align-items:center;}
+.post figure.photo img{flex:0 0 auto;width:42%;max-height:240px;object-fit:contain;border-radius:8px;background:#fff;height:auto;}
+.post figure.photo figcaption{flex:1;font-family:var(--sans);font-size:14.5px;color:var(--ink);text-align:left;margin:0;}
+.post figure.photo figcaption strong:first-child{color:var(--accent);}
+.post figure.photo .credit{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:8px;}
+.post figure.photo a{color:var(--accent);}
+@media (max-width:600px){.post figure.photo{flex-direction:column;align-items:stretch;}.post figure.photo img{width:100%;max-height:260px;}}
+.post .goals{margin:0 0 8px;padding-left:22px;font-size:15.5px;}
+.post .goals li{margin-bottom:5px;}
+.post .goals a{color:var(--accent);text-decoration:none;border-bottom:1px dotted currentColor;}
+.hero-k{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-warm);margin:0 0 8px !important;}
+.post .tag{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--accent-ink);background:var(--accent-warm);border-radius:4px;padding:1px 7px;margin-right:8px;vertical-align:1px;}
+.post .easy{font-size:16.5px;margin:4px 0 10px;}
+.post figure.ill{padding:14px 12px 10px;}
+.il{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.il .water{fill:#5B9BD5;opacity:.8;}
+.il .tank,.il .wire,.il .plate{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+.il .plate{stroke-width:4;}
+.il .loop{fill:none;stroke:#5B9BD5;stroke-opacity:.8;stroke-width:16;}
+.il .dot circle{fill:#fff;opacity:.95;}
+.il .qdot circle{fill:var(--accent-warm);}
+.il .ruler,.il .tk line,.il .axis{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.il .ground{stroke:var(--ink);stroke-width:2;stroke-dasharray:8 5;}
+.il .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.il .cut{stroke:var(--accent-warm);stroke-width:1.6;stroke-dasharray:4 4;}
+.il .field{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;opacity:.8;}
+.il .arr{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .arr-ac{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .curve-ac{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.il .curve-warm{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.il .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.il .pump{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .blade{stroke:var(--accent-warm);stroke-width:5;stroke-linecap:round;}
+.il .load{fill:var(--surface);stroke:var(--ink);stroke-width:2.2;}
+.il .bulb{fill:var(--accent-warm);fill-opacity:.25;stroke:var(--ink);stroke-width:2.2;}
+.il .base{fill:var(--surface-2);stroke:var(--ink);stroke-width:2;}
+.il .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.il .bar-warm{fill:var(--accent-warm);}
+.il .bar-ac{fill:var(--accent);}
+.il text{fill:var(--ink);}
+.il .s{fill:var(--ink-soft);font-size:12.5px;}
+.il .b{font-weight:600;font-size:14px;}
+.il .big{font-size:17px;}
+.il .ac{fill:var(--accent);}
+.il .warm{fill:var(--accent-warm);}
+.il .sub{font-size:10px;}
+.post table.small{min-width:0;}
+.units{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px 4px;margin:6px 0 14px;}
+.units-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 6px !important;}
+.units .tablewrap{border:none;margin:0;background:none;}
+.post table.small td{padding:7px 10px;}
+.post table.small th{padding:8px 10px 6px;}
+.post tr.base td{background:var(--surface-2);color:var(--accent);}
+.units-ex{font-size:14px;margin:8px 0 6px !important;}
+.units-ex li{margin-bottom:2px !important;}
+
+.il .mask{fill:var(--surface-2);}
+.il .srcc{fill:var(--surface-2);stroke:var(--ink);stroke-width:2.2;}
+.il .br1,.il .br2,.il .br3{fill:none;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;}
+.il .br1{stroke:var(--accent-warm);} .il .c1{fill:var(--accent-warm);}
+.il .br2{stroke:var(--accent);} .il .c2{fill:var(--accent);}
+.il .br3{stroke:#3E9E6B;} .il .c3{fill:#3E9E6B;}
+.il .node{fill:var(--ink);stroke:var(--surface-2);stroke-width:2;}
+.il .outer{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:7 5;}
+.il .loopv{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .pm{font-size:16px;font-weight:700;}
+.sym{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;font-family:var(--mono);font-size:12.5px;}
+.sym .w,.kh-svg .kh-w{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;}
+.sym .src,.kh-svg .kh-src{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.sym .t,.kh-svg .kh-t{fill:var(--ink);}
+.sym .lbl{fill:var(--ink-soft);}
+.sym .pm,.kh-svg .kh-pm{fill:var(--ink);font-size:14px;font-weight:600;}
+.sym .ac{fill:var(--accent);}
+.kh-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto;font-family:var(--mono);font-size:13px;}
+.kh-svg .kh-mask{fill:var(--surface-2);}
+.kh-svg .kh-arrow,.kh-svg .kh-dot{fill:var(--accent);}
+.kh-svg .kh-cur{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-node{fill:var(--accent);font-weight:600;}
+.kh-svg .kh-loop{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.kh-svg .kh-loop-t{fill:var(--ink-soft);font-size:12px;}
+.vidone{max-width:340px;margin:14px auto 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.vidone iframe{display:block;width:100%;aspect-ratio:9/16;border:0;background:#000;}
+.vidone p{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:8px 12px;margin:0;}
+.vidone a{color:var(--accent);text-decoration:none;}
+.exlist a.card h2{font-size:18px;margin:0 0 6px;}
+.exlist{display:flex;flex-direction:column;gap:12px;margin:10px 0;}
+.exlist a.card .go{font-family:var(--mono);font-size:11px;color:var(--accent-warm);margin-top:8px;display:block;}
+.post .back{display:block;width:fit-content;margin:30px 0 0 auto;font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.post .back-top{display:flex;width:fit-content;align-items:center;gap:6px;margin:0 0 10px auto;padding:6px 12px;font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;transition:border-color .15s;}
+.post .back-top:hover{border-color:var(--accent);}
+.post .back-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (max-width:600px){.post h2{font-size:21px;}.post .toc ol{columns:1;}.post .formula{font-size:18px;}}
+.il .warmline{stroke:var(--accent-warm);}
+/* Mô phỏng tương tác (.sim) */
+.sim{--flow-g:#2E8B57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sim{--flow-g:#5CC08A;}}
+:root[data-theme="dark"] .sim{--flow-g:#5CC08A;}
+.post figure.sim{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:14px 14px 16px;margin:16px 0 18px;}
+.sim .sim-h{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--accent);margin:0 0 8px;}
+.sim .simbox{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;background:var(--surface-2);padding:6px 0;}
+.sim svg{display:block;width:100%;min-width:500px;max-width:620px;height:auto;margin:0 auto;font-family:var(--sans);font-size:13px;}
+.sim svg text{fill:var(--ink);}
+.sim .s{fill:var(--ink-soft);font-size:12.5px;}
+.sim .b{font-weight:600;font-size:14px;}
+.sim .sub{font-size:10px;}
+.sim .ac{fill:var(--accent);}
+.sim .warm{fill:var(--accent-warm);}
+.sim .grn{fill:var(--flow-g);}
+.sim .w{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .thin{fill:none;stroke:var(--ink-soft);stroke-width:1.6;}
+.sim .water{fill:#5B9BD5;opacity:.8;}
+.sim .src,.sim .part{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .node{fill:var(--ink);}
+.sim .ring{fill:none;stroke:var(--accent-warm);stroke-width:2.5;}
+.sim .dash{fill:none;stroke:var(--ink-faint);stroke-width:1.4;stroke-dasharray:5 4;}
+.sim .ref{stroke:var(--accent-warm);stroke-width:2;stroke-dasharray:8 5;}
+.sim .uarr{stroke:var(--accent-warm);stroke-width:2.4;}
+.sim .mk{fill:var(--accent-warm);}
+.sim .loopv{fill:none;stroke:var(--accent-warm);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .heat{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;}
+.sim .bulb{fill:var(--accent-warm);stroke:var(--ink);stroke-width:2.2;}
+.sim .ray line{stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .track{fill:var(--surface);stroke:var(--line);}
+.sim .fillU{fill:var(--accent-warm);}
+.sim .fillI{fill:var(--accent);}
+.sim .fillP{fill:var(--flow-g);}
+.sim .ov{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s;}
+.sim .ov.c-w{stroke:var(--accent-warm);}
+.sim .ov.c-g{stroke:var(--flow-g);}
+.sim .ov.lane{stroke:#fff;stroke-width:3;stroke-dasharray:2 14;}
+.sim .ov.off,.sim .hide{opacity:0;}
+.sim g,.sim .ring,.sim .uarr,.sim text{transition:opacity .3s;}
+@media (prefers-reduced-motion:no-preference){
+  .sim .ov{stroke-dasharray:8 8;animation:simflow var(--dur,1s) linear infinite;}
+  .sim .ov.lane{stroke-dasharray:2 14;}
+  .sim .ov.rev{animation-direction:reverse;}
+}
+@keyframes simflow{to{stroke-dashoffset:-16;}}
+.sim .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px;}
+.sim button{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;transition:border-color .15s,color .15s;}
+.sim button:hover,.sim button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);}
+.sim button[aria-pressed="true"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent);}
+.sim button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sim .sl{display:grid;grid-template-columns:150px minmax(0,1fr) 76px;gap:10px;align-items:center;font-size:14px;margin:6px 0;}
+.sim .sl input{width:100%;margin:0;accent-color:var(--accent);}
+.sim .sl input:disabled{opacity:.5;}
+.sim .sl output{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink);}
+.sim .live{font-size:14.5px;line-height:1.6;margin:10px 0 0;background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+.sim .live b{color:var(--accent);}
+.sim .live .ok{color:var(--flow-g);font-weight:600;}
+.sim .live .neg{color:var(--accent-warm);font-weight:600;}
+.sim .plate{fill:none;stroke:var(--ink);stroke-width:4;stroke-linecap:round;}
+.sim .gap{fill:var(--surface-2);}
+.sim .cu{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .ci{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;}
+.sim .k-u{color:var(--accent-warm);font-weight:600;}
+.sim .k-i{color:var(--accent);font-weight:600;}
+.sim .iarr path{fill:var(--accent);stroke:var(--surface-2);stroke-width:1.5;stroke-linejoin:round;transition:fill .2s;}
+.sim .iarr.neg path{fill:var(--accent-warm);}
+.post figure.sim figcaption{font-family:var(--sans);font-size:13.5px;text-align:left;margin-top:8px;}
+@media (max-width:600px){.sim .sl{grid-template-columns:96px minmax(0,1fr) 64px;gap:8px;font-size:13px;}.post figure.sim{padding:12px 10px 14px;}}
+.sim .cu{fill:none;stroke:var(--accent);stroke-width:2.6;}
+.sim .ci{fill:none;stroke:var(--accent-warm);stroke-width:2.6;}
+.sim .va{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vw{fill:none;stroke:var(--accent-warm);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .vg{fill:none;stroke:var(--flow-g);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.sim .ink{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.sim .dotu{fill:var(--accent);}
+.sim .beer{fill:#E3A92B;}
+.sim .foam{fill:#F4EEDC;stroke:var(--line);}
+.il .win{fill:var(--accent);fill-opacity:.08;}
+.il .win2{fill:var(--accent-warm);fill-opacity:.1;}
+.il .loopw{fill:none;stroke:var(--accent-warm);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.il .node{stroke-width:0;}
+/* Chương 4: màu 3 pha (A xanh, B cam, C lục) */
+.il{--ph-c:#3E9E6B;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .il{--ph-c:#5CC08A;}}
+:root[data-theme="dark"] .il{--ph-c:#5CC08A;}
+.il .pa,.il .pb,.il .pc,.il .pd{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.il .pa{stroke:var(--accent);} .il .pb{stroke:var(--accent-warm);} .il .pc{stroke:var(--ph-c);} .il .pd{stroke:var(--ink);}
+.il .fa{fill:var(--accent);} .il .fb{fill:var(--accent-warm);} .il .fc{fill:var(--ph-c);} .il .fd{fill:var(--ink);}
+.il .c3{fill:var(--ph-c);}
+.il .mag-n{fill:var(--accent-warm);} .il .mag-s{fill:var(--accent);}
+.il .coil{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;}
+.il .tb{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.il .term{fill:var(--surface-2);stroke:var(--ink);stroke-width:1.8;}
+.il .link{stroke:var(--accent-warm);stroke-width:6;stroke-linecap:round;}
+.sim .fa{fill:var(--accent);} .sim .fb{fill:var(--accent-warm);} .sim .fc{fill:var(--flow-g);}
+.sim .vd{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:6 4;}
+.sim .proj{stroke:var(--ink-faint);stroke-width:1.2;stroke-dasharray:3 4;}
+.sim .zbox{fill:var(--surface);stroke:var(--ink);stroke-width:2;}
+.sim .tri-p{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;}
+.sim .tri-q{fill:none;stroke:var(--accent-warm);stroke-width:3;stroke-linecap:round;}
+.sim .tri-s{fill:none;stroke:var(--flow-g);stroke-width:3;stroke-linecap:round;}
+</style>
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lý thuyết mạch – Chương 4: Mạch điện xoay chiều 3 pha</h1>
+    <div class="headright">
+      <a href="mailto:caothang.cdddt26c@gmail.com" class="feedbacklink">Contact: caothang.cdddt26c@gmail.com</a>
+      <a href="https://www.tiktok.com/@ckcddt26c" class="feedbacklink" target="_blank" rel="noopener">Tiktok: @ckcddt26c</a>
+    </div>
+  </header>
+  <nav class="menu" id="siteNav" aria-label="Menu chính">
+    <a href="/">Trang chủ</a>
+    <a href="/hoctap">Học tập</a>
+    <a href="/ontap">Ôn tập</a>
+    <a href="/duan">Dự án</a>
+    <a href="/hoatdong">Hoạt động</a>
+    <a href="/event">Bài viết</a>
+    <a href="/diemdanh">Điểm danh</a>
+  </nav>
+
+
+  <article class="post">
+    <a class="back-top" href="/namnhat-lythuyetmach">← Lý thuyết mạch (Năm nhất)</a>
+    <p class="byline">27/11/2026 · Học tập · Năm nhất · Lý thuyết mạch · Chương 4</p>
+
+    <div class="hero">
+      <p class="hero-k">Sau khi học Chương 4, bạn cần nắm</p>
+      <ol class="goals">
+        <li>Hiểu <a href="#nguon-3-pha">nguồn điện 3 pha</a>: ba sức điện động cùng biên độ, cùng tần số, lệch nhau 120°, thứ tự pha A – B – C.</li>
+        <li>Phân biệt <a href="#pha-day">điện áp pha, điện áp dây, dòng điện pha, dòng điện dây</a> và ký hiệu U<sub>p</sub>, U<sub>d</sub>, I<sub>p</sub>, I<sub>d</sub>.</li>
+        <li>Nhớ quan hệ khi <a href="#noi-sao">nối hình sao (Y)</a>: I<sub>d</sub> = I<sub>p</sub>, U<sub>d</sub> = √3·U<sub>p</sub>; hiểu vai trò dây trung tính.</li>
+        <li>Nhớ quan hệ khi <a href="#noi-tam-giac">nối tam giác (Δ)</a>: U<sub>d</sub> = U<sub>p</sub>, I<sub>d</sub> = √3·I<sub>p</sub>.</li>
+        <li>Tính được I<sub>p</sub>, I<sub>d</sub> và góc lệch pha φ của <a href="#tai-sao">tải đối xứng nối sao</a> và <a href="#tai-tam-giac">nối tam giác</a>, kể cả khi xét trở kháng đường dây.</li>
+        <li>Tính được <a href="#cong-suat">công suất P, Q, S</a> và hệ số công suất cosφ của mạch 3 pha đối xứng.</li>
+        <li>Giải trọn <a href="#vi-du-sao">bài tải nối sao</a> và <a href="#vi-du-tam-giac">bài tải nối tam giác</a>, kiểm tra lại bằng S = √(P² + Q²).</li>
+        <li>Đọc được <a href="#ung-dung">hộp đấu dây động cơ 3 pha</a>: nối Y hay Δ theo điện áp lưới.</li>
+      </ol>
+    </div>
+    <nav class="toc" aria-label="Mục lục">
+      <p>Nội dung</p>
+      <ol>
+        <li><a href="#nguon-3-pha">Nguồn điện 3 pha</a></li>
+        <li><a href="#pha-day">Đại lượng pha và đại lượng dây</a></li>
+        <li><a href="#noi-sao">Nối hình sao (Y)</a></li>
+        <li><a href="#noi-tam-giac">Nối tam giác (Δ)</a></li>
+        <li><a href="#tai-sao">Tải đối xứng nối sao</a></li>
+        <li><a href="#tai-tam-giac">Tải đối xứng nối tam giác</a></li>
+        <li><a href="#cong-suat">Công suất mạch 3 pha đối xứng</a></li>
+        <li><a href="#vi-du-sao">Ví dụ: tải nối sao</a></li>
+        <li><a href="#vi-du-tam-giac">Ví dụ: tải nối tam giác</a></li>
+        <li><a href="#ung-dung">Ứng dụng: động cơ 3 pha</a></li>
+        <li><a href="#tom-tat">Bảng tóm tắt</a></li>
+        <li><a href="#trac-nghiem">Trắc nghiệm ôn tập</a></li>
+        <li><a href="#bai-tap">Bài tập</a></li>
+      </ol>
+    </nav>
+    <p>Chương 2 xét mạch xoay chiều có <strong>một</strong> nguồn sin. Điện lưới thực tế được phát, truyền tải và phân phối bằng <strong>ba</strong> nguồn sin chạy cùng lúc, gọi là hệ thống 3 pha. Chương 4 học cách nối ba pha thành hình sao hoặc tam giác, quan hệ giữa đại lượng pha và đại lượng dây, cách tính dòng điện và công suất của tải 3 pha đối xứng.</p>
+
+    <!-- 1 -->
+    <h2 id="nguon-3-pha"><span class="num">01</span>Nguồn điện 3 pha</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Ba người đạp chung một chiếc xe đạp ba chỗ, mỗi người đạp <strong>lệch nhau một phần ba vòng</strong>. Lúc nào cũng có người đang dồn sức, nên xe chạy đều hơn hẳn một người đạp. Ba pha điện cũng vậy: ba sóng sin thay nhau lên đỉnh, công suất cấp cho tải gần như không bị hụt.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 250" role="img" aria-label="Máy phát 3 pha: nam châm quay ở giữa, ba cuộn dây A, B, C đặt lệch nhau 120 độ; bên phải là ba sóng sin lệch nhau một phần ba chu kỳ">
+  <circle class="base" cx="150" cy="125" r="100"/>
+  <circle class="mask" cx="150" cy="125" r="62"/>
+  <g transform="rotate(-20 150 125)">
+    <rect class="mag-n" x="140" y="75" width="20" height="50" rx="3"/>
+    <rect class="mag-s" x="140" y="125" width="20" height="50" rx="3"/>
+    <text class="b" x="150" y="95" text-anchor="middle" style="fill:#fff">N</text>
+    <text class="b" x="150" y="166" text-anchor="middle" style="fill:#fff">S</text>
+  </g>
+  <path class="pa" d="M132 40 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0"/>
+  <g transform="rotate(120 150 125)"><path class="pb" d="M132 40 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0"/></g>
+  <g transform="rotate(240 150 125)"><path class="pc" d="M132 40 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0 q4.5 -10 9 0"/></g>
+  <text class="b ac" x="150" y="16" text-anchor="middle">cuộn A</text>
+  <text class="b warm" x="236" y="232">cuộn B</text>
+  <text class="b c3" x="64" y="232" text-anchor="end">cuộn C</text>
+  <text class="s" x="200" y="62">lệch 120°</text>
+  <path class="axis" d="M296 125 L548 125 M300 40 L300 210"/>
+  <path class="pa" d="M300 125.0 L305 114.0 L310 103.4 L315 93.2 L320 83.9 L325 75.5 L330 68.4 L335 62.6 L340 58.4 L345 55.9 L350 55.0 L355 55.9 L360 58.4 L365 62.6 L370 68.4 L375 75.5 L380 83.9 L385 93.2 L390 103.4 L395 114.0 L400 125.0 L405 136.0 L410 146.6 L415 156.8 L420 166.1 L425 174.5 L430 181.6 L435 187.4 L440 191.6 L445 194.1 L450 195.0 L455 194.1 L460 191.6 L465 187.4 L470 181.6 L475 174.5 L480 166.1 L485 156.8 L490 146.6 L495 136.0 L500 125.0 L505 114.0 L510 103.4 L515 93.2 L520 83.9 L525 75.5 L530 68.4 L535 62.6 L540 58.4 L545 55.9 L550 55.0"/>
+  <path class="pb" d="M300 185.6 L305 190.4 L310 193.5 L315 194.9 L320 194.6 L325 192.6 L330 188.9 L335 183.7 L340 177.0 L345 169.1 L350 160.0 L355 150.1 L360 139.6 L365 128.7 L370 117.7 L375 106.9 L380 96.5 L385 86.9 L390 78.2 L395 70.6 L400 64.4 L405 59.6 L410 56.5 L415 55.1 L420 55.4 L425 57.4 L430 61.1 L435 66.3 L440 73.0 L445 80.9 L450 90.0 L455 99.9 L460 110.4 L465 121.3 L470 132.3 L475 143.1 L480 153.5 L485 163.1 L490 171.8 L495 179.4 L500 185.6 L505 190.4 L510 193.5 L515 194.9 L520 194.6 L525 192.6 L530 188.9 L535 183.7 L540 177.0 L545 169.1 L550 160.0"/>
+  <path class="pc" d="M300 64.4 L305 70.6 L310 78.2 L315 86.9 L320 96.5 L325 106.9 L330 117.7 L335 128.7 L340 139.6 L345 150.1 L350 160.0 L355 169.1 L360 177.0 L365 183.7 L370 188.9 L375 192.6 L380 194.6 L385 194.9 L390 193.5 L395 190.4 L400 185.6 L405 179.4 L410 171.8 L415 163.1 L420 153.5 L425 143.1 L430 132.3 L435 121.3 L440 110.4 L445 99.9 L450 90.0 L455 80.9 L460 73.0 L465 66.3 L470 61.1 L475 57.4 L480 55.4 L485 55.1 L490 56.5 L495 59.6 L500 64.4 L505 70.6 L510 78.2 L515 86.9 L520 96.5 L525 106.9 L530 117.7 L535 128.7 L540 139.6 L545 150.1 L550 160.0"/>
+  <text class="s" x="548" y="142" text-anchor="end">t</text>
+  <text class="b ac" x="350" y="44" text-anchor="middle">e<tspan class="sub" dy="4">A</tspan></text>
+  <text class="b warm" x="417" y="44" text-anchor="middle">e<tspan class="sub" dy="4">B</tspan></text>
+  <text class="b c3" x="483" y="44" text-anchor="middle">e<tspan class="sub" dy="4">C</tspan></text>
+  <text class="s" x="424" y="236" text-anchor="middle">ba sóng sin lệch nhau 1/3 chu kỳ</text>
+</svg>
+      <figcaption>Nam châm quay một vòng thì lần lượt quét qua cuộn A, rồi B, rồi C: ba sức điện động lệch nhau 120°</figcaption>
+    </figure>
+    <div class="def"><strong>Nguồn điện 3 pha</strong> gồm ba sức điện động e<sub>A</sub>, e<sub>B</sub>, e<sub>C</sub> có <strong>cùng biên độ, cùng tần số</strong> và <strong>lệch pha nhau 120°</strong> (một phần ba chu kỳ). Mỗi sức điện động cùng cuộn dây của nó gọi là một <strong>pha</strong>. Thứ tự pha thuận A → B → C: e<sub>B</sub> chậm sau e<sub>A</sub> 120°, e<sub>C</sub> chậm sau e<sub>B</sub> 120°.</div>
+    <div class="formula">e<sub>A</sub> = E<sub>m</sub>·sin(ωt) &nbsp;·&nbsp; e<sub>B</sub> = E<sub>m</sub>·sin(ωt − 120°) &nbsp;·&nbsp; e<sub>C</sub> = E<sub>m</sub>·sin(ωt − 240°)<small>Tổng ba sức điện động tại mọi thời điểm: e<sub>A</sub> + e<sub>B</sub> + e<sub>C</sub> = 0 · Lưới điện Việt Nam: f = 50 hertz <span class="say" title="Cách đọc">héc</span> (Hz)</small></div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Overhead_power_lines_in_Iran_01.jpg/960px-Overhead_power_lines_in_Iran_01.jpg" width="960" height="720" alt="Đường dây truyền tải điện cao thế trên cột thép, mỗi mạch có ba dây pha" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Đường dây truyền tải 3 pha.</strong> Đếm sứ cách điện trên mỗi bên cột: dây treo theo bộ <strong>3</strong>, mỗi dây là một pha. Truyền cùng một công suất, 3 pha cần ít dây đồng hơn hẳn so với ba đường một pha riêng.<span class="credit">Ảnh: Mostafameraji · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=126147971" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+    <ul>
+      <li>Ba pha tạo cho <strong>động cơ</strong> một từ trường quay sẵn, nên động cơ 3 pha tự khởi động, chạy êm, không cần tụ đề như quạt một pha.</li>
+      <li>Ổ điện một pha ở nhà chỉ lấy <strong>một pha và dây trung tính</strong> của lưới 3 pha.</li>
+    </ul>
+
+    <figure class="sim" id="simPhase">
+      <p class="sim-h">Thử ngay · Giản đồ vectơ 3 pha quay</p>
+      <div class="simbox">
+        <svg viewBox="0 0 620 260" role="img" aria-labelledby="phTitle">
+          <title id="phTitle">Bên trái: ba vectơ pha U_A, U_B, U_C quay ngược chiều kim đồng hồ, lệch nhau 120 độ. Bên phải: ba sóng sin và vạch thời điểm hiện tại; hình chiếu đứng của mỗi vectơ là giá trị tức thời.</title>
+          <circle class="dash" cx="130" cy="130" r="60"/>
+          <path class="thin" d="M30 130 L230 130 M130 20 L130 240"/>
+          <path class="thin" d="M270 130 L605 130 M270 30 L270 230"/>
+          <path class="proj" id="phPa" d="M0 0"/><path class="proj" id="phPb" d="M0 0"/><path class="proj" id="phPc" d="M0 0"/>
+          <path class="va" id="phWa" d="M0 0"/><path class="vw" id="phWb" d="M0 0"/><path class="vg" id="phWc" d="M0 0"/>
+          <path class="vd hide" id="phWd" d="M0 0"/>
+          <path class="ref" id="phCur" d="M270 30 L270 230"/>
+          <path class="vd hide" id="phVd" d="M0 0"/>
+          <path class="va" id="phVa" d="M130 130 L130 70"/><path class="vw" id="phVb" d="M130 130 L130 70"/><path class="vg" id="phVc" d="M130 130 L130 70"/>
+          <circle class="fa" id="phDa" r="4.5" cx="0" cy="0"/><circle class="fb" id="phDb" r="4.5" cx="0" cy="0"/><circle class="fc" id="phDc" r="4.5" cx="0" cy="0"/>
+          <text class="b ac" id="phLa" x="0" y="0">U<tspan class="sub" dy="4">A</tspan></text>
+          <text class="b warm" id="phLb" x="0" y="0">U<tspan class="sub" dy="4">B</tspan></text>
+          <text class="b grn" id="phLc" x="0" y="0">U<tspan class="sub" dy="4">C</tspan></text>
+          <text class="b hide" id="phLd" x="0" y="0">U<tspan class="sub" dy="4">AB</tspan></text>
+          <text class="s" x="600" y="148" text-anchor="end">ωt</text>
+          <text class="s" id="phAng" x="130" y="256" text-anchor="middle">ωt = 0°</text>
+        </svg>
+      </div>
+      <div class="controls">
+        <button type="button" id="phPlay" aria-pressed="false">▶ Cho quay</button>
+        <button type="button" id="phShowD" aria-pressed="false">Hiện điện áp dây U<sub>AB</sub></button>
+      </div>
+      <div class="sl"><label for="phT">Thời điểm ωt</label><input type="range" id="phT" min="0" max="360" step="1" value="30"><output id="phTo"></output></div>
+      <div class="sl"><label for="phU">Điện áp pha U<sub>p</sub></label><input type="range" id="phU" min="100" max="240" step="10" value="220"><output id="phUo"></output></div>
+      <p class="live" id="phLive" aria-live="polite"></p>
+      <figcaption>Kéo ωt hoặc bấm "Cho quay": tại mọi thời điểm, tổng ba giá trị tức thời bằng 0. Bật U<sub>AB</sub> để thấy điện áp dây dài gấp √3 lần điện áp pha (dùng ở mục 03).</figcaption>
+    </figure>
+
+    <!-- 2 -->
+    <h2 id="pha-day"><span class="num">02</span>Đại lượng pha và đại lượng dây</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>"Pha" là <strong>bên trong</strong> từng cuộn dây (hoặc từng tải). "Dây" là <strong>bên ngoài</strong>, trên các dây dẫn chạy từ nguồn tới tải. Đo giữa hai đầu một cuộn là đại lượng pha; đo giữa hai dây pha là đại lượng dây.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 260" role="img" aria-label="Nguồn 3 pha nối sao: ba cuộn eA, eB, eC chung điểm trung tính N; điện áp pha đo giữa dây A và N, điện áp dây đo giữa dây A và dây B">
+  <path class="wire" d="M150 40 L520 40 M150 140 L520 140 M237 190 L520 190 M63 190 L63 228 L520 228"/>
+  <path class="pa" d="M150 40 L150 140"/><path class="pb" d="M150 140 L237 190"/><path class="pc" d="M150 140 L63 190"/>
+  <circle class="srcc" cx="150" cy="90" r="16"/><circle class="srcc" cx="193" cy="165" r="16"/><circle class="srcc" cx="107" cy="165" r="16"/>
+  <path class="arr" d="M150 99 L150 81 M144 87 L150 81 L156 87"/>
+  <path class="arr" d="M186 161 L201 170 M193 172 L201 170 L198 162"/>
+  <path class="arr" d="M114 161 L99 170 M102 162 L99 170 L107 172"/>
+  <text class="b ac" x="128" y="94" text-anchor="end">e<tspan class="sub" dy="4">A</tspan></text>
+  <text class="b warm" x="214" y="150">e<tspan class="sub" dy="4">B</tspan></text>
+  <text class="b c3" x="86" y="150" text-anchor="end">e<tspan class="sub" dy="4">C</tspan></text>
+  <circle class="node" cx="150" cy="140" r="4.5"/><circle class="node" cx="150" cy="40" r="4"/>
+  <circle class="node" cx="237" cy="190" r="4"/><circle class="node" cx="63" cy="190" r="4"/>
+  <text class="b" x="160" y="134">N</text>
+  <text class="b" x="528" y="45">A</text><text class="b" x="528" y="145">N</text><text class="b" x="528" y="195">B</text><text class="b" x="528" y="233">C</text>
+  <path class="arr-ac" d="M300 46 L300 134 M294 126 L300 134 L306 126"/>
+  <text class="b ac" x="308" y="96">U<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> = U</tspan><tspan class="sub" dy="4">AN</tspan></text>
+  <path class="arr" d="M420 46 L420 184 M414 176 L420 184 L426 176" style="stroke:var(--accent-warm)"/>
+  <text class="b warm" x="428" y="120">U<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = U</tspan><tspan class="sub" dy="4">AB</tspan></text>
+  <path class="arr" d="M232 33 L246 40 L232 47"/>
+  <text class="b" x="240" y="28" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan></text>
+  <text class="s" x="150" y="252" text-anchor="middle">nguồn nối sao</text>
+</svg>
+      <figcaption>U<sub>p</sub>: giữa đầu và cuối một pha (dây A với trung tính N) · U<sub>d</sub>: giữa hai dây pha (A với B)</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Đại lượng</th><th>Định nghĩa</th><th>Ký hiệu</th></tr></thead>
+        <tbody>
+          <tr><td>Điện áp pha</td><td>Điện áp giữa <strong>điểm đầu và điểm cuối của một pha</strong> (hai đầu một cuộn nguồn hoặc một tải)</td><td>U<sub>p</sub>; U<sub>A</sub>, U<sub>B</sub>, U<sub>C</sub></td></tr>
+          <tr><td>Điện áp dây</td><td>Điện áp giữa <strong>điểm đầu của pha này với điểm đầu của pha kia</strong>, tức giữa hai dây pha</td><td>U<sub>d</sub>; U<sub>AB</sub>, U<sub>BC</sub>, U<sub>CA</sub></td></tr>
+          <tr><td>Dòng điện pha</td><td>Dòng chạy <strong>trong mỗi pha</strong> (qua cuộn nguồn hoặc qua tải của pha đó)</td><td>I<sub>p</sub></td></tr>
+          <tr><td>Dòng điện dây</td><td>Dòng chạy <strong>trên dây dẫn</strong> nối từ nguồn tới tải</td><td>I<sub>d</sub></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Lưới 220/380 V</strong> nghĩa là U<sub>p</sub> = 220 V (pha với trung tính, như ổ điện ở nhà) và U<sub>d</sub> = 380 V (giữa hai dây pha, cấp cho động cơ 3 pha). Một nguồn ghi hai con số thì số nhỏ là điện áp pha, số lớn là điện áp dây.</div>
+    <figure class="photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Chargingstation_socket_cee_red_400v_32a_3phases.jpg/960px-Chargingstation_socket_cee_red_400v_32a_3phases.jpg" width="960" height="720" alt="Ổ cắm công nghiệp 3 pha màu đỏ 400 V 32 A có năm lỗ chân cắm" loading="lazy">
+      <figcaption><strong>Thiết bị thực tế · Ổ cắm công nghiệp 3 pha (vỏ đỏ, 400 V).</strong> Năm lỗ: ba dây pha L1, L2, L3, dây trung tính N và dây bảo vệ PE (lỗ to hơn). Máy hàn, máy nén khí trong xưởng cắm vào loại ổ này để lấy điện áp dây.<span class="credit">Ảnh: GoeggiSams · CC0 · <a href="https://commons.wikimedia.org/w/index.php?curid=15251129" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    </figure>
+
+    <!-- 3 -->
+    <h2 id="noi-sao"><span class="num">03</span>Nối hình sao (Y)</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Sao là <strong>ba cuộn chụm chung một điểm</strong> (điểm trung tính N). Mỗi dây chỉ nối vào một cuộn, nên dòng trên dây chính là dòng trong cuộn. Còn điện áp giữa hai dây phải đi qua <strong>hai</strong> cuộn lệch nhau 120°, nên lớn hơn điện áp một cuộn, nhưng không gấp đôi mà chỉ gấp √3 ≈ 1,73 lần.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Giản đồ vectơ khi nối sao: U_AB là hiệu của U_A và U_B, dài gấp căn 3 lần U_A, vượt trước U_A 30 độ">
+  <path class="dash" d="M140 50 L226.6 200 L53.4 200 Z"/>
+  <path class="pa" d="M140 150 L140 50 M134 60 L140 50 L146 60"/>
+  <path class="pb" d="M140 150 L226.6 200 M215 200 L226.6 200 L221 190"/>
+  <path class="pc" d="M140 150 L53.4 200 M59 190 L53.4 200 L65 200"/>
+  <path class="pd" d="M226.6 200 L140 50 M141 63 L140 50 L151 58"/>
+  <circle class="node" cx="140" cy="150" r="4"/>
+  <text class="b ac" x="128" y="96" text-anchor="end">U<tspan class="sub" dy="4">A</tspan></text>
+  <text class="b warm" x="232" y="218">U<tspan class="sub" dy="4">B</tspan></text>
+  <text class="b c3" x="48" y="218" text-anchor="end">U<tspan class="sub" dy="4">C</tspan></text>
+  <text class="b" x="192" y="112">U<tspan class="sub" dy="4">AB</tspan></text>
+  <text class="s" x="140" y="168" text-anchor="middle">N</text>
+  <text class="s" x="140" y="228" text-anchor="middle">tam giác điện áp dây (nét đứt)</text>
+  <text class="b" x="290" y="60">U<tspan class="sub" dy="4">AB</tspan><tspan dy="-4"> = U</tspan><tspan class="sub" dy="4">A</tspan><tspan dy="-4"> − U</tspan><tspan class="sub" dy="4">B</tspan><tspan dy="-4"> (vectơ)</tspan></text>
+  <text class="s" x="290" y="90">Hai vectơ dài U<tspan class="sub" dy="4">p</tspan><tspan dy="-4">, lệch 120°:</tspan></text>
+  <text class="b" x="290" y="118">U<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = 2·U</tspan><tspan class="sub" dy="4">p</tspan><tspan dy="-4">·cos30° = √3·U</tspan><tspan class="sub" dy="4">p</tspan></text>
+  <text class="s" x="290" y="150">U<tspan class="sub" dy="4">AB</tspan><tspan dy="-4"> vượt trước U</tspan><tspan class="sub" dy="4">A</tspan><tspan dy="-4"> 30°</tspan></text>
+  <text class="b ac" x="290" y="190">220 V × √3 ≈ 380 V</text>
+</svg>
+      <figcaption>Ba điện áp dây tạo thành tam giác đều có cạnh dài √3 lần điện áp pha</figcaption>
+    </figure>
+    <div class="def"><strong>Nối hình sao (Y)</strong>: nối ba điểm cuối X, Y, Z của ba pha lại thành một điểm chung gọi là <strong>điểm trung tính N</strong>; ba điểm đầu A, B, C nối ra ba dây pha. Dây nối từ điểm trung tính nguồn tới điểm trung tính tải gọi là <strong>dây trung tính</strong>.</div>
+    <div class="formula">I<sub>d</sub> = I<sub>p</sub> &nbsp;&nbsp;&nbsp; U<sub>d</sub> = √3·U<sub>p</sub><small>√3 ≈ 1,732 · Đơn vị: điện áp volt <span class="say" title="Cách đọc">vôn</span> (V), dòng điện ampere <span class="say" title="Cách đọc">am-pe</span> (A)</small></div>
+    <div class="steps">
+      <h4>Ví dụ 1 – Biết điện áp pha, tìm điện áp dây</h4>
+      <p>Nguồn nối Y có U<sub>p</sub> = 220 V. Tìm U<sub>d</sub>.</p>
+      <p class="ans">U<sub>d</sub> = √3·U<sub>p</sub> = √3 × 220 ≈ 380 V</p>
+      <h4>Ví dụ 2 – Nhận ra cách nối</h4>
+      <p>Đo được U<sub>p</sub> = 220 V và U<sub>d</sub> = 380 V. Nguồn nối kiểu gì?</p>
+      <p class="ans">380 / 220 ≈ 1,73 = √3 ⇒ U<sub>d</sub> = √3·U<sub>p</sub> ⇒ nối hình sao (Y)</p>
+    </div>
+    <div class="note"><strong>Dây trung tính:</strong> khi tải ba pha <strong>đối xứng</strong> (ba pha giống hệt nhau), ba dòng pha cùng độ lớn, lệch nhau 120° nên cộng lại bằng 0: dây trung tính gần như không có dòng. Khi tải <strong>không đối xứng</strong> (ví dụ ba pha cấp cho ba dãy nhà dùng điện khác nhau), dây trung tính mang phần dòng chênh lệch và <strong>giữ cho điện áp mỗi pha luôn bằng U<sub>p</sub></strong>. Đứt dây trung tính lúc đó thì pha tải nhẹ bị quá áp, thiết bị dễ cháy. Vì vậy dây trung tính không được lắp cầu chì hay cầu dao riêng.</div>
+
+    <!-- 4 -->
+    <h2 id="noi-tam-giac"><span class="num">04</span>Nối tam giác (Δ)</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Tam giác là <strong>ba cuộn nối tiếp nhau thành vòng kín</strong>, mỗi đỉnh nối ra một dây. Giữa hai dây chỉ có đúng một cuộn, nên điện áp dây bằng điện áp pha. Nhưng mỗi dây nhận dòng của <strong>hai</strong> cuộn gặp nhau ở đỉnh, nên dòng dây lớn gấp √3 lần dòng pha.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 255" role="img" aria-label="Nguồn 3 pha nối tam giác: ba cuộn eA, eB, eC nối vòng kín, ba đỉnh A, B, C nối ra ba dây; không có dây trung tính">
+  <path class="wire" d="M190 40 L520 40 M280 195 L280 205 L520 205 M100 195 L100 230 L520 230"/>
+  <path class="pa" d="M190 40 L280 195"/><path class="pb" d="M280 195 L100 195"/><path class="pc" d="M100 195 L190 40"/>
+  <circle class="srcc" cx="235" cy="118" r="16"/><circle class="srcc" cx="190" cy="195" r="16"/><circle class="srcc" cx="145" cy="118" r="16"/>
+  <path class="arr" d="M230 109 L240 127 M240 117 L240 127 L232 123"/>
+  <path class="arr" d="M200 195 L180 195 M186 189 L180 195 L186 201"/>
+  <path class="arr" d="M140 127 L150 109 M142 113 L150 109 L151 118"/>
+  <text class="b ac" x="258" y="112">e<tspan class="sub" dy="4">A</tspan></text>
+  <text class="b warm" x="190" y="172" text-anchor="middle">e<tspan class="sub" dy="4">B</tspan></text>
+  <text class="b c3" x="122" y="112" text-anchor="end">e<tspan class="sub" dy="4">C</tspan></text>
+  <circle class="node" cx="190" cy="40" r="4.5"/><circle class="node" cx="280" cy="195" r="4.5"/><circle class="node" cx="100" cy="195" r="4.5"/>
+  <text class="b" x="182" y="34" text-anchor="end">A</text><text class="b" x="292" y="190">B</text><text class="b" x="88" y="190" text-anchor="end">C</text>
+  <text class="b" x="528" y="45">A</text><text class="b" x="528" y="210">B</text><text class="b" x="528" y="235">C</text>
+  <path class="arr-ac" d="M420 46 L420 199 M414 191 L420 199 L426 191"/>
+  <text class="b ac" x="428" y="122">U<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = U</tspan><tspan class="sub" dy="4">p</tspan></text>
+  <path class="arr" d="M322 33 L336 40 L322 47"/>
+  <text class="b" x="330" y="28" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = √3·I</tspan><tspan class="sub" dy="4">p</tspan></text>
+  <text class="s" x="190" y="252" text-anchor="middle">nguồn nối tam giác: không có điểm trung tính</text>
+</svg>
+      <figcaption>Mỗi cuộn nằm thẳng giữa hai dây ⇒ U<sub>d</sub> = U<sub>p</sub>; ở mỗi đỉnh hai dòng pha gặp nhau ⇒ I<sub>d</sub> = √3·I<sub>p</sub></figcaption>
+    </figure>
+    <div class="def"><strong>Nối tam giác (Δ)</strong>: nối điểm cuối pha này với điểm đầu pha kia (X với B, Y với C, Z với A) thành một vòng kín; ba đỉnh A, B, C nối ra ba dây pha. Cách nối này không có điểm trung tính, chỉ có <strong>3 dây</strong>.</div>
+    <div class="formula">U<sub>d</sub> = U<sub>p</sub> &nbsp;&nbsp;&nbsp; I<sub>d</sub> = √3·I<sub>p</sub><small>Dòng dây là hiệu vectơ của hai dòng pha lệch 120°: I<sub>A</sub> = I<sub>AB</sub> − I<sub>CA</sub>, cùng phép tính √3 như điện áp ở mục 03</small></div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Cách nối</th><th>Điện áp</th><th>Dòng điện</th><th>Số dây</th></tr></thead>
+        <tbody>
+          <tr><td>Hình sao (Y)</td><td>U<sub>d</sub> = √3·U<sub>p</sub></td><td>I<sub>d</sub> = I<sub>p</sub></td><td>3 dây, hoặc 4 dây khi có dây trung tính</td></tr>
+          <tr><td>Tam giác (Δ)</td><td>U<sub>d</sub> = U<sub>p</sub></td><td>I<sub>d</sub> = √3·I<sub>p</sub></td><td>3 dây</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Mẹo nhớ: <strong>√3 luôn nằm ở phía "dây"</strong> và chỉ ở <strong>một</strong> đại lượng. Sao thì √3 ở điện áp, tam giác thì √3 ở dòng điện.</p>
+
+    <!-- 5 -->
+    <h2 id="tai-sao"><span class="num">05</span>Tải đối xứng nối sao</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Tải đối xứng là <strong>ba pha giống hệt nhau</strong>, như ba bóng đèn cùng loại. Chỉ cần giải <strong>một pha</strong> như mạch xoay chiều Chương 2, hai pha còn lại có cùng độ lớn, chỉ lệch 120°.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 220" role="img" aria-label="Tải nối sao có xét trở kháng đường dây: mỗi dây có Rd và Xd nối tiếp với tổng trở pha Zp, ba đầu còn lại nối chung">
+  <path class="wire" d="M40 50 L110 50 M170 50 L200 50 M260 50 L330 50 M390 50 L440 50 L440 170 L390 170 M40 110 L110 110 M170 110 L200 110 M260 110 L330 110 M390 110 L440 110 M40 170 L110 170 M170 170 L200 170 M260 170 L330 170"/>
+  <rect class="load" x="110" y="40" width="60" height="20" rx="3"/><rect class="load" x="110" y="100" width="60" height="20" rx="3"/><rect class="load" x="110" y="160" width="60" height="20" rx="3"/>
+  <path class="coil" d="M200 50 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0 M200 110 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0 M200 170 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0 q7.5 -14 15 0"/>
+  <rect class="load" x="330" y="38" width="60" height="24" rx="3" style="stroke:var(--accent)"/><rect class="load" x="330" y="98" width="60" height="24" rx="3" style="stroke:var(--accent)"/><rect class="load" x="330" y="158" width="60" height="24" rx="3" style="stroke:var(--accent)"/>
+  <circle class="node" cx="440" cy="110" r="4.5"/>
+  <text class="b" x="30" y="55" text-anchor="end">A</text><text class="b" x="30" y="115" text-anchor="end">B</text><text class="b" x="30" y="175" text-anchor="end">C</text>
+  <text class="b" x="140" y="32" text-anchor="middle">R<tspan class="sub" dy="4">d</tspan></text>
+  <text class="b" x="230" y="30" text-anchor="middle">X<tspan class="sub" dy="4">d</tspan></text>
+  <text class="b ac" x="360" y="30" text-anchor="middle">Z<tspan class="sub" dy="4">p</tspan></text>
+  <text class="b" x="452" y="115">N</text>
+  <path class="arr" d="M72 43 L84 50 L72 57"/><text class="b" x="78" y="38" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan></text>
+  <path class="arr-ac" d="M60 56 L60 104 M54 96 L60 104 L66 96"/><text class="b ac" x="66" y="86">U<tspan class="sub" dy="4">d</tspan></text>
+  <text class="s" x="185" y="206" text-anchor="middle">đường dây (mỗi dây)</text>
+  <text class="s" x="360" y="206" text-anchor="middle">tải pha</text>
+</svg>
+      <figcaption>Nối sao: mỗi dây nối tiếp đúng một tải pha, nên trở kháng đường dây cộng thẳng vào trở kháng pha</figcaption>
+    </figure>
+    <div class="def"><strong>Tải 3 pha đối xứng</strong>: ba tổng trở pha bằng nhau Z<sub>A</sub> = Z<sub>B</sub> = Z<sub>C</sub> = Z<sub>p</sub> = R<sub>p</sub> + jX<sub>p</sub>. Khi nối vào nguồn 3 pha đối xứng thì ba dòng pha bằng nhau về độ lớn và lệch nhau 120°.</div>
+    <div class="formula">U<sub>p</sub> = <span class="frac"><span>U<sub>d</sub></span><span>√3</span></span> &nbsp;·&nbsp; Z<sub>p</sub> = √(R<sub>p</sub>² + X<sub>p</sub>²) &nbsp;·&nbsp; I<sub>d</sub> = I<sub>p</sub> = <span class="frac"><span>U<sub>p</sub></span><span>Z<sub>p</sub></span></span> = <span class="frac"><span>U<sub>d</sub></span><span>√3·√(R<sub>p</sub>² + X<sub>p</sub>²)</span></span><small>R<sub>p</sub>, X<sub>p</sub>, Z<sub>p</sub>: điện trở, điện kháng, tổng trở một pha, đơn vị ohm <span class="say" title="Cách đọc">ôm</span> (Ω)</small></div>
+    <div class="formula">φ = arctg <span class="frac"><span>X<sub>p</sub></span><span>R<sub>p</sub></span></span> &nbsp;&nbsp;&nbsp; cosφ = <span class="frac"><span>R<sub>p</sub></span><span>Z<sub>p</sub></span></span><small>φ: góc lệch pha giữa điện áp pha U<sub>p</sub> và dòng điện pha I<sub>p</sub> (tải cảm thì dòng chậm sau áp)</small></div>
+    <h3>Khi xét trở kháng đường dây</h3>
+    <p>Dây dẫn dài có điện trở R<sub>d</sub> và điện kháng X<sub>d</sub> trên mỗi dây. Ở tải nối sao, mỗi dây nối tiếp với một tải pha nên cộng thẳng vào:</p>
+    <div class="formula">I<sub>d</sub> = I<sub>p</sub> = <span class="frac"><span>U<sub>d</sub></span><span>√3·√((R<sub>d</sub> + R<sub>p</sub>)² + (X<sub>d</sub> + X<sub>p</sub>)²)</span></span><small>Bỏ qua đường dây (R<sub>d</sub> = X<sub>d</sub> = 0) thì quay về công thức ở trên</small></div>
+
+    <!-- 6 -->
+    <h2 id="tai-tam-giac"><span class="num">06</span>Tải đối xứng nối tam giác</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Nối tam giác thì mỗi tải pha <strong>nằm thẳng giữa hai dây</strong>, nhận nguyên điện áp dây. Cùng một tải, đổi từ sao sang tam giác thì điện áp trên mỗi tải tăng √3 lần, dòng pha tăng √3 lần, công suất tăng <strong>3 lần</strong>.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 240" role="img" aria-label="Tải nối tam giác ba tổng trở Zp tương đương tải nối sao ba tổng trở Zp chia 3">
+  <path class="wire" d="M30 50 L150 50 L150 75 M150 175 L150 200 L30 200 M30 130 L95 130 M95 50 L95 72 M95 112 L95 145 M95 185 L95 200"/>
+  <rect class="load" x="85" y="72" width="20" height="40" rx="3" style="stroke:var(--accent)"/>
+  <rect class="load" x="85" y="145" width="20" height="40" rx="3" style="stroke:var(--accent)"/>
+  <rect class="load" x="140" y="75" width="20" height="100" rx="3" style="stroke:var(--accent)"/>
+  <text class="b" x="22" y="55" text-anchor="end">A</text><text class="b" x="22" y="135" text-anchor="end">B</text><text class="b" x="22" y="205" text-anchor="end">C</text>
+  <text class="b ac" x="112" y="97">Z<tspan class="sub" dy="4">p</tspan></text><text class="b ac" x="112" y="170">Z<tspan class="sub" dy="4">p</tspan></text><text class="b ac" x="168" y="130">Z<tspan class="sub" dy="4">p</tspan></text>
+  <circle class="node" cx="95" cy="50" r="4"/><circle class="node" cx="95" cy="130" r="4"/><circle class="node" cx="95" cy="200" r="4"/>
+  <text class="s" x="100" y="232" text-anchor="middle">tải nối Δ</text>
+  <text class="b big" x="250" y="132" text-anchor="middle">⇔</text>
+  <text class="s" x="250" y="152" text-anchor="middle">tương đương</text>
+  <path class="wire" d="M330 50 L380 50 M440 50 L480 50 L480 200 L440 200 M330 125 L380 125 M440 125 L480 125 M330 200 L380 200"/>
+  <rect class="load" x="380" y="40" width="60" height="20" rx="3"/><rect class="load" x="380" y="115" width="60" height="20" rx="3"/><rect class="load" x="380" y="190" width="60" height="20" rx="3"/>
+  <circle class="node" cx="480" cy="125" r="4.5"/>
+  <text class="b" x="322" y="55" text-anchor="end">A</text><text class="b" x="322" y="130" text-anchor="end">B</text><text class="b" x="322" y="205" text-anchor="end">C</text>
+  <text class="b warm" x="410" y="32" text-anchor="middle">Z<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> / 3</tspan></text>
+  <text class="s" x="410" y="232" text-anchor="middle">tải nối Y tương đương</text>
+</svg>
+      <figcaption>Biến đổi tải tam giác đối xứng thành hình sao: điện trở chia 3, điện kháng chia 3</figcaption>
+    </figure>
+    <div class="formula">U<sub>p</sub> = U<sub>d</sub> &nbsp;·&nbsp; I<sub>p</sub> = <span class="frac"><span>U<sub>p</sub></span><span>Z<sub>p</sub></span></span> = <span class="frac"><span>U<sub>d</sub></span><span>√(R<sub>p</sub>² + X<sub>p</sub>²)</span></span> &nbsp;·&nbsp; I<sub>d</sub> = √3·I<sub>p</sub><small>Góc lệch pha giữa U<sub>p</sub> và I<sub>p</sub> vẫn là φ = arctg(X<sub>p</sub>/R<sub>p</sub>)</small></div>
+    <div class="steps">
+      <h4>Ví dụ 3 – Tải thuần trở nối tam giác</h4>
+      <p>Ba điện trở R = 10 Ω nối Δ vào lưới có U<sub>d</sub> = 380 V. Tìm I<sub>p</sub> và I<sub>d</sub>.</p>
+      <p>Tải nối Δ ⇒ U<sub>p</sub> = U<sub>d</sub> = 380 V; tải thuần trở ⇒ Z<sub>p</sub> = √(10²) = 10 Ω</p>
+      <p class="ans">I<sub>p</sub> = U<sub>p</sub>/Z<sub>p</sub> = 380/10 = 38 A</p>
+      <p class="ans">I<sub>d</sub> = √3·I<sub>p</sub> = 38√3 ≈ 65,8 A</p>
+    </div>
+    <h3>Khi xét trở kháng đường dây</h3>
+    <p>Đường dây nối tiếp với <strong>đỉnh</strong> tam giác chứ không nối tiếp với từng tải pha, nên không cộng thẳng được. Đổi tải Δ thành tải Y tương đương (Z<sub>p</sub>/3) rồi mới cộng với đường dây:</p>
+    <div class="formula">I<sub>d</sub> = <span class="frac"><span>U<sub>d</sub></span><span>√3·√((R<sub>d</sub> + R<sub>p</sub>/3)² + (X<sub>d</sub> + X<sub>p</sub>/3)²)</span></span> &nbsp;&nbsp;&nbsp; I<sub>p</sub> = <span class="frac"><span>I<sub>d</sub></span><span>√3</span></span><small>R<sub>d</sub>, X<sub>d</sub>: điện trở và điện kháng của mỗi dây dẫn</small></div>
+
+    <figure class="sim" id="simLoad">
+      <p class="sim-h">Thử ngay · Tải 3 pha đối xứng: đổi sao / tam giác</p>
+      <div class="simbox">
+        <svg viewBox="0 0 620 250" role="img" aria-labelledby="ldTitle">
+          <title id="ldTitle">Ba dây pha L1, L2, L3 cấp cho tải 3 pha đối xứng, nối sao hoặc tam giác; bên phải là tam giác công suất P, Q, S.</title>
+          <path class="w" d="M40 50 L210 50 M40 120 L210 120 M40 190 L210 190"/>
+          <path class="ov" id="ldF1" d="M40 50 L205 50"/>
+          <path class="ov c-w" id="ldF2" d="M40 120 L205 120"/>
+          <path class="ov c-g" id="ldF3" d="M40 190 L205 190"/>
+          <text class="b" x="32" y="55" text-anchor="end">L1</text><text class="b" x="32" y="125" text-anchor="end">L2</text><text class="b" x="32" y="195" text-anchor="end">L3</text>
+          <path class="thin" d="M60 57 L60 113 M55 105 L60 113 L65 105"/>
+          <text class="s" x="66" y="90">U<tspan class="sub" dy="4">d</tspan></text>
+          <text class="b ac" id="ldLId" x="130" y="40" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan></text>
+          <g id="ldY">
+            <path class="w" d="M210 50 L240 50 M300 50 L340 50 M210 120 L240 120 M300 120 L340 120 M210 190 L240 190 M300 190 L340 190 M340 50 L340 190"/>
+            <rect class="zbox" x="240" y="38" width="60" height="24" rx="3"/><rect class="zbox" x="240" y="108" width="60" height="24" rx="3"/><rect class="zbox" x="240" y="178" width="60" height="24" rx="3"/>
+            <circle class="node" cx="340" cy="120" r="4.5"/>
+            <text class="s" x="348" y="124">N</text>
+            <text class="s" x="270" y="82" text-anchor="middle">Z<tspan class="sub" dy="4">p</tspan></text>
+          </g>
+          <g id="ldD" class="hide">
+            <path class="w" d="M210 50 L360 50 M210 190 L360 190 M210 120 L300 120 M250 50 L250 70 M250 100 L250 120 M300 120 L300 140 M300 170 L300 190 M360 50 L360 105 M360 135 L360 190"/>
+            <rect class="zbox" x="238" y="70" width="24" height="30" rx="3"/><rect class="zbox" x="288" y="140" width="24" height="30" rx="3"/><rect class="zbox" x="348" y="105" width="24" height="30" rx="3"/>
+            <circle class="node" cx="250" cy="50" r="4"/><circle class="node" cx="250" cy="120" r="4"/><circle class="node" cx="300" cy="120" r="4"/>
+            <circle class="node" cx="300" cy="190" r="4"/><circle class="node" cx="360" cy="50" r="4"/><circle class="node" cx="360" cy="190" r="4"/>
+            <text class="s" x="268" y="90">Z<tspan class="sub" dy="4">p</tspan></text>
+          </g>
+          <text class="b" id="ldLIp" x="290" y="232" text-anchor="middle">I<tspan class="sub" dy="4">p</tspan></text>
+          <path class="tri-p" id="ldTP" d="M420 200 L560 200"/>
+          <path class="tri-q" id="ldTQ" d="M560 200 L560 100"/>
+          <path class="tri-s" id="ldTS" d="M420 200 L560 100"/>
+          <text class="b ac" x="490" y="222" text-anchor="middle">P</text>
+          <text class="b warm" id="ldTQl" x="568" y="150">Q</text>
+          <text class="b grn" id="ldTSl" x="480" y="140" text-anchor="end">S</text>
+          <text class="s" x="446" y="194">φ</text>
+        </svg>
+      </div>
+      <div class="controls" role="group" aria-label="Cách nối tải">
+        <button type="button" id="ldBY" aria-pressed="true">Nối sao (Y)</button>
+        <button type="button" id="ldBD" aria-pressed="false">Nối tam giác (Δ)</button>
+      </div>
+      <div class="sl"><label for="ldU">Điện áp dây U<sub>d</sub></label><input type="range" id="ldU" min="220" max="440" step="10" value="380"><output id="ldUo"></output></div>
+      <div class="sl"><label for="ldR">Điện trở pha R<sub>p</sub></label><input type="range" id="ldR" min="1" max="40" step="1" value="20"><output id="ldRo"></output></div>
+      <div class="sl"><label for="ldX">Điện kháng pha X<sub>p</sub></label><input type="range" id="ldX" min="0" max="40" step="1" value="15"><output id="ldXo"></output></div>
+      <p class="live" id="ldLive" aria-live="polite"></p>
+      <figcaption>Giữ nguyên R<sub>p</sub>, X<sub>p</sub>, U<sub>d</sub> rồi bấm đổi Y ↔ Δ: dòng dây và công suất thay đổi đúng 3 lần, còn cosφ không đổi vì chỉ phụ thuộc tải.</figcaption>
+    </figure>
+
+    <!-- 7 -->
+    <h2 id="cong-suat"><span class="num">07</span>Công suất mạch 3 pha đối xứng</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Ba pha giống hệt nhau thì công suất toàn mạch bằng <strong>3 lần công suất một pha</strong>. Muốn tính theo số đo trên dây (U<sub>d</sub>, I<sub>d</sub>) thì thay số 3 bằng √3, công thức này đúng cho cả sao lẫn tam giác.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 210" role="img" aria-label="Tam giác công suất: P cạnh nằm ngang, Q cạnh đứng, S cạnh huyền, góc phi giữa P và S">
+  <path class="pa" d="M80 170 L320 170"/>
+  <path class="pb" d="M320 170 L320 50"/>
+  <path class="pc" d="M80 170 L320 50"/>
+  <path class="dash" d="M130 170 A50 50 0 0 0 125 148"/>
+  <text class="b" x="138" y="162">φ</text>
+  <text class="b ac" x="200" y="196" text-anchor="middle">P = 3·R<tspan class="sub" dy="4">p</tspan><tspan dy="-4">·I</tspan><tspan class="sub" dy="4">p</tspan><tspan dy="-4">² (W)</tspan></text>
+  <text class="b warm" x="328" y="140">Q = 3·X<tspan class="sub" dy="4">p</tspan><tspan dy="-4">·I</tspan><tspan class="sub" dy="4">p</tspan><tspan dy="-4">² (VAr)</tspan></text>
+  <text class="b c3" x="190" y="96" text-anchor="end">S = 3·U<tspan class="sub" dy="4">p</tspan><tspan dy="-4">·I</tspan><tspan class="sub" dy="4">p</tspan><tspan dy="-4"> (VA)</tspan></text>
+  <text class="s" x="490" y="60">S² = P² + Q²</text>
+  <text class="s" x="490" y="84">cosφ = P / S</text>
+  <text class="s" x="490" y="108">sinφ = Q / S</text>
+</svg>
+      <figcaption>Tam giác công suất của cả mạch 3 pha: giống Chương 2, chỉ nhân thêm 3</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Công suất</th><th>Theo đại lượng pha</th><th>Theo đại lượng dây</th><th>Theo R, X</th></tr></thead>
+        <tbody>
+          <tr><td>Tác dụng P (W)</td><td>3·U<sub>p</sub>·I<sub>p</sub>·cosφ</td><td>√3·U<sub>d</sub>·I<sub>d</sub>·cosφ</td><td>3·R<sub>p</sub>·I<sub>p</sub>²</td></tr>
+          <tr><td>Phản kháng Q (VAr)</td><td>3·U<sub>p</sub>·I<sub>p</sub>·sinφ</td><td>√3·U<sub>d</sub>·I<sub>d</sub>·sinφ</td><td>3·X<sub>p</sub>·I<sub>p</sub>²</td></tr>
+          <tr><td>Biểu kiến S (VA)</td><td>3·U<sub>p</sub>·I<sub>p</sub></td><td>√3·U<sub>d</sub>·I<sub>d</sub></td><td>√(P² + Q²)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Vì sao dạng dây là √3?</strong> Nối sao: 3·U<sub>p</sub>·I<sub>p</sub> = 3·(U<sub>d</sub>/√3)·I<sub>d</sub> = √3·U<sub>d</sub>·I<sub>d</sub>. Nối tam giác: 3·U<sub>d</sub>·(I<sub>d</sub>/√3) = √3·U<sub>d</sub>·I<sub>d</sub>. Hai cách nối cho cùng một công thức, nên nhãn máy chỉ cần ghi U<sub>d</sub>, I<sub>d</sub>. Chú ý: φ trong công thức luôn là góc lệch giữa <strong>điện áp pha và dòng điện pha</strong>, không phải giữa U<sub>d</sub> và I<sub>d</sub>.</div>
+    <div class="units">
+      <p class="units-h">Bảng đổi đơn vị công suất</p>
+      <div class="tablewrap">
+        <table class="small">
+          <thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Quy đổi</th><th>Ví dụ thực tế</th></tr></thead>
+          <tbody>
+            <tr><td>Megawatt <span class="say" title="Cách đọc">mê-ga oát</span></td><td>MW</td><td>1 MW = 1 000 kW</td><td>Một tổ máy thuỷ điện cỡ vừa: 100 MW</td></tr>
+            <tr><td>Kilowatt <span class="say" title="Cách đọc">ki-lô oát</span></td><td>kW</td><td>1 kW = 1 000 W</td><td>Động cơ 3 pha máy bơm: 5,5 kW</td></tr>
+            <tr class="base"><td>Watt <span class="say" title="Cách đọc">oát</span></td><td>W</td><td>Đơn vị gốc của P</td><td>Bóng đèn LED: 9 W</td></tr>
+            <tr><td>Kilovolt-ampere <span class="say" title="Cách đọc">ki-lô vôn am-pe</span></td><td>kVA</td><td>1 kVA = 1 000 VA</td><td>Máy biến áp phân phối khu dân cư: 400 kVA</td></tr>
+            <tr class="base"><td>Volt-ampere <span class="say" title="Cách đọc">vôn am-pe</span></td><td>VA</td><td>Đơn vị gốc của S</td><td>Bộ lưu điện UPS: 1 000 VA</td></tr>
+            <tr class="base"><td>Volt-ampere phản kháng <span class="say" title="Cách đọc">vôn am-pe phản kháng</span></td><td>VAr</td><td>Đơn vị gốc của Q; 1 kVAr = 1 000 VAr</td><td>Tụ bù hệ số công suất: 20 kVAr</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <h2 id="vi-du-sao"><span class="num">08</span>Ví dụ: tải nối sao</h2>
+    <p>Tải 3 pha đối xứng nối hình sao có R<sub>p</sub> = 20 Ω, X<sub>p</sub> = 15 Ω, đấu vào mạng điện 3 pha có U<sub>d</sub> = 380 V.<br>a) Tính I<sub>p</sub> và I<sub>d</sub>. &nbsp; b) Tính P, Q, S và cosφ của tải 3 pha.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 225" role="img" aria-label="Ba dây L1, L2, L3 và dây trung tính N nối tới tải nối sao, mỗi pha có Zp gồm R 20 ohm và X 15 ohm">
+  <path class="wire" d="M40 40 L300 40 L300 120 M40 120 L300 120 M300 120 L245 175 L245 180 L40 180 M300 120 L355 175 L355 205 L40 205"/>
+  <rect class="load" x="290" y="60" width="20" height="40" rx="3" style="stroke:var(--accent)"/>
+  <rect class="load" x="263.5" y="127.5" width="18" height="40" rx="3" transform="rotate(45 272.5 147.5)" style="stroke:var(--accent)"/>
+  <rect class="load" x="318.5" y="127.5" width="18" height="40" rx="3" transform="rotate(-45 327.5 147.5)" style="stroke:var(--accent)"/>
+  <circle class="node" cx="300" cy="120" r="4.5"/>
+  <text class="b" x="32" y="45" text-anchor="end">L1</text><text class="b" x="32" y="125" text-anchor="end">N</text><text class="b" x="32" y="185" text-anchor="end">L2</text><text class="b" x="32" y="210" text-anchor="end">L3</text>
+  <text class="b ac" x="318" y="85">Z<tspan class="sub" dy="4">p</tspan></text>
+  <text class="s" x="300" y="112" text-anchor="end" dx="-8">điểm trung tính</text>
+  <path class="arr" d="M170 33 L182 40 L170 47"/><text class="b" x="176" y="28" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan></text>
+  <path class="arr-ac" d="M100 46 L100 199 M94 191 L100 199 L106 191"/><text class="b ac" x="108" y="160">U<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = 380 V</tspan></text>
+  <text class="b" x="420" y="70">R<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> = 20 Ω</tspan></text>
+  <text class="b" x="420" y="96">X<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> = 15 Ω</tspan></text>
+  <text class="s" x="420" y="124">ba pha giống nhau</text>
+</svg>
+      <figcaption>Tải nối sao, có dây trung tính N</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>a) Dòng điện pha và dòng điện dây</h4>
+      <p>Tải nối Y ⇒ U<sub>d</sub> = √3·U<sub>p</sub> ⇒ U<sub>p</sub> = U<sub>d</sub>/√3 = 380/√3 ≈ 220 V</p>
+      <p>Z<sub>p</sub> = √(R<sub>p</sub>² + X<sub>p</sub>²) = √(20² + 15²) = √625 = 25 Ω</p>
+      <p class="ans">I<sub>d</sub> = I<sub>p</sub> = U<sub>d</sub> / (√3·Z<sub>p</sub>) = 380 / (√3 × 25) ≈ 8,78 A</p>
+      <h4>b) Công suất</h4>
+      <p class="ans">P = 3·R<sub>p</sub>·I<sub>p</sub>² = 3 × 20 × 8,776² ≈ 4 621 W</p>
+      <p class="ans">Q = 3·X<sub>p</sub>·I<sub>p</sub>² = 3 × 15 × 8,776² ≈ 3 466 VAr</p>
+      <p class="ans">S = √(P² + Q²) = √(4 621² + 3 466²) ≈ 5 776 VA</p>
+      <p class="ans">cosφ = P/S = 4 621 / 5 776 = 0,8</p>
+      <h4>Kiểm tra lại</h4>
+      <p>S = √3·U<sub>d</sub>·I<sub>d</sub> = √3 × 380 × 8,776 ≈ 5 776 VA ✓ · cosφ = R<sub>p</sub>/Z<sub>p</sub> = 20/25 = 0,8 ✓</p>
+      <p>Làm tròn I<sub>p</sub> = 8,78 A trước rồi mới bình phương thì được P ≈ 4 625 W, Q ≈ 3 469 VAr: lệch vài watt do làm tròn, vẫn chấp nhận được. Muốn chính xác thì giữ nhiều chữ số đến bước cuối.</p>
+    </div>
+
+    <!-- 9 -->
+    <h2 id="vi-du-tam-giac"><span class="num">09</span>Ví dụ: tải nối tam giác</h2>
+    <p>Tải 3 pha đối xứng nối hình tam giác có R<sub>p</sub> = 9 Ω, X<sub>p</sub> = 12 Ω, đấu vào mạng điện 3 pha có U<sub>d</sub> = 380 V.<br>a) Tính I<sub>p</sub> và I<sub>d</sub>. &nbsp; b) Tính P, Q, S và cosφ của tải 3 pha.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Ba dây L1, L2, L3 nối tới ba đỉnh tam giác A, B, C; mỗi cạnh là một tải pha Zp gồm R 9 ohm và X 12 ohm">
+  <path class="wire" d="M40 40 L230 40 M40 190 L150 190 M40 214 L330 214 L330 190 L310 190 M230 40 L207 80 M173 140 L150 190 M230 40 L253 80 M287 140 L310 190 M150 190 L210 190 M250 190 L310 190"/>
+  <rect class="load" x="181" y="88" width="18" height="44" rx="3" transform="rotate(25 190 110)" style="stroke:var(--accent)"/>
+  <rect class="load" x="261" y="88" width="18" height="44" rx="3" transform="rotate(-25 270 110)" style="stroke:var(--accent)"/>
+  <rect class="load" x="210" y="181" width="40" height="18" rx="3" style="stroke:var(--accent)"/>
+  <circle class="node" cx="230" cy="40" r="4.5"/><circle class="node" cx="150" cy="190" r="4.5"/><circle class="node" cx="310" cy="190" r="4.5"/>
+  <text class="b" x="230" y="30" text-anchor="middle">A</text><text class="b" x="140" y="182" text-anchor="end">B</text><text class="b" x="318" y="182">C</text>
+  <text class="b" x="32" y="45" text-anchor="end">L1</text><text class="b" x="32" y="195" text-anchor="end">L2</text><text class="b" x="32" y="219" text-anchor="end">L3</text>
+  <text class="b ac" x="166" y="112" text-anchor="end">Z<tspan class="sub" dy="4">p</tspan></text>
+  <path class="arr" d="M120 33 L132 40 L120 47"/><text class="b" x="126" y="28" text-anchor="middle">I<tspan class="sub" dy="4">d</tspan></text>
+  <path class="arr" d="M246 62 L250 74 L240 70"/><text class="b" x="258" y="64">I<tspan class="sub" dy="4">p</tspan></text>
+  <text class="b" x="400" y="70">R<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> = 9 Ω</tspan></text>
+  <text class="b" x="400" y="96">X<tspan class="sub" dy="4">p</tspan><tspan dy="-4"> = 12 Ω</tspan></text>
+  <text class="b" x="400" y="122">U<tspan class="sub" dy="4">d</tspan><tspan dy="-4"> = 380 V</tspan></text>
+</svg>
+      <figcaption>Tải nối tam giác: mỗi tải pha nằm giữa hai dây</figcaption>
+    </figure>
+    <div class="steps">
+      <h4>a) Dòng điện pha và dòng điện dây</h4>
+      <p>Tải nối Δ ⇒ U<sub>p</sub> = U<sub>d</sub> = 380 V</p>
+      <p>Z<sub>p</sub> = √(9² + 12²) = √225 = 15 Ω</p>
+      <p class="ans">I<sub>p</sub> = U<sub>p</sub>/Z<sub>p</sub> = 380/15 ≈ 25,33 A</p>
+      <p class="ans">I<sub>d</sub> = √3·I<sub>p</sub> = √3 × 25,33 ≈ 43,88 A</p>
+      <h4>b) Công suất</h4>
+      <p class="ans">P = 3·R<sub>p</sub>·I<sub>p</sub>² = 3 × 9 × 25,33² ≈ 17 328 W</p>
+      <p class="ans">Q = 3·X<sub>p</sub>·I<sub>p</sub>² = 3 × 12 × 25,33² ≈ 23 104 VAr</p>
+      <p class="ans">S = √(P² + Q²) ≈ 28 880 VA &nbsp;·&nbsp; cosφ = P/S = 0,6</p>
+      <h4>Kiểm tra lại</h4>
+      <p>S = 3·U<sub>p</sub>·I<sub>p</sub> = 3 × 380 × 25,33 ≈ 28 880 VA ✓ · cosφ = R<sub>p</sub>/Z<sub>p</sub> = 9/15 = 0,6 ✓</p>
+      <p>Nếu làm tròn I<sub>p</sub> = 25,3 A trước khi bình phương thì ra P ≈ 17 282 W, Q ≈ 23 043 VAr, S ≈ 28 803 VA.</p>
+    </div>
+    <div class="note"><strong>So sánh với nối sao:</strong> cũng tải này mà nối Y vào lưới 380 V thì U<sub>p</sub> ≈ 219,4 V, I<sub>p</sub> ≈ 219,4/15 ≈ 14,6 A, P = 3 × 9 × 14,63² ≈ 5 776 W, đúng bằng 1/3 khi nối Δ. Thử lại bằng mô phỏng ở mục 06.</div>
+
+    <!-- 10 -->
+    <h2 id="ung-dung"><span class="num">10</span>Ứng dụng: động cơ 3 pha</h2>
+    <p class="easy"><span class="tag">Dễ nhớ</span>Hộp đấu dây động cơ có <strong>6 cọc</strong> cho ba cuộn dây. Thanh nối nằm <strong>ngang</strong> chụm ba cuối cuộn lại là sao; ba thanh nối <strong>dọc</strong> nối đầu cuộn này với cuối cuộn kia là tam giác.</p>
+    <figure class="ill">
+      <svg class="il" viewBox="0 0 560 230" role="img" aria-label="Hộp đấu dây động cơ 6 cọc: U1 V1 W1 ở hàng trên, W2 U2 V2 ở hàng dưới; nối sao dùng một thanh ngang ở hàng dưới, nối tam giác dùng ba thanh dọc">
+  <rect class="tb" x="30" y="40" width="220" height="150" rx="10"/>
+  <rect class="tb" x="310" y="40" width="220" height="150" rx="10"/>
+  <path class="pa" d="M80 70 L80 22"/><path class="pb" d="M140 70 L140 22"/><path class="pc" d="M200 70 L200 22"/>
+  <path class="pa" d="M360 70 L360 22"/><path class="pb" d="M420 70 L420 22"/><path class="pc" d="M480 70 L480 22"/>
+  <circle class="term" cx="80" cy="85" r="15"/><circle class="term" cx="140" cy="85" r="15"/><circle class="term" cx="200" cy="85" r="15"/>
+  <circle class="term" cx="80" cy="150" r="15"/><circle class="term" cx="140" cy="150" r="15"/><circle class="term" cx="200" cy="150" r="15"/>
+  <line class="link" x1="80" y1="150" x2="200" y2="150"/>
+  <circle class="term" cx="360" cy="85" r="15"/><circle class="term" cx="420" cy="85" r="15"/><circle class="term" cx="480" cy="85" r="15"/>
+  <circle class="term" cx="360" cy="150" r="15"/><circle class="term" cx="420" cy="150" r="15"/><circle class="term" cx="480" cy="150" r="15"/>
+  <line class="link" x1="360" y1="85" x2="360" y2="150"/><line class="link" x1="420" y1="85" x2="420" y2="150"/><line class="link" x1="480" y1="85" x2="480" y2="150"/>
+  <text class="s" x="80" y="16" text-anchor="middle">L1</text><text class="s" x="140" y="16" text-anchor="middle">L2</text><text class="s" x="200" y="16" text-anchor="middle">L3</text>
+  <text class="s" x="360" y="16" text-anchor="middle">L1</text><text class="s" x="420" y="16" text-anchor="middle">L2</text><text class="s" x="480" y="16" text-anchor="middle">L3</text>
+  <text class="b" x="80" y="120" text-anchor="middle">U1</text><text class="b" x="140" y="120" text-anchor="middle">V1</text><text class="b" x="200" y="120" text-anchor="middle">W1</text>
+  <text class="b" x="80" y="182" text-anchor="middle">W2</text><text class="b" x="140" y="182" text-anchor="middle">U2</text><text class="b" x="200" y="182" text-anchor="middle">V2</text>
+  <text class="b" x="385" y="120" text-anchor="middle">U1</text><text class="b" x="445" y="120" text-anchor="middle">V1</text><text class="b" x="505" y="120" text-anchor="middle">W1</text>
+  <text class="b" x="385" y="182" text-anchor="middle">W2</text><text class="b" x="445" y="182" text-anchor="middle">U2</text><text class="b" x="505" y="182" text-anchor="middle">V2</text>
+  <text class="b ac" x="140" y="215" text-anchor="middle">Nối sao (Y)</text>
+  <text class="b warm" x="420" y="215" text-anchor="middle">Nối tam giác (Δ)</text>
+</svg>
+      <figcaption>Cuộn U nối U1–U2, cuộn V nối V1–V2, cuộn W nối W1–W2; cọc hàng dưới đặt lệch (W2 U2 V2) để ba thanh nối dọc tạo thành tam giác</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Nhãn động cơ</th><th>Lưới 220/380 V</th><th>Vì sao</th></tr></thead>
+        <tbody>
+          <tr><td>Δ 220 V / Y 380 V</td><td>Nối <strong>sao</strong></td><td>Mỗi cuộn chịu được 220 V. Nối Y thì mỗi cuộn nhận 380/√3 ≈ 220 V, vừa đúng.</td></tr>
+          <tr><td>Δ 380 V / Y 660 V</td><td>Nối <strong>tam giác</strong></td><td>Mỗi cuộn chịu được 380 V. Nối Δ thì mỗi cuộn nhận đủ 380 V; nối Y chỉ còn 220 V, động cơ yếu.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Khởi động sao – tam giác:</strong> động cơ lớn (cuộn dây chịu 380 V) được khởi động ở kiểu sao rồi mới chuyển sang tam giác. Lúc khởi động mỗi cuộn chỉ nhận U<sub>d</sub>/√3, nên dòng dây khởi động giảm còn <strong>1/3</strong> (đúng tỉ lệ 3 lần như ví dụ ở mục 09), lưới đỡ bị sụt áp.</li>
+      <li>Đấu nhầm: động cơ "Δ 220 V / Y 380 V" mà nối Δ vào lưới 380 V thì mỗi cuộn nhận 380 V thay vì 220 V, dòng và công suất tăng gấp 3, cuộn dây cháy rất nhanh.</li>
+      <li>Đảo chiều quay động cơ 3 pha: đổi chỗ <strong>hai</strong> trong ba dây pha cấp vào (đổi thứ tự pha A – B – C thành A – C – B).</li>
+    </ul>
+
+    <!-- 11 -->
+    <h2 id="tom-tat"><span class="num">11</span>Bảng tóm tắt</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nội dung</th><th>Nối sao (Y)</th><th>Nối tam giác (Δ)</th></tr></thead>
+        <tbody>
+          <tr><td>Điện áp</td><td>U<sub>d</sub> = √3·U<sub>p</sub></td><td>U<sub>d</sub> = U<sub>p</sub></td></tr>
+          <tr><td>Dòng điện</td><td>I<sub>d</sub> = I<sub>p</sub></td><td>I<sub>d</sub> = √3·I<sub>p</sub></td></tr>
+          <tr><td>Dòng pha (tải đối xứng)</td><td>I<sub>p</sub> = U<sub>d</sub> / (√3·Z<sub>p</sub>)</td><td>I<sub>p</sub> = U<sub>d</sub> / Z<sub>p</sub></td></tr>
+          <tr><td>Có trở kháng đường dây</td><td>I<sub>d</sub> = U<sub>d</sub> / (√3·√((R<sub>d</sub>+R<sub>p</sub>)² + (X<sub>d</sub>+X<sub>p</sub>)²))</td><td>I<sub>d</sub> = U<sub>d</sub> / (√3·√((R<sub>d</sub>+R<sub>p</sub>/3)² + (X<sub>d</sub>+X<sub>p</sub>/3)²))</td></tr>
+          <tr><td>Dây trung tính</td><td>Có thể có (3 pha 4 dây)</td><td>Không có</td></tr>
+          <tr><td>Tổng trở, góc lệch</td><td colspan="2">Z<sub>p</sub> = √(R<sub>p</sub>² + X<sub>p</sub>²) · φ = arctg(X<sub>p</sub>/R<sub>p</sub>) · cosφ = R<sub>p</sub>/Z<sub>p</sub></td></tr>
+          <tr><td>Công suất</td><td colspan="2">P = √3·U<sub>d</sub>·I<sub>d</sub>·cosφ = 3·R<sub>p</sub>·I<sub>p</sub>² · Q = √3·U<sub>d</sub>·I<sub>d</sub>·sinφ = 3·X<sub>p</sub>·I<sub>p</sub>² · S = √3·U<sub>d</sub>·I<sub>d</sub> = √(P² + Q²)</td></tr>
+          <tr><td>Cùng tải, đổi Y → Δ</td><td colspan="2">I<sub>p</sub> tăng √3 lần, I<sub>d</sub> và P, Q, S tăng 3 lần, cosφ giữ nguyên</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tablewrap">
+      <table class="small">
+        <thead><tr><th>Đơn vị</th><th>Ký hiệu</th><th>Đại lượng</th></tr></thead>
+        <tbody>
+          <tr><td>Volt <span class="say" title="Cách đọc">vôn</span></td><td>V</td><td>Điện áp pha U<sub>p</sub>, điện áp dây U<sub>d</sub></td></tr>
+          <tr><td>Ampere <span class="say" title="Cách đọc">am-pe</span></td><td>A</td><td>Dòng điện pha I<sub>p</sub>, dòng điện dây I<sub>d</sub></td></tr>
+          <tr><td>Ohm <span class="say" title="Cách đọc">ôm</span></td><td>Ω</td><td>R<sub>p</sub>, X<sub>p</sub>, Z<sub>p</sub>, R<sub>d</sub>, X<sub>d</sub></td></tr>
+          <tr><td>Watt <span class="say" title="Cách đọc">oát</span></td><td>W</td><td>Công suất tác dụng P</td></tr>
+          <tr><td>Volt-ampere phản kháng <span class="say" title="Cách đọc">vôn am-pe phản kháng</span></td><td>VAr</td><td>Công suất phản kháng Q</td></tr>
+          <tr><td>Volt-ampere <span class="say" title="Cách đọc">vôn am-pe</span></td><td>VA</td><td>Công suất biểu kiến S</td></tr>
+          <tr><td>Hertz <span class="say" title="Cách đọc">héc</span></td><td>Hz</td><td>Tần số lưới f = 50 Hz</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 12 -->
+    <h2 id="trac-nghiem"><span class="num">12</span>Trắc nghiệm ôn tập</h2>
+    <p>10 câu hỏi tóm tắt lý thuyết của chương. Chọn một đáp án để xem đúng sai và giải thích.</p>
+    <div class="quiz" id="quiz"></div>
+
+    <!-- 13 -->
+    <h2 id="bai-tap"><span class="num">13</span>Bài tập</h2>
+    <p>Làm bài để luyện tính đại lượng pha, đại lượng dây và công suất của tải 3 pha nối sao, nối tam giác:</p>
+    <div class="exlist">
+      <a class="card" href="/baitap3pha">
+        <h2>Bài tập mạch điện xoay chiều 3 pha</h2>
+        <p>Bài tự chấm: tải đối xứng nối sao và nối tam giác, tổng trở dạng R + jX, có xét trở kháng đường dây; tính I<sub>p</sub>, I<sub>d</sub>, P, Q, S và cosφ.</p>
+        <span class="go">Làm bài →</span>
+      </a>
+    </div>
+
+    <a class="back" href="/namnhat-lythuyetmach">← Về Lý thuyết mạch (Năm nhất)</a>
+  </article>
+</div>
+<script src="/assets/posts.js?v=20261108d"></script>
+<script src="/assets/site.js?v=20261108d"></script>
+<script>
+window.CT_QUIZ = [
+  { q: "Nguồn điện 3 pha đối xứng gồm ba sức điện động:",
+    opts: ["Cùng biên độ, cùng tần số, lệch pha nhau 90°", "Cùng biên độ, cùng tần số, lệch pha nhau 120°", "Cùng biên độ, khác tần số, cùng pha", "Khác biên độ, cùng tần số, lệch pha nhau 120°"], a: 1,
+    why: "Ba pha đối xứng có cùng biên độ, cùng tần số và lệch nhau 120° (360°/3, một phần ba chu kỳ). Lệch 90° là hệ hai pha; khác tần số hoặc khác biên độ thì không còn đối xứng." },
+  { q: "Điện áp dây là điện áp giữa:",
+    opts: ["Điểm đầu và điểm cuối của cùng một pha", "Một dây pha và dây trung tính", "Hai dây pha với nhau", "Dây trung tính và đất"], a: 2,
+    why: "Điện áp dây U<sub>d</sub> đo giữa điểm đầu pha này và điểm đầu pha kia, tức giữa hai dây pha (U<sub>AB</sub>, U<sub>BC</sub>, U<sub>CA</sub>). Đo giữa đầu và cuối một pha (dây pha với trung tính khi nối Y) là điện áp pha." },
+  { q: "Nguồn nối hình sao có U<sub>p</sub> = 220 V. Điện áp dây bằng:",
+    opts: ["220 V", "311 V", "380 V", "660 V"], a: 2,
+    why: "Nối Y: U<sub>d</sub> = √3·U<sub>p</sub> = 1,732 × 220 ≈ 380 V. 311 V là biên độ (220√2) của điện áp pha chứ không phải điện áp dây; 660 V là √3 × 380." },
+  { q: "Khi nối tam giác, quan hệ đúng là:",
+    opts: ["U<sub>d</sub> = √3·U<sub>p</sub>, I<sub>d</sub> = I<sub>p</sub>", "U<sub>d</sub> = U<sub>p</sub>, I<sub>d</sub> = √3·I<sub>p</sub>", "U<sub>d</sub> = U<sub>p</sub>, I<sub>d</sub> = I<sub>p</sub>", "U<sub>d</sub> = √3·U<sub>p</sub>, I<sub>d</sub> = √3·I<sub>p</sub>"], a: 1,
+    why: "Mỗi pha của tam giác nằm thẳng giữa hai dây nên U<sub>d</sub> = U<sub>p</sub>; mỗi dây nhận dòng của hai pha gặp nhau ở đỉnh nên I<sub>d</sub> = √3·I<sub>p</sub>. Phương án đầu là của nối sao. √3 chỉ nằm ở một đại lượng, không bao giờ ở cả hai." },
+  { q: "Tải 3 pha đối xứng nối sao có dây trung tính. Dòng điện trong dây trung tính bằng:",
+    opts: ["0", "I<sub>p</sub>", "√3·I<sub>p</sub>", "3·I<sub>p</sub>"], a: 0,
+    why: "Ba dòng pha cùng độ lớn, lệch nhau 120° nên tổng vectơ bằng 0: dây trung tính không có dòng. Dây trung tính chỉ mang dòng khi tải không đối xứng." },
+  { q: "Tải nối sao có R<sub>p</sub> = 8 Ω, X<sub>p</sub> = 6 Ω, mắc vào lưới 220/380 V. Dòng điện dây là:",
+    opts: ["22 A", "38 A", "27,5 A", "12,7 A"], a: 0,
+    why: "Z<sub>p</sub> = √(8² + 6²) = 10 Ω. Nối Y nên mỗi pha nhận U<sub>p</sub> = 220 V: I<sub>p</sub> = 220/10 = 22 A, và I<sub>d</sub> = I<sub>p</sub> = 22 A. Lấy 380/10 = 38 A là quên rằng tải sao chỉ nhận điện áp pha; 27,5 A là chia cho R thay vì Z." },
+  { q: "Ba điện trở 10 Ω nối tam giác vào lưới có U<sub>d</sub> = 380 V. Dòng điện dây là:",
+    opts: ["22 A", "38 A", "≈ 65,8 A", "≈ 21,9 A"], a: 2,
+    why: "Nối Δ: U<sub>p</sub> = U<sub>d</sub> = 380 V, I<sub>p</sub> = 380/10 = 38 A, I<sub>d</sub> = √3 × 38 ≈ 65,8 A. 38 A mới là dòng pha; 21,9 A là chia √3 nhầm chiều." },
+  { q: "Công thức công suất tác dụng của mạch 3 pha đối xứng, viết theo đại lượng dây:",
+    opts: ["P = 3·U<sub>d</sub>·I<sub>d</sub>·cosφ", "P = √3·U<sub>d</sub>·I<sub>d</sub>·cosφ", "P = √3·U<sub>d</sub>·I<sub>d</sub>·sinφ", "P = U<sub>d</sub>·I<sub>d</sub>·cosφ"], a: 1,
+    why: "P = 3·U<sub>p</sub>·I<sub>p</sub>·cosφ; đổi sang đại lượng dây (sao hay tam giác đều vậy) được √3·U<sub>d</sub>·I<sub>d</sub>·cosφ. Hệ số 3 chỉ đi với đại lượng pha; sinφ là của công suất phản kháng Q." },
+  { q: "Tải 3 pha có P = 4 800 W và Q = 3 600 VAr. Công suất biểu kiến và hệ số công suất là:",
+    opts: ["S = 8 400 VA, cosφ = 0,57", "S = 6 000 VA, cosφ = 0,8", "S = 6 000 VA, cosφ = 0,6", "S = 1 200 VA, cosφ = 4"], a: 1,
+    why: "S = √(P² + Q²) = √(4 800² + 3 600²) = 6 000 VA (không cộng thẳng P + Q), cosφ = P/S = 4 800/6 000 = 0,8. 0,6 là sinφ = Q/S." },
+  { q: "Một tải 3 pha đối xứng đang nối sao, chuyển sang nối tam giác trên cùng lưới điện. Công suất tiêu thụ:",
+    opts: ["Không đổi", "Tăng √3 lần", "Tăng 3 lần", "Giảm 3 lần"], a: 2,
+    why: "Nối Δ thì điện áp mỗi tải tăng từ U<sub>d</sub>/√3 lên U<sub>d</sub> (gấp √3), dòng pha cũng gấp √3, nên P = 3·R·I<sub>p</sub>² gấp (√3)² = 3 lần. Vì vậy khởi động sao – tam giác giảm dòng khởi động còn 1/3, còn đấu nhầm Δ cho động cơ Y thì cháy cuộn dây." }
+];
+</script>
+<script src="/assets/quiz.js?v=3"></script>
+<script src="/assets/lt4-sim.js?v=1"></script>
+<script src="/assets/i18n.js?v=1" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
