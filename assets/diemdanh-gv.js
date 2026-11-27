@@ -870,22 +870,22 @@
     if (!monthData) await loadMonth();
     $('exportMsg').textContent = 'Đang tạo file…';
     try {
-      const marks = {};
-      for (const d of classDates()) {
-        const st = dayStatus(d);
-        const day = String(Number(d.slice(8)));
-        for (const s of roster) {
-          const v = st(s.mssv);
-          // Trễ vẫn tính là có mặt — mẫu Excel chỉ ghi P/K.
-          if (v === 'P' || v === 'K') (marks[s.mssv] ??= {})[day] = v;
-        }
-      }
+      // Tính cho mọi bạn trong file mẫu: bạn không có trong danh sách lớp trên web trước đây bị để trống (= đi học đủ).
+      const templateStudents = await window.DDXlsx.readRoster(file);
+      const missing = window.DDXlsx.notInRoster(templateStudents, roster);
+      const marks = window.DDXlsx.exportMarks({
+        dates: classDates(),
+        mssvs: [...roster.map((s) => s.mssv), ...templateStudents.map((s) => s.mssv)],
+        statusOn: dayStatus,
+      });
       const [y, m] = $('monthInput').value.split('-').map(Number);
       const blob = await window.DDXlsx.fillTemplate(file, marks, { month: m, signDate: new Date() });
       const a = h('a', { href: URL.createObjectURL(blob), download: `DiemDanh_CDDDT26C_T${pad(m)}-${y}.xlsx` });
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 10_000);
-      $('exportMsg').textContent = 'Đã xuất file.';
+      $('exportMsg').textContent = missing.length
+        ? `Đã xuất file. Lưu ý: ${missing.length} bạn có trong file mẫu nhưng không có trong danh sách lớp trên web nên không điểm danh được, đã ghi vắng K: ${missing.map((s) => `${`${s.ho} ${s.ten}`.trim()} (${s.mssv})`).join(', ')}. Nếu các bạn này vẫn học, thêm vào danh sách lớp (tab Danh sách lớp).`
+        : 'Đã xuất file.';
     } catch (err) {
       console.error(err);
       $('exportMsg').textContent = `Không xuất được: ${err.message}`;

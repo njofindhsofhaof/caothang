@@ -134,7 +134,7 @@
     const students = studentRows(rows, lay);
     let totalP = 0; let totalK = 0;
     for (const s of students) {
-      const m = marks[s.mssv] ?? {};
+      const m = marks[normMssv(s.mssv)] ?? {};
       let p = 0; let k = 0;
       for (const [day, col] of Object.entries(lay.dayCols)) {
         const v = m[day] ?? '';
@@ -163,5 +163,34 @@
     return book.zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   }
 
-  window.DDXlsx = { readRoster, fillTemplate };
+  // SV hay gõ thêm số 0 ở đầu; danh sách trên web lưu MSSV không có số 0 đầu.
+  const normMssv = (v) => String(v ?? '').trim().replace(/^0+(?=\d)/, '');
+
+  /**
+   * P/K để điền vào mẫu cho MỌI sinh viên có trong file mẫu (không chỉ danh sách trên web):
+   * bạn không có trên web thì không có bản ghi nào nên ra K, thay vì để trống (= đi học đủ).
+   * statusOn(date) trả hàm mssv → 'ok' | 'T' | 'P' | 'K'. Trễ (T) vẫn tính có mặt: mẫu chỉ ghi P/K.
+   * @returns {{ [mssv: string]: { [day: string]: 'P' | 'K' } }}
+   */
+  function exportMarks({ dates, mssvs, statusOn }) {
+    const marks = {};
+    const list = [...new Set(mssvs.map(normMssv))];
+    for (const d of dates) {
+      const st = statusOn(d);
+      const day = String(Number(d.slice(8)));
+      for (const mssv of list) {
+        const v = st(mssv);
+        if (v === 'P' || v === 'K') (marks[mssv] ??= {})[day] = v;
+      }
+    }
+    return marks;
+  }
+
+  /** Sinh viên có trong file mẫu nhưng không có trong danh sách lớp trên web. */
+  function notInRoster(templateStudents, roster) {
+    const have = new Set(roster.map((s) => normMssv(s.mssv)));
+    return templateStudents.filter((s) => !have.has(normMssv(s.mssv)));
+  }
+
+  window.DDXlsx = { readRoster, fillTemplate, exportMarks, notInRoster };
 })();
