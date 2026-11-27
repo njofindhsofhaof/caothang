@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=20261108d">
-<link rel="stylesheet" href="/assets/diemdanh.css?v=luot1">
+<link rel="stylesheet" href="/assets/diemdanh.css?v=add1">
   <script src="/assets/theme.js"></script>
 </head>
 <body>
@@ -199,6 +199,17 @@
         <input type="file" id="rosterInput" accept=".xlsx">
         <p class="dd-hint" id="rosterMsg" role="status"></p>
       </div>
+      <form class="dd-card gv-add-form" id="addStudentForm" aria-labelledby="addStudentTitle">
+        <h3 class="dd-label" id="addStudentTitle">Thêm sinh viên</h3>
+        <p class="dd-hint">Thêm một bạn vào lớp (vd. bạn có trong danh sách của trường nhưng thiếu trên web). Bạn mới chưa có điểm danh nên các buổi đã qua tự tính <b>vắng K</b>.</p>
+        <div class="gv-add-row">
+          <label>MSSV <input id="addMssv" inputmode="numeric" pattern="\d{6,12}" maxlength="12" required autocomplete="off"></label>
+          <label>Họ và tên lót <input id="addHo" maxlength="60" autocomplete="off"></label>
+          <label>Tên <input id="addTen" maxlength="60" required autocomplete="off"></label>
+          <button class="dd-btn" type="submit">Thêm</button>
+        </div>
+        <p class="dd-hint" id="addStudentMsg" role="status"></p>
+      </form>
       <div class="gv-table-wrap"><table class="gv-table" id="rosterTable"></table></div>
 
       <form class="dd-card" id="pinForm" aria-labelledby="pinTitle">
@@ -219,10 +230,10 @@
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="/assets/diemdanh-xlsx.js?v=fab08e2"></script>
+<script src="/assets/diemdanh-xlsx.js?v=all1"></script>
 <script src="/assets/diemdanh-img.js?v=img"></script>
 <script src="/assets/subjects.js?v=1"></script>
-<script src="/assets/diemdanh-gv.js?v=luot1"></script>
+<script src="/assets/diemdanh-gv.js?v=add1"></script>
 <script src="/assets/diemdanh-gv-checkins.js?v=luot2"></script>
 </body>
 </html>

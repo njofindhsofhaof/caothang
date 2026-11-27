@@ -770,6 +770,7 @@
       case 'session_qr': return `${e.value ? 'Bật' : 'Tắt'} bắt buộc QR: ${where(e)}.`;
       case 'sessionDelete': return `Xoá lịch: ${where(e)}.`;
       case 'rosterImport': return `Nhập danh sách lớp: ${e.before} → ${e.count} sinh viên${e.added?.length ? ` · thêm ${e.added.join(', ')}` : ''}${e.removed?.length ? ` · bớt ${e.removed.join(', ')}` : ''}.`;
+      case 'rosterAdd': return `Thêm vào danh sách lớp: ${e.name || ''} (${e.mssv}).`;
       case 'rosterRemove': return `Xoá khỏi danh sách lớp: ${e.name || ''} (${e.mssv}).`;
       case 'pinChange': return 'Đổi PIN giáo viên.';
       case 'placeAdd': return `Lưu phòng: ${e.name}.`;
@@ -870,22 +871,22 @@
     if (!monthData) await loadMonth();
     $('exportMsg').textContent = 'Đang tạo file…';
     try {
-      const marks = {};
-      for (const d of classDates()) {
-        const st = dayStatus(d);
-        const day = String(Number(d.slice(8)));
-        for (const s of roster) {
-          const v = st(s.mssv);
-          // Trễ vẫn tính là có mặt — mẫu Excel chỉ ghi P/K.
-          if (v === 'P' || v === 'K') (marks[s.mssv] ??= {})[day] = v;
-        }
-      }
+      // Tính cho mọi bạn trong file mẫu: bạn không có trong danh sách lớp trên web trước đây bị để trống (= đi học đủ).
+      const templateStudents = await window.DDXlsx.readRoster(file);
+      const missing = window.DDXlsx.notInRoster(templateStudents, roster);
+      const marks = window.DDXlsx.exportMarks({
+        dates: classDates(),
+        mssvs: [...roster.map((s) => s.mssv), ...templateStudents.map((s) => s.mssv)],
+        statusOn: dayStatus,
+      });
       const [y, m] = $('monthInput').value.split('-').map(Number);
       const blob = await window.DDXlsx.fillTemplate(file, marks, { month: m, signDate: new Date() });
       const a = h('a', { href: URL.createObjectURL(blob), download: `DiemDanh_CDDDT26C_T${pad(m)}-${y}.xlsx` });
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 10_000);
-      $('exportMsg').textContent = 'Đã xuất file.';
+      $('exportMsg').textContent = missing.length
+        ? `Đã xuất file. Lưu ý: ${missing.length} bạn có trong file mẫu nhưng không có trong danh sách lớp trên web nên không điểm danh được, đã ghi vắng K: ${missing.map((s) => `${`${s.ho} ${s.ten}`.trim()} (${s.mssv})`).join(', ')}. Nếu các bạn này vẫn học, thêm vào danh sách lớp (tab Danh sách lớp).`
+        : 'Đã xuất file.';
     } catch (err) {
       console.error(err);
       $('exportMsg').textContent = `Không xuất được: ${err.message}`;
@@ -935,6 +936,21 @@
     renderRosterTable();
     $('rosterMsg').textContent = `Đã xoá ${fullName(s)}. Lớp còn ${r.count} sinh viên.`;
   }
+
+  $('addStudentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = { mssv: $('addMssv').value.trim(), ho: $('addHo').value, ten: $('addTen').value };
+    const name = `${body.ho} ${body.ten}`.replace(/\s+/g, ' ').trim();
+    if (!confirm(`Thêm ${name} (MSSV ${body.mssv}) vào lớp? Các buổi đã qua sẽ tính vắng K cho bạn này.`)) return;
+    const r = await api('/api/roster', { method: 'POST', body });
+    if (!r.ok) { $('addStudentMsg').textContent = r.message; return; }
+    const fresh = await api('/api/roster');
+    roster = (fresh.roster ?? []).sort(byStt);
+    renderRosterInfo();
+    renderRosterTable();
+    e.target.reset();
+    $('addStudentMsg').textContent = `Đã thêm ${name}, STT ${r.stt}. Lớp có ${r.count} sinh viên.`;
+  });
 
   /* ---------- Khởi động ---------- */
   if (pin.get()) start(); else showLogin();

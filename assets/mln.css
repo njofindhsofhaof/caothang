@@ -1,0 +1,12 @@
+/* Bo sung cho kirchhoff.css: trang bai tap dong mat luoi va dien the nut (/baitapmatluoinut). */
+.mln-ask{font-size:15px;color:var(--ink);margin:10px 0 0;}
+h2.kh-ask{font-family:var(--sans);line-height:1.35;}
+.mln-fig{overflow-x:auto;}
+.mln-svg{max-width:640px;}
+@media (max-width:600px){.mln-svg{min-width:470px;}}
+.kh-field sub{font-size:.75em;}
+.mln-rule{font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:10px 16px;margin:0 0 14px;}
+.mln-rule p{margin:0 0 6px;}
+.mln-rule p:last-child{margin:0;}
+.mln-answer{margin-top:18px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:8px;padding:2px 14px 10px;}
+.mln-answer p{font-family:var(--mono);font-size:13.5px;color:var(--ink);margin:0;line-height:1.8;}

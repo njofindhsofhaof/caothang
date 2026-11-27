@@ -31,6 +31,8 @@ window.CT_EN = {
   "unfgfh": "<a href=\"#so-sanh\">Comparing the two methods</a>",
   "fzzf7e": "<a href=\"#tom-tat\">Summary table</a>",
   "1vnzl8d": "<a href=\"#trac-nghiem\">Review quiz</a>",
+  // Bài tập
+  "15d8xgf": "<a href=\"#bai-tap\">Exercises</a>",
   "10s6yis": "In Chapter 1 we solved circuits by writing KCL and KVL for every branch current: a circuit with b branches has b unknowns. The bigger the circuit, the longer the system of equations. Chapter 3 covers two methods that <strong>reduce the number of unknowns</strong>: the <strong>mesh current method</strong> (also called the loop current method), based on KVL, and the <strong>node voltage method</strong>, based on KCL. Once the auxiliary unknowns are solved, every branch current follows.",
   "1a2cq6a": "<span class=\"num\">01</span>Branches, nodes, loops, meshes",
   "186a1u": "<span class=\"tag\">Easy to remember</span>Look at a circuit diagram as <strong>a window frame with several panes</strong>. Each empty pane is a <strong>mesh</strong>. The outer edge around both panes is also a closed loop, but it is not a mesh because there is a bar inside it.",
@@ -260,6 +262,14 @@ window.CT_EN = {
   "15xq2fv": "Power P = U·I = R·I²",
   "72d5am": "<span class=\"num\">13</span>Review quiz",
   "888k4t": "10 questions summarising the theory of the chapter. Pick an answer to see whether it is right and why.",
+  // 14Bài tập
+  "3xstbm": "<span class=\"num\">14</span>Exercises",
+  // Làm bài để luyện lập hệ phương trình dòng mắt lưới, điện thế nút và kiểm tra lại bằng K1,
+  "1bpw0ia": "Practise writing mesh current and node voltage equations, then check the result with KCL and the power balance:",
+  // Bài tập dòng mắt lưới và điện thế nút
+  "j8t1x4": "Mesh current and node voltage exercises",
+  // 4 bài tự chấm: mạch 3 mắt lưới, mắt lưới có nguồn dòng, mạch 2 nút có nguồn dòng và mạch
+  "aqebqk": "4 self-checked problems: a 3-mesh circuit, a mesh with a current source, a 2-node circuit with current sources, and a circuit with voltage sources in series with resistors.",
   "qxoy1n": "← Back to Circuit Theory (Year 1)",
   "17cbiz4": "A circuit with 3 branches and 2 nodes A and B, split into 2 meshes; the outer edge is a loop but not a mesh",
   "3e0230": "Two ways to set mesh current directions: opposite gives a shared-branch current equal to the sum, both clockwise gives the difference",
