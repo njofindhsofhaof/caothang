@@ -89,6 +89,19 @@ test('bài 4: transformed-circuit figure shows J = E/R for every voltage branch'
   assert.ok(p.transformed.afterStep < p.steps.length);
 });
 
+test('nodal problems: 2 unknown nodes A, B; node C is the reference, named on every figure', () => {
+  const opening = 'Gọi V_A, V_B, V_C là điện thế tại các nút A, B, C. Chọn nút C làm nút gốc ⇒ V_C = 0.';
+  for (const p of globalThis.MLN_PROBLEMS.filter((q) => q.method === 'nodal')) {
+    assert.deepEqual(p.nodes, ['A', 'B'], `bài ${p.id}`);
+    assert.ok(p.steps[0].lines[0].startsWith(opening), `bài ${p.id} mở đầu bằng câu gọi V_A, V_B, V_C`);
+    for (const draw of [p.draw, p.transformed?.draw].filter(Boolean)) {
+      const names = draw.filter((c) => c[0] === 'n' && c[3]).map((c) => c[3]);
+      assert.deepEqual(names.sort(), ['A', 'B', 'C'], `bài ${p.id}: nhãn nút`);
+    }
+    assert.ok(!JSON.stringify(p).includes('gốc (0 V)'), `bài ${p.id} không ghi "gốc (0 V)"`);
+  }
+});
+
 test('every problem balances power and lists 5 solution steps', () => {
   for (const p of globalThis.MLN_PROBLEMS) {
     const s = solve(p);

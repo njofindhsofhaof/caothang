@@ -143,7 +143,7 @@ window.MLN_PROBLEMS = [
     id: 3,
     method: "nodal",
     title: "Hai nguồn dòng, hai nút",
-    ask: "Mạch có 2 nút A, B; chọn nút dưới làm gốc (0 V). Dùng phương pháp điện thế nút tính V_A, V_B và dòng điện I₁ … I₄. Kiểm tra lại bằng K1 và cân bằng công suất.",
+    ask: "Chọn C làm nút gốc (V_C = 0). Dùng phương pháp điện thế nút tính V_A, V_B và dòng điện I₁ … I₄. Kiểm tra lại bằng K1 và cân bằng công suất.",
     nodes: ["A", "B"],
     resistors: [
       { sym: "R_1", value: 10, nodes: [0] },
@@ -166,11 +166,11 @@ window.MLN_PROBLEMS = [
       ["r", 40, 195, "v", "R₁ = 10 Ω"], ["r", 170, 195, "v", "R₂ = 5 Ω"], ["r", 310, 120, "h", "R₃ = 2 Ω", "b"],
       ["r", 390, 195, "v", "R₄ = 4 Ω"], ["i", 310, 46, "r", "J₁ = 6 A", "t"], ["i", 510, 195, "u", "J₂ = 3 A"],
       ["a", 40, 152, "d", "I₁"], ["a", 170, 152, "d", "I₂"], ["a", 362, 120, "l", "I₃"], ["a", 390, 152, "d", "I₄"],
-      ["n", 230, 120, "A"], ["n", 390, 120, "B"], ["n", 170, 120, ""], ["n", 170, 270, ""], ["n", 390, 270, "gốc (0 V)"]
+      ["n", 230, 120, "A"], ["n", 390, 120, "B"], ["n", 170, 120, ""], ["n", 170, 270, ""], ["n", 390, 270, "C"]
     ],
     steps: [
-      { title: "Bước 1. Chọn nút gốc và ẩn", lines: [
-        "Mạch có 2 nút A, B; nút dưới chọn làm gốc (0 V). Ẩn là V_A, V_B.",
+      { title: "Bước 1. Gọi điện thế các nút, chọn nút gốc", lines: [
+        "Gọi V_A, V_B, V_C là điện thế tại các nút A, B, C. Chọn nút C làm nút gốc ⇒ V_C = 0. Ẩn còn lại là V_A, V_B.",
         "Vế trái: điện dẫn riêng của nút × điện thế nút − điện dẫn chung × điện thế nút kia. Vế phải: tổng nguồn dòng đổ vào nút (đi ra thì mang dấu −)."
       ] },
       { title: "Bước 2. Viết phương trình cho nút A và nút B", lines: [
@@ -191,7 +191,7 @@ window.MLN_PROBLEMS = [
       { title: "Bước 5. Kiểm tra", lines: [
         "K1 tại nút A: I_3 = J_1 + I_1 + I_2 ⇒ 6 = 6 + 0 + 0 ✓",
         "K1 tại nút B: J_1 + J_2 = I_3 + I_4 ⇒ 6 + 3 = 6 + 3 ✓",
-        "Công suất nguồn dòng = điện áp trên nguồn × dòng nguồn: P_J1 = U_BA × J_1 = (12 − 0) × 6 = 72 W ; P_J2 = V_B × J_2 = 12 × 3 = 36 W",
+        "Công suất nguồn dòng = điện áp trên nguồn × dòng nguồn: P_J1 = U_BA × J_1 = (12 − 0) × 6 = 72 W ; P_J2 = U_BC × J_2 = (12 − 0) × 3 = 36 W",
         "P_nguồn = 72 + 36 = 108 W ; P_tải = R_3 × I_3² + R_4 × I_4² = 2 × 6² + 4 × 3² = 72 + 36 = 108 W (R_1, R_2 không có dòng)",
         "⇒ P_nguồn = P_tải ✓"
       ] }
@@ -201,7 +201,7 @@ window.MLN_PROBLEMS = [
     id: 4,
     method: "nodal",
     title: "Hai nhánh nguồn áp nối tiếp điện trở, một nguồn dòng",
-    ask: "Chọn nút dưới làm gốc. Dùng phương pháp điện thế nút tính V_A, V_B và dòng điện I₁ … I₅. Kiểm tra lại bằng K1 và cân bằng công suất.",
+    ask: "Chọn C làm nút gốc (V_C = 0). Dùng phương pháp điện thế nút tính V_A, V_B và dòng điện I₁ … I₅. Kiểm tra lại bằng K1 và cân bằng công suất.",
     nodes: ["A", "B"],
     resistors: [
       { sym: "R_3", value: 1, nodes: [0, 1] },
@@ -226,12 +226,12 @@ window.MLN_PROBLEMS = [
       ["r", 500, 60, "h", "R₂ = 1 Ω"], ["v", 570, 150, "u", "E₂ = 16 V"],
       ["a", 155, 60, "r", "I₁"], ["a", 180, 200, "d", "I₄"], ["a", 405, 60, "r", "I₃"], ["a", 430, 200, "d", "I₅"], ["a", 545, 60, "l", "I₂"],
       ["n", 180, 60, "A"], ["n", 290, 60, ""], ["n", 430, 60, "B"],
-      ["n", 180, 240, ""], ["n", 290, 240, "gốc (0 V)"], ["n", 430, 240, ""]
+      ["n", 180, 240, ""], ["n", 290, 240, "C"], ["n", 430, 240, ""]
     ],
     /* Mach sau khi bien doi nguon, hien trong loi giai ngay sau buoc 1 (afterStep = chi so buoc). */
     transformed: {
       afterStep: 0,
-      caption: "Mạch sau khi biến đổi nguồn áp thành nguồn dòng (nút A, B và nút gốc giữ nguyên):",
+      caption: "Mạch sau khi biến đổi nguồn áp thành nguồn dòng (các nút A, B, C giữ nguyên):",
       size: [900, 290],
       draw: [
         ["w", 110, 60, 790, 60], ["w", 110, 240, 790, 240],
@@ -241,12 +241,12 @@ window.MLN_PROBLEMS = [
         ["i", 410, 150, "u", "J = 4 A"], ["r", 500, 60, "h", "R₃ = 1 Ω"],
         ["r", 590, 150, "v", "R₅ = 2 Ω"], ["r", 690, 150, "v", "R₂ = 1 Ω"], ["i", 790, 150, "u", "J₂ = 16 A"],
         ["n", 210, 60, "A"], ["n", 310, 60, ""], ["n", 410, 60, ""], ["n", 590, 60, "B"], ["n", 690, 60, ""],
-        ["n", 210, 240, ""], ["n", 310, 240, ""], ["n", 410, 240, "gốc (0 V)"], ["n", 590, 240, ""], ["n", 690, 240, ""]
+        ["n", 210, 240, ""], ["n", 310, 240, ""], ["n", 410, 240, "C"], ["n", 590, 240, ""], ["n", 690, 240, ""]
       ]
     },
     steps: [
-      { title: "Bước 1. Chọn nút gốc và biến đổi nguồn", lines: [
-        "Chọn nút dưới làm gốc (0 V), ẩn là V_A, V_B.",
+      { title: "Bước 1. Gọi điện thế các nút, chọn nút gốc và biến đổi nguồn", lines: [
+        "Gọi V_A, V_B, V_C là điện thế tại các nút A, B, C. Chọn nút C làm nút gốc ⇒ V_C = 0. Ẩn còn lại là V_A, V_B.",
         "Nhánh nguồn áp nối tiếp điện trở đổi thành nguồn dòng song song điện trở đó, rồi vẽ lại mạch (hình dưới):",
         "E_1 nối tiếp R_1 ⇒ nguồn dòng J_1 = E_1/R_1 = 24/2 = 12 A đổ vào A, song song R_1 = 2 Ω",
         "E_2 nối tiếp R_2 ⇒ nguồn dòng J_2 = E_2/R_2 = 16/1 = 16 A đổ vào B, song song R_2 = 1 Ω"
@@ -263,7 +263,7 @@ window.MLN_PROBLEMS = [
       ] },
       { title: "Bước 4. Dòng điện các nhánh", lines: [
         "I_3 = (V_A − V_B)/R_3 = (14 − 12)/1 = 2 A ; I_4 = V_A/R_4 = 14/2 = 7 A ; I_5 = V_B/R_5 = 12/2 = 6 A",
-        "Lưu ý: nhánh có nguồn áp phải tính lại trên mạch gốc (không dùng nguồn dòng tương đương 12 A, 16 A, vì dòng qua R_1, R_2 trong mạch đã biến đổi khác dòng thật):",
+        "Lưu ý: nhánh có nguồn áp phải tính lại trên mạch ban đầu (không dùng nguồn dòng tương đương 12 A, 16 A, vì dòng qua R_1, R_2 trong mạch đã biến đổi khác dòng thật):",
         "I_1 = (E_1 − V_A)/R_1 = (24 − 14)/2 = 5 A ; I_2 = (E_2 − V_B)/R_2 = (16 − 12)/1 = 4 A"
       ] },
       { title: "Bước 5. Kiểm tra", lines: [
