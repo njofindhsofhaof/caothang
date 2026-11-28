@@ -13,6 +13,9 @@
   /** So am dat trong ngoac khi nhan: (−3). */
   var par = function (x) { return x < 0 ? "(" + num(x) + ")" : num(x); };
 
+  /** Nut goc cua bai dien the nut luon la nut C (V_C = 0), theo cach giai tren lop. */
+  var GROUND = "C";
+
   function zeros(n) { var a = []; for (var i = 0; i < n; i++) a.push(0); return a; }
 
   /* ---------- he phuong trinh ---------- */
@@ -233,13 +236,15 @@
           return "Nguồn dòng " + j.sym + " nằm riêng ở nhánh ngoài của mắt " + (j.loop + 1) + " và cùng chiều mắt ⇒ I_m" + (j.loop + 1) + " = " + j.sym + " = " + num(j.value) +
             " A đã biết, không cần viết phương trình mắt " + (j.loop + 1) + "; chỉ còn " + sys.free.length + " ẩn.";
         }))
-      : ["Chọn nút dưới làm gốc (0 V); ẩn là " + p.nodes.map(function (x) { return "V_" + x; }).join(", ") +
-        ". Vế trái: tổng điện dẫn nối vào nút × điện thế nút đó − điện dẫn chung × điện thế nút kia; vế phải: tổng nguồn dòng đổ vào nút."]
+      : ["Gọi " + p.nodes.concat([GROUND]).map(function (x) { return "V_" + x; }).join(", ") + " là điện thế tại các nút " +
+        p.nodes.concat([GROUND]).join(", ") + ". Chọn nút " + GROUND + " làm nút gốc ⇒ V_" + GROUND + " = 0. Ẩn còn lại là " +
+        p.nodes.map(function (x) { return "V_" + x; }).join(", ") + ".",
+        "Vế trái: tổng điện dẫn nối vào nút × điện thế nút đó − điện dẫn chung × điện thế nút kia; vế phải: tổng nguồn dòng đổ vào nút."]
         .concat((p.vbranches || []).map(function (v, k) {
           return v.sym + " nối tiếp " + v.rSym + " ⇒ nguồn dòng J_" + (k + 1) + " = " + v.sym + "/" + v.rSym + " = " + num(v.value) + "/" + num(v.r) + " = " + num(v.value / v.r) +
             " A đổ vào nút " + p.nodes[v.node] + ", song song " + v.rSym + " = " + num(v.r) + " Ω.";
         }))
-        .concat(p.vbranches && p.vbranches.length ? ["Vẽ lại mạch sau khi biến đổi (hình dưới): mỗi nhánh nguồn áp nối tiếp điện trở thay bằng nguồn dòng song song điện trở đó; các nút A, B, … và nút gốc giữ nguyên. Viết phương trình điện thế nút trên mạch này."] : [])
+        .concat(p.vbranches && p.vbranches.length ? ["Vẽ lại mạch sau khi biến đổi (hình dưới): mỗi nhánh nguồn áp nối tiếp điện trở thay bằng nguồn dòng song song điện trở đó; các nút A, B, C giữ nguyên. Viết phương trình điện thế nút trên mạch này."] : [])
     var eqs = sys.free.map(function (i, k) { return equation(p, sys, i, k + 1); });
     var nf = sys.free.length;
     var curLines = p.currents.map(function (c) { return mesh ? meshCurrentLine(p, c, s.im, cur[c.name]) : nodalCurrentLine(p, c, s.v, cur[c.name]); });

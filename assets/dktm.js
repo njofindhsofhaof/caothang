@@ -90,7 +90,7 @@
       id: "d" + e.de + "b1", bai: "1", sub: mesh ? "Phương pháp dòng mắt lưới" : "Phương pháp điện thế nút",
       intro: mesh
         ? "Cho mạch điện một chiều như hình. Dùng phương pháp dòng mắt lưới (chọn các dòng mắt lưới " + ms.join(", ") + " cùng chiều kim đồng hồ):"
-        : "Cho mạch điện một chiều như hình. Chọn nút dưới làm nút gốc (0 V), dùng phương pháp điện thế nút:",
+        : "Cho mạch điện một chiều như hình. Gọi V_A, V_B, V_C là điện thế tại các nút A, B, C; chọn nút C làm nút gốc (V_C = 0). Dùng phương pháp điện thế nút:",
       fig: W.MLN_SVG.draw({ id: "1 đề " + e.de, size: p.size, draw: p.draw }),
       asks: mesh
         ? [["Viết hệ phương trình dòng mắt lưới." + (hasJ ? " Mắt có nguồn dòng J xử lý thế nào?" : ""), 2], ["Giải hệ, tìm " + ms.join(", ") + ".", 1],

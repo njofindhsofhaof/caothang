@@ -156,3 +156,16 @@ test('nodal exams with source transformation have a redrawn circuit whose curren
     assert.match(setup, /nguồn dòng J_1 = E_1\/R_1/);
   }
 });
+
+test('nodal solutions name the ground node C and start with "Gọi V_A, V_B, V_C … V_C = 0"', () => {
+  for (const de of [2, 4]) {
+    const p = exams[de].b1;
+    const first = solveCircuit(p).groups[0].lines[0];
+    assert.equal(first, 'Gọi V_A, V_B, V_C là điện thế tại các nút A, B, C. Chọn nút C làm nút gốc ⇒ V_C = 0. Ẩn còn lại là V_A, V_B.');
+    for (const d of [p.draw, p.drawT]) {
+      const names = d.filter((c) => c[0] === 'n').map((c) => c[3]);
+      assert.ok(names.includes('C'), `đề ${de}: hình thiếu tên nút C`);
+      assert.ok(!names.some((n) => /gốc/.test(n)), `đề ${de}: hình còn chữ "gốc"`);
+    }
+  }
+});
