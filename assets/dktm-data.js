@@ -82,6 +82,7 @@
   /* 2 nut A, B: hai nhanh nguon ap noi tiep dien tro (can bien doi nguon). */
   var NODAL_2 = {
     method: "nodal", nodes: ["A", "B"],
+    k1: true, /* I_1, I_2 (nhanh co nguon ap) tinh bang K1 tai nut A, B */
     resistors: [
       { sym: "R_3", value: 1, nodes: [0, 1] },
       { sym: "R_4", value: 2, nodes: [0] },
@@ -122,6 +123,7 @@
   /* 2 nut A, B: hai nhanh nguon ap noi tiep dien tro + nguon dong J vao A. */
   var NODAL_2J = {
     method: "nodal", nodes: ["A", "B"],
+    k1: true, /* I_1, I_2 (nhanh co nguon ap) tinh bang K1 tai nut A, B */
     resistors: [
       { sym: "R_3", value: 4, nodes: [0, 1] },
       { sym: "R_4", value: 2, nodes: [0] },

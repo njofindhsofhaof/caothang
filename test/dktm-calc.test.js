@@ -169,3 +169,19 @@ test('nodal solutions name the ground node C and start with "Gọi V_A, V_B, V_C
     }
   }
 });
+
+test('đề 2 finds I_1, I_2 with K1 after the Ohm currents', () => {
+  const c = solveCircuit(exams[2].b1).groups[2].lines;
+  const at = (re) => c.findIndex((l) => re.test(l));
+  assert.ok(c.includes('K1 tại nút A (tổng dòng vào = tổng dòng ra): I_1 + I_3 = I_4 ⇒ I_1 = I_4 − I_3 = 5 − 2 = 3 A'));
+  assert.ok(c.includes('K1 tại nút B (tổng dòng vào = tổng dòng ra): I_2 = I_3 + I_5 ⇒ I_2 = I_3 + I_5 = 2 + 6 = 8 A'));
+  assert.ok(at(/^I_3 = /) < at(/^K1 tại nút A/) && at(/^I_5 = /) < at(/^K1 tại nút B/));
+  assert.ok(!c.some((l) => /\(E_1 − V_A\)/.test(l)));
+});
+
+test('every nodal exam with voltage branches finds their currents with K1 (đề 4 has J at node A)', () => {
+  for (const de of [2, 4]) assert.equal(exams[de].b1.k1, true, `đề ${de} chưa dùng K1`);
+  const c = solveCircuit(exams[4].b1).groups[2].lines.join('\n');
+  assert.match(c, /K1 tại nút B .*: I_2 \+ I_3 = I_5 ⇒ I_2 = I_5 − I_3 = 8 − 2 = 6 A/);
+  assert.match(c, /K1 tại nút A .*: I_1 \+ J = I_3 \+ I_4 ⇒ I_1 = I_3 \+ I_4 − J = 2 \+ 8 − 5 = 5 A/);
+});

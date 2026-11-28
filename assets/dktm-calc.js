@@ -195,6 +195,35 @@
       nums.join(" + ").replace(/\+ ([−+]) /g, "$1 ") + " = " + num(s.uJ[src.sym]) + " V";
   }
 
+  /**
+   * p.k1: dong nhanh dien tro tinh bang dinh luat Ohm truoc, dong nhanh co nguon ap (vbranch) tinh sau bang K1 tai nut cua no.
+   * Chieu: dong dien tro di tu nut dau sang nut sau (sign −1 dao chieu); dong vbranch va nguon dong J di vao nut.
+   */
+  function k1CurrentLines(p, v, cur) {
+    var isVb = function (c) { return !!findVb(p, c.of); };
+    var lines = p.currents.filter(function (c) { return !isVb(c); }).map(function (c) { return nodalCurrentLine(p, c, v, cur[c.name]); });
+    p.currents.filter(isVb).forEach(function (c) {
+      var k = findVb(p, c.of).node, into = [], out = [];
+      p.currents.forEach(function (o) {
+        if (o === c) return;
+        var vb = findVb(p, o.of);
+        if (vb) { if (vb.node === k) into.push(o.name); return; }
+        var r = findRes(p, o.of), from = r.nodes[0], to = r.nodes[1];
+        if ((o.sign || 1) < 0) { var t = from; from = to; to = t; }
+        if (from === k) out.push(o.name);
+        else if (to === k) into.push(o.name);
+      });
+      var js = (p.isources || []).filter(function (j) { return j.to === k || j.from === k; });
+      js.forEach(function (j) { (j.to === k ? into : out).push(j.sym); });
+      var val = function (n) { return n in cur ? cur[n] : js.filter(function (j) { return j.sym === n; })[0].value; };
+      var rhs = out.map(function (n) { return { n: n, s: 1 }; }).concat(into.map(function (n) { return { n: n, s: -1 }; }));
+      var txt = function (f) { return rhs.map(function (x, i) { return (x.s < 0 ? " − " : (i ? " + " : "")) + f(x.n); }).join("").replace(/^ − /, "−"); };
+      lines.push("K1 tại nút " + p.nodes[k] + " (tổng dòng vào = tổng dòng ra): " + [c.name].concat(into).join(" + ") + " = " + out.join(" + ") +
+        " ⇒ " + c.name + " = " + txt(function (n) { return n; }) + " = " + txt(function (n) { return num(val(n)); }) + " = " + num(cur[c.name]) + " A");
+    });
+    return lines;
+  }
+
   /* ---------- can bang cong suat ---------- */
   function powerLines(p, s, cur) {
     var all = (p.vsources || []).concat(p.vbranches || []).concat(p.isources || []);
@@ -247,7 +276,9 @@
         .concat(p.vbranches && p.vbranches.length ? ["Vẽ lại mạch sau khi biến đổi (hình dưới): mỗi nhánh nguồn áp nối tiếp điện trở thay bằng nguồn dòng song song điện trở đó; các nút A, B, C giữ nguyên. Viết phương trình điện thế nút trên mạch này."] : [])
     var eqs = sys.free.map(function (i, k) { return equation(p, sys, i, k + 1); });
     var nf = sys.free.length;
-    var curLines = p.currents.map(function (c) { return mesh ? meshCurrentLine(p, c, s.im, cur[c.name]) : nodalCurrentLine(p, c, s.v, cur[c.name]); });
+    var curLines = mesh || !p.k1
+      ? p.currents.map(function (c) { return mesh ? meshCurrentLine(p, c, s.im, cur[c.name]) : nodalCurrentLine(p, c, s.v, cur[c.name]); })
+      : k1CurrentLines(p, s.v, cur);
     return {
       x: cr.x, cur: cur, pSrc: pw.pSrc, pLoad: pw.pLoad,
       groups: [
@@ -256,7 +287,9 @@
             " đúng 0,5 đ; mỗi phương trình đúng " + num(1.5 / nf) + " đ."]) },
         { title: "b) Giải hệ phương trình", pts: 1, lines: cr.lines.concat([nf === 2 ? "Thang điểm: mỗi ẩn đúng 0,5 đ." : "Thang điểm: đúng cả 3 ẩn 1 đ; đúng 1 hoặc 2 ẩn 0,5 đ."]) },
         { title: "c) Dòng điện các nhánh", pts: 1,
-          lines: (mesh ? [] : ["Định luật Ohm cho từng nhánh: dòng = hiệu điện thế hai đầu nhánh / điện trở."]).concat(curLines)
+          lines: (mesh ? [] : [p.k1
+            ? "Nhánh chỉ có điện trở: định luật Ohm, dòng = hiệu điện thế hai đầu nhánh / điện trở. Nhánh có nguồn áp: dùng K1 tại nút của nhánh đó."
+            : "Định luật Ohm cho từng nhánh: dòng = hiệu điện thế hai đầu nhánh / điện trở."]).concat(curLines)
             .concat(["Thang điểm: chia đều 1 đ cho " + p.currents.length + " dòng nhánh (đúng giá trị và chiều)."]) },
         { title: "d) Kiểm tra cân bằng công suất", pts: 1, lines: pw.lines.concat(["Thang điểm: P_nguồn 0,5 đ; P_tải và kết luận 0,5 đ."]) }
       ],
