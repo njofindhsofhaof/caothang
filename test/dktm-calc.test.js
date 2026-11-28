@@ -17,8 +17,19 @@ test('plan adds up to 42 minutes of work and 10 points', () => {
   assert.equal(plan.reduce((a, p) => a + p.pts, 0), 10);
 });
 
-test('đề 1, 3 use mesh currents; đề 2, 4 use nodal voltages', () => {
+test('đề 1, 3 use mesh currents; đề 2, 4 use nodal voltages, all with 3 meshes or 3 nodes', () => {
   assert.deepEqual([1, 2, 3, 4].map((d) => exams[d].b1.method), ['mesh', 'nodal', 'mesh', 'nodal']);
+  assert.equal(exams[1].b1.loops, 3);
+  assert.equal(exams[3].b1.loops, 3);
+  assert.equal(exams[2].b1.nodes.length, 3);
+  assert.equal(exams[4].b1.nodes.length, 3);
+});
+
+test('nodal exams need source transformation; đề 3 and đề 4 have a current source', () => {
+  assert.ok(exams[2].b1.vbranches.length >= 2);
+  assert.ok(exams[4].b1.vbranches.length >= 2);
+  assert.equal(exams[3].b1.isources.length, 1);
+  assert.equal(exams[4].b1.isources.length, 1);
 });
 
 test('every part of each bài sums to 5 points', () => {
@@ -28,60 +39,63 @@ test('every part of each bài sums to 5 points', () => {
   }
 });
 
-test('đề 1 mesh: I_m1 = 2 A, I_m2 = −2 A, branch currents 2, 2, 4 A, 88 W', () => {
-  const s = solveCircuit(exams[1].b1);
-  near(s.x[0], 2);
-  near(s.x[1], -2);
-  for (const [k, v] of Object.entries({ I_1: 2, I_2: 2, I_3: 4 })) near(s.cur[k], v, 1e-9);
-  near(s.pSrc, 88);
-  near(s.pLoad, 88);
+const checkCircuit = (de, x, cur, p) => {
+  const s = solveCircuit(exams[de].b1);
+  x.forEach((v, k) => near(s.x[k], v, 1e-9));
+  for (const [k, v] of Object.entries(cur)) near(s.cur[k], v, 1e-9);
+  near(s.pSrc, p, 1e-9);
+  near(s.pLoad, p, 1e-9);
+};
+
+test('đề 1 three meshes: I_m = 8, 2, −1 A, branches 8, 6, 2, 3, 1 A, 340 W', () => {
+  checkCircuit(1, [8, 2, -1], { I_1: 8, I_2: 6, I_3: 2, I_4: 3, I_5: 1 }, 340);
 });
 
-test('đề 3 mesh: I_m1 = 6 A, I_m2 = 4 A, P = 168 W', () => {
-  const s = solveCircuit(exams[3].b1);
-  near(s.x[0], 6);
-  near(s.x[1], 4);
-  for (const [k, v] of Object.entries({ I_1: 6, I_2: 2, I_3: 4 })) near(s.cur[k], v, 1e-9);
-  near(s.pSrc, 168);
-  near(s.pLoad, 168);
+test('đề 3 mesh with current source: I_m3 = J, two unknowns 10, 8 A, U_J = 16 V, 736 W', () => {
+  const p = exams[3].b1;
+  const sys = system(p);
+  assert.deepEqual(sys.free, [0, 1]);
+  checkCircuit(3, [10, 8], { I_1: 10, I_2: 2, I_3: 8, I_4: 4, I_5: 4 }, 736);
+  near(globalThis.MLN_CALC.solve(p).uJ.J, 16);
+  const d = solveCircuit(p).groups[3].lines.join('\n');
+  assert.match(d, /U_J = R_4\(I_m3 − I_m2\) \+ R_5·I_m3 = 2 × \(4 − 8\) \+ 6 × 4 = 16 V/);
 });
 
-test('đề 2 nodal: V_A = 10 V, V_B = 12 V, currents 3, 8, 2, 5, 6 A, 280 W', () => {
-  const s = solveCircuit(exams[2].b1);
-  near(s.x[0], 10);
-  near(s.x[1], 12);
-  for (const [k, v] of Object.entries({ I_1: 3, I_2: 8, I_3: 2, I_4: 5, I_5: 6 })) near(s.cur[k], v, 1e-9);
-  near(s.pSrc, 280);
-  near(s.pLoad, 280);
+test('đề 2 three nodes, two source transformations: V = 16, 8, 4 V, 504 W', () => {
+  checkCircuit(2, [16, 8, 4], { I_1: 12, I_2: 8, I_3: 4, I_4: 2, I_5: 2, I_6: 4, I_7: 2 }, 504);
 });
 
-test('đề 4 nodal with current source: V_A = 16 V, V_B = 14 V, 430 W', () => {
-  const s = solveCircuit(exams[4].b1);
-  near(s.x[0], 16);
-  near(s.x[1], 14);
-  for (const [k, v] of Object.entries({ I_1: 10, I_2: 8, I_3: 2, I_4: 7 })) near(s.cur[k], v, 1e-9);
-  near(s.pSrc, 430);
-  near(s.pLoad, 430);
+test('đề 4 three nodes, transformations and J: V = 16, 12, 8 V, 324 W', () => {
+  checkCircuit(4, [16, 12, 8], { I_1: 6, I_2: 4, I_3: 2, I_4: 3, I_5: 1, I_6: 4, I_7: 3 }, 324);
 });
 
 test('Cramer agrees with MLN_CALC for every Chương 3 circuit', () => {
   for (const e of globalThis.DKTM_EXAMS) {
     const p = e.b1;
     const ref = globalThis.MLN_CALC.solve(p);
-    const x = cramer(p, system(p)).x;
+    const { x, free } = cramer(p, system(p));
     const want = p.method === 'mesh' ? ref.im : ref.v;
-    near(x[0], want[0], 1e-9);
-    near(x[1], want[1], 1e-9);
+    free.forEach((i, k) => near(x[k], want[i], 1e-9));
   }
 });
 
-test('written equations match the matrix (đề 1 and đề 2)', () => {
+test('written equations match the matrix (đề 1, đề 2, đề 3)', () => {
   const mesh = solveCircuit(exams[1].b1).groups[0].lines;
-  assert.ok(mesh.some((l) => l.includes('(R_1 + R_3)·I_m1 − R_3·I_m2 = E_1') && l.endsWith('9I_m1 − 3I_m2 = 24   (1)')));
-  assert.ok(mesh.some((l) => l.includes('= −E_2') && l.endsWith('−3I_m1 + 7I_m2 = −20   (2)')));
+  assert.ok(mesh.some((l) => l.includes('(R_2 + R_3 + R_4)·I_m2 − R_2·I_m1 − R_4·I_m3 = 0') && l.endsWith('−4I_m1 + 13I_m2 − 6I_m3 = 0   (2)')));
+  assert.ok(mesh.some((l) => l.includes('= −E_2') && l.endsWith('−6I_m2 + 8I_m3 = −20   (3)')));
   const nodal = solveCircuit(exams[2].b1).groups[0].lines;
-  assert.ok(nodal.some((l) => l.includes('(1/R_1 + 1/R_3 + 1/R_4)·V_A') && l.endsWith('1,6V_A − V_B = 4   (1)')));
-  assert.ok(nodal.some((l) => l.endsWith('−V_A + 2,5V_B = 20   (2)')));
+  assert.ok(nodal.some((l) => l.includes('(1/R_1 + 1/R_2 + 1/R_3)·V_A') && l.endsWith('1,5V_A − 0,5V_B = 20   (1)')));
+  assert.ok(nodal.some((l) => l.endsWith('−0,5V_B + 1,75V_C = 3   (3)')));
+  const withJ = solveCircuit(exams[3].b1).groups[0].lines;
+  assert.ok(withJ.some((l) => l.includes('I_m3 = J = 4 A')));
+  assert.ok(withJ.some((l) => l.endsWith('−4I_m1 + 9I_m2 = 32   (2)')));
+  assert.ok(!withJ.some((l) => l.startsWith('Mắt 3:')));
+});
+
+test('determinants keep enough decimals for exact division (đề 2)', () => {
+  const b = solveCircuit(exams[2].b1).groups[1].lines.join('\n');
+  assert.match(b, /Δ = det.* = 2,46875/);
+  assert.match(b, /V_A = Δ_1\/Δ = 39,5\/2,46875 = 16 V/);
 });
 
 test('linear() drops zero terms and unit coefficients', () => {
@@ -91,8 +105,9 @@ test('linear() drops zero terms and unit coefficients', () => {
   assert.equal(linear(p, [0, 0]), '0');
 });
 
-test('cramer() refuses systems that are not 2×2', () => {
-  assert.throws(() => cramer({ method: 'mesh' }, { n: 3 }));
+test('cramer() refuses systems that are not 2×2 or 3×3', () => {
+  assert.throws(() => cramer({ method: 'mesh' }, { free: [0] }));
+  assert.throws(() => cramer({ method: 'mesh' }, { free: [0, 1, 2, 3] }));
 });
 
 test('three-phase answers: Y 6+j8, Δ 12+j16, Y 16+j12, Δ 30+j40', () => {

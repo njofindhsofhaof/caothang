@@ -45,7 +45,14 @@
     }
     var bySym = function (x, y) { return x.sym < y.sym ? -1 : x.sym > y.sym ? 1 : 0; };
     self.forEach(function (list) { list.sort(bySym); });
-    return { n: n, A: A, b: b, self: self, mutual: mutual, rhs: rhs };
+    /* Nguon dong nam rieng nhanh ngoai cua 1 mat (cung chieu mat) ⇒ I_m cua mat do = J, bo phuong trinh mat do. */
+    var fixed = {};
+    if (mesh) (p.isources || []).forEach(function (s) { fixed[s.loop] = s.value; });
+    var free = [];
+    for (var k = 0; k < n; k++) if (fixed[k] == null) free.push(k);
+    var Ar = A.map(function (row) { return row.map(function (c, j) { return fixed[j] == null ? c : 0; }); });
+    var br = b.map(function (v, r) { return Object.keys(fixed).reduce(function (acc, j) { return acc - A[r][j] * fixed[j]; }, v); });
+    return { n: n, A: A, b: b, Ar: Ar, br: br, fixed: fixed, free: free, self: self, mutual: mutual, rhs: rhs };
   }
 
   function unknown(p, i) { return p.method === "mesh" ? "I_m" + (i + 1) : "V_" + p.nodes[i]; }
@@ -77,39 +84,55 @@
     return items.map(function (it, k) { return (it.sign < 0 ? (k ? " − " : "−") : (k ? " + " : "")) + it[field]; }).join("");
   }
 
-  /** Dong phuong trinh i: ky hieu ⇒ thay so ⇒ rut gon   (i+1). */
-  function equation(p, sys, i) {
+  /** Dong phuong trinh i: ky hieu ⇒ thay so ⇒ rut gon   (k). Mat co nguon dong: thay I_m = J bang so. */
+  function equation(p, sys, i, k) {
     var symText = coefText(p, sys.self[i], "sym") + "·" + unknown(p, i);
     var numText = coefText(p, sys.self[i], "num") + unknown(p, i);
     var others = {};
     sys.mutual[i].forEach(function (m) { (others[m.to] = others[m.to] || []).push(m.r); });
     Object.keys(others).forEach(function (j) {
       symText += " − " + coefText(p, others[j], "sym") + "·" + unknown(p, +j);
-      numText += " − " + coefText(p, others[j], "num") + unknown(p, +j);
+      numText += " − " + coefText(p, others[j], "num") + (sys.fixed[j] == null ? unknown(p, +j) : "×" + num(sys.fixed[j]));
     });
     var name = p.method === "mesh" ? "Mắt " + (i + 1) : "Nút " + p.nodes[i];
     return name + ": " + symText + " = " + rhsText(sys.rhs[i], "text") + " ⇒ " + numText + " = " + rhsText(sys.rhs[i], "val") +
-      " ⇒ " + linear(p, sys.A[i]) + " = " + num(sys.b[i]) + "   (" + (i + 1) + ")";
+      " ⇒ " + linear(p, sys.Ar[i]) + " = " + num(sys.br[i]) + "   (" + k + ")";
   }
 
-  /** Giai he 2 an bang dinh thuc (Cramer). */
+  function det(m) {
+    if (m.length === 2) return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+    return m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+      m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+  }
+  function matText(m) { return "|" + m.map(function (row) { return row.map(num).join("  "); }).join(" ; ") + "|"; }
+  /** Dinh thuc giu toi 5 chu so thap phan de phep chia ra dung so tron. */
+  var dnum = function (x) { return B.num(x, 5); };
+
+  /** Giai he 2 hoac 3 an (cac an tu do) bang dinh thuc Cramer. */
   function cramer(p, sys) {
-    if (sys.n !== 2) throw new Error("Đề kiểm tra chỉ dùng hệ 2 ẩn");
-    var a = sys.A, b = sys.b, unit = p.method === "mesh" ? " A" : " V";
-    var d = a[0][0] * a[1][1] - a[0][1] * a[1][0];
-    var d1 = b[0] * a[1][1] - a[0][1] * b[1];
-    var d2 = a[0][0] * b[1] - b[0] * a[1][0];
-    return {
-      x: [d1 / d, d2 / d],
-      lines: [
-        "Δ = " + par(a[0][0]) + " × " + par(a[1][1]) + " − " + par(a[0][1]) + " × " + par(a[1][0]) + " = " + num(d),
-        "Δ_1 = " + par(b[0]) + " × " + par(a[1][1]) + " − " + par(a[0][1]) + " × " + par(b[1]) + " = " + num(d1) +
-          " ⇒ " + unknown(p, 0) + " = Δ_1/Δ = " + num(d1) + "/" + num(d) + " = " + num(d1 / d) + unit,
-        "Δ_2 = " + par(a[0][0]) + " × " + par(b[1]) + " − " + par(b[0]) + " × " + par(a[1][0]) + " = " + num(d2) +
-          " ⇒ " + unknown(p, 1) + " = Δ_2/Δ = " + num(d2) + "/" + num(d) + " = " + num(d2 / d) + unit,
-        "(Giải bằng phép thế hoặc máy tính cầm tay đều được, chấm theo kết quả.)"
-      ]
-    };
+    var f = sys.free, n = f.length;
+    if (n !== 2 && n !== 3) throw new Error("Đề kiểm tra chỉ dùng hệ 2 hoặc 3 ẩn");
+    var M = f.map(function (i) { return f.map(function (j) { return sys.Ar[i][j]; }); });
+    var rhs = f.map(function (i) { return sys.br[i]; });
+    var unit = p.method === "mesh" ? " A" : " V", d = det(M), x = [], lines = [];
+    if (n === 2) {
+      lines.push("Δ = " + par(M[0][0]) + " × " + par(M[1][1]) + " − " + par(M[0][1]) + " × " + par(M[1][0]) + " = " + dnum(d));
+    } else {
+      lines.push("Hệ 3 ẩn: ma trận hệ số (mỗi dòng là 1 phương trình) " + matText(M) + ", vế phải " + rhs.map(num).join("; ") + ".");
+      lines.push("Δ = det" + matText(M) + " = " + dnum(d));
+    }
+    for (var k = 0; k < n; k++) {
+      var Mk = M.map(function (row, r) { return row.map(function (c, j) { return j === k ? rhs[r] : c; }); });
+      var dk = det(Mk), name = unknown(p, f[k]);
+      x.push(dk / d);
+      lines.push("Δ_" + (k + 1) + " = " + (n === 2
+        ? par(Mk[0][0]) + " × " + par(Mk[1][1]) + " − " + par(Mk[0][1]) + " × " + par(Mk[1][0])
+        : "det" + matText(Mk)) + " = " + dnum(dk) + " ⇒ " + name + " = Δ_" + (k + 1) + "/Δ = " + dnum(dk) + "/" + dnum(d) + " = " + num(dk / d) + unit);
+    }
+    lines.push(n === 3
+      ? "(Có thể giải bằng phép thế hoặc chức năng giải hệ 3 ẩn của máy tính cầm tay, chấm theo kết quả.)"
+      : "(Giải bằng phép thế hoặc máy tính cầm tay đều được, chấm theo kết quả.)");
+    return { x: x, free: f, lines: lines };
   }
 
   /* ---------- dong nhanh ---------- */
@@ -150,12 +173,32 @@
     return c.name + " = " + top + "/" + r.sym + " = " + topV + "/" + num(r.value) + " = " + num(val) + " A";
   }
 
+  /** Dien ap tren nguon dong J (dau + o dau mui ten), tu K2 cho mat chua J. */
+  function uJLine(p, s, src) {
+    var k = src.loop, terms = [], nums = [];
+    p.resistors.forEach(function (r) {
+      var at = r.loops.indexOf(k);
+      if (at < 0) return;
+      var other = r.loops[1 - at];
+      if (other == null) { terms.push(r.sym + "·I_m" + (k + 1)); nums.push(num(r.value) + " × " + num(s.im[k])); return; }
+      terms.push(r.sym + "(I_m" + (k + 1) + " − I_m" + (other + 1) + ")");
+      nums.push(num(r.value) + " × (" + num(s.im[k]) + " − " + par(s.im[other]) + ")");
+    });
+    (p.vsources || []).forEach(function (v) {
+      if (v.loop !== k) return;
+      terms.push((v.sign > 0 ? "− " : "+ ") + v.sym); nums.push((v.sign > 0 ? "− " : "+ ") + num(v.value));
+    });
+    return "K2 cho mắt " + (k + 1) + " (chiều mắt): U_" + src.sym + " = " + terms.join(" + ").replace(/\+ ([−+]) /g, "$1 ") + " = " +
+      nums.join(" + ").replace(/\+ ([−+]) /g, "$1 ") + " = " + num(s.uJ[src.sym]) + " V";
+  }
+
   /* ---------- can bang cong suat ---------- */
   function powerLines(p, s, cur) {
     var all = (p.vsources || []).concat(p.vbranches || []).concat(p.isources || []);
     var src = p.pSrc.map(function (x) {
       var e = all.filter(function (q) { return q.sym === x.sym; })[0];
       if (x.cur) return { text: x.sym + " × " + x.cur, nums: num(e.value) + " × " + par(cur[x.cur]), val: e.value * cur[x.cur] };
+      if (x.uJ) return { text: "U_" + x.sym + " × " + x.sym, nums: par(s.uJ[x.sym]) + " × " + num(e.value), val: s.uJ[x.sym] * e.value };
       var k = p.nodes.indexOf(x.u.replace("V_", ""));
       return { text: x.u + " × " + x.sym, nums: par(s.v[k]) + " × " + num(e.value), val: s.v[k] * e.value };
     });
@@ -171,7 +214,8 @@
       "P_tải = " + load.map(function (x) { return x.text; }).join(" + ") + " = " + load.map(function (x) { return x.nums; }).join(" + ") + " = " + num(pl) + " W",
       ok ? "⇒ P_nguồn = P_tải = " + num(ps) + " W ✓ (kết quả đúng)" : "⇒ P_nguồn ≠ P_tải: kiểm tra lại"
     ];
-    if (p.pSrc.some(function (x) { return x.u; })) lines.unshift("Công suất nguồn dòng = điện áp trên nguồn × dòng nguồn (đầu + là đầu mũi tên chỉ tới).");
+    if (p.pSrc.some(function (x) { return x.u || x.uJ; })) lines.unshift("Công suất nguồn dòng = điện áp trên nguồn × dòng nguồn (đầu + là đầu mũi tên chỉ tới).");
+    (p.isources || []).forEach(function (src) { if (src.loop != null) lines.splice(1, 0, uJLine(p, s, src)); });
     return { lines: lines, pSrc: ps, pLoad: pl };
   }
 
@@ -182,29 +226,36 @@
   function solveCircuit(p) {
     var mesh = p.method === "mesh";
     var sys = system(p), s = M.solve(p), cr = cramer(p, sys), cur = branchValues(p), pw = powerLines(p, s, cur);
+    var ms = []; for (var q = 0; q < sys.n; q++) ms.push(unknown(p, q));
     var setup = mesh
-      ? ["Mạch có " + p.loops + " mắt lưới. Chọn dòng mắt lưới I_m1, I_m2 cùng chiều kim đồng hồ (hình). Nguồn đẩy dòng cùng chiều mắt mang dấu +, ngược chiều mang dấu −."]
+      ? ["Mạch có " + p.loops + " mắt lưới. Chọn dòng mắt lưới " + ms.join(", ") + " cùng chiều kim đồng hồ (hình). Nguồn áp đẩy dòng cùng chiều mắt mang dấu +, ngược chiều mang dấu −."]
+        .concat((p.isources || []).map(function (j) {
+          return "Nguồn dòng " + j.sym + " nằm riêng ở nhánh ngoài của mắt " + (j.loop + 1) + " và cùng chiều mắt ⇒ I_m" + (j.loop + 1) + " = " + j.sym + " = " + num(j.value) +
+            " A đã biết, không cần viết phương trình mắt " + (j.loop + 1) + "; chỉ còn " + sys.free.length + " ẩn.";
+        }))
       : ["Chọn nút dưới làm gốc (0 V); ẩn là " + p.nodes.map(function (x) { return "V_" + x; }).join(", ") +
         ". Vế trái: tổng điện dẫn nối vào nút × điện thế nút đó − điện dẫn chung × điện thế nút kia; vế phải: tổng nguồn dòng đổ vào nút."]
         .concat((p.vbranches || []).map(function (v) {
           return v.sym + " nối tiếp " + v.rSym + " ⇒ nguồn dòng " + v.sym + "/" + v.rSym + " = " + num(v.value) + "/" + num(v.r) + " = " + num(v.value / v.r) +
             " A đổ vào nút " + p.nodes[v.node] + ", song song " + v.rSym + " = " + num(v.r) + " Ω.";
         }));
-    var eqs = [];
-    for (var i = 0; i < sys.n; i++) eqs.push(equation(p, sys, i));
+    var eqs = sys.free.map(function (i, k) { return equation(p, sys, i, k + 1); });
+    var nf = sys.free.length;
     var curLines = p.currents.map(function (c) { return mesh ? meshCurrentLine(p, c, s.im, cur[c.name]) : nodalCurrentLine(p, c, s.v, cur[c.name]); });
     return {
       x: cr.x, cur: cur, pSrc: pw.pSrc, pLoad: pw.pLoad,
       groups: [
         { title: mesh ? "a) Chọn chiều dòng mắt lưới, viết hệ phương trình" : "a) Chọn nút gốc, biến đổi nguồn, viết hệ phương trình", pts: 2,
-          lines: setup.concat(eqs).concat(["Thang điểm: chọn ẩn" + (mesh ? " và chiều mắt lưới" : ", biến đổi nguồn") + " đúng 0,5 đ; mỗi phương trình đúng 0,75 đ."]) },
-        { title: "b) Giải hệ phương trình", pts: 1, lines: cr.lines.concat(["Thang điểm: mỗi ẩn đúng 0,5 đ."]) },
+          lines: setup.concat(eqs).concat(["Thang điểm: chọn ẩn" + (mesh ? (p.isources ? ", chiều mắt lưới và I_m = J" : " và chiều mắt lưới") : ", biến đổi nguồn") +
+            " đúng 0,5 đ; mỗi phương trình đúng " + num(1.5 / nf) + " đ."]) },
+        { title: "b) Giải hệ phương trình", pts: 1, lines: cr.lines.concat([nf === 2 ? "Thang điểm: mỗi ẩn đúng 0,5 đ." : "Thang điểm: đúng cả 3 ẩn 1 đ; đúng 1 hoặc 2 ẩn 0,5 đ."]) },
         { title: "c) Dòng điện các nhánh", pts: 1,
           lines: (mesh ? [] : ["Định luật Ohm cho từng nhánh: dòng = hiệu điện thế hai đầu nhánh / điện trở."]).concat(curLines)
             .concat(["Thang điểm: chia đều 1 đ cho " + p.currents.length + " dòng nhánh (đúng giá trị và chiều)."]) },
         { title: "d) Kiểm tra cân bằng công suất", pts: 1, lines: pw.lines.concat(["Thang điểm: P_nguồn 0,5 đ; P_tải và kết luận 0,5 đ."]) }
       ],
-      answer: cr.x.map(function (x, k) { return unknown(p, k) + " = " + num(x) + (mesh ? " A" : " V"); })
+      answer: s[mesh ? "im" : "v"].map(function (x, k) { return unknown(p, k) + " = " + num(x) + (mesh ? " A" : " V"); })
+        .concat((p.isources || []).filter(function (j) { return j.loop != null; }).map(function (j) { return "U_" + j.sym + " = " + num(s.uJ[j.sym]) + " V"; }))
         .concat(p.currents.map(function (c) { return c.name + " = " + num(cur[c.name]) + " A"; }))
         .concat(["P_nguồn = P_tải = " + num(pw.pSrc) + " W"]).join("; ")
     };

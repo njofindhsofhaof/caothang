@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Đề kiểm tra 1 tiết Lý thuyết Mạch Chương 3–4 · Thông tin học tập - Ôn tập ngành Điện Điện Tử</title>
-<meta name="description" content="4 đề kiểm tra 1 tiết (45 phút, 10 điểm) môn Lý thuyết Mạch Chương 3–4: Bài 1 phương pháp dòng mắt lưới hoặc điện thế nút, Bài 2 mạch 3 pha tải đối xứng nối Y, Δ; có sơ đồ, lời giải từng bước và thang điểm chi tiết.">
+<meta name="description" content="4 đề kiểm tra 1 tiết (45 phút, 10 điểm) môn Lý thuyết Mạch Chương 3–4: Bài 1 dòng mắt lưới 3 mắt có nguồn dòng hoặc điện thế nút 3 nút có biến đổi nguồn, Bài 2 mạch 3 pha tải đối xứng nối Y, Δ; có sơ đồ, lời giải từng bước và thang điểm chi tiết.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DDT26C Cao Thắng">
 <meta property="og:locale" content="vi_VN">
@@ -51,7 +51,7 @@
   <div class="backbar">
     <a class="backlink" href="/lythuyetmach">&larr; Lý Thuyết Mạch</a>
   </div>
-  <p class="kh-intro">4 đề kiểm tra Chương 3–4, mỗi đề <strong>45 phút / 10 điểm</strong>, gồm 2 bài tự luận. Đề 1, 3 giải Bài 1 bằng <strong>dòng mắt lưới</strong>; đề 2, 4 bằng <strong>điện thế nút</strong>. Tự làm ra giấy theo đúng số phút ghi ở mỗi bài, rồi bấm <strong>Xem lời giải và thang điểm</strong> để đối chiếu.</p>
+  <p class="kh-intro">4 đề kiểm tra Chương 3–4, mỗi đề <strong>45 phút / 10 điểm</strong>, gồm 2 bài tự luận. Bài 1 là dạng khó nhất Chương 3: đề 1, 3 giải bằng <strong>dòng mắt lưới</strong> (mạch 3 mắt, đề 3 có nguồn dòng); đề 2, 4 bằng <strong>điện thế nút</strong> (mạch 3 nút, phải biến đổi nguồn áp thành nguồn dòng, đề 4 có thêm nguồn dòng J). Tự làm ra giấy theo đúng số phút ghi ở mỗi bài, rồi bấm <strong>Xem lời giải và thang điểm</strong> để đối chiếu.</p>
 
   <section class="dkt-box" aria-labelledby="planTitle">
     <h2 id="planTitle">Bảng thời gian và điểm</h2>
@@ -60,7 +60,7 @@
       <table class="dkt-plan">
         <thead><tr><th>Bài</th><th>Dạng bài</th><th>Chương</th><th>Yêu cầu</th><th class="num">Phút</th><th class="num">Điểm</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Dòng mắt lưới (đề 1, 3) hoặc điện thế nút (đề 2, 4), mạch 2 ẩn</td><td class="ch">Ch.3</td><td>a) Viết hệ phương trình (2 đ) · b) Giải hệ (1 đ) · c) Dòng các nhánh (1 đ) · d) Kiểm tra cân bằng công suất (1 đ)</td><td class="num">22</td><td class="num">5</td></tr>
+          <tr><td>1</td><td>Dòng mắt lưới 3 mắt (đề 1, 3; đề 3 có nguồn dòng) hoặc điện thế nút 3 nút có biến đổi nguồn (đề 2, 4; đề 4 có nguồn dòng)</td><td class="ch">Ch.3</td><td>a) Viết hệ phương trình (2 đ) · b) Giải hệ (1 đ) · c) Dòng các nhánh (1 đ) · d) Kiểm tra cân bằng công suất (1 đ)</td><td class="num">22</td><td class="num">5</td></tr>
           <tr><td>2</td><td>Mạch 3 pha tải đối xứng nối Y (đề 1, 3) hoặc Δ (đề 2, 4)</td><td class="ch">Ch.4</td><td>a) U<sub>d</sub>, U<sub>p</sub> (1 đ) · b) Z<sub>p</sub>, I<sub>p</sub>, I<sub>d</sub> (1,5 đ) · c) cosφ, P, Q, S (2 đ) · d) Đấu lại tải, so sánh P (0,5 đ)</td><td class="num">20</td><td class="num">5</td></tr>
         </tbody>
         <tfoot><tr><td colspan="4">Tổng (cộng 3 phút đọc đề, soát lại = 45 phút)</td><td class="num">42</td><td class="num">10</td></tr></tfoot>
@@ -68,7 +68,8 @@
     </div>
     <p><strong>Nguyên tắc chấm:</strong></p>
     <ul>
-      <li>Bài 1 chấm theo cách giải trong đề (mắt lưới hoặc điện thế nút). Giải hệ bằng định thức, phép thế hay máy tính cầm tay đều được.</li>
+      <li>Bài 1 chấm theo cách giải trong đề (mắt lưới hoặc điện thế nút). Giải hệ 3 ẩn bằng định thức, phép thế hay chức năng giải hệ của máy tính cầm tay đều được.</li>
+      <li>Điện thế nút: thiếu bước biến đổi nguồn áp nối tiếp R thành nguồn dòng, hoặc tính dòng nhánh có nguồn trên mạch đã biến đổi, trừ 0,5 đ.</li>
       <li>Phương trình viết sai dấu nhưng các bước sau làm đúng theo phương trình đó: trừ điểm ý a, vẫn cho điểm phương pháp ở ý c, d.</li>
       <li>Dòng nhánh ra âm mà ghi rõ "dòng thật ngược chiều mũi tên" vẫn cho đủ điểm.</li>
       <li>Bài 2 chấp nhận lấy U<sub>p</sub> ≈ 220 V và làm tròn I<sub>p</sub> trước khi bình phương: lệch dưới 1% vẫn đủ điểm. Thiếu đơn vị (V, A, W, VAr, VA) trừ 0,25 đ mỗi bài.</li>
@@ -78,9 +79,9 @@
   <details class="pa-theory">
     <summary>Nhắc lại công thức</summary>
     <ul>
-      <li><strong>Dòng mắt lưới:</strong> mỗi mắt viết K2 theo chiều mắt: <span class="f">(tổng R của mắt)·I<sub>m</sub> − R<sub>chung</sub>·I<sub>m kề</sub> = tổng E</span> (E đẩy dòng cùng chiều mắt mang dấu +). Nhánh riêng: <span class="f">I = I<sub>m</sub></span>; nhánh chung: <span class="f">I = I<sub>m1</sub> − I<sub>m2</sub></span>.</li>
+      <li><strong>Dòng mắt lưới:</strong> mỗi mắt viết K2 theo chiều mắt: <span class="f">(tổng R của mắt)·I<sub>m</sub> − R<sub>chung</sub>·I<sub>m kề</sub> = tổng E</span> (E đẩy dòng cùng chiều mắt mang dấu +). Nhánh riêng: <span class="f">I = I<sub>m</sub></span>; nhánh chung: <span class="f">I = I<sub>m1</sub> − I<sub>m2</sub></span>. Nguồn dòng J nằm riêng ở nhánh ngoài của 1 mắt: <span class="f">I<sub>m</sub> = J</span> (cùng chiều mắt), bỏ phương trình mắt đó; điện áp U<sub>J</sub> tính bằng K2 cho mắt chứa J.</li>
       <li><strong>Điện thế nút:</strong> chọn nút gốc 0 V; E nối tiếp R đổi thành nguồn dòng <span class="f">E/R</span> song song R. Mỗi nút: <span class="f">(tổng 1/R nối vào nút)·V<sub>A</sub> − (1/R<sub>chung</sub>)·V<sub>B</sub> = tổng nguồn dòng đổ vào nút</span>. Dòng nhánh theo định luật Ohm: <span class="f">I = (V<sub>A</sub> − V<sub>B</sub>)/R</span>, nhánh có nguồn <span class="f">I = (E − V<sub>A</sub>)/R</span>.</li>
-      <li><strong>Hệ 2 ẩn:</strong> <span class="f">Δ = a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub></span>, <span class="f">x<sub>1</sub> = Δ<sub>1</sub>/Δ</span>, <span class="f">x<sub>2</sub> = Δ<sub>2</sub>/Δ</span>. Kiểm tra: <span class="f">P<sub>nguồn</sub> = P<sub>tải</sub></span>, với <span class="f">P<sub>N</sub> = E × I</span>, <span class="f">P<sub>tải</sub> = R × I²</span>.</li>
+      <li><strong>Giải hệ:</strong> <span class="f">Δ = a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub></span>, <span class="f">x<sub>k</sub> = Δ<sub>k</sub>/Δ</span> (Δ<sub>k</sub>: thay cột k bằng vế phải); hệ 3 ẩn dùng định thức cấp 3 hoặc máy tính cầm tay. Kiểm tra: <span class="f">P<sub>nguồn</sub> = P<sub>tải</sub></span>, với <span class="f">P<sub>N</sub> = E × I</span>, <span class="f">P<sub>tải</sub> = R × I²</span>.</li>
       <li><strong>Mạch 3 pha:</strong> nối Y: <span class="f">U<sub>d</sub> = √3·U<sub>p</sub></span>, <span class="f">I<sub>d</sub> = I<sub>p</sub></span>; nối Δ: <span class="f">U<sub>d</sub> = U<sub>p</sub></span>, <span class="f">I<sub>d</sub> = √3·I<sub>p</sub></span>. <span class="f">Z<sub>p</sub> = √(R<sub>p</sub>² + X<sub>p</sub>²)</span>, <span class="f">I<sub>p</sub> = U<sub>p</sub>/Z<sub>p</sub></span>, <span class="f">cosφ = R<sub>p</sub>/Z<sub>p</sub></span>.</li>
       <li><strong>Công suất 3 pha:</strong> <span class="f">P = 3·R<sub>p</sub>·I<sub>p</sub>² = √3·U<sub>d</sub>·I<sub>d</sub>·cosφ</span>, <span class="f">Q = 3·X<sub>p</sub>·I<sub>p</sub>²</span>, <span class="f">S = 3·U<sub>p</sub>·I<sub>p</sub> = √(P² + Q²)</span>.</li>
       <li>Đơn vị: volt <span class="say" title="Cách đọc">vôn</span> (V) · ampere <span class="say" title="Cách đọc">am-pe</span> (A) · ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · watt <span class="say" title="Cách đọc">oát</span> (W) công suất tác dụng · volt-ampere phản kháng <span class="say" title="Cách đọc">vôn-am-pe phản kháng</span> (VAr) · volt-ampere <span class="say" title="Cách đọc">vôn-am-pe</span> (VA) công suất biểu kiến; 1 kW (kilo <span class="say" title="Cách đọc">ki-lô</span>watt) = 1000 W.</li>
@@ -95,9 +96,9 @@
 <script src="/assets/mln-svg.js?v=1"></script>
 <script src="/assets/bp3-calc.js?v=1"></script>
 <script src="/assets/bp3-svg.js?v=1"></script>
-<script src="/assets/dktm-calc.js?v=1"></script>
-<script src="/assets/dktm-data.js?v=1"></script>
-<script src="/assets/dktm.js?v=1"></script>
+<script src="/assets/dktm-calc.js?v=2"></script>
+<script src="/assets/dktm-data.js?v=3"></script>
+<script src="/assets/dktm.js?v=2"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

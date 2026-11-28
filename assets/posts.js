@@ -356,7 +356,7 @@ window.CT_POSTS = [
   {
     section: "ontap",
     title: "Đề kiểm tra 1 tiết Lý thuyết Mạch (Chương 3–4)",
-    desc: "4 đề 45 phút / 10 điểm: Bài 1 giải mạch bằng phương pháp dòng mắt lưới (đề 1, 3) hoặc điện thế nút (đề 2, 4), Bài 2 mạch 3 pha tải đối xứng nối Y hoặc Δ. Mỗi bài ghi số phút và điểm, có sơ đồ, lời giải từng bước và thang điểm chi tiết.",
+    desc: "4 đề 45 phút / 10 điểm: Bài 1 dạng khó nhất Chương 3: dòng mắt lưới mạch 3 mắt có nguồn dòng (đề 1, 3) hoặc điện thế nút 3 nút có biến đổi nguồn áp thành nguồn dòng (đề 2, 4), Bài 2 mạch 3 pha tải đối xứng nối Y hoặc Δ. Mỗi bài ghi số phút và điểm, có sơ đồ, lời giải từng bước và thang điểm chi tiết.",
     short: "4 đề 45 phút: mắt lưới, điện thế nút và mạch 3 pha, có thang điểm.",
     date: "2026-11-27",
     href: "/dekiemtralythuyetmach",

@@ -77,18 +77,22 @@
     var p = e.b1, mesh = p.method === "mesh";
     var names = p.currents.map(function (c) { return c.name; });
     var range = names[0] + " … " + names[names.length - 1];
+    var ms = [];
+    for (var k = 0; k < (mesh ? p.loops : 0); k++) ms.push("I_m" + (k + 1));
+    var hasJ = (p.isources || []).length > 0;
+    var power = "Kiểm tra kết quả bằng cân bằng công suất P_nguồn = P_tải" + (hasJ ? " (kể cả công suất của nguồn dòng J)." : ".");
     return problem({
       id: "d" + e.de + "b1", bai: "1", sub: mesh ? "Phương pháp dòng mắt lưới" : "Phương pháp điện thế nút",
       intro: mesh
-        ? "Cho mạch điện một chiều như hình. Dùng phương pháp dòng mắt lưới (chọn các dòng mắt lưới I_m1, I_m2 cùng chiều kim đồng hồ):"
+        ? "Cho mạch điện một chiều như hình. Dùng phương pháp dòng mắt lưới (chọn các dòng mắt lưới " + ms.join(", ") + " cùng chiều kim đồng hồ):"
         : "Cho mạch điện một chiều như hình. Chọn nút dưới làm nút gốc (0 V), dùng phương pháp điện thế nút:",
       fig: W.MLN_SVG.draw({ id: "1 đề " + e.de, size: p.size, draw: p.draw }),
       asks: mesh
-        ? [["Viết hệ phương trình dòng mắt lưới.", 2], ["Giải hệ, tìm I_m1 và I_m2.", 1],
-          ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], ["Kiểm tra kết quả bằng cân bằng công suất P_nguồn = P_tải.", 1]]
-        : [["Biến đổi nhánh nguồn áp nối tiếp điện trở thành nguồn dòng, viết hệ phương trình điện thế nút.", 2],
+        ? [["Viết hệ phương trình dòng mắt lưới." + (hasJ ? " Mắt có nguồn dòng J xử lý thế nào?" : ""), 2], ["Giải hệ, tìm " + ms.join(", ") + ".", 1],
+          ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], [power, 1]]
+        : [["Biến đổi các nhánh nguồn áp nối tiếp điện trở thành nguồn dòng, viết hệ phương trình điện thế nút.", 2],
           ["Giải hệ, tìm điện thế V_" + p.nodes.join(", V_") + ".", 1],
-          ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], ["Kiểm tra kết quả bằng cân bằng công suất P_nguồn = P_tải.", 1]],
+          ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], [power, 1]],
       sol: C.solveCircuit(p)
     });
   }
