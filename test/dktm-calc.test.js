@@ -17,12 +17,12 @@ test('plan adds up to 42 minutes of work and 10 points', () => {
   assert.equal(plan.reduce((a, p) => a + p.pts, 0), 10);
 });
 
-test('đề 1, 3 use mesh currents; đề 2, 4 use nodal voltages, all with 3 meshes or 3 nodes', () => {
+test('đề 1, 3 use 3-mesh circuits; đề 2, 4 use nodal voltages with only nodes A, B', () => {
   assert.deepEqual([1, 2, 3, 4].map((d) => exams[d].b1.method), ['mesh', 'nodal', 'mesh', 'nodal']);
   assert.equal(exams[1].b1.loops, 3);
   assert.equal(exams[3].b1.loops, 3);
-  assert.equal(exams[2].b1.nodes.length, 3);
-  assert.equal(exams[4].b1.nodes.length, 3);
+  assert.deepEqual(exams[2].b1.nodes, ['A', 'B']);
+  assert.deepEqual(exams[4].b1.nodes, ['A', 'B']);
 });
 
 test('nodal exams need source transformation; đề 3 and đề 4 have a current source', () => {
@@ -61,12 +61,12 @@ test('đề 3 mesh with current source: I_m3 = J, two unknowns 10, 8 A, U_J = 16
   assert.match(d, /U_J = R_4\(I_m3 − I_m2\) \+ R_5·I_m3 = 2 × \(4 − 8\) \+ 6 × 4 = 16 V/);
 });
 
-test('đề 2 three nodes, two source transformations: V = 16, 8, 4 V, 504 W', () => {
-  checkCircuit(2, [16, 8, 4], { I_1: 12, I_2: 8, I_3: 4, I_4: 2, I_5: 2, I_6: 4, I_7: 2 }, 504);
+test('đề 2 two nodes, two source transformations: V_A = 10 V, V_B = 12 V, 280 W', () => {
+  checkCircuit(2, [10, 12], { I_1: 3, I_2: 8, I_3: 2, I_4: 5, I_5: 6 }, 280);
 });
 
-test('đề 4 three nodes, transformations and J: V = 16, 12, 8 V, 324 W', () => {
-  checkCircuit(4, [16, 12, 8], { I_1: 6, I_2: 4, I_3: 2, I_4: 3, I_5: 1, I_6: 4, I_7: 3 }, 324);
+test('đề 4 two nodes, transformations and J: V_A = 16 V, V_B = 8 V, 380 W', () => {
+  checkCircuit(4, [16, 8], { I_1: 5, I_2: 6, I_3: 2, I_4: 8, I_5: 8 }, 380);
 });
 
 test('Cramer agrees with MLN_CALC for every Chương 3 circuit', () => {
@@ -84,18 +84,22 @@ test('written equations match the matrix (đề 1, đề 2, đề 3)', () => {
   assert.ok(mesh.some((l) => l.includes('(R_2 + R_3 + R_4)·I_m2 − R_2·I_m1 − R_4·I_m3 = 0') && l.endsWith('−4I_m1 + 13I_m2 − 6I_m3 = 0   (2)')));
   assert.ok(mesh.some((l) => l.includes('= −E_2') && l.endsWith('−6I_m2 + 8I_m3 = −20   (3)')));
   const nodal = solveCircuit(exams[2].b1).groups[0].lines;
-  assert.ok(nodal.some((l) => l.includes('(1/R_1 + 1/R_2 + 1/R_3)·V_A') && l.endsWith('1,5V_A − 0,5V_B = 20   (1)')));
-  assert.ok(nodal.some((l) => l.endsWith('−0,5V_B + 1,75V_C = 3   (3)')));
+  assert.ok(nodal.some((l) => l.includes('(1/R_1 + 1/R_3 + 1/R_4)·V_A') && l.endsWith('1,6V_A − V_B = 4   (1)')));
+  assert.ok(nodal.some((l) => l.endsWith('−V_A + 2,5V_B = 20   (2)')));
+  const withJn = solveCircuit(exams[4].b1).groups[0].lines;
+  assert.ok(withJn.some((l) => l.includes('= E_1/R_1 + J') && l.endsWith('V_A − 0,25V_B = 14   (1)')));
   const withJ = solveCircuit(exams[3].b1).groups[0].lines;
   assert.ok(withJ.some((l) => l.includes('I_m3 = J = 4 A')));
   assert.ok(withJ.some((l) => l.endsWith('−4I_m1 + 9I_m2 = 32   (2)')));
   assert.ok(!withJ.some((l) => l.startsWith('Mắt 3:')));
 });
 
-test('determinants keep enough decimals for exact division (đề 2)', () => {
-  const b = solveCircuit(exams[2].b1).groups[1].lines.join('\n');
-  assert.match(b, /Δ = det.* = 2,46875/);
-  assert.match(b, /V_A = Δ_1\/Δ = 39,5\/2,46875 = 16 V/);
+test('determinants divide to exact answers (đề 1 3×3, đề 4 2×2)', () => {
+  const b1 = solveCircuit(exams[1].b1).groups[1].lines.join('\n');
+  assert.match(b1, /I_m1 = Δ_1\/Δ = 2240\/280 = 8 A/);
+  const b4 = solveCircuit(exams[4].b1).groups[1].lines.join('\n');
+  assert.match(b4, /Δ = 1 × 1,75 − \(−0,25\) × \(−0,25\) = 1,6875/);
+  assert.match(b4, /V_A = Δ_1\/Δ = 27\/1,6875 = 16 V/);
 });
 
 test('linear() drops zero terms and unit coefficients', () => {
