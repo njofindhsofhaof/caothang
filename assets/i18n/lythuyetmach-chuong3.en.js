@@ -279,7 +279,19 @@ window.CT_EN = {
   "1rj22dc": "Voltage source E in series with resistor R is equivalent to a current source J equal to E over R in parallel with R",
   "v8ewep": "2-node circuit a, b: 1 A source into a, 6 ohm from a to reference, 4 ohm from a to b, 6 A source from b to a, 2 ohm from b to reference, 3 A source into b",
   "rfsw0b": "Original circuit: 10 A source, 5 ohm resistor, 10 ohm between a and b, 20 ohm, 30 ohm in series with a 100 V voltage source",
-  "3seb24": "Transformed circuit: the 100 V source in series with 30 ohm becomes a 3.33 A current source in parallel with 30 ohm"
+  "3seb24": "Transformed circuit: the 100 V source in series with 30 ohm becomes a 3.33 A current source in parallel with 30 ohm",
+  // 28/11: dòng nhánh có nguồn áp tính bằng K1, nút gốc ghi là nút C
+  "1kwgcoj": "node C: V<tspan class=\"sub\" dy=\"4\">C</tspan><tspan dy=\"-4\"> = 0 (ground)</tspan>",
+  "1g0ojh7": "<strong>Careful:</strong> the current through R after the transformation is <strong>not</strong> the current through R in the original circuit. For the current of a branch containing a voltage source, first find the resistor branch currents with Ohm's law, then use <strong>KCL at a node</strong> (see the example in section 10).",
+  "18byn8d": "Let V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> be the voltages at nodes a, b, c. Choose node C as the reference node ⇒ V<sub>C</sub> = 0. Pick the node with the most branches connected as the reference.",
+  "x1w9u5": "Find the resistor branch currents with Ohm's law: I = (V<sub>start</sub> − V<sub>end</sub>)/R. For a branch with a voltage source (or current source), use KCL at a node: total current in = total current out.",
+  "t0pct0": "Let V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> be the voltages at nodes a, b, c. Choose node C as the reference node ⇒ V<sub>C</sub> = 0.",
+  "10pu25v": "Branches at a: 6 Ω (to node C), 4 Ω (to b). Sources into a: 1 A + 6 A = 7 A.",
+  "1u0ux01": "Branches at b: 4 Ω (to a), 2 Ω (to node C). Sources: 3 A in, 6 A out ⇒ 3 − 6 = −3 A.",
+  "49t8oo": "Current through 20 Ω (Ohm's law): I<sub>2</sub> = V<sub>B</sub>/20 = 44.44/20 ≈ 2.22 A. The current of the 100 V – 30 Ω branch (call it I<sub>3</sub>, flowing into b) comes from KCL at node b (total in = total out): I<sub>1</sub> + I<sub>3</sub> = I<sub>2</sub> ⇒ I<sub>3</sub> = I<sub>2</sub> − I<sub>1</sub> = 2.22 − 0.37 ≈ 1.85 A. Not V<sub>B</sub>/30 ≈ 1.48 A (that is the current through 30 Ω in the transformed circuit).",
+  "f0rcrv": "100 V – 30 Ω branch: the voltage across 30 Ω is 100 − 44.44 = 55.56 V ⇒ 55.56/30 ≈ 1.85 A = I<sub>3</sub> ✓ &nbsp;·&nbsp; KCL at a: 10 = V<sub>A</sub>/5 + I<sub>1</sub> = 9.63 + 0.37 ✓",
+  "1p736q9": "Example: the circuit in section 04 has b = 3, n = 2. The mesh method needs 2 equations; the node method needs only <strong>1</strong>. Transform the three sources into current sources: 12/3 = 4 A (into the node), 3/3 = 1 A (out of the node, because the + terminal of E<sub>2</sub> is at the bottom), 15/9 = 5/3 A (into the node). Top node: (1/3 + 1/3 + 1/9)·V = 4 − 1 + 5/3 ⇒ V = 6 V. Currents through R<sub>1</sub>, R<sub>2</sub> by Ohm's law: I<sub>1</sub> = (12 − 6)/3 = 2 A, I<sub>2</sub> = (15 − 6)/9 = 1 A; then KCL at the top node: I<sub>3</sub> = I<sub>1</sub> + I<sub>2</sub> = 3 A, the same as in section 04.",
+  "s1s40b": "Resistor branches: I = (V<sub>start</sub> − V<sub>end</sub>)/R; branches with voltage sources: KCL at a node"
 };
 
 window.CT_QUIZ_EN = [

@@ -553,7 +553,7 @@
   <text class="b ac" x="380" y="156" text-anchor="middle">V<tspan class="sub" dy="4">B</tspan><tspan dy="-4"> = 2 V</tspan></text>
   <text class="s" x="265" y="56" text-anchor="middle">I = (V<tspan class="sub" dy="4">A</tspan><tspan dy="-4"> − V</tspan><tspan class="sub" dy="4">B</tspan><tspan dy="-4">) / R</tspan></text>
   <text class="s" x="265" y="76" text-anchor="middle">= (18 − 2) / 4 = 4 A</text>
-  <text class="s" x="280" y="204" text-anchor="middle">nút gốc C: V<tspan class="sub" dy="4">C</tspan><tspan dy="-4"> = 0 (mặt đất)</tspan></text>
+  <text class="s" x="280" y="204" text-anchor="middle">nút C: V<tspan class="sub" dy="4">C</tspan><tspan dy="-4"> = 0 (mặt đất)</tspan></text>
 </svg>
       <figcaption>Biết điện thế hai đầu một nhánh là tính được dòng qua nhánh đó</figcaption>
     </figure>
@@ -593,7 +593,7 @@
     </figure>
     <div class="def"><strong>Biến đổi tương đương:</strong> nguồn áp E nối tiếp R ⇒ nguồn dòng J = E/R song song với cùng điện trở R. Hai sơ đồ cho cùng điện áp và dòng điện ở hai cực ra, nên phần mạch còn lại không đổi.</div>
     <div class="formula">J = <span class="frac"><span>E</span><span><span class="vh">/</span>R</span></span><small>E: volt <span class="say" title="Cách đọc">vôn</span> (V) · R: ohm <span class="say" title="Cách đọc">ôm</span> (Ω) · J: ampere <span class="say" title="Cách đọc">am-pe</span> (A)</small></div>
-    <div class="note"><strong>Cẩn thận:</strong> dòng qua điện trở R sau khi biến đổi <strong>không phải</strong> dòng qua R trong mạch gốc. Muốn tính dòng của nhánh có nguồn áp thì quay về mạch gốc: I = (E − U)/R, hoặc dùng K1 tại nút (xem ví dụ mục 10).</div>
+    <div class="note"><strong>Cẩn thận:</strong> dòng qua điện trở R sau khi biến đổi <strong>không phải</strong> dòng qua R trong mạch gốc. Muốn tính dòng của nhánh có nguồn áp thì tính dòng các nhánh điện trở bằng định luật Ohm trước, rồi dùng <strong>K1 tại nút</strong> (xem ví dụ mục 10).</div>
 
     <!-- 8 -->
     <h2 id="cac-buoc-nut"><span class="num">08</span>Các bước giải bằng điện thế nút</h2>
@@ -601,11 +601,11 @@
       <h4>Bước 1 – Biến đổi nguồn</h4>
       <p>Biến đổi các nguồn áp nối tiếp điện trở thành nguồn dòng song song điện trở (mục 07).</p>
       <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
-      <p>Gọi điện thế tại các nút là V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub>, … và chọn 1 nút có nhiều nhánh nối tới làm nút gốc (điện thế tại nút gốc = 0).</p>
+      <p>Gọi V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> là điện thế tại các nút a, b, c. Chọn nút C làm nút gốc ⇒ V<sub>C</sub> = 0. Nên chọn nút có nhiều nhánh nối tới nhất làm nút gốc.</p>
       <h4>Bước 3 – Lập và giải hệ phương trình</h4>
       <p>Viết phương trình điện thế cho từng nút còn lại, giải tìm V<sub>A</sub>, V<sub>B</sub>, …</p>
       <h4>Bước 4 – Tìm dòng nhánh</h4>
-      <p>I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R cho nhánh điện trở; nhánh có nguồn áp thì tính trên mạch gốc hoặc dùng K1.</p>
+      <p>Tính dòng các nhánh điện trở bằng định luật Ohm: I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R. Dòng nhánh có nguồn áp (hoặc nguồn dòng) thì dùng K1 tại nút: tổng dòng vào = tổng dòng ra.</p>
     </div>
     <p>Phương trình cho nút A viết theo khuôn:</p>
     <div class="formula">(ΣG nối vào A) · V<sub>A</sub> − G<sub>AB</sub> · V<sub>B</sub> − … = ΣJ đổ vào A<small>Hệ số V<sub>A</sub>: tổng 1/R của mọi nhánh nối vào A (luôn dương) · Trừ 1/R của nhánh nối A với từng nút khác · Vế phải: nguồn dòng đi <strong>vào</strong> A lấy +, đi <strong>ra</strong> lấy −</small></div>
@@ -630,7 +630,7 @@
   <circle class="node" cx="210" cy="90" r="4.5"/><circle class="node" cx="380" cy="90" r="4.5"/><circle class="node" cx="210" cy="230" r="4.5"/><circle class="node" cx="380" cy="230" r="4.5"/>
   <path class="wire" d="M295 230 L295 244 M283 244 L307 244 M287 249 L303 249 M291 254 L299 254"/>
   <text class="b" x="200" y="110" text-anchor="end">a</text><text class="b" x="392" y="110">b</text>
-  <text class="s" x="312" y="252">c · nút gốc</text>
+  <text class="b" x="312" y="252">C</text>
   <text class="b" x="56" y="165" text-anchor="end">1 A</text>
   <text class="b" x="534" y="165">3 A</text>
   <text class="b" x="290" y="64" text-anchor="middle">6 A</text>
@@ -647,12 +647,12 @@
       <h4>Bước 1 – Biến đổi nguồn</h4>
       <p>Mạch chỉ có nguồn dòng ⇒ không cần biến đổi.</p>
       <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
-      <p>Gọi V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> là điện thế tại các nút a, b, c. Chọn nút c làm nút gốc ⇒ V<sub>C</sub> = 0.</p>
+      <p>Gọi V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> là điện thế tại các nút a, b, c. Chọn nút C làm nút gốc ⇒ V<sub>C</sub> = 0.</p>
       <h4>Bước 3 – Phương trình điện thế tại nút a</h4>
-      <p>Nhánh nối vào a: 6 Ω (xuống gốc), 4 Ω (sang b). Nguồn đổ vào a: 1 A + 6 A = 7 A.</p>
+      <p>Nhánh nối vào a: 6 Ω (xuống nút C), 4 Ω (sang b). Nguồn đổ vào a: 1 A + 6 A = 7 A.</p>
       <p class="ans">(1/6 + 1/4)·V<sub>A</sub> − (1/4)·V<sub>B</sub> = 7 &nbsp;(1)</p>
       <h4>Bước 3 – Phương trình điện thế tại nút b</h4>
-      <p>Nhánh nối vào b: 4 Ω (sang a), 2 Ω (xuống gốc). Nguồn: 3 A đổ vào, 6 A đi ra ⇒ 3 − 6 = −3 A.</p>
+      <p>Nhánh nối vào b: 4 Ω (sang a), 2 Ω (xuống nút C). Nguồn: 3 A đổ vào, 6 A đi ra ⇒ 3 − 6 = −3 A.</p>
       <p class="ans">−(1/4)·V<sub>A</sub> + (1/4 + 1/2)·V<sub>B</sub> = −3 &nbsp;(2)</p>
       <h4>Giải hệ (1), (2)</h4>
       <p>Nhân (2) với 4: −V<sub>A</sub> + 3·V<sub>B</sub> = −12 ⇒ V<sub>A</sub> = 3·V<sub>B</sub> + 12. Thay vào (1) (nhân 12): 5·V<sub>A</sub> − 3·V<sub>B</sub> = 84 ⇒ 12·V<sub>B</sub> + 60 = 84</p>
@@ -727,7 +727,7 @@
   <circle class="srcc" cx="70" cy="125" r="18"/><path class="arr" d="M70 137 L70 113 M64 120 L70 112 L76 120"/>
   <circle class="srcc" cx="460" cy="125" r="18"/><text class="pm" x="460" y="121" text-anchor="middle">+</text><text class="pm" x="460" y="138" text-anchor="middle">−</text>
   <circle class="node" cx="190" cy="50" r="4.5"/><circle class="node" cx="330" cy="50" r="4.5"/><circle class="node" cx="190" cy="200" r="4.5"/><circle class="node" cx="330" cy="200" r="4.5"/>
-  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="s" x="260" y="222" text-anchor="middle">c · nút gốc</text>
+  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="b" x="260" y="222" text-anchor="middle">C</text>
   <text class="b" x="46" y="130" text-anchor="end">10 A</text>
   <text class="b" x="202" y="130">5 Ω</text>
   <text class="b" x="260" y="32" text-anchor="middle">10 Ω</text>
@@ -752,7 +752,7 @@
   <circle class="srcc" cx="70" cy="125" r="18"/><path class="arr" d="M70 137 L70 113 M64 120 L70 112 L76 120"/>
   <circle class="srcc" cx="520" cy="125" r="18"/><path class="arr" d="M520 137 L520 113 M514 120 L520 112 L526 120"/>
   <circle class="node" cx="190" cy="50" r="4.5"/><circle class="node" cx="330" cy="50" r="4.5"/><circle class="node" cx="190" cy="200" r="4.5"/><circle class="node" cx="330" cy="200" r="4.5"/>
-  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="s" x="260" y="222" text-anchor="middle">c · nút gốc</text>
+  <text class="b" x="182" y="40" text-anchor="end">a</text><text class="b" x="338" y="40">b</text><text class="b" x="260" y="222" text-anchor="middle">C</text>
   <text class="b" x="46" y="130" text-anchor="end">10 A</text>
   <text class="b" x="202" y="130">5 Ω</text>
   <text class="b" x="260" y="32" text-anchor="middle">10 Ω</text>
@@ -765,7 +765,7 @@
     </figure>
     <div class="steps">
       <h4>Bước 2 – Đặt ẩn, chọn nút gốc</h4>
-      <p>Gọi V<sub>A</sub>, V<sub>B</sub> là điện thế nút a, b; chọn nút c làm gốc ⇒ V<sub>C</sub> = 0.</p>
+      <p>Gọi V<sub>A</sub>, V<sub>B</sub>, V<sub>C</sub> là điện thế tại các nút a, b, c. Chọn nút C làm nút gốc ⇒ V<sub>C</sub> = 0.</p>
       <h4>Bước 3 – Phương trình điện thế</h4>
       <p>Nút a: <span class="ans">(1/5 + 1/10)·V<sub>A</sub> − (1/10)·V<sub>B</sub> = 10 &nbsp;(1)</span></p>
       <p>Nút b: <span class="ans">−(1/10)·V<sub>A</sub> + (1/10 + 1/20 + 1/30)·V<sub>B</sub> = 10/3 &nbsp;(2)</span></p>
@@ -773,9 +773,9 @@
       <p class="ans">⇒ V<sub>B</sub> = 400/9 ≈ 44,44 V, V<sub>A</sub> = 1300/27 ≈ 48,15 V</p>
       <h4>Bước 4 – Dòng nhánh</h4>
       <p class="ans">I<sub>1</sub> = (V<sub>A</sub> − V<sub>B</sub>)/10 = (48,15 − 44,44)/10 ≈ 0,37 A</p>
-      <p>Dòng thật qua nhánh 100 V – 30 Ω (mạch gốc, chảy vào b): I = (E − V<sub>B</sub>)/30 = (100 − 44,44)/30 ≈ 1,85 A. Không phải V<sub>B</sub>/30 ≈ 1,48 A (đó là dòng qua 30 Ω trong mạch đã biến đổi).</p>
+      <p>Dòng qua 20 Ω (định luật Ohm): I<sub>2</sub> = V<sub>B</sub>/20 = 44,44/20 ≈ 2,22 A. Dòng nhánh 100 V – 30 Ω (gọi I<sub>3</sub>, chảy vào b) tính bằng K1 tại nút b (tổng dòng vào = tổng dòng ra): I<sub>1</sub> + I<sub>3</sub> = I<sub>2</sub> ⇒ I<sub>3</sub> = I<sub>2</sub> − I<sub>1</sub> = 2,22 − 0,37 ≈ 1,85 A. Không phải V<sub>B</sub>/30 ≈ 1,48 A (đó là dòng qua 30 Ω trong mạch đã biến đổi).</p>
       <h4>Kiểm tra lại</h4>
-      <p>K1 tại b: vào I<sub>1</sub> + 1,85 = 2,22 A; ra V<sub>B</sub>/20 = 2,22 A ✓ &nbsp;·&nbsp; K1 tại a: 10 = V<sub>A</sub>/5 + I<sub>1</sub> = 9,63 + 0,37 ✓</p>
+      <p>Nhánh 100 V – 30 Ω: điện áp trên 30 Ω là 100 − 44,44 = 55,56 V ⇒ 55,56/30 ≈ 1,85 A = I<sub>3</sub> ✓ &nbsp;·&nbsp; K1 tại a: 10 = V<sub>A</sub>/5 + I<sub>1</sub> = 9,63 + 0,37 ✓</p>
     </div>
 
     <!-- 11 -->
@@ -795,7 +795,7 @@
         </tbody>
       </table>
     </div>
-    <p>Ví dụ: mạch ở mục 04 có b = 3, n = 2. Dòng mắt lưới cần 2 phương trình; điện thế nút chỉ cần <strong>1</strong>. Đổi ba nguồn thành nguồn dòng: 12/3 = 4 A (vào nút), 3/3 = 1 A (ra khỏi nút, vì cực + của E<sub>2</sub> ở dưới), 15/9 = 5/3 A (vào nút). Nút trên: (1/3 + 1/3 + 1/9)·V = 4 − 1 + 5/3 ⇒ V = 6 V. Quay về mạch gốc: I<sub>1</sub> = (12 − 6)/3 = 2 A, I<sub>2</sub> = (15 − 6)/9 = 1 A, I<sub>3</sub> = (6 + 3)/3 = 3 A, đúng như kết quả ở mục 04.</p>
+    <p>Ví dụ: mạch ở mục 04 có b = 3, n = 2. Dòng mắt lưới cần 2 phương trình; điện thế nút chỉ cần <strong>1</strong>. Đổi ba nguồn thành nguồn dòng: 12/3 = 4 A (vào nút), 3/3 = 1 A (ra khỏi nút, vì cực + của E<sub>2</sub> ở dưới), 15/9 = 5/3 A (vào nút). Nút trên: (1/3 + 1/3 + 1/9)·V = 4 − 1 + 5/3 ⇒ V = 6 V. Dòng qua R<sub>1</sub>, R<sub>2</sub> theo định luật Ohm: I<sub>1</sub> = (12 − 6)/3 = 2 A, I<sub>2</sub> = (15 − 6)/9 = 1 A; rồi K1 tại nút trên: I<sub>3</sub> = I<sub>1</sub> + I<sub>2</sub> = 3 A, đúng như kết quả ở mục 04.</p>
 
     <!-- 12 -->
     <h2 id="tom-tat"><span class="num">12</span>Bảng tóm tắt</h2>
@@ -806,7 +806,7 @@
           <tr><td>Bước 1</td><td>Đặt I<sub>m1</sub>, I<sub>m2</sub>, … và vẽ chiều</td><td>Biến đổi nguồn áp nối tiếp R thành J = E/R song song R</td></tr>
           <tr><td>Bước 2</td><td>Lập hệ phương trình mắt lưới, giải</td><td>Đặt V<sub>A</sub>, V<sub>B</sub>, …; chọn nút gốc V = 0</td></tr>
           <tr><td>Bước 3</td><td>Suy ra dòng nhánh</td><td>Lập hệ phương trình nút, giải</td></tr>
-          <tr><td>Bước 4</td><td>–</td><td>I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R; nhánh có nguồn áp tính trên mạch gốc</td></tr>
+          <tr><td>Bước 4</td><td>–</td><td>Nhánh điện trở: I = (V<sub>đầu</sub> − V<sub>cuối</sub>)/R; nhánh có nguồn áp: K1 tại nút</td></tr>
           <tr><td>Khuôn phương trình</td><td>(ΣR)·I<sub>mk</sub> ± R<sub>chung</sub>·I<sub>m kề</sub> = ΣE</td><td>(ΣG)·V<sub>A</sub> − G<sub>AB</sub>·V<sub>B</sub> = ΣJ<sub>vào</sub></td></tr>
           <tr><td>Dấu</td><td>R chung: cùng chiều +, ngược chiều −; E: dòng đi − sang + lấy +</td><td>J vào nút +, ra khỏi nút −</td></tr>
           <tr><td>Trường hợp đặc biệt</td><td>Nguồn dòng nhánh ngoài: I<sub>m</sub> = ±J</td><td>Nhánh nối nút gốc chỉ góp vào hệ số</td></tr>
