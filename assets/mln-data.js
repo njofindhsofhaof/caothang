@@ -228,17 +228,33 @@ window.MLN_PROBLEMS = [
       ["n", 180, 60, "A"], ["n", 290, 60, ""], ["n", 430, 60, "B"],
       ["n", 180, 240, ""], ["n", 290, 240, "gốc (0 V)"], ["n", 430, 240, ""]
     ],
+    /* Mach sau khi bien doi nguon, hien trong loi giai ngay sau buoc 1 (afterStep = chi so buoc). */
+    transformed: {
+      afterStep: 0,
+      caption: "Mạch sau khi biến đổi nguồn áp thành nguồn dòng (nút A, B và nút gốc giữ nguyên):",
+      size: [900, 290],
+      draw: [
+        ["w", 110, 60, 790, 60], ["w", 110, 240, 790, 240],
+        ["w", 110, 60, 110, 240], ["w", 210, 60, 210, 240], ["w", 310, 60, 310, 240], ["w", 410, 60, 410, 240],
+        ["w", 590, 60, 590, 240], ["w", 690, 60, 690, 240], ["w", 790, 60, 790, 240],
+        ["i", 110, 150, "u", "J₁ = 12 A", "l"], ["r", 210, 150, "v", "R₁ = 2 Ω"], ["r", 310, 150, "v", "R₄ = 2 Ω"],
+        ["i", 410, 150, "u", "J = 4 A"], ["r", 500, 60, "h", "R₃ = 1 Ω"],
+        ["r", 590, 150, "v", "R₅ = 2 Ω"], ["r", 690, 150, "v", "R₂ = 1 Ω"], ["i", 790, 150, "u", "J₂ = 16 A"],
+        ["n", 210, 60, "A"], ["n", 310, 60, ""], ["n", 410, 60, ""], ["n", 590, 60, "B"], ["n", 690, 60, ""],
+        ["n", 210, 240, ""], ["n", 310, 240, ""], ["n", 410, 240, "gốc (0 V)"], ["n", 590, 240, ""], ["n", 690, 240, ""]
+      ]
+    },
     steps: [
       { title: "Bước 1. Chọn nút gốc và biến đổi nguồn", lines: [
         "Chọn nút dưới làm gốc (0 V), ẩn là V_A, V_B.",
-        "Nhánh nguồn áp nối tiếp điện trở đổi thành nguồn dòng song song điện trở đó:",
-        "E_1 nối tiếp R_1 ⇒ nguồn dòng E_1/R_1 = 24/2 = 12 A đổ vào A, song song R_1 = 2 Ω",
-        "E_2 nối tiếp R_2 ⇒ nguồn dòng E_2/R_2 = 16/1 = 16 A đổ vào B, song song R_2 = 1 Ω"
+        "Nhánh nguồn áp nối tiếp điện trở đổi thành nguồn dòng song song điện trở đó, rồi vẽ lại mạch (hình dưới):",
+        "E_1 nối tiếp R_1 ⇒ nguồn dòng J_1 = E_1/R_1 = 24/2 = 12 A đổ vào A, song song R_1 = 2 Ω",
+        "E_2 nối tiếp R_2 ⇒ nguồn dòng J_2 = E_2/R_2 = 16/1 = 16 A đổ vào B, song song R_2 = 1 Ω"
       ] },
-      { title: "Bước 2. Viết phương trình cho nút A và nút B", lines: [
-        "Nút A: (1/R_1 + 1/R_4 + 1/R_3)V_A − (1/R_3)V_B = E_1/R_1 + J",
+      { title: "Bước 2. Viết phương trình cho nút A và nút B (trên mạch đã biến đổi)", lines: [
+        "Nút A: (1/R_1 + 1/R_4 + 1/R_3)V_A − (1/R_3)V_B = J_1 + J",
         "⇒ (1/2 + 1/2 + 1)V_A − V_B = 12 + 4 ⇒ 2V_A − V_B = 16   (1)",
-        "Nút B: −(1/R_3)V_A + (1/R_3 + 1/R_5 + 1/R_2)V_B = E_2/R_2",
+        "Nút B: −(1/R_3)V_A + (1/R_3 + 1/R_5 + 1/R_2)V_B = J_2",
         "⇒ −V_A + (1 + 1/2 + 1)V_B = 16 ⇒ −V_A + 2,5V_B = 16   (2)"
       ] },
       { title: "Bước 3. Giải hệ phương trình", lines: [

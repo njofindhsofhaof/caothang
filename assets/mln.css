@@ -10,3 +10,4 @@ h2.kh-ask{font-family:var(--sans);line-height:1.35;}
 .mln-rule p:last-child{margin:0;}
 .mln-answer{margin-top:18px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent-warm);border-radius:8px;padding:2px 14px 10px;}
 .mln-answer p{font-family:var(--mono);font-size:13.5px;color:var(--ink);margin:0;line-height:1.8;}
+.mln-cap{font-size:13.5px;color:var(--ink-soft);margin:12px 0 0;}

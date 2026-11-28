@@ -76,6 +76,19 @@ test('bài 4: source transformation, branch currents recomputed on the original 
   near(s.pLoad, 240);
 });
 
+test('bài 4: transformed-circuit figure shows J = E/R for every voltage branch', () => {
+  const p = byId[4];
+  const labels = p.transformed.draw.filter((c) => c[0] === 'i').map((c) => c[4]);
+  const subs = { 1: '₁', 2: '₂' };
+  for (const vb of p.vbranches) {
+    const label = labels.find((l) => l.startsWith('J' + subs[vb.sym.split('_')[1]] + ' '));
+    assert.ok(label, `có nguồn dòng tương đương cho ${vb.sym}`);
+    near(parseNumber(label.split('=')[1]), vb.value / vb.r);
+  }
+  assert.ok(labels.includes('J = 4 A'), 'nguồn dòng J giữ nguyên');
+  assert.ok(p.transformed.afterStep < p.steps.length);
+});
+
 test('every problem balances power and lists 5 solution steps', () => {
   for (const p of globalThis.MLN_PROBLEMS) {
     const s = solve(p);

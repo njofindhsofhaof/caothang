@@ -36,9 +36,16 @@
 
   function buildSolution(p, keys, expected) {
     var sol = el("details", { "class": "kh-sol kh-worked-sol" }, [el("summary", { text: "Xem lời giải bài " + p.id })]);
-    p.steps.forEach(function (st) {
+    var t = p.transformed;
+    p.steps.forEach(function (st, k) {
       sol.appendChild(el("h4", { text: st.title }));
       sol.appendChild(el("ul", { "class": "kh-steps" }, st.lines.map(function (l) { return rich("li", l); })));
+      if (t && t.afterStep === k) {
+        sol.appendChild(el("p", { "class": "mln-cap", text: t.caption }));
+        sol.appendChild(el("figure", { "class": "kh-fig kh-fig-svg mln-fig" }, [
+          SVG.draw({ id: p.id + " sau khi biến đổi nguồn", size: t.size, draw: t.draw })
+        ]));
+      }
     });
     sol.appendChild(el("div", { "class": "mln-answer" }, [
       el("h4", { text: "Đáp số" }),
