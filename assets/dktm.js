@@ -61,11 +61,16 @@
       return li;
     })));
     var sol = el("details", { "class": "kh-sol dkt-sol" }, [el("summary", { text: "Xem lời giải và thang điểm" })]);
-    q.sol.groups.forEach(function (g) {
+    q.sol.groups.forEach(function (g, k) {
       sol.appendChild(el("p", { "class": "dktm-step" }, [rich("strong", g.title), el("span", { "class": "dkt-pts", text: " (" + pts(g.pts) + ")" })]));
-      sol.appendChild(el("ol", { "class": "kh-steps dkt-steps" }, g.lines.map(function (s) {
-        return rich("li", s, /^Thang điểm/.test(s) ? { "class": "dktm-rubric" } : undefined);
-      })));
+      var steps = g.lines.filter(function (s) { return !/^Thang điểm/.test(s); });
+      var rubric = g.lines.filter(function (s) { return /^Thang điểm/.test(s); });
+      var fig = k === 0 && q.solFig;
+      var split = fig ? steps.length - q.solFigAfter : steps.length;
+      var li = function (s) { return rich("li", s); };
+      sol.appendChild(el("ol", { "class": "kh-steps dkt-steps" }, steps.slice(0, split).map(li)));
+      if (fig) sol.appendChild(el("figure", { "class": "pa-fig dktm-fig" }, [fig, el("figcaption", { "class": "dktm-cap", text: "Mạch sau khi biến đổi nguồn áp thành nguồn dòng" })]));
+      sol.appendChild(el("ol", { "class": "kh-steps dkt-steps" }, steps.slice(split).map(li).concat(rubric.map(function (s) { return rich("li", s, { "class": "dktm-rubric" }); }))));
     });
     sol.appendChild(rich("p", "Đáp số: " + q.sol.answer, { "class": "dkt-ans" }));
     body.push(sol);
@@ -90,10 +95,13 @@
       asks: mesh
         ? [["Viết hệ phương trình dòng mắt lưới." + (hasJ ? " Mắt có nguồn dòng J xử lý thế nào?" : ""), 2], ["Giải hệ, tìm " + ms.join(", ") + ".", 1],
           ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], [power, 1]]
-        : [["Biến đổi các nhánh nguồn áp nối tiếp điện trở thành nguồn dòng, viết hệ phương trình điện thế nút.", 2],
+        : [["Biến đổi các nhánh nguồn áp nối tiếp điện trở thành nguồn dòng, vẽ lại mạch sau khi biến đổi và viết hệ phương trình điện thế nút.", 2],
           ["Giải hệ, tìm điện thế V_" + p.nodes.join(", V_") + ".", 1],
           ["Tính dòng điện " + range + " trong các nhánh theo chiều mũi tên trên hình.", 1], [power, 1]],
-      sol: C.solveCircuit(p)
+      sol: C.solveCircuit(p),
+      /* Hinh mach da bien doi chen sau dong "Ve lai mach", truoc cac phuong trinh nut. */
+      solFig: p.drawT ? W.MLN_SVG.draw({ id: "1 đề " + e.de + " sau biến đổi", size: p.sizeT, draw: p.drawT }) : null,
+      solFigAfter: p.drawT ? p.nodes.length : 0
     });
   }
 

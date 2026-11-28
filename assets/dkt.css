@@ -45,3 +45,4 @@
 .dktm-step{margin:14px 0 2px;font-size:14.5px;}
 .dkt-steps li.dktm-rubric{font-family:var(--mono);font-size:12.5px;color:var(--accent-warm);}
 @media (max-width:600px){.dktm-fig .mln-svg{min-width:0;}}
+.dktm-cap{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:6px;}

@@ -235,10 +235,11 @@
         }))
       : ["Chọn nút dưới làm gốc (0 V); ẩn là " + p.nodes.map(function (x) { return "V_" + x; }).join(", ") +
         ". Vế trái: tổng điện dẫn nối vào nút × điện thế nút đó − điện dẫn chung × điện thế nút kia; vế phải: tổng nguồn dòng đổ vào nút."]
-        .concat((p.vbranches || []).map(function (v) {
-          return v.sym + " nối tiếp " + v.rSym + " ⇒ nguồn dòng " + v.sym + "/" + v.rSym + " = " + num(v.value) + "/" + num(v.r) + " = " + num(v.value / v.r) +
+        .concat((p.vbranches || []).map(function (v, k) {
+          return v.sym + " nối tiếp " + v.rSym + " ⇒ nguồn dòng J_" + (k + 1) + " = " + v.sym + "/" + v.rSym + " = " + num(v.value) + "/" + num(v.r) + " = " + num(v.value / v.r) +
             " A đổ vào nút " + p.nodes[v.node] + ", song song " + v.rSym + " = " + num(v.r) + " Ω.";
-        }));
+        }))
+        .concat(p.vbranches && p.vbranches.length ? ["Vẽ lại mạch sau khi biến đổi (hình dưới): mỗi nhánh nguồn áp nối tiếp điện trở thay bằng nguồn dòng song song điện trở đó; các nút A, B, … và nút gốc giữ nguyên. Viết phương trình điện thế nút trên mạch này."] : [])
     var eqs = sys.free.map(function (i, k) { return equation(p, sys, i, k + 1); });
     var nf = sys.free.length;
     var curLines = p.currents.map(function (c) { return mesh ? meshCurrentLine(p, c, s.im, cur[c.name]) : nodalCurrentLine(p, c, s.v, cur[c.name]); });
@@ -246,7 +247,7 @@
       x: cr.x, cur: cur, pSrc: pw.pSrc, pLoad: pw.pLoad,
       groups: [
         { title: mesh ? "a) Chọn chiều dòng mắt lưới, viết hệ phương trình" : "a) Chọn nút gốc, biến đổi nguồn, viết hệ phương trình", pts: 2,
-          lines: setup.concat(eqs).concat(["Thang điểm: chọn ẩn" + (mesh ? (p.isources ? ", chiều mắt lưới và I_m = J" : " và chiều mắt lưới") : ", biến đổi nguồn") +
+          lines: setup.concat(eqs).concat(["Thang điểm: chọn ẩn" + (mesh ? (p.isources ? ", chiều mắt lưới và I_m = J" : " và chiều mắt lưới") : ", biến đổi nguồn và vẽ lại mạch") +
             " đúng 0,5 đ; mỗi phương trình đúng " + num(1.5 / nf) + " đ."]) },
         { title: "b) Giải hệ phương trình", pts: 1, lines: cr.lines.concat([nf === 2 ? "Thang điểm: mỗi ẩn đúng 0,5 đ." : "Thang điểm: đúng cả 3 ẩn 1 đ; đúng 1 hoặc 2 ẩn 0,5 đ."]) },
         { title: "c) Dòng điện các nhánh", pts: 1,

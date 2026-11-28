@@ -134,3 +134,21 @@ test('solution text never shows NaN or undefined', () => {
     }
   }
 });
+
+test('nodal exams with source transformation have a redrawn circuit whose current sources match E/R', () => {
+  const sub = (s) => s.replace(/[₀-₉]/g, (c) => String(c.charCodeAt(0) - 0x2080));
+  for (const de of [2, 4]) {
+    const p = exams[de].b1;
+    assert.ok(Array.isArray(p.drawT) && p.sizeT, `đề ${de} thiếu hình sau biến đổi`);
+    const labels = p.drawT.filter((c) => c[0] === 'i').map((c) => sub(c[4]));
+    p.vbranches.forEach((v, k) => {
+      const name = `J${k + 1}`;
+      assert.ok(labels.includes(`${name} = ${v.value / v.r} A`), `đề ${de}: thiếu nguồn ${name} = ${v.value / v.r} A`);
+      assert.ok(!p.drawT.some((c) => c[0] === 'v'), `đề ${de}: hình sau biến đổi vẫn còn nguồn áp`);
+    });
+    for (const j of p.isources || []) assert.ok(labels.some((l) => l.startsWith(`${j.sym} = ${j.value} A`)));
+    const setup = solveCircuit(p).groups[0].lines.join('\n');
+    assert.match(setup, /Vẽ lại mạch sau khi biến đổi/);
+    assert.match(setup, /nguồn dòng J_1 = E_1\/R_1/);
+  }
+});
