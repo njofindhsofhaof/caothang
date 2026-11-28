@@ -102,6 +102,17 @@ test('nodal problems: 2 unknown nodes A, B; node C is the reference, named on ev
   }
 });
 
+test('nodal problems: voltage-source branch currents come from K1, not (E − V)/R', () => {
+  for (const p of globalThis.MLN_PROBLEMS.filter((q) => q.vbranches)) {
+    const text = p.steps.flatMap((s) => s.lines).join('\n');
+    assert.ok(!/\(E_\d − V_[AB]\)/.test(text), `bài ${p.id} không dùng (E − V)/R`);
+    for (const vb of p.vbranches) {
+      const name = p.currents.find((c) => c.of === vb.sym).name;
+      assert.match(text, new RegExp('K1 tại nút [AB].*⇒ ' + name + ' = '), `bài ${p.id}: ${name} tính bằng K1`);
+    }
+  }
+});
+
 test('every problem balances power and lists 5 solution steps', () => {
   for (const p of globalThis.MLN_PROBLEMS) {
     const s = solve(p);

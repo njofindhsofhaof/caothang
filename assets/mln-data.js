@@ -263,12 +263,11 @@ window.MLN_PROBLEMS = [
       ] },
       { title: "Bước 4. Dòng điện các nhánh", lines: [
         "I_3 = (V_A − V_B)/R_3 = (14 − 12)/1 = 2 A ; I_4 = V_A/R_4 = 14/2 = 7 A ; I_5 = V_B/R_5 = 12/2 = 6 A",
-        "Lưu ý: nhánh có nguồn áp phải tính lại trên mạch ban đầu (không dùng nguồn dòng tương đương 12 A, 16 A, vì dòng qua R_1, R_2 trong mạch đã biến đổi khác dòng thật):",
-        "I_1 = (E_1 − V_A)/R_1 = (24 − 14)/2 = 5 A ; I_2 = (E_2 − V_B)/R_2 = (16 − 12)/1 = 4 A"
+        "Nhánh có nguồn áp (I_1, I_2) tính bằng K1 trên mạch ban đầu (không lấy dòng qua R_1, R_2 của mạch đã biến đổi, vì đó không phải dòng thật):",
+        "K1 tại nút A (tổng dòng vào = tổng dòng ra): I_1 + J = I_3 + I_4 ⇒ I_1 = I_3 + I_4 − J = 2 + 7 − 4 = 5 A",
+        "K1 tại nút B: I_2 + I_3 = I_5 ⇒ I_2 = I_5 − I_3 = 6 − 2 = 4 A"
       ] },
-      { title: "Bước 5. Kiểm tra", lines: [
-        "K1 tại nút A: I_1 + J = I_3 + I_4 ⇒ 5 + 4 = 2 + 7 ✓",
-        "K1 tại nút B: I_3 + I_2 = I_5 ⇒ 2 + 4 = 6 ✓",
+      { title: "Bước 5. Kiểm tra cân bằng công suất", lines: [
         "P_nguồn = E_1 × I_1 + E_2 × I_2 + V_A × J = 24 × 5 + 16 × 4 + 14 × 4 = 120 + 64 + 56 = 240 W",
         "P_tải = R_1 × I_1² + R_2 × I_2² + R_3 × I_3² + R_4 × I_4² + R_5 × I_5² = 2 × 5² + 1 × 4² + 1 × 2² + 2 × 7² + 2 × 6² = 50 + 16 + 4 + 98 + 72 = 240 W",
         "⇒ P_nguồn = P_tải ✓"
